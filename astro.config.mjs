@@ -14,7 +14,6 @@ export default defineConfig({
       customCss: ["./src/tailwind.css"],
       components: {
         SocialIcons: "./src/components/social-icons.astro",
-        TableOfContents: "./src/components/table-of-contents/index.astro",
       },
       expressiveCode: {
         themes: ["github-dark-default", "github-light"],

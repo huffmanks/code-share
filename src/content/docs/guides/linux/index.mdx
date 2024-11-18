@@ -2,22 +2,24 @@
 title: Getting Started
 description: A guide in my new Starlight docs site.
 sidebar: { order: 1 }
+tableOfContents:
+  maxHeadingLevel: 4
 ---
 
-import { Code, Steps } from "@astrojs/starlight/components";
+#### SSH login
 
-<Steps>
+```sh
+ssh USER_NAME@IP_ADDRESS
+```
 
-1. <div id="ssh-login">
-     <Code lang="sh" title="ssh login" code={`ssh USER_NAME@IP_ADDRESS`} />
-   </div>
+#### Update and upgrade apt
 
-2. <div id="apt-update-and-upgrade">
-     <Code lang="sh" title="apt update and upgrade" code={`sudo apt update && sudo apt upgrade -y`} />
-   </div>
+```sh
+sudo apt update && sudo apt upgrade -y
+```
 
-3. <div id="reboot">
-     <Code lang="sh" title="reboot" code={`sudo reboot`} />
-   </div>
+#### Reboot
 
-</Steps>
+```sh
+sudo reboot
+```
