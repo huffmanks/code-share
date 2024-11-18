@@ -1,0 +1,97 @@
+---
+title: Docker
+description: Installing Docker on a Debian-based Linux system is a straightforward process, but ensuring that all dependencies, keyrings and configurations are correctly set up is crucial for a smooth installation. This guide walks you through the steps needed to install Docker, add users to the Docker group and finalize the setup for managing containers on your Debian system. By the end of this guide, your system will be fully ready to run Docker containers efficiently and securely.
+sidebar: { order: 1 }
+---
+
+export const addDockerSource = `
+echo \\
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \\
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+`;
+
+Installing Docker on a Debian-based Linux system is a straightforward process, but ensuring that all dependencies, keyrings and configurations are correctly set up is crucial for a smooth installation. This guide walks you through the steps needed to install Docker, add users to the Docker group and finalize the setup for managing containers on your Debian system. By the end of this guide, your system will be fully ready to run Docker containers efficiently and securely.
+
+## Install required dependencies
+
+Before installing Docker, ensure your system has all the necessary dependencies. This step installs packages that are essential for Docker to function properly on Debian Linux.
+
+```sh
+sudo apt install ca-certificates curl -y
+```
+
+## Install required keyrings
+
+Docker requires keyrings to authenticate the software packages during installation. This step ensures that your system has the appropriate keyrings installed to verify Docker’s official package sources.
+
+```sh
+sudo install -m 0755 -d /etc/apt/keyrings
+```
+
+## Add Docker GPG key
+
+Add the official Docker GPG key to your system’s keyring. This ensures that packages you download are verified as authentic and from the trusted Docker repositories.
+
+```sh wrap
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+```
+
+## Change file permission
+
+Modify the file permissions to ensure Docker's configuration files and directories are properly accessible. This step is essential for maintaining system security and ensuring Docker operates smoothly.
+
+```sh
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+## Add docker repository to apt source
+
+Add Docker’s official repository to your APT sources. This will allow you to install Docker directly from Docker’s official repository, ensuring you get the latest version.
+
+```sh wrap
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+## Update apt package list
+
+Run an APT update to refresh your package database and include the new Docker repository. This ensures that your system recognizes Docker as an available package for installation.
+
+```sh
+sudo apt update
+```
+
+## Install Docker Engine
+
+Install the Docker Engine on your system. This command downloads and installs the latest stable version of Docker, enabling you to start using Docker on your Debian system.
+
+```sh wrap
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
+
+## Add user to docker group
+
+Add your user to the docker group. This allows you to run Docker commands without needing sudo each time, streamlining the Docker management process.
+
+```sh
+sudo groupadd docker
+```
+
+## Modify user permissions
+
+Modify user permissions to ensure they have the necessary access rights to interact with Docker. This step ensures that the user has proper control over Docker without compromising system security.
+
+```sh
+sudo usermod -aG docker $USER
+```
+
+## Reboot the system
+
+Finally, reboot your system to ensure all changes take effect. This step ensures that your system is fully prepared to run Docker and any necessary services start properly on boot.
+
+```sh
+sudo reboot
+```

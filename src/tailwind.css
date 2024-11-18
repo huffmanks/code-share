@@ -14,6 +14,13 @@
   --sl-color-gray-5: #353841;
   --sl-color-gray-6: #24272f;
   --sl-color-black: #17181c;
+
+  /* Resizing headings */
+  --sl-text-h1: var(--sl-text-4xl);
+  --sl-text-h2: var(--sl-text-2xl);
+  --sl-text-h3: var(--sl-text-xl);
+  --sl-text-h4: var(--sl-text-lg);
+  --sl-text-h5: var(--sl-text-base);
 }
 
 :root[data-theme="light"] {
