@@ -1,0 +1,128 @@
+---
+title: Security
+description: A guide in my new Starlight docs site.
+sidebar: { order: 4 }
+---
+
+1. Keep system updated
+
+```sh
+sudo apt install unattended-upgrades
+```
+
+```sh
+sudo nano /etc/apt/apt.conf.d/02periodic
+```
+
+### Add this
+
+```sh
+APT::Periodic::Enable "1";
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::AutocleanInterval "1";
+APT::Periodic::Verbose "2";
+```
+
+```sh
+sudo unattended-upgrades -d
+```
+
+2. Make sudo require password
+
+```sh
+sudo nano /etc/sudoers.d/010_pi-nopasswd
+```
+
+### Find this line and change
+
+pi ALL=(ALL) NOPASSWD: ALL => Remove NO, "PASSWD: ALL"
+
+3. SSH: prevent root login
+
+```sh
+sudo nano /etc/ssh/sshd_config
+```
+
+### Find this line and uncomment
+
+\#PermitRootLogin prohibit-password
+
+### Restart the SSH server if you changed anything in the configuration file:
+
+```sh
+sudo service ssh restart
+```
+
+4. SSH: change port
+
+```sh
+sudo nano /etc/ssh/sshd_config
+```
+
+### Change port on this line
+
+\#Port 22
+
+5. SSH: use keys instead of password
+
+### HOST: Create key
+
+```sh
+ssh-keygen -t rsa
+```
+
+### HOST: Copy public key to Pi
+
+```sh
+scp ~/.ssh/id_rsa.pub USER_NAME@DEVICE_IP:~/.ssh/id_rsa.pub
+```
+
+### PI: Add key to the allowed keys
+
+```sh
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+
+### PI: Edit config to disallow password
+
+```sh
+sudo nano /etc/ssh/sshd_config
+```
+
+PasswordAuthentication no
+
+6. Install fail2ban
+
+```sh
+sudo apt install fail2ban
+```
+
+### Optional update config
+
+```sh
+sudo nano /etc/fail2ban/jail.conf
+```
+
+### Restart the service if you change anything
+
+```sh
+sudo service fail2ban restart
+```
+
+7. Install firewall
+
+```sh
+sudo apt install ufw
+```
+
+### Example limit access to port by ip
+
+```sh
+sudo ufw allow from IP_ADDRESS port PORT_NUMBER
+```
+
+```sh
+sudo ufw enable
+```

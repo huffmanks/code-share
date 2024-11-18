@@ -1,0 +1,37 @@
+---
+import Default from "@astrojs/starlight/components/TableOfContents.astro";
+import type { Props } from "@astrojs/starlight/props";
+import type { StarlightDocsEntry } from "@astrojs/starlight/utils/routing";
+import TableOfContentsList from "./table-of-contents-list.astro";
+const { entry } = Astro.props;
+
+type Item = { depth: number; slug: string; text: string; children: Item[] };
+
+function parseEntry(entry: StarlightDocsEntry): Item[] {
+  const codeRegex = /<Code[^>]*title="([^"]+)"[^>]*>/g;
+
+  return Array.from(entry.body.matchAll(codeRegex)).map((match) => {
+    const [_, title] = match as RegExpMatchArray;
+    const slug = title.toLowerCase().replace(/\s+/g, "-");
+    return { depth: 2, slug, text: title, children: [] };
+  });
+}
+const items = parseEntry(entry);
+---
+
+{
+  items ? (
+    <starlight-toc data-min-h={2} data-max-h={2}>
+      <nav aria-labelledby="starlight__on-this-page">
+        <h2 id="starlight__on-this-page">On this page</h2>
+        <TableOfContentsList toc={items} />
+      </nav>
+    </starlight-toc>
+  ) : (
+    <Default {...Astro.props}>
+      <slot />
+    </Default>
+  )
+}
+
+<script src="./starlight-toc"></script>

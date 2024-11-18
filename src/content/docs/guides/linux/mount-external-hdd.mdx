@@ -1,0 +1,43 @@
+---
+title: Mount external HDD
+description: A guide in my new Starlight docs site.
+sidebar: { order: 2 }
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<Steps>
+
+1.  <div id="find-mounted-drives">
+      <Code lang="sh" title="Find mounted drives" code={`lsblk`} />
+    </div>
+
+2.  <div id="get-uuid">
+      <Code lang="sh" title="Get UUID" code={`sudo blkid /dev/sda1`} />
+    </div>
+
+3.  <div id="create-mount-location">
+      <Code lang="sh" title="Create mount location" code={`sudo mkdir -p /mnt/flex`} />
+    </div>
+
+4.  <div id="change-ownership">
+      <Code lang="sh" title="Change ownership" code={`sudo chown -R $USER:$USER /mnt/flex && sudo chmod -R 755 /mnt/flex`} />
+    </div>
+
+5.  <div id="modify-fstab">
+      <Code lang="sh" title="Modify fstab" code={`sudo nano /etc/fstab`} />
+    </div>
+
+6.  <div id="add-line-below-other-entries">
+      <Code lang="sh" title="Add line below other entries" code={`UUID=22d23d78-272d-4d51-9168-3ac30bfb6353  /mnt/flex       ext4            auto,nofail,noatime,rw,users  0    0`} />
+    </div>
+
+7.  <div id="unmount-drive">
+      <Code lang="sh" title="Unmount drive" code={`sudo umount /dev/sda1`} />
+    </div>
+
+8.  <div id="reboot">
+      <Code lang="sh" title="Reboot" code={`sudo reboot`} />
+    </div>
+
+</Steps>

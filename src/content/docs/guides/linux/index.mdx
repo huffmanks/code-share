@@ -1,0 +1,23 @@
+---
+title: Getting Started
+description: A guide in my new Starlight docs site.
+sidebar: { order: 1 }
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<Steps>
+
+1. <div id="ssh-login">
+     <Code lang="sh" title="ssh login" code={`ssh USER_NAME@IP_ADDRESS`} />
+   </div>
+
+2. <div id="apt-update-and-upgrade">
+     <Code lang="sh" title="apt update and upgrade" code={`sudo apt update && sudo apt upgrade -y`} />
+   </div>
+
+3. <div id="reboot">
+     <Code lang="sh" title="reboot" code={`sudo reboot`} />
+   </div>
+
+</Steps>
