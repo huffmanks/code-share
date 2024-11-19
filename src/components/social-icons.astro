@@ -3,7 +3,7 @@ import Default from "@astrojs/starlight/components/SocialIcons.astro";
 import type { Props } from "@astrojs/starlight/props";
 ---
 
-<a href="https://github.com/huffmanks" rel="noopener" target="_blank" class="flex -m-2 p-2 hover:opacity-65 text-accent-foreground">
+<a href="https://github.com/huffmanks" rel="noopener" target="_blank" class="social-icon-link">
   <span class="sr-only">Github</span>
   <svg aria-hidden="true" class="astro-xbvitifg astro-7g42sowe" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
     ><path
@@ -11,7 +11,7 @@ import type { Props } from "@astrojs/starlight/props";
     ></path></svg
   >
 </a>
-<a href="https://linkedin.com/in/huffmanks" rel="noopener" target="_blank" class="flex -m-2 p-2 hover:opacity-65 text-accent-foreground">
+<a href="https://linkedin.com/in/huffmanks" rel="noopener" target="_blank" class="social-icon-link">
   <span class="sr-only">LinkedIn</span>
   <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
     ><path
@@ -19,7 +19,7 @@ import type { Props } from "@astrojs/starlight/props";
     ></path></svg
   >
 </a>
-<a href="https://huffmanks.com" rel="noopener" target="_blank" class="flex -m-2 p-2 hover:opacity-65 text-accent-foreground">
+<a href="https://huffmanks.com" rel="noopener" target="_blank" class="social-icon-link">
   <span class="sr-only">huffmanks.com</span>
   <svg aria-hidden="true" fill="currentColor" height="16" width="16" viewBox="0 0 24 24">
     <path
@@ -29,3 +29,16 @@ import type { Props } from "@astrojs/starlight/props";
 </a>
 
 <Default {...Astro.props}><slot /></Default>
+
+<style>
+  .social-icon-link {
+    display: flex;
+    margin: -8px;
+    padding: 8px;
+    color: var(--sl-color-text-accent);
+  }
+
+  .social-icon-link:hover {
+    opacity: 0.65;
+  }
+</style>

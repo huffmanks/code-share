@@ -1,0 +1,38 @@
+---
+title: Snippets
+description: A reference page in my new Starlight docs site.
+template: splash
+tableOfContents: false
+prev: false
+next: false
+---
+
+import { CardGrid } from "@astrojs/starlight/components";
+import CodeSnippet from "../../components/code-snippet.astro";
+
+export const regexAddLinkTitle = `
+# $1 retains the entire <a> tag with existing attributes.
+# title="$4" inserts the title attribute, using the link text content as its value.
+# $3$4$5 reinserts the original link text content and closing </a> tag.
+
+\# pattern to match
+(<a\b[^>]_href="([^"]+)"[^>]_)(>)([^<]+)(</a>)
+
+\# replace while preserving original content
+$1 title="$4"$3$4$5
+`
+
+export const equalSizeGridColumns = `
+.el {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    gap: 20px;
+}
+`;
+
+<CardGrid stagger>
+
+<CodeSnippet title="Add title to link" lang="sh" code={regexAddLinkTitle} tags={["regex", "vscode"]} />
+<CodeSnippet title="Equal size grid columns" lang="css" code={equalSizeGridColumns} />
+
+</CardGrid>

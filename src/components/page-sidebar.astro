@@ -7,7 +7,7 @@ import { PageBacklinks } from "starlight-site-graph/components";
 {
   Astro.props.toc && (
     <>
-      <div class="right-sidebar-panel sl-hidden lg:sl-block mt-8">
+      <div class="right-sidebar-panel sl-hidden lg:sl-block">
         <div class="sl-container">
           <TableOfContents {...Astro.props} />
         </div>
@@ -22,6 +22,7 @@ import { PageBacklinks } from "starlight-site-graph/components";
 
 <style>
   .right-sidebar-panel {
+    margin-top: 48px;
     padding: 1rem var(--sl-sidebar-pad-x);
   }
   .sl-container {

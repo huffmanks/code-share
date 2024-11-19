@@ -1,8 +1,9 @@
 // @ts-check
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import starlightThemeObsidian from "starlight-theme-obsidian";
+
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,7 +12,7 @@ export default defineConfig({
     starlight({
       title: "CodeShare",
       description: "Codeshare is your go-to platform for clear, practical coding guides and reusable code snippets.",
-      customCss: ["./src/tailwind.css"],
+      customCss: ["./src/index.css"],
       components: {
         SocialIcons: "./src/components/social-icons.astro",
         PageSidebar: "./src/components/page-sidebar.astro",
@@ -56,7 +57,7 @@ export default defineConfig({
         },
         {
           label: "Snippets",
-          autogenerate: { directory: "snippets" },
+          link: "snippets",
         },
       ],
       plugins: [
@@ -68,8 +69,6 @@ export default defineConfig({
         }),
       ],
     }),
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    icon(),
   ],
 });
