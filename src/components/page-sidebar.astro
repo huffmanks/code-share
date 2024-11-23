@@ -1,7 +1,6 @@
 ---
 import TableOfContents from "@astrojs/starlight/components/TableOfContents.astro";
 import type { Props } from "@astrojs/starlight/props";
-import { PageBacklinks } from "starlight-site-graph/components";
 ---
 
 {
@@ -16,9 +15,9 @@ import { PageBacklinks } from "starlight-site-graph/components";
   )
 }
 
-<PageBacklinks {...Astro.props} class="right-sidebar-panel backlinks-panel">
+<!-- <PageBacklinks {...Astro.props} class="right-sidebar-panel backlinks-panel">
   <h2 slot="title">{Astro.locals.t("starlight-site-graph.backlinks")}</h2>
-</PageBacklinks>
+</PageBacklinks> -->
 
 <style>
   .right-sidebar-panel {

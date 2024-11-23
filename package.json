@@ -7,11 +7,14 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "push": "astro db push --force-reset",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/db": "^0.14.3",
     "@astrojs/starlight": "^0.29.0",
+    "@paralleldrive/cuid2": "^2.2.2",
     "astro": "^4.16.10",
     "astro-icon": "^1.1.2",
     "sharp": "^0.32.5",

@@ -8,7 +8,9 @@ next: false
 ---
 
 import { CardGrid } from "@astrojs/starlight/components";
+import { category, db, fragment, snippet, snippetCategory } from "astro:db";
 import CodeSnippet from "../../components/code-snippet.astro";
+export const snippets = await db.select().from(snippet);
 
 export const regexAddLinkTitle = `
 # $1 retains the entire <a> tag with existing attributes.
@@ -30,9 +32,11 @@ export const equalSizeGridColumns = `
 }
 `;
 
-<CardGrid stagger>
+<CardGrid>
 
-<CodeSnippet title="Add title to link" lang="sh" code={regexAddLinkTitle} tags={["regex", "vscode"]} />
-<CodeSnippet title="Equal size grid columns" lang="css" code={equalSizeGridColumns} />
+{snippets && snippets.map((snippet) => (
+
+<CodeSnippet title={snippet.title} lang={snippet.language} code="s" tags={["regex", "vscode"]} />
+))}
 
 </CardGrid>
