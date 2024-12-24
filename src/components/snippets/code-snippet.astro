@@ -1,0 +1,80 @@
+---
+import { Badge, Code } from "@astrojs/starlight/components";
+import { Icon } from "astro-icon/components";
+import { asc, db, eq, fragment, snippetTag, tag } from "astro:db";
+import { type Snippet } from "../../../db/config";
+import { getLanguageInfo } from "../../lib/languages";
+
+interface Props {
+  codeSnippet: Snippet
+}
+
+const { codeSnippet } = Astro.props;
+
+const languageInfo = getLanguageInfo(codeSnippet.language)
+
+const tags = await db
+.select({
+      id: tag.id,
+      title: tag.title,
+    })
+    .from(tag)
+    .innerJoin(snippetTag, eq(tag.id, snippetTag.tagId))
+    .where(eq(snippetTag.snippetId, codeSnippet.id));
+
+    const fragments = await db
+    .select()
+    .from(fragment)
+    .where(eq(fragment.snippetId, codeSnippet.id)).orderBy(asc(fragment.position) );
+---
+
+<article class="card sl-flex">
+  <h2 class="title">{codeSnippet.title}</h2>
+  <div class="sl-flex language">
+    <Icon name={languageInfo.extension} size="1em" style={{ color: languageInfo.color }} />
+    <span set:html={languageInfo.label} />
+  </div>
+  <div class="description truncate">
+    <p>{codeSnippet.description}</p>
+  </div>
+  <div class="tags-container">
+    {tags && tags.map((tag) => <Badge text={tag.title} variant="caution" />)}
+  </div>
+  <div>
+    {fragments.map((item) => (
+      <Code lang={languageInfo.extension} title={`${item.filename}.${languageInfo.extension}`} frame="auto" preserveIndent wrap code={item.code} />
+    ))}
+  </div>
+</article>
+
+<style>
+  .card {
+    border: 1px solid var(--sl-color-gray-5);
+    background-color: var(--sl-color-gray-6);
+    padding: 20px;
+    flex-direction: column;
+  }
+  .title {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.075rem;
+    color: var(--sl-color-white);
+    line-height: var(--sl-line-height-headings);
+  }
+  .language {
+    margin-bottom: 10px;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--sl-color-gray-3);
+  }
+  .description {
+    margin-bottom: 15px;
+  }
+  .tags-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

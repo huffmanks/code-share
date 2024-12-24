@@ -11,6 +11,12 @@
   display: none;
 }
 
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .sl-link-button.primary:hover {
   color: var(--sl-color-white);
 }
@@ -26,6 +32,10 @@ header.header .header {
 
 .mobile-header mobile-starlight-toc nav .dropdown {
   width: auto;
+}
+
+.sl-markdown-content .card > * {
+  margin-top: 0;
 }
 
 @media (min-width: 1152px) {

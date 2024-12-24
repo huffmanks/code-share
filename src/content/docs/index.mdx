@@ -1,5 +1,6 @@
 ---
 title: Welcome to CodeShare
+pagefind: false
 description: Codeshare is your go-to platform for clear, practical coding guides and reusable code snippets.
 template: splash
 hero:
@@ -11,11 +12,11 @@ hero:
       link: /guides/linux
       icon: linux
     - text: MacOS
-      link: /guides/mac/example
+      link: /guides/macos/example
       icon: apple
       variant: secondary
     - text: Snippets
-      link: /snippets/example
+      link: /snippets
       icon: right-arrow
       variant: minimal
 ---
@@ -25,15 +26,13 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
 ## Next steps
 
 <CardGrid stagger>
-
-<Card title="Linux" icon="linux">
-  Getting started guides with Linux.
-</Card>
-<Card title="MacOS" icon="apple">
-  Getting started guides with MacOS.
-</Card>
-<Card title="Snippets" icon="right-arrow">
-  A collection code snippets.
-</Card>
-
+  <Card title="Linux" icon="linux">
+    Getting started guides with Linux.
+  </Card>
+  <Card title="MacOS" icon="apple">
+    Getting started guides with MacOS.
+  </Card>
+  <Card title="Snippets" icon="right-arrow">
+    A collection code snippets.
+  </Card>
 </CardGrid>

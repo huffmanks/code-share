@@ -1,3 +1,4 @@
+import { z } from "astro/zod";
 import { column, defineDb, defineTable, NOW } from "astro:db";
 
 export const snippet = defineTable({
@@ -5,21 +6,29 @@ export const snippet = defineTable({
     id: column.text({ primaryKey: true }),
     title: column.text(),
     description: column.text(),
+    language: column.text({ references: () => language.columns.id }),
     createdAt: column.date({ default: NOW }),
     updatedAt: column.date({ default: NOW }),
   },
 });
 
-export const category = defineTable({
+export const language = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     title: column.text(),
   },
 });
 
-export const snippetCategory = defineTable({
+export const tag = defineTable({
   columns: {
-    categoryId: column.text({ references: () => category.columns.id }),
+    id: column.text({ primaryKey: true }),
+    title: column.text(),
+  },
+});
+
+export const snippetTag = defineTable({
+  columns: {
+    tagId: column.text({ references: () => tag.columns.id }),
     snippetId: column.text({ references: () => snippet.columns.id }),
   },
 });
@@ -27,14 +36,16 @@ export const snippetCategory = defineTable({
 export const fragment = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
-    title: column.text(),
+    filename: column.text(),
     code: column.text(),
-    language: column.text(),
     position: column.number(),
     snippetId: column.text({ references: () => snippet.columns.id }),
   },
 });
 
 export default defineDb({
-  tables: { category, fragment, snippet, snippetCategory },
+  tables: { snippet, language, tag, snippetTag, fragment },
 });
+
+const SnippetTableSchema = z.object({ id: z.string(), title: z.string(), description: z.string(), language: z.string(), createdAt: z.date(), updatedAt: z.date() });
+export type Snippet = z.infer<typeof SnippetTableSchema>;
