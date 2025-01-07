@@ -1,0 +1,42 @@
+---
+title: Dockge
+description: "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager."
+sidebar: { order: 2 }
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+import dockgeYaml from "/src/code/dockge.yaml?raw";
+
+A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.
+
+## Create directories for dockge
+
+```sh
+mkdir -p /opt/stacks /opt/dockge
+```
+
+## Change directory
+
+```sh
+cd /opt/dockge
+```
+
+## Copy compose.yaml
+
+<Code lang="yaml" title="compose.yaml" code={dockgeYaml} />
+
+## Create compose.yaml
+
+```sh
+sudo nano compose.yaml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:5001](http://localhost:5001)

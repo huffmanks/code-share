@@ -1,0 +1,64 @@
+---
+import { getLanguageInfo } from "@/lib/languages";
+import { Badge, Code } from "@astrojs/starlight/components";
+import { Icon } from "astro-icon/components";
+
+import { type Snippet } from "@/content.config";
+
+interface Props {
+  item: Snippet;
+}
+const { item } = Astro.props;
+
+const languageInfo = getLanguageInfo(item.data.language);
+const variants = ["note", "danger", "success", "caution", "tip", "default"] as const;
+---
+
+<article class="card sl-flex">
+  <h2 class="title">{item.data.title}</h2>
+  <div class="sl-flex language">
+    <Icon name={languageInfo.extension} size="1em" style={{ color: languageInfo.color }} />
+    <span set:html={languageInfo.label} />
+  </div>
+  <div class="description truncate">
+    <p>{item.data.description}</p>
+  </div>
+  <div class="tags-container">
+    {item.data.tags && item.data.tags.map((tag: string, index: number) => <Badge text={tag} variant={variants[index % variants.length]} />)}
+  </div>
+  <div>
+    <Code lang={languageInfo.extension} title={`${item.data.slug}.${languageInfo.extension}`} frame="auto" preserveIndent wrap code={item.body!} />
+  </div>
+</article>
+
+<style>
+  .card {
+    border: 1px solid var(--sl-color-gray-5);
+    background-color: var(--sl-color-gray-6);
+    padding: 20px;
+    flex-direction: column;
+  }
+  .title {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.075rem;
+    color: var(--sl-color-white);
+    line-height: var(--sl-line-height-headings);
+  }
+  .language {
+    margin-bottom: 10px;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--sl-color-gray-3);
+  }
+  .description {
+    margin-bottom: 15px;
+  }
+  .tags-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

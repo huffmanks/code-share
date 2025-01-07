@@ -1,0 +1,149 @@
+---
+title: Security
+description: Linux Security is a critical aspect of maintaining a secure and stable server or personal environment. This page provides a comprehensive guide on key security practices to harden a Linux system, reduce vulnerabilities and protect against common threats. By following these best practices, you can ensure that your system is well-defended from unauthorized access, malware and potential exploits.
+next: "Install apps"
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+export const unattendedUpgradesConfig = `
+# Update these lines
+APT::Periodic::Enable "1";
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::AutocleanInterval "1";
+APT::Periodic::Verbose "2";
+`;
+
+export const sudoersConfig = `
+# Update this line
+# pi ALL=(ALL) NOPASSWD: ALL
+pi ALL=(ALL) PASSWD: ALL
+`;
+
+export const sshdConfig = `
+\# Disable password auth
+#PasswordAuthentication yes
+PasswordAuthentication no
+
+\# Uncomment below to prevent root login
+#PermitRootLogin prohibit-password
+PermitRootLogin prohibit-password
+
+\# Uncomment and change port (optional)
+#Port 22
+Port 2222
+`
+
+export const fail2banConfig = `
+enabled = true
+
+\# This must change if using a custom ssh port
+port = ssh
+filter = sshd
+
+\# Number of seconds that a host is banned
+bantime = 600
+
+\# A host is banned if it has generated maxretry during the last findtime
+findtime = 600
+
+\# How many attempts until host is banned
+maxretry = 3
+`
+
+Linux Security is a critical aspect of maintaining a secure and stable server or personal environment. This page provides a comprehensive guide on key security practices to harden a Linux system, reduce vulnerabilities and protect against common threats. By following these best practices, you can ensure that your system is well-defended from unauthorized access, malware and potential exploits.
+
+## unattended-upgrades
+
+Ensure your Linux system is automatically updated with security patches. Unattended Upgrades enables automatic installation of critical updates without manual intervention, ensuring your system stays secure against newly discovered vulnerabilities.
+
+<Steps>
+
+1. <Code lang="sh" title="Install unattended-upgrades" code={`sudo apt install unattended-upgrades`} />
+
+2. <Code lang="sh" title="Nano config" code={`sudo nano /etc/apt/apt.conf.d/02periodic`} />
+
+3. <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" preserveIndent code={unattendedUpgradesConfig} />
+
+4. <Code lang="sh" title="Check that it is working" code={`sudo unattended-upgrades -d`} />
+
+</Steps>
+
+## Require password for sudo
+
+Require users to authenticate with a password before using sudo privileges. This simple change adds an extra layer of protection by preventing unauthorized users or scripts from executing commands with elevated privileges.
+
+<Steps>
+
+1. <Code lang="sh" title="Update sudoers config" code={`sudo nano /etc/sudoers.d/010_pi-nopasswd`} />
+
+2. <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" preserveIndent code={sudoersConfig} />
+
+</Steps>
+
+## Use ssh keys for authentication
+
+Switch from password-based authentication to SSH key-based authentication. This method is more secure because it eliminates the risk of brute-force attacks and provides stronger encryption for remote logins.
+
+<Steps>
+1. **Client** <Code lang="sh" title="Create key" code={`ssh-keygen -t rsa`} />
+
+2. <Code lang="sh" title="Copy key to server" code={`scp ~/.ssh/id_rsa.pub USER_NAME@DEVICE_IP:~/.ssh/id_rsa.pub`} />
+
+3. **Server** <Code lang="sh" title="Add key to authorized keys" code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
+
+</Steps>
+
+## sshd_config
+
+The sshd_config file is a key part of securing SSH. By adjusting its settings, you can control login methods, restrict access and enhance overall SSH security, such as disabling root login and limiting authentication methods.
+
+<Steps>
+
+1. <Code lang="sh" title="Nano config" code={`sudo nano /etc/ssh/sshd_config`} />
+
+2. <Code lang="sh" title="Update sshd_config" frame="terminal" preserveIndent code={sshdConfig} />
+
+3. <Code lang="sh" title="Restart ssh" code={`sudo service ssh restart`} />
+
+</Steps>
+
+## fail2ban
+
+Install and configure Fail2Ban to protect your server from brute-force attacks. Fail2Ban monitors log files for suspicious activity and blocks IPs that repeatedly fail authentication, preventing attackers from gaining access.
+
+<Steps>
+
+1. <Code lang="sh" title="Install fail2ban" code={`sudo apt install fail2ban`} />
+
+2. <Code lang="sh" title="Nano config" code={`sudo nano /etc/fail2ban/jail.conf`} />
+
+3. <Code lang="sh" title="Optional changes" frame="terminal" preserveIndent code={fail2banConfig} />
+
+4. <Code lang="sh" title="Restart fail2ban service" code={`sudo service fail2ban restart`} />
+
+</Steps>
+
+## ufw firewall
+
+A firewall is your first line of defense against unauthorized access. Installing and configuring a firewall like UFW or iptables ensures that only trusted traffic is allowed to reach your system, reducing exposure to external threats.
+
+<Steps>
+
+1. <Code lang="sh" title="Install ufw" code={`sudo apt install ufw`} />
+
+2. <Code lang="sh" title="Allow ssh" code={`sudo ufw allow ssh`} />
+
+3. **_Optional_** <Code lang="sh" title="Deny incoming" code={`sudo ufw default deny incoming`} />
+
+4. **_Optional_** <Code lang="sh" title="Allow outgoing" code={`sudo ufw default allow outgoing`} />
+
+5. **_Optional_** <Code lang="sh" title="Install ufw" code={`sudo ufw allow from $IP_ADDRESS port $PORT_NUMBER`} />
+
+6. <Code lang="sh" title="Enable ufw" code={`sudo ufw enable`} />
+
+7. <Code lang="sh" title="Check status" code={`sudo ufw status verbose`} />
+
+</Steps>

@@ -1,0 +1,30 @@
+---
+title: Getting started
+description: Getting started with Linux involves setting up your system for secure access and keeping it up-to-date. This guide walks you through essential initial steps such as configuring SSH login for remote access, ensuring your system is updated with the latest packages and rebooting the system to apply changes. By following these steps, you'll have a secure and up-to-date Linux environment ready for further use.
+---
+
+Getting started with Linux involves setting up your system for secure access and keeping it up-to-date. This guide walks you through essential initial steps such as configuring SSH login for remote access, ensuring your system is updated with the latest packages and rebooting the system to apply changes. By following these steps, you'll have a secure and up-to-date Linux environment ready for further use.
+
+## SSH login
+
+Secure Shell (SSH) allows you to access your Linux system remotely. In this step, you'll configure SSH login, ensuring you can securely connect to your system from another machine.
+
+```sh
+ssh USER_NAME@IP_ADDRESS
+```
+
+## Update and upgrade system packages
+
+It’s important to keep your system updated to ensure security patches and software improvements are applied. This step shows you how to update your package list and upgrade all installed packages using APT.
+
+```sh
+sudo apt update && sudo apt upgrade -y
+```
+
+## Reboot the system
+
+After performing updates or system changes, it's often necessary to reboot your system. This step ensures all updates take effect, and your system is ready for use with the latest configurations and security patches.
+
+```sh
+sudo reboot
+```

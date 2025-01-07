@@ -1,0 +1,70 @@
+---
+title: Mount external HDD
+description: Mounting an external hard drive (HDD) on Linux is a straightforward process, but it requires a few key steps to ensure the drive is properly recognized, mounted and available for use. This guide walks you through how to find your mounted drives, obtain the drive's UUID, create a mount point and configure your system to automatically mount the external HDD on boot. By following these steps, you'll ensure the drive is securely mounted and ready for use.
+---
+
+Mounting an external hard drive (HDD) on Linux is a straightforward process, but it requires a few key steps to ensure the drive is properly recognized, mounted and available for use. This guide walks you through how to find your mounted drives, obtain the drive's UUID, create a mount point and configure your system to automatically mount the external HDD on boot. By following these steps, you'll ensure the drive is securely mounted and ready for use.
+
+## Identify mounted drives
+
+The first step is to identify the drives that are currently mounted on your system. This will help you locate the external HDD and determine where it’s currently mounted, if at all.
+
+```sh
+lsblk
+```
+
+## Obtain drive UUID
+
+Each drive in Linux has a unique identifier called the UUID. This step shows you how to obtain the UUID of your external HDD, which will be used for reliable mounting.
+
+```sh
+sudo blkid /dev/sda1
+```
+
+## Create a mount point
+
+A mount point is a directory where your external HDD will be accessed. In this step, you’ll create a directory that will serve as the location for your drive’s mount.
+
+```sh
+sudo mkdir -p /mnt/flex
+```
+
+## Change ownership of mount point
+
+After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
+
+```sh
+sudo chown -R $USER:$USER /mnt/flex && sudo chmod -R 755 /mnt/flex
+```
+
+## Modify fstab for auto-mount
+
+The /etc/fstab file controls how filesystems are mounted during system boot. This step shows you how to modify fstab to automatically mount your external HDD every time the system starts.
+
+```sh
+sudo nano /etc/fstab
+```
+
+## Add mount entry to fstab
+
+You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
+
+```sh
+UUID=22d23d78-272d-4d51-9168-3ac30bfb6353  /mnt/flex       ext4            auto,nofail,noatime,rw,users  0    0
+```
+
+## Unmount external HDD
+
+Before making permanent changes, unmount the drive to ensure it’s safely disconnected from the system. This step avoids any potential data corruption while you edit configuration files.
+
+```sh
+sudo umount /dev/sda1
+```
+
+## Reboot the system
+
+Once all changes are made, reboot your system to apply the fstab modifications and ensure that your external HDD mounts correctly at startup.
+
+```sh
+sudo reboot
+```

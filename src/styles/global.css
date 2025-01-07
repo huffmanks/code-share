@@ -1,0 +1,5 @@
+@media (min-width: 72rem) {
+  .sl-container {
+    --sl-content-margin-inline: auto;
+  }
+}
