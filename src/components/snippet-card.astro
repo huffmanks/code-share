@@ -1,64 +1,99 @@
 ---
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguageInfo } from "@/lib/languages";
 import { Badge, Code } from "@astrojs/starlight/components";
 import { Icon } from "astro-icon/components";
 
-import { type Snippet } from "@/content.config";
-
 interface Props {
-  item: Snippet;
+  title: string;
+  description: string;
+  language: string;
+  slug: string;
+  tags: string[];
+  code: string;
+  createdAt: string;
 }
-const { item } = Astro.props;
 
-const languageInfo = getLanguageInfo(item.data.language);
+const { title, description, language, slug, tags, code, createdAt } = Astro.props;
+
+const languageInfo = getLanguageInfo(language);
 const variants = ["note", "danger", "success", "caution", "tip", "default"] as const;
+
+const time = formatRelativeTime(createdAt);
 ---
 
 <article class="card sl-flex">
-  <h2 class="title">{item.data.title}</h2>
-  <div class="sl-flex language">
-    <Icon name={languageInfo.extension} size="1em" style={{ color: languageInfo.color }} />
-    <span set:html={languageInfo.label} />
+  <div class="time">
+    <Icon name="clock" size="0.8rem" />
+    <span>{time}</span>
   </div>
-  <div class="description truncate">
-    <p>{item.data.description}</p>
-  </div>
-  <div class="tags-container">
-    {item.data.tags && item.data.tags.map((tag: string, index: number) => <Badge text={tag} variant={variants[index % variants.length]} />)}
-  </div>
-  <div>
-    <Code lang={languageInfo.extension} title={`${item.data.slug}.${languageInfo.extension}`} frame="auto" preserveIndent wrap code={item.body!} />
+  <div class="card-inner">
+    <h2 class="title">{title}</h2>
+    <div class="sl-flex language">
+      <Icon name={languageInfo.extension} size="1em" style={{ color: languageInfo.color }} />
+      <span>{languageInfo.label}</span>
+    </div>
+    <div class="description truncate">
+      <p>{description}</p>
+    </div>
+    <div class="tags-container">{tags && tags.map((tag: string, index: number) => <Badge text={tag} variant={variants[index % variants.length]} />)}</div>
+    <div>
+      <Code class="code scrollbar" lang={languageInfo.extension} title={`${slug}.${languageInfo.extension}`} code={code} wrap preserveIndent frame="auto" />
+    </div>
   </div>
 </article>
 
-<style>
-  .card {
-    border: 1px solid var(--sl-color-gray-5);
-    background-color: var(--sl-color-gray-6);
-    padding: 20px;
-    flex-direction: column;
+<style is:inline>
+  .time {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5rem;
+    padding: 5px 10px;
+    background-color: var(--sl-color-gray-7);
+    font-size: 0.9rem;
+    border-radius: 0.5rem 0.5rem 0 0;
   }
+
+  .card-inner {
+    padding: 10px 15px 15px;
+  }
+
   .title {
-    margin-bottom: 10px;
-    font-weight: 600;
-    font-size: 1.075rem;
+    margin-bottom: 0;
     color: var(--sl-color-white);
     line-height: var(--sl-line-height-headings);
   }
+
   .language {
     margin-bottom: 10px;
     gap: 0.5rem;
     align-items: center;
+    font-size: 0.9rem;
+  }
+
+  .description {
+    margin-bottom: 20px;
     color: var(--sl-color-gray-3);
   }
-  .description {
-    margin-bottom: 15px;
-  }
+
   .tags-container {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
+  }
+
+  .code {
+    max-height: 186px;
+    overflow-y: auto;
+  }
+
+  /* ==== Overrides ==== */
+  .sl-markdown-content .card {
+    padding: 0;
+    background-color: var(--sl-color-gray-6);
+    flex-direction: column;
   }
 </style>

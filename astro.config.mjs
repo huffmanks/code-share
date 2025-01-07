@@ -1,9 +1,8 @@
 // @ts-check
 import starlight from "@astrojs/starlight";
+import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
-
-import icon from "astro-icon";
 
 export default defineConfig({
   integrations: [
@@ -16,6 +15,7 @@ export default defineConfig({
         frames: {
           removeCommentsWhenCopyingTerminalFrames: true,
         },
+        useThemedScrollbars: false,
       },
       components: {
         SocialIcons: "./src/components/social-icons.astro",

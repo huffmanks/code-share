@@ -13,7 +13,7 @@ export const collections = {
       slug: z.string(),
       language: z.string(),
       tags: z.array(z.string()),
-      createdAt: z.coerce.date(),
+      createdAt: z.coerce.string(),
     }),
   }),
 };

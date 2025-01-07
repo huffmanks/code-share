@@ -1,5 +1,46 @@
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==== Overrides ==== */
 @media (min-width: 72rem) {
   .sl-container {
     --sl-content-margin-inline: auto;
   }
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: var(--sl-color-accent) transparent;
+}
+
+.scrollbar:hover,
+.scrollbar:active {
+  scrollbar-color: var(--sl-color-accent-high) transparent;
+}
+
+/* Chrome, Edge and Safari */
+.scrollbar::-webkit-scrollbar {
+  width: 18px;
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-clip: content-box;
+  background-color: var(--sl-color-accent);
+  border-radius: 50px;
+  border: 6px solid transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover,
+.scrollbar::-webkit-scrollbar-thumb:active {
+  background-color: var(--sl-color-accent-high);
 }
