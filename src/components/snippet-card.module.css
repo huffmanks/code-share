@@ -1,0 +1,96 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 0.5rem;
+  padding: 5px 10px;
+  background-color: var(--sl-color-gray-7);
+  font-size: 0.9rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.time svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cardInner {
+  padding: 10px 15px 15px;
+}
+
+.title {
+  margin-bottom: 0;
+  color: var(--sl-color-white);
+  line-height: var(--sl-line-height-headings);
+}
+
+.language {
+  margin-bottom: 10px;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.description {
+  margin-bottom: 20px;
+  color: var(--sl-color-gray-3);
+}
+
+.tagsContainer {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge-note {
+  --sl-color-bg-badge: var(--sl-color-blue-low);
+  --sl-color-text-badge: var(--sl-color-blue-high);
+  --sl-color-border-badge: var(--sl-color-blue);
+}
+
+.badge-danger {
+  --sl-color-bg-badge: var(--sl-color-red-low);
+  --sl-color-text-badge: var(--sl-color-red-high);
+  --sl-color-border-badge: var(--sl-color-red);
+}
+
+.badge-success {
+  --sl-color-bg-badge: var(--sl-color-green-low);
+  --sl-color-text-badge: var(--sl-color-green-high);
+  --sl-color-border-badge: var(--sl-color-green);
+}
+
+.badge-caution {
+  --sl-color-bg-badge: var(--sl-color-yellow-low);
+  --sl-color-text-badge: var(--sl-color-yellow-high);
+  --sl-color-border-badge: var(--sl-color-yellow);
+}
+
+.badge-tip {
+  --sl-color-bg-badge: var(--sl-color-purple-low);
+  --sl-color-text-badge: var(--sl-color-purple-high);
+  --sl-color-border-badge: var(--sl-color-purple);
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid var(--sl-color-border-badge);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  font-size: var(--sl-text-xs);
+  font-family: var(--sl-font-system-mono);
+  line-height: normal;
+  background-color: var(--sl-color-bg-badge);
+  color: var(--sl-color-text-badge);
+  overflow-wrap: anywhere;
+}
