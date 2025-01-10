@@ -1,9 +1,8 @@
 // @ts-check
+import preact from "@astrojs/preact";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
-
-import preact from "@astrojs/preact";
 
 export default defineConfig({
   integrations: [

@@ -17,7 +17,7 @@ export default function SnippetCard({ snippet }: SnippetCardProps) {
   const LanguageIconComponent = LanguageIcon[languageInfo.extension];
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} data-pagefind-id={snippet.id}>
       <div className={styles.time}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -28,16 +28,23 @@ export default function SnippetCard({ snippet }: SnippetCardProps) {
         <span>{time}</span>
       </div>
       <div className={styles.cardInner}>
-        <h2 className={styles.title}>{snippet.data.title}</h2>
+        <h2 id={snippet.id} className={styles.title}>
+          {snippet.data.title}
+        </h2>
         <div class={`${styles.language} sl-flex`}>
           {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
-          <span>{languageInfo.label}</span>
+          <span data-pagefind-filter="language">{languageInfo.label}</span>
         </div>
-        <div class={`${styles.description} truncate`}>
-          <p>{snippet.data.description}</p>
+        <div class={styles.description}>
+          <p class="truncate">{snippet.data.description}</p>
         </div>
         <div className={styles.tagsContainer}>
-          {snippet.data.tags && snippet.data.tags.map((tag: string, index: number) => <div className={`${styles.badge} ${styles[`badge-${variants[index % variants.length]}`]}`}>{tag}</div>)}
+          {snippet.data.tags &&
+            snippet.data.tags.map((tag: string, index: number) => (
+              <div className={`${styles.badge} ${styles[`badge-${variants[index % variants.length]}`]}`} data-pagefind-filter="tag">
+                {tag}
+              </div>
+            ))}
         </div>
         <div dangerouslySetInnerHTML={{ __html: snippet.codeHtml }} />
       </div>
