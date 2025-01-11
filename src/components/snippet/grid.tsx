@@ -1,16 +1,22 @@
 import { LanguageIcon } from "@/components/preact-icons";
-import styles from "@/components/snippet-card.module.css";
-import type { SnippetWithHtml } from "@/components/snippet-grid";
+import type { SnippetWithHtml } from "@/components/snippet";
+import styles from "@/components/snippet/grid.module.css";
+import { badgeVariants } from "@/lib/constants";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguageInfo } from "@/lib/languages";
 
-interface SnippetCardProps {
-  snippet: SnippetWithHtml;
+export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] }) {
+  return (
+    <div className={styles.grid}>
+      {snippets.map((snippet) => (
+        <SnippetCard key={snippet.id} snippet={snippet} />
+      ))}
+    </div>
+  );
 }
 
-export default function SnippetCard({ snippet }: SnippetCardProps) {
+function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
   const languageInfo = getLanguageInfo(snippet.data.language);
-  const variants = ["note", "danger", "success", "caution", "tip"] as const;
 
   const time = formatRelativeTime(snippet.data.createdAt);
 
@@ -41,7 +47,7 @@ export default function SnippetCard({ snippet }: SnippetCardProps) {
         <div className={styles.tagsContainer}>
           {snippet.data.tags &&
             snippet.data.tags.map((tag: string, index: number) => (
-              <div className={`${styles.badge} ${styles[`badge-${variants[index % variants.length]}`]}`} data-pagefind-filter="tag">
+              <div className={`badge badge-${badgeVariants[index % badgeVariants.length]}`} data-pagefind-filter="tag">
                 {tag}
               </div>
             ))}

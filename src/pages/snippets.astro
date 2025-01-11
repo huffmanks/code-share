@@ -1,5 +1,5 @@
 ---
-import SnippetGrid from "@/components/snippet-grid";
+import SnippetContainer from "@/components/snippet";
 import { getLanguageInfo } from "@/lib/languages";
 import { Code } from "@astrojs/starlight/components";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
@@ -23,7 +23,7 @@ const snippets = await Promise.all(
 ---
 
 <StarlightPage frontmatter={{ title: "Snippets", tableOfContents: false, prev: false, next: false }}>
-  <SnippetGrid client:load snippets={snippets} />
+  <SnippetContainer client:load snippets={snippets} />
 </StarlightPage>
 
 <style is:inline>

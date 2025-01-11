@@ -14,6 +14,62 @@ html {
   white-space: nowrap;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* === Badge === */
+.badge-note {
+  --sl-color-bg-badge: var(--sl-color-blue-low);
+  --sl-color-text-badge: var(--sl-color-blue-high);
+  --sl-color-border-badge: var(--sl-color-blue);
+}
+
+.badge-danger {
+  --sl-color-bg-badge: var(--sl-color-red-low);
+  --sl-color-text-badge: var(--sl-color-red-high);
+  --sl-color-border-badge: var(--sl-color-red);
+}
+
+.badge-success {
+  --sl-color-bg-badge: var(--sl-color-green-low);
+  --sl-color-text-badge: var(--sl-color-green-high);
+  --sl-color-border-badge: var(--sl-color-green);
+}
+
+.badge-caution {
+  --sl-color-bg-badge: var(--sl-color-yellow-low);
+  --sl-color-text-badge: var(--sl-color-yellow-high);
+  --sl-color-border-badge: var(--sl-color-yellow);
+}
+
+.badge-tip {
+  --sl-color-bg-badge: var(--sl-color-purple-low);
+  --sl-color-text-badge: var(--sl-color-purple-high);
+  --sl-color-border-badge: var(--sl-color-purple);
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid var(--sl-color-border-badge);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  font-size: var(--sl-text-xs);
+  font-family: var(--sl-font-system-mono);
+  line-height: normal;
+  background-color: var(--sl-color-bg-badge);
+  color: var(--sl-color-text-badge);
+  overflow-wrap: anywhere;
+}
+
 /* ==== Overrides ==== */
 @media (min-width: 72rem) {
   .sl-container {

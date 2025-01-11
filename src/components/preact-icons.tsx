@@ -53,7 +53,7 @@ export const LanguageIcon: Record<string, ({ style }: { style: JSX.CSSProperties
   ),
 };
 
-export const SortIcon: Record<string, ({ style }: { style?: JSX.CSSProperties }) => JSX.Element> = {
+export const ButtonIcon: Record<string, ({ style }: { style?: JSX.CSSProperties }) => JSX.Element> = {
   az: ({ style }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" style={style}>
       <g fill="none">
@@ -96,6 +96,33 @@ export const SortIcon: Record<string, ({ style }: { style?: JSX.CSSProperties })
         <path d="m14 18l4-4l4 4M16 2v4m2 16v-8" />
         <path d="M21 11.343V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9M3 10h18M8 2v4" />
       </g>
+    </svg>
+  ),
+  grid: ({ style }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={style}>
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <rect width="7" height="7" x="3" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="14" rx="1" />
+        <rect width="7" height="7" x="3" y="14" rx="1" />
+      </g>
+    </svg>
+  ),
+  list: ({ style }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={style}>
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13" />
+    </svg>
+  ),
+  table: ({ style }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={style}>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"
+      />
     </svg>
   ),
 };
