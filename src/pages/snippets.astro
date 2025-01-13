@@ -1,7 +1,7 @@
 ---
 import SnippetContainer from "@/components/snippet";
+import Fragments from "@/components/snippet/fragments.astro";
 import { getLanguageInfo } from "@/lib/languages";
-import { Code } from "@astrojs/starlight/components";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { experimental_AstroContainer } from "astro/container";
 import { getCollection } from "astro:content";
@@ -14,9 +14,10 @@ const snippets = await Promise.all(
   collection.map(async (snippet) => {
     const languageInfo = getLanguageInfo(snippet.data.language);
 
-    const codeHtml = await container.renderToString(Code, {
-      props: { class: "code scrollbar", code: snippet.body!, wrap: true, preserveIndent: true, frame: "auto", lang: languageInfo.extension, title: `${snippet.data.slug}.${languageInfo.extension}` },
+    const codeHtml = await container.renderToString(Fragments, {
+      props: { fragments: snippet.data.fragments, languageExt: languageInfo.extension },
     });
+
     return { ...snippet, codeHtml };
   })
 );

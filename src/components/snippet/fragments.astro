@@ -1,0 +1,25 @@
+---
+import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
+
+interface Props {
+  fragments: {
+    title: string;
+    code: string;
+  }[];
+  languageExt: string;
+}
+
+const { fragments, languageExt } = Astro.props;
+---
+
+<Tabs>
+  {
+    fragments.map((fragment) => (
+      <TabItem label={fragment.title}>
+        <Code class="code scrollbar" code={fragment.code} wrap preserveIndent frame="auto" lang={languageExt} />
+      </TabItem>
+    ))
+  }
+</Tabs>
+
+<style></style>

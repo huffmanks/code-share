@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "src/content/snippets/**/*.md": "markdown.snippets"
+  },
+  "[markdown.snippets]": {
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

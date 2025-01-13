@@ -10,10 +10,15 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       description: z.string(),
-      slug: z.string(),
       language: z.string(),
       tags: z.array(z.string()),
       createdAt: z.coerce.string(),
+      fragments: z.array(
+        z.object({
+          title: z.string(),
+          code: z.string(),
+        })
+      ),
     }),
   }),
 };
