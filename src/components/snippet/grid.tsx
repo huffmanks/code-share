@@ -1,7 +1,8 @@
-import { LanguageIcon } from "@/components/preact-icons";
+import { ButtonIcon, LanguageIcon } from "@/components/preact-icons";
 import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/grid.module.css";
 import { badgeVariants } from "@/lib/constants";
+import { downloadFile } from "@/lib/downloadFile";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguagesInfo } from "@/lib/languages";
 
@@ -19,6 +20,20 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
   const languages = getLanguagesInfo(snippet.data.fragments);
 
   const time = formatRelativeTime(snippet.data.updatedAt);
+
+  function handleCopy() {
+    console.log("nothing");
+  }
+
+  function handleDownload() {
+    snippet.data.fragments.map((fragment) => {
+      downloadFile(fragment);
+    });
+  }
+
+  function handleNewTab() {
+    console.log("nothing");
+  }
 
   return (
     <article className={styles.card} data-pagefind-id={snippet.id}>
@@ -56,6 +71,17 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
                 {tag}
               </div>
             ))}
+        </div>
+        <div className={styles.actionButtons}>
+          <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleCopy}>
+            <ButtonIcon.copy />
+          </button>
+          <button className="btn" style={{ borderRadius: 0 }} onClick={handleDownload}>
+            <ButtonIcon.download />
+          </button>
+          <button className="btn" style={{ borderLeft: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} onClick={handleNewTab}>
+            <ButtonIcon.external />
+          </button>
         </div>
         <div dangerouslySetInnerHTML={{ __html: snippet.codeHtml }} />
       </div>

@@ -5,7 +5,7 @@ import SnippetGrid from "@/components/snippet/grid";
 import styles from "@/components/snippet/index.module.css";
 import SnippetList from "@/components/snippet/list";
 import SnippetTable from "@/components/snippet/table";
-import { getAllLanguagesWithExtensionsAndLabels } from "@/lib/languages";
+import { getLanguagesInfo } from "@/lib/languages";
 import { useState } from "preact/hooks";
 import { type JSX } from "preact/jsx-runtime";
 
@@ -33,7 +33,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [toggleView, setToggleView] = useState("grid");
 
-  const languageOptions = getAllLanguagesWithExtensionsAndLabels();
+  const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
 
   const filteredSnippets = snippets.filter((snippet) => (selectedLanguage ? snippet.data.fragments.some((fragment) => fragment.language === selectedLanguage) : true));
 
@@ -82,7 +82,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
         <div className={styles.sortViewGroup}>
           <div role="group" aria-label="Sort snippet group">
             <button
-              className={styles.btn}
+              className="btn"
               style={{
                 borderRight: 0,
                 borderTopRightRadius: 0,
@@ -94,7 +94,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
               {sortState.field !== "title" ? <ButtonIcon.az /> : sortState.direction === "asc" ? <ButtonIcon.azdown /> : <ButtonIcon.azup />}
             </button>
             <button
-              className={styles.btn}
+              className="btn"
               style={{
                 borderLeft: 0,
                 borderTopLeftRadius: 0,
@@ -109,7 +109,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
 
           <div role="group" aria-label="View toggle group">
             <button
-              className={styles.btn}
+              className="btn"
               style={{
                 borderRight: 0,
                 borderTopRightRadius: 0,
@@ -121,7 +121,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
               <ButtonIcon.grid />
             </button>
             <button
-              className={styles.btn}
+              className="btn"
               style={{
                 borderLeft: 0,
                 borderRight: 0,
@@ -133,7 +133,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
               <ButtonIcon.list />
             </button>
             <button
-              className={styles.btn}
+              className="btn"
               style={{
                 borderLeft: 0,
                 borderTopLeftRadius: 0,
