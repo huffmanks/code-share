@@ -1,11 +1,13 @@
 ---
 title: Responsive table
 description: Responsive table that stacks on mobile
-language: css
 tags: ["table"]
-createdAt: 2025-01-13 16:00:56
+updatedAt: 2025-01-14 10:26:25
 fragments:
-  - title: responsive-table
+  - filename: responsive-table
+    label: Styles
+    language: css
+    position: 0
     code: |
       @media (max-width: 800px) {
           .table-vertical tbody tr {
@@ -28,4 +30,18 @@ fragments:
               border-top: none;
           }
       }
+  - filename: responsive-table
+    label: Markup
+    language: html
+    position: 1
+    code: |
+      <table class="table-vertical">
+          <tbody>
+              <tr>
+                  <td>10:30 a.m.</td>
+                  <td>Session 1</td>
+              </tr>
+              <!-- ... -->
+          </tbody>
+      </table>
 ---

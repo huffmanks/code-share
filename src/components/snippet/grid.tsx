@@ -3,7 +3,7 @@ import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/grid.module.css";
 import { badgeVariants } from "@/lib/constants";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
-import { getLanguageInfo } from "@/lib/languages";
+import { getLanguagesInfo } from "@/lib/languages";
 
 export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
@@ -16,11 +16,9 @@ export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] 
 }
 
 function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
-  const languageInfo = getLanguageInfo(snippet.data.language);
+  const languages = getLanguagesInfo(snippet.data.fragments);
 
-  const time = formatRelativeTime(snippet.data.createdAt);
-
-  const LanguageIconComponent = LanguageIcon[languageInfo.extension];
+  const time = formatRelativeTime(snippet.data.updatedAt);
 
   return (
     <article className={styles.card} data-pagefind-id={snippet.id}>
@@ -37,9 +35,16 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <h2 id={snippet.id} className={styles.title}>
           {snippet.data.title}
         </h2>
-        <div class={`${styles.language} sl-flex`}>
-          {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
-          <span data-pagefind-filter="language">{languageInfo.label}</span>
+        <div className={styles.languages}>
+          {languages.map((languageInfo) => {
+            const LanguageIconComponent = LanguageIcon[languageInfo.extension];
+            return (
+              <div class={styles.language}>
+                {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
+                <span data-pagefind-filter="language">{languageInfo.label}</span>
+              </div>
+            );
+          })}
         </div>
         <div class={styles.description}>
           <p class="truncate">{snippet.data.description}</p>

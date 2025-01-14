@@ -1,7 +1,6 @@
 ---
 import SnippetContainer from "@/components/snippet";
 import Fragments from "@/components/snippet/fragments.astro";
-import { getLanguageInfo } from "@/lib/languages";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { experimental_AstroContainer } from "astro/container";
 import { getCollection } from "astro:content";
@@ -12,10 +11,8 @@ const container = await experimental_AstroContainer.create();
 
 const snippets = await Promise.all(
   collection.map(async (snippet) => {
-    const languageInfo = getLanguageInfo(snippet.data.language);
-
     const codeHtml = await container.renderToString(Fragments, {
-      props: { fragments: snippet.data.fragments, languageExt: languageInfo.extension },
+      props: { fragments: snippet.data.fragments },
     });
 
     return { ...snippet, codeHtml };
@@ -29,8 +26,23 @@ const snippets = await Promise.all(
 
 <style is:inline>
   .code {
-    max-height: 186px;
+    height: 187px;
     overflow-y: auto;
+    padding-inline: 8px;
+  }
+
+  .code figure.frame {
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
+  }
+
+  .code pre.wrap {
+    height: 148px;
+  }
+
+  .expressive-code .copy {
+    inset-inline-end: 4px;
+    inset-block-start: 3.5px;
   }
 
   /* ==== Overrides ==== */

@@ -32,9 +32,11 @@ select {
   stroke: var(--sl-color-white);
 }
 
-select:hover {
+select:hover,
+select:focus-within {
   background-color: rgb(39, 39, 42);
   color: var(--sl-color-accent-high);
+  cursor: pointer;
 }
 
 .btn {
@@ -68,7 +70,9 @@ select:hover {
   flex-shrink: 0;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:focus-within {
   background-color: rgb(39, 39, 42);
   color: var(--sl-color-accent-high);
+  cursor: pointer;
 }

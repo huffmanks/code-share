@@ -3,20 +3,30 @@ import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
 
 interface Props {
   fragments: {
-    title: string;
+    filename: string;
+    label: string;
+    language: string;
+    position: number;
     code: string;
   }[];
-  languageExt: string;
 }
 
-const { fragments, languageExt } = Astro.props;
+const { fragments } = Astro.props;
 ---
 
 <Tabs>
   {
     fragments.map((fragment) => (
-      <TabItem label={fragment.title}>
-        <Code class="code scrollbar" code={fragment.code} wrap preserveIndent frame="auto" lang={languageExt} />
+      <TabItem label={fragment.label}>
+        <Code
+          class="code scrollbar"
+          code={fragment.code}
+          wrap
+          preserveIndent
+          frame={fragment.language === "sh" ? "terminal" : "auto"}
+          lang={fragment.language}
+          title={`${fragment.filename}.${fragment.language}`}
+        />
       </TabItem>
     ))
   }

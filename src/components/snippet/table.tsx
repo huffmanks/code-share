@@ -24,7 +24,7 @@ export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[]
 }
 
 function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
-  const createdAt = new Date(snippet.data.createdAt).toLocaleString();
+  const updatedAt = new Date(snippet.data.updatedAt).toLocaleString();
   return (
     <>
       <tr>
@@ -34,13 +34,13 @@ function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
         <td className="truncate" style={{ maxWidth: 400 }}>
           {snippet.data.description}
         </td>
-        <td>{snippet.data.language}</td>
+        <td>{snippet.data.fragments.map((fragment) => fragment.language).join(", ")}</td>
         <td>
           {snippet.data.tags.map((tag, index) => (
             <span className={`badge badge-${badgeVariants[index % badgeVariants.length]}`}>{tag}</span>
           ))}
         </td>
-        <td>{createdAt}</td>
+        <td>{updatedAt}</td>
       </tr>
     </>
   );

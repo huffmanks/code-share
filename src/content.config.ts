@@ -10,12 +10,14 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       description: z.string(),
-      language: z.string(),
       tags: z.array(z.string()),
-      createdAt: z.coerce.string(),
+      updatedAt: z.coerce.string(),
       fragments: z.array(
         z.object({
-          title: z.string(),
+          filename: z.string(),
+          label: z.string(),
+          language: z.enum(["css", "html", "js", "py", "sh", "txt", "ts"]),
+          position: z.number().default(0),
           code: z.string(),
         })
       ),

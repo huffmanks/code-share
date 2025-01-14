@@ -1,11 +1,12 @@
 ---
 title: Responsive grid columns
 description: Responsive, equally sized grid columns that wrap for mobile
-language: css
 tags: ["grid"]
-createdAt: 2025-01-13 15:54:59
+updatedAt: 2025-01-13 15:54:59
 fragments:
-  - title: responsive-grid-columns
+  - filename: responsive-grid-columns
+    label: Styles
+    language: css
     code: |
       .el {
           display: grid;

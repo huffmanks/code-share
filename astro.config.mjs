@@ -16,6 +16,19 @@ export default defineConfig({
           removeCommentsWhenCopyingTerminalFrames: true,
         },
         useThemedScrollbars: false,
+        styleOverrides: {
+          frames: {
+            inlineButtonBackground: "rgb(39, 39, 42)",
+            inlineButtonForeground: "var(--sl-color-accent-high)",
+            inlineButtonBorder: "var(--sl-color-gray-5)",
+            inlineButtonBackgroundActiveOpacity: "1",
+            inlineButtonBackgroundHoverOrFocusOpacity: "1",
+            inlineButtonBackgroundIdleOpacity: "1",
+            inlineButtonBorderOpacity: "1",
+            tooltipSuccessBackground: "#2b7256",
+            tooltipSuccessForeground: "#e3dcdc",
+          },
+        },
       },
       components: {
         SocialIcons: "./src/components/social-icons.astro",

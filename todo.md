@@ -1,3 +1,4 @@
-1. [add a json content collection for languages](https://docs.astro.build/en/guides/content-collections/#defining-the-collection-schema)
-2. list view
-3. table view
+1. list view
+2. table view
+3. snippets - all languages select only populate used languages
+4. snippets - download button

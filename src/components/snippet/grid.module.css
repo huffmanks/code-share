@@ -39,8 +39,15 @@
   line-height: var(--sl-line-height-headings);
 }
 
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .language {
   margin-bottom: 10px;
+  display: flex;
   gap: 0.5rem;
   align-items: center;
   font-size: 0.9rem;

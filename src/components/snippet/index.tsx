@@ -17,7 +17,7 @@ interface SnippetContainerProps {
   snippets: SnippetWithHtml[];
 }
 
-type SortField = "title" | "createdAt";
+type SortField = "title" | "updatedAt";
 type SortDirection = "asc" | "desc";
 
 interface SortState {
@@ -35,12 +35,12 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
 
   const languageOptions = getAllLanguagesWithExtensionsAndLabels();
 
-  const filteredSnippets = snippets.filter((snippet) => (selectedLanguage ? snippet.data.language === selectedLanguage : true));
+  const filteredSnippets = snippets.filter((snippet) => (selectedLanguage ? snippet.data.fragments.some((fragment) => fragment.language === selectedLanguage) : true));
 
   const sortedSnippets = [...filteredSnippets].sort((a, b) => {
     const { field, direction } = sortState;
-    const aValue = field === "title" ? a.data.title.toLowerCase() : new Date(a.data.createdAt).getTime();
-    const bValue = field === "title" ? b.data.title.toLowerCase() : new Date(b.data.createdAt).getTime();
+    const aValue = field === "title" ? a.data.title.toLowerCase() : new Date(a.data.updatedAt).getTime();
+    const bValue = field === "title" ? b.data.title.toLowerCase() : new Date(b.data.updatedAt).getTime();
 
     if (aValue < bValue) return direction === "asc" ? -1 : 1;
     if (aValue > bValue) return direction === "asc" ? 1 : -1;
@@ -99,11 +99,11 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderLeft: 0,
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                backgroundColor: sortState.field === "createdAt" ? "rgb(39, 39, 42)" : "",
-                color: sortState.field === "createdAt" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: sortState.field === "updatedAt" ? "rgb(39, 39, 42)" : "",
+                color: sortState.field === "updatedAt" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => toggleSort("createdAt")}>
-              {sortState.field !== "createdAt" ? <ButtonIcon.cal /> : sortState.direction === "asc" ? <ButtonIcon.caldown /> : <ButtonIcon.calup />}
+              onClick={() => toggleSort("updatedAt")}>
+              {sortState.field !== "updatedAt" ? <ButtonIcon.cal /> : sortState.direction === "asc" ? <ButtonIcon.caldown /> : <ButtonIcon.calup />}
             </button>
           </div>
 
