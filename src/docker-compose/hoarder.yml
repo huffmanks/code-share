@@ -1,0 +1,40 @@
+services:
+  web:
+    image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}
+    container_name: hoarder
+    ports:
+      - 3002:3000
+    volumes:
+      - /opt/docker-apps/hoarder/data:/data
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      # OPENAI_API_KEY: ...
+      DATA_DIR: /data
+    restart: unless-stopped
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    container_name: chrome
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+    restart: unless-stopped
+  meilisearch:
+    image: getmeili/meilisearch:v1.11.1
+    container_name: meilisearch
+    volumes:
+      - /opt/docker-apps/meilisearch/data:/meili_data
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    restart: unless-stopped
+volumes:
+  meilisearch:
+  data:

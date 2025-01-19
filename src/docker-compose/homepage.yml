@@ -1,0 +1,13 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 3003:3000
+    volumes:
+      - /opt/docker-apps/homepage/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    environment:
+      PUID: 1000
+      PGID: 1000
+    restart: unless-stopped

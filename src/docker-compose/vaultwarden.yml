@@ -1,0 +1,11 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    ports:
+      - 8002:80
+    volumes:
+      - /opt/docker-apps/vaultwarden/data/:/data/
+    environment:
+      DOMAIN: "https://vw.domain.tld" # update
+    restart: unless-stopped

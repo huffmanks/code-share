@@ -1,0 +1,21 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v2.4.2
+    container_name: mealie
+    ports:
+      - 9925:9000
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - /opt/docker-apps/mealie/data:/app/data
+    environment:
+      - ALLOW_SIGNUP=false
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - BASE_URL=https://mealie.yourdomain.com
+    restart: unless-stopped
+volumes:
+  mealie-data:
