@@ -1,0 +1,50 @@
+---
+title: Paperless-ngx
+description: "Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper."
+references:
+  - href: https://github.com/paperless-ngx/paperless-ngx
+    label: GitHub repo
+  - href: https://docs.paperless-ngx.com/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/paperless-ngx.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Paperless-ngx
+
+```sh
+mkdir -p /opt/docker-apps/paperless-ngx && cd /opt/docker-apps/paperless-ngx
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:8001](http://localhost:8001)

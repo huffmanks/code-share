@@ -1,0 +1,48 @@
+---
+title: Vaultwarden
+description: "An alternative server implementation of the Bitwarden Client API, written in Rust and compatible with official Bitwarden clients."
+references:
+  - href: https://github.com/dani-garcia/vaultwarden
+    label: GitHub repo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/vaultwarden.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Vaultwarden
+
+```sh
+mkdir -p /opt/docker-apps/vaultwarden && cd /opt/docker-apps/vaultwarden
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:8002](http://localhost:8002)

@@ -42,20 +42,30 @@ export default defineConfig({
               items: [
                 {
                   label: "Getting started",
-                  link: "guides/linux",
+                  slug: "guides/linux",
                 },
                 {
                   label: "Mount external HDD",
-                  link: "guides/linux/mount-external-hdd",
+                  slug: "guides/linux/mount-external-hdd",
                 },
                 {
                   label: "Security",
-                  link: "guides/linux/security",
+                  slug: "guides/linux/security",
                 },
                 {
-                  label: "Install apps",
+                  label: "Docker",
                   collapsed: true,
-                  autogenerate: { directory: "guides/linux/install-apps" },
+                  items: [
+                    {
+                      label: "Getting started",
+                      slug: "guides/linux/docker",
+                    },
+                    {
+                      label: "Apps",
+                      collapsed: true,
+                      autogenerate: { directory: "guides/linux/docker/apps", collapsed: true },
+                    },
+                  ],
                 },
               ],
             },

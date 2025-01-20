@@ -1,15 +1,24 @@
 ---
 title: Docker
 description: Installing Docker on a Debian-based Linux system is a straightforward process, but ensuring that all dependencies, keyrings and configurations are correctly set up is crucial for a smooth installation. This guide walks you through the steps needed to install Docker, add users to the Docker group and finalize the setup for managing containers on your Debian system. By the end of this guide, your system will be fully ready to run Docker containers efficiently and securely.
-sidebar: { order: 1 }
 ---
 
-export const addDockerSource = `
+import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
+
+export const debianAptSource = `
 echo \\
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \\
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 `;
+export const ubuntuAptSource = `
+echo \\
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \\
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+`;
+
+## Getting started
 
 Installing Docker on a Debian-based Linux system is a straightforward process, but ensuring that all dependencies, keyrings and configurations are correctly set up is crucial for a smooth installation. This guide walks you through the steps needed to install Docker, add users to the Docker group and finalize the setup for managing containers on your Debian system. By the end of this guide, your system will be fully ready to run Docker containers efficiently and securely.
 
@@ -49,12 +58,14 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 Add Docker’s official repository to your APT sources. This will allow you to install Docker directly from Docker’s official repository, ensuring you get the latest version.
 
-```sh wrap
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
+<Tabs syncKey="distribution">
+  <TabItem label="Debian">
+    <Code lang="sh" wrap preserveIndent code={debianAptSource} />
+  </TabItem>
+  <TabItem label="Ubuntu">
+    <Code lang="sh" wrap preserveIndent code={ubuntuAptSource} />
+  </TabItem>
+</Tabs>
 
 ## Update apt package list
 

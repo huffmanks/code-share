@@ -1,0 +1,50 @@
+---
+title: Home Assistant
+description: "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts."
+references:
+  - href: https://docs.linuxserver.io/images/docker-homeassistant/
+    label: LinuxServer.io
+  - href: https://www.home-assistant.io/docs/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/home-assistant.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Home Assistant
+
+```sh
+mkdir -p /opt/docker-apps/home-assistant && cd /opt/docker-apps/home-assistant
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:8123](http://localhost:8123)

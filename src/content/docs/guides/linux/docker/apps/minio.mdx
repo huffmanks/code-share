@@ -1,0 +1,50 @@
+---
+title: MinIO
+description: "MinIO is an object storage solution that provides an Amazon Web Services S3-compatible API and supports all core S3 features. MinIO is built to deploy anywhere - public or private cloud, baremetal infrastructure, orchestrated environments and edge infrastructure."
+references:
+  - href: https://github.com/minio/minio
+    label: GitHub repo
+  - href: https://min.io/docs/minio/container/index.html
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/minio.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for MinIO
+
+```sh
+mkdir -p /opt/docker-apps/minio && cd /opt/docker-apps/minio
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:9000](http://localhost:9000)

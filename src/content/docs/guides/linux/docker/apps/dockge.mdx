@@ -1,0 +1,48 @@
+---
+title: Dockge
+description: "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager."
+references:
+  - href: https://github.com/louislam/dockge
+    label: GitHub repo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/dockge.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directories for dockge
+
+```sh
+mkdir -p /opt/stacks /opt/docker-apps/dockge && cd /opt/docker-apps/dockge
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:5001](http://localhost:5001)

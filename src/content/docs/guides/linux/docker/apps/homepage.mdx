@@ -1,0 +1,50 @@
+---
+title: Homepage
+description: "A modern, fully static, fast, secure fully proxied, highly customizable application dashboard with integrations for over 100 services and translations into multiple languages. Easily configured via YAML files or through docker label discovery."
+references:
+  - href: https://github.com/gethomepage/homepage
+    label: GitHub repo
+  - href: https://gethomepage.dev/configs/settings/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/homepage.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Homepage
+
+```sh
+mkdir -p /opt/docker-apps/homepage && cd /opt/docker-apps/homepage
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:3003](http://localhost:3003)

@@ -1,0 +1,50 @@
+---
+title: Gitea
+description: "Gitea is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry and CI/CD. It is similar to GitHub, Bitbucket and GitLab."
+references:
+  - href: https://github.com/go-gitea/gitea
+    label: GitHub repo
+  - href: https://docs.gitea.com/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/gitea.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Gitea
+
+```sh
+mkdir -p /opt/docker-apps/gitea && cd /opt/docker-apps/gitea
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:3001](http://localhost:3001)

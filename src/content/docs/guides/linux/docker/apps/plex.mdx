@@ -1,0 +1,50 @@
+---
+title: Plex
+description: "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices."
+references:
+  - href: https://docs.linuxserver.io/images/docker-plex/
+    label: LinuxServer.io
+  - href: https://support.plex.tv/articles/categories/plex-media-server/installation-and-basic-setup/
+    label: Plex support
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/plex.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Plex
+
+```sh
+mkdir -p /opt/docker-apps/plex && cd /opt/docker-apps/plex
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:32400](http://localhost:32400)

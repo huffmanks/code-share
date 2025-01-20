@@ -1,0 +1,50 @@
+---
+title: Immich
+description: "Easily back up, organize and manage your photos on your own server. Immich helps you browse, search and organize your photos and videos with ease."
+references:
+  - href: https://github.com/immich-app/immich
+    label: GitHub repo
+  - href: https://immich.app/docs/overview/introduction
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/immich.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Immich
+
+```sh
+mkdir -p /opt/docker-apps/immich && cd /opt/docker-apps/immich
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:2283](http://localhost:2283)

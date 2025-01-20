@@ -1,0 +1,50 @@
+---
+title: Mealie
+description: "Mealie is a self-hosted recipe manager, meal planner and shopping list designed for the whole family. Effortlessly add recipes to your database by providing a URL, and Mealie will automatically import the relevant details. You can also add recipes using the intuitive UI editor."
+references:
+  - href: https://github.com/mealie-recipes/mealie
+    label: GitHub repo
+  - href: https://docs.mealie.io/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/mealie.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Mealie
+
+```sh
+mkdir -p /opt/docker-apps/mealie && cd /opt/docker-apps/mealie
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:9925](http://localhost:9925)

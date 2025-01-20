@@ -1,0 +1,50 @@
+---
+title: IT Tools
+description: "Useful tools for developer and people working in IT."
+references:
+  - href: https://github.com/CorentinTh/it-tools
+    label: GitHub repo
+  - href: https://it-tools.tech/
+    label: Demo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/it-tools.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for IT Tools
+
+```sh
+mkdir -p /opt/docker-apps/it-tools && cd /opt/docker-apps/it-tools
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:8081](http://localhost:8081)

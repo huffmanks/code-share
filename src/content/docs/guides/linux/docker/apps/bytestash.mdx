@@ -1,0 +1,48 @@
+---
+title: ByteStash
+description: "ByteStash is a self-hosted web application designed to store, organise and manage your code snippets efficiently. With support for creating, editing and filtering snippets, ByteStash helps you keep track of your code in one secure place."
+references:
+  - href: https://github.com/jordan-dalby/ByteStash
+    label: GitHub repo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/bytestash.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for ByteStash
+
+```sh
+mkdir -p /opt/docker-apps/bytestash && cd /opt/docker-apps/bytestash
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:5000](http://localhost:5000)

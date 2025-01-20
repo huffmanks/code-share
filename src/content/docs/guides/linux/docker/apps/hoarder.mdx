@@ -1,0 +1,50 @@
+---
+title: Hoarder
+description: 'Hoarder is an open source "Bookmark Everything" app that uses AI for automatically tagging the content you throw at it.'
+references:
+  - href: https://github.com/hoarder-app/hoarder
+    label: GitHub repo
+  - href: https://docs.hoarder.app/
+    label: Docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/hoarder.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Hoarder
+
+```sh
+mkdir -p /opt/docker-apps/hoarder && cd /opt/docker-apps/hoarder
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:3002](http://localhost:3002)

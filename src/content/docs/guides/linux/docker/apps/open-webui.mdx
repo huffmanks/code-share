@@ -1,0 +1,52 @@
+---
+title: Open WebUI
+description: "Open WebUI is an extensible, feature-rich and user-friendly self-hosted AI platform designed to operate entirely offline. It supports various LLM runners like Ollama and OpenAI-compatible APIs, with built-in inference engine for RAG, making it a powerful AI deployment solution."
+references:
+  - href: https://github.com/open-webui/open-webui
+    label: GitHub repo
+  - href: https://docs.openwebui.com/
+    label: Docs
+  - href: https://ollama.com/download
+    label: Ollama download
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/open-webui.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Open WebUI
+
+```sh
+mkdir -p /opt/docker-apps/open-webui && cd /opt/docker-apps/open-webui
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:3004](http://localhost:3004)

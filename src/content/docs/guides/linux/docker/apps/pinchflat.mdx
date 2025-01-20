@@ -1,0 +1,48 @@
+---
+title: Pinchflat
+description: "Pinchflat is a self-hosted app for downloading YouTube content built using yt-dlp. It's designed to be lightweight, self-contained and easy to use."
+references:
+  - href: https://github.com/kieraneglin/pinchflat
+    label: GitHub repo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/docker-compose/pinchflat.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href}>{ref.label}</a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for Pinchflat
+
+```sh
+mkdir -p /opt/docker-apps/pinchflat && cd /opt/docker-apps/pinchflat
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+[http://localhost:8945](http://localhost:8945)
