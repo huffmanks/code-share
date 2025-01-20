@@ -1,0 +1,17 @@
+---
+import { LinkCard } from "@astrojs/starlight/components";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+
+const cheatsheets = await getCollection("cheatsheets");
+---
+
+<StarlightPage frontmatter={{ title: "Cheatsheets", tableOfContents: false, prev: false, next: false }}>
+  {
+    cheatsheets.map((cheatsheet) => (
+      <>
+        <LinkCard title={cheatsheet.data.title} href={`/cheatsheets/${cheatsheet.id}`} description={cheatsheet.data.description} />
+      </>
+    ))
+  }
+</StarlightPage>

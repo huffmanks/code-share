@@ -76,6 +76,10 @@ export default defineConfig({
           ],
         },
         {
+          label: "Cheatsheets",
+          link: "cheatsheets",
+        },
+        {
           label: "Snippets",
           link: "snippets",
         },

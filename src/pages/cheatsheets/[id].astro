@@ -1,0 +1,44 @@
+---
+import { Card, Code } from "@astrojs/starlight/components";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const cheatsheets = await getCollection("cheatsheets");
+
+  return cheatsheets.map((cheatsheet) => ({
+    params: { id: cheatsheet.id },
+    props: { cheatsheet },
+  }));
+}
+
+const { cheatsheet } = Astro.props;
+---
+
+<StarlightPage frontmatter={{ title: cheatsheet.data.title, tableOfContents: false, prev: false, next: false }}>
+  {
+    cheatsheet.data.groups.map((group) => (
+      <div>
+        <h2>{group.title}</h2>
+        <p>{group.description}</p>
+        <div class="grid">
+          {group.items.map((item) => (
+            <Card title={item.label}>
+              <p>{item.description}</p>
+              {item?.example && <Code lang="sh" wrap preserveIndent code={item.example} />}
+            </Card>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</StarlightPage>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+    gap: 10px;
+    margin: 0 auto;
+  }
+</style>

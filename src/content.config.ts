@@ -23,6 +23,27 @@ export const collections = {
       ),
     }),
   }),
+  cheatsheets: defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/cheatsheets" }),
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      updatedAt: z.coerce.string(),
+      groups: z.array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          items: z.array(
+            z.object({
+              label: z.string(),
+              description: z.string(),
+              example: z.string().optional(),
+            })
+          ),
+        })
+      ),
+    }),
+  }),
 };
 
 export type Snippet = CollectionEntry<"snippets">;
