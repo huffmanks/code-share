@@ -70,7 +70,7 @@ export default defineConfig({
               ],
             },
             {
-              label: "MacOS",
+              label: "macOS",
               autogenerate: { directory: "guides/macos" },
             },
           ],

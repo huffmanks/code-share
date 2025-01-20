@@ -25,26 +25,6 @@ const snippets = await Promise.all(
 </StarlightPage>
 
 <style is:inline>
-  .code {
-    height: 187px;
-    overflow-y: auto;
-    padding-inline: 8px;
-  }
-
-  .code figure.frame {
-    border-radius: 0 0 0.5rem 0.5rem;
-    overflow: hidden;
-  }
-
-  .code pre.wrap {
-    height: 148px;
-  }
-
-  .expressive-code .copy {
-    inset-inline-end: 4px;
-    inset-block-start: 3.5px;
-  }
-
   /* ==== Overrides ==== */
 
   .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {

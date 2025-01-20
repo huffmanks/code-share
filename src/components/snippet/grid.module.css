@@ -34,7 +34,7 @@
 }
 
 .title {
-  margin-bottom: 0;
+  margin-bottom: 5px;
   color: var(--sl-color-white);
   line-height: var(--sl-line-height-headings);
 }

@@ -21,18 +21,10 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
 
   const time = formatRelativeTime(snippet.data.updatedAt);
 
-  function handleCopy() {
-    console.log("nothing");
-  }
-
   function handleDownload() {
     snippet.data.fragments.map((fragment) => {
       downloadFile(fragment);
     });
-  }
-
-  function handleNewTab() {
-    console.log("nothing");
   }
 
   return (
@@ -54,15 +46,15 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
           {languages.map((languageInfo) => {
             const LanguageIconComponent = LanguageIcon[languageInfo.extension];
             return (
-              <div class={styles.language}>
+              <div className={styles.language}>
                 {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
                 <span data-pagefind-filter="language">{languageInfo.label}</span>
               </div>
             );
           })}
         </div>
-        <div class={styles.description}>
-          <p class="truncate">{snippet.data.description}</p>
+        <div className={styles.description}>
+          <p className="truncate">{snippet.data.description}</p>
         </div>
         <div className={styles.tagsContainer}>
           {snippet.data.tags &&
@@ -73,15 +65,12 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
             ))}
         </div>
         <div className={styles.actionButtons}>
-          <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleCopy}>
-            <ButtonIcon.copy />
-          </button>
-          <button className="btn" style={{ borderRadius: 0 }} onClick={handleDownload}>
+          <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleDownload}>
             <ButtonIcon.download />
           </button>
-          <button className="btn" style={{ borderLeft: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} onClick={handleNewTab}>
+          <a href={`/snippets/${snippet.id}`} className="btn" style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
             <ButtonIcon.external />
-          </button>
+          </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: snippet.codeHtml }} />
       </div>

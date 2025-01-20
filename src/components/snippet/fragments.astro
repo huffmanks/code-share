@@ -9,9 +9,10 @@ interface Props {
     position: number;
     code: string;
   }[];
+  codeIsFullHeight?: boolean;
 }
 
-const { fragments } = Astro.props;
+const { fragments, codeIsFullHeight = false } = Astro.props;
 ---
 
 <Tabs>
@@ -19,7 +20,7 @@ const { fragments } = Astro.props;
     fragments.map((fragment) => (
       <TabItem label={fragment.label}>
         <Code
-          class="code scrollbar"
+          class={`${!codeIsFullHeight ? "fragment-code scrollable scrollbar" : "fragment-code"}`}
           code={fragment.code}
           wrap
           preserveIndent
@@ -32,4 +33,27 @@ const { fragments } = Astro.props;
   }
 </Tabs>
 
-<style></style>
+<style is:inline>
+  .fragment-code {
+    padding-inline: 8px;
+  }
+
+  .fragment-code.scrollable {
+    height: 187px;
+    overflow-y: auto;
+  }
+
+  .fragment-code.scrollable figure.frame {
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
+  }
+
+  .fragment-code.scrollable pre.wrap {
+    height: 148px;
+  }
+
+  .expressive-code .copy {
+    inset-inline-end: 4px;
+    inset-block-start: 3.5px;
+  }
+</style>

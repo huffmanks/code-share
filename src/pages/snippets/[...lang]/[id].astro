@@ -1,0 +1,130 @@
+---
+import { ButtonIcon, LanguageIcon } from "@/components/preact-icons";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
+import { getLanguagesInfo } from "@/lib/languages";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import Fragments from "@/components/snippet/fragments.astro";
+import { badgeVariants } from "@/lib/constants";
+
+export async function getStaticPaths() {
+  const snippets = await getCollection("snippets");
+
+  return snippets.map((snippet) => ({
+    params: { id: snippet.id },
+    props: { snippet },
+  }));
+}
+
+const { snippet } = Astro.props;
+
+const languages = getLanguagesInfo(snippet.data.fragments);
+
+const time = formatRelativeTime(snippet.data.updatedAt);
+---
+
+<StarlightPage frontmatter={{ title: snippet.data.title, tableOfContents: false, prev: false, next: false }}>
+  <article class="snippet" data-pagefind-id={snippet.id}>
+    <div class="languages">
+      {
+        languages.map((languageInfo) => {
+          const LanguageIconComponent = LanguageIcon[languageInfo.extension];
+          return (
+            <div class="language">
+              {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
+              <span data-pagefind-filter="language">{languageInfo.label}</span>
+            </div>
+          );
+        })
+      }
+    </div>
+    <div class="time">
+      {time}
+    </div>
+    <div class="description">
+      <p>{snippet.data.description}</p>
+    </div>
+    <div class="tags-container">
+      {
+        snippet.data.tags &&
+          snippet.data.tags.map((tag: string, index: number) => (
+            <div class={`badge badge-${badgeVariants[index % badgeVariants.length]}`} data-pagefind-filter="tag">
+              {tag}
+            </div>
+          ))
+      }
+    </div>
+    <div class="action-buttons">
+      <button id="download-btn" class="btn" style="width: auto; padding: 0 15px;">
+        <ButtonIcon.download />
+        <span>Download</span>
+      </button>
+    </div>
+
+    <Fragments fragments={snippet.data.fragments} codeIsFullHeight />
+  </article>
+</StarlightPage>
+
+<script is:inline define:vars={{ snippet }}>
+  import { downloadFile } from "@/lib/downloadFile";
+
+  const downloadBtn = document.querySelector("download-btn");
+
+  downloadBtn.addEventListener("click", handleDownload);
+
+  function handleDownload() {
+    snippet.data.fragments.map((fragment) => {
+      downloadFile(fragment);
+    });
+  }
+</script>
+
+<style is:inline>
+  .time {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .languages {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 5px;
+  }
+
+  .language {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+
+  .description {
+    margin-bottom: 20px;
+    color: var(--sl-color-gray-3);
+  }
+
+  .tags-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* ==== Overrides ==== */
+
+  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+    margin-top: 0;
+  }
+
+  .content-panel {
+    padding-bottom: 10px;
+  }
+</style>
