@@ -1,7 +1,7 @@
 ---
 title: Git
 description: This cheat sheet features the most important and commonly used Git commands for easy reference.
-updatedAt: "2025-01-20"
+updatedAt: 2025-01-22 17:56:21
 groups:
   - title: Setup
     description: Configuring user information used across all local repositories

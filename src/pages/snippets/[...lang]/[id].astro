@@ -5,7 +5,8 @@ import { getLanguagesInfo } from "@/lib/languages";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
 import Fragments from "@/components/snippet/fragments.astro";
-import { badgeVariants } from "@/lib/constants";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
+import { getVariant } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const snippets = await getCollection("snippets");
@@ -48,7 +49,7 @@ const time = formatRelativeTime(snippet.data.updatedAt);
       {
         snippet.data.tags &&
           snippet.data.tags.map((tag: string, index: number) => (
-            <div class={`badge badge-${badgeVariants[index % badgeVariants.length]}`} data-pagefind-filter="tag">
+            <div class="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }} data-pagefind-filter="tag">
               {tag}
             </div>
           ))

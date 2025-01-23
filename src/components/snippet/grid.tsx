@@ -1,10 +1,11 @@
 import { ButtonIcon, LanguageIcon } from "@/components/preact-icons";
 import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/grid.module.css";
-import { badgeVariants } from "@/lib/constants";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { downloadFile } from "@/lib/downloadFile";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguagesInfo } from "@/lib/languages";
+import { getVariant } from "@/lib/utils";
 
 export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
@@ -59,7 +60,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <div className={styles.tagsContainer}>
           {snippet.data.tags &&
             snippet.data.tags.map((tag: string, index: number) => (
-              <div className={`badge badge-${badgeVariants[index % badgeVariants.length]}`} data-pagefind-filter="tag">
+              <div className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }} data-pagefind-filter="tag">
                 {tag}
               </div>
             ))}

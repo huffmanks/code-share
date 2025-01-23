@@ -1,5 +1,6 @@
 ---
-import { Card, Code } from "@astrojs/starlight/components";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
+import { getVariant } from "@/lib/utils";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
 
@@ -20,13 +21,14 @@ const { cheatsheet } = Astro.props;
     cheatsheet.data.groups.map((group) => (
       <div>
         <h2>{group.title}</h2>
-        <p>{group.description}</p>
+        <p class="group-description">{group.description}</p>
         <div class="grid">
-          {group.items.map((item) => (
-            <Card title={item.label}>
-              <p>{item.description}</p>
-              {item?.example && <Code lang="sh" wrap preserveIndent code={item.example} />}
-            </Card>
+          {group.items.map((item, index) => (
+            <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
+              <h3>{item.label}</h3>
+              <p class="item-description">{item.description}</p>
+              {/* {item?.example && <Code lang="sh" wrap preserveIndent code={item.example} />} */}
+            </div>
           ))}
         </div>
       </div>
@@ -34,11 +36,37 @@ const { cheatsheet } = Astro.props;
   }
 </StarlightPage>
 
-<style>
+<style is:inline>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(500px, 100%), 1fr));
+    /* align-items: start; */
     gap: 10px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
+  }
+
+  h2,
+  .item-description {
+    margin-bottom: 10px;
+  }
+
+  .group-description {
+    margin-bottom: 20px;
+  }
+
+  .cheatsheet-card {
+    padding: clamp(1rem, calc(0.125rem + 1.5vw), 2.5rem);
+    border-radius: 0.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+  }
+
+  .cheatsheet-card p {
+    margin-bottom: 0;
+  }
+
+  /* ==== Overrides ==== */
+
+  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+    margin-top: 0;
   }
 </style>

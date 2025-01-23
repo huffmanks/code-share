@@ -1,6 +1,7 @@
 import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/table.module.css";
-import { badgeVariants } from "@/lib/constants";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
+import { getVariant } from "@/lib/utils";
 
 export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
@@ -37,7 +38,9 @@ function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
         <td>{snippet.data.fragments.map((fragment) => fragment.language).join(", ")}</td>
         <td>
           {snippet.data.tags.map((tag, index) => (
-            <span className={`badge badge-${badgeVariants[index % badgeVariants.length]}`}>{tag}</span>
+            <span className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
+              {tag}
+            </span>
           ))}
         </td>
         <td>{updatedAt}</td>
