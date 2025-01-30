@@ -27,16 +27,16 @@ const snippets = await Promise.all(
 <style is:inline>
   /* ==== Overrides ==== */
 
+  .sl-container {
+    --sl-content-width: 96rem;
+  }
+
   .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
     margin-top: 0;
   }
 
   .sl-markdown-content h2:not(:where(.not-content *)) {
     font-size: 1.5rem;
-  }
-
-  .sl-container {
-    --sl-content-width: 1200px;
   }
 
   @media (min-width: 50rem) {

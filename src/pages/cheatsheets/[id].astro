@@ -1,6 +1,7 @@
 ---
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
+import { Code } from "@astrojs/starlight/components";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
 
@@ -27,7 +28,12 @@ const { cheatsheet } = Astro.props;
             <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
               <h3>{item.label}</h3>
               <p class="item-description">{item.description}</p>
-              {/* {item?.example && <Code lang="sh" wrap preserveIndent code={item.example} />} */}
+              {item?.example && (
+                <>
+                  <code>{item.example}</code>
+                </>
+              )}
+              {item?.code && <Code lang="sh" wrap preserveIndent code={item.code} />}
             </div>
           ))}
         </div>
@@ -39,8 +45,7 @@ const { cheatsheet } = Astro.props;
 <style is:inline>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(500px, 100%), 1fr));
-    /* align-items: start; */
+    grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
     gap: 10px;
     margin: 0 auto 30px;
   }
@@ -65,6 +70,10 @@ const { cheatsheet } = Astro.props;
   }
 
   /* ==== Overrides ==== */
+
+  .sl-container {
+    --sl-content-width: 80rem;
+  }
 
   .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
     margin-top: 0;

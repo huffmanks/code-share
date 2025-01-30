@@ -5,7 +5,7 @@ import { getVariant } from "@/lib/utils";
 
 export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
-    <table className={styles.table}>
+    <table className={styles.table} style={{ display: "table" }}>
       <thead>
         <tr>
           <th>Title</th>
@@ -26,6 +26,8 @@ export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[]
 
 function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
   const updatedAt = new Date(snippet.data.updatedAt).toLocaleString();
+  const languages = [...new Set(snippet.data.fragments.map((f) => f.language))].join(", ");
+
   return (
     <>
       <tr>
@@ -35,13 +37,15 @@ function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
         <td className="truncate" style={{ maxWidth: 400 }}>
           {snippet.data.description}
         </td>
-        <td>{snippet.data.fragments.map((fragment) => fragment.language).join(", ")}</td>
+        <td>{languages}</td>
         <td>
-          {snippet.data.tags.map((tag, index) => (
-            <span className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
-              {tag}
-            </span>
-          ))}
+          <div class={styles.badges}>
+            {snippet.data.tags.slice(0, 5).map((tag, index) => (
+              <span className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index), overflowWrap: "normal" }}>
+                {tag}
+              </span>
+            ))}
+          </div>
         </td>
         <td>{updatedAt}</td>
       </tr>
