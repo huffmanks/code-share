@@ -6,6 +6,7 @@ import { downloadFile } from "@/lib/downloadFile";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguagesInfo } from "@/lib/languages";
 import { getVariant } from "@/lib/utils";
+import Tabs from "./tabs";
 
 export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
@@ -29,7 +30,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
   }
 
   return (
-    <article className={styles.card} data-pagefind-id={snippet.id}>
+    <article className={styles.card}>
       <div className={styles.time}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -49,7 +50,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
             return (
               <div className={styles.language}>
                 {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
-                <span data-pagefind-filter="language">{languageInfo.label}</span>
+                <span>{languageInfo.label}</span>
               </div>
             );
           })}
@@ -60,7 +61,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <div className={styles.tagsContainer}>
           {snippet.data.tags &&
             snippet.data.tags.map((tag: string, index: number) => (
-              <div className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }} data-pagefind-filter="tag">
+              <div className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
                 {tag}
               </div>
             ))}
@@ -73,7 +74,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
             <ButtonIcon.external />
           </a>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: snippet.codeHtml }} />
+        <Tabs fragments={snippet.data.fragments} codeFragments={snippet.codeFragments} />
       </div>
     </article>
   );

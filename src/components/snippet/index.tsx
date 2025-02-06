@@ -9,8 +9,17 @@ import { getLanguagesInfo } from "@/lib/languages";
 import { useState } from "preact/hooks";
 import { type JSX } from "preact/jsx-runtime";
 
-export type SnippetWithHtml = Snippet & {
+export interface Fragment {
+  filename: string;
+  label: string;
+  language: string;
+  position: number;
+  code: string;
   codeHtml: string;
+}
+
+export type SnippetWithHtml = Snippet & {
+  codeFragments: Fragment[];
 };
 
 interface SnippetContainerProps {

@@ -1,6 +1,6 @@
 ---
 title: Add title attribute to link
-description: Regex pattern to add link text to title attribute
+description: Regex pattern to add link text to title attribute.
 tags: ["regex", "url"]
 updatedAt: 2025-01-13 16:07:00
 fragments:

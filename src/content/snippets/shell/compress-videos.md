@@ -1,6 +1,6 @@
 ---
 title: Compress videos
-description: Regex pattern to add link text to title attribute
+description: A script to compress all videos in a directory using ffmpeg.
 tags: ["ffmpeg", "script"]
 updatedAt: 2025-01-19 20:41:00
 fragments:

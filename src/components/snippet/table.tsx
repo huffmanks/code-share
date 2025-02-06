@@ -2,6 +2,7 @@ import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/table.module.css";
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
+import { navigate } from "astro:transitions/client";
 
 export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
@@ -30,7 +31,7 @@ function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
 
   return (
     <>
-      <tr>
+      <tr className="snippet-row" onClick={() => navigate(`/snippets/${snippet.id}`)}>
         <td className="truncate" style={{ maxWidth: 200 }}>
           {snippet.data.title}
         </td>

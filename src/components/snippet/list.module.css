@@ -1,0 +1,24 @@
+.listItem {
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin-bottom: 0.5rem;
+}
+
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.language {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.description {
+  color: var(--sl-color-gray-3);
+}

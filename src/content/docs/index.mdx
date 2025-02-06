@@ -11,14 +11,19 @@ hero:
     - text: Linux
       link: /guides/linux
       icon: linux
+      variant: secondary
     - text: macOS
       link: /guides/macos/example
       icon: apple
       variant: secondary
     - text: Snippets
       link: /snippets
-      icon: right-arrow
-      variant: minimal
+      icon: seti:jade
+      variant: secondary
+    - text: Cheatsheets
+      link: /cheatsheets
+      icon: document
+      variant: secondary
 ---
 
 import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
@@ -32,7 +37,10 @@ import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
   <Card title="macOS" icon="apple">
     Getting started guides with macOS.
   </Card>
-  <Card title="Snippets" icon="right-arrow">
-    A collection code snippets.
+  <Card title="Snippets" icon="seti:jade">
+    A collection of code snippets.
+  </Card>
+  <Card title="Snippets" icon="document">
+    A collection of cheatsheets.
   </Card>
 </CardGrid>

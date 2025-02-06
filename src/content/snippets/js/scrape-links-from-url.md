@@ -1,6 +1,6 @@
 ---
 title: Scrape links from url
-description: Extract text and links from anchor tags and generate an HTML table
+description: Extract text and links from anchor tags and generate an HTML table.
 tags: ["links", "dom", "url"]
 updatedAt: 2025-01-14 11:00:19
 fragments:

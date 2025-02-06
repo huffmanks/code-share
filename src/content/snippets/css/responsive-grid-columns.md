@@ -1,6 +1,6 @@
 ---
 title: Responsive grid columns
-description: Responsive, equally sized grid columns that wrap for mobile
+description: Responsive, equally sized grid columns that wrap for mobile.
 tags: ["grid"]
 updatedAt: 2025-01-13 15:54:59
 fragments:

@@ -117,6 +117,39 @@ html {
   }
 }
 
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(1) {
+  border-color: var(--sl-color-orange);
+  color: var(--sl-color-orange-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(2) {
+  border-color: var(--sl-color-purple);
+  color: var(--sl-color-purple-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(3) {
+  border-color: var(--sl-color-blue);
+  color: var(--sl-color-blue-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(4) {
+  border-color: var(--sl-color-red);
+  color: var(--sl-color-red-high);
+}
+
+.card-grid.stagger article:nth-child(3) svg.icon {
+  border: 1px solid var(--sl-color-blue);
+}
+
+.snippet-row {
+  cursor: pointer;
+}
+
+.sl-markdown-content tr.snippet-row:hover {
+  background-color: var(--sl-color-green-low);
+  color: var(--sl-color-green-high);
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 .scrollbar {
