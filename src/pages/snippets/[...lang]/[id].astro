@@ -1,12 +1,13 @@
 ---
-import { ButtonIcon, LanguageIcon } from "@/components/preact-icons";
+import { LanguageIcon } from "@/components/preact-icons";
+import { DownloadButton } from "@/components/snippet/download-button";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguagesInfo } from "@/lib/languages";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { getCollection } from "astro:content";
-import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
 import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const snippets = await getCollection("snippets");
@@ -56,10 +57,7 @@ const time = formatRelativeTime(snippet.data.updatedAt);
       }
     </div>
     <div class="action-buttons">
-      <button id="download-btn" class="btn" style="width: auto; padding: 0 15px;">
-        <ButtonIcon.download />
-        <span>Download</span>
-      </button>
+      <DownloadButton client:load snippet={snippet} />
     </div>
 
     <Tabs>
@@ -81,20 +79,6 @@ const time = formatRelativeTime(snippet.data.updatedAt);
     </Tabs>
   </article>
 </StarlightPage>
-
-<script is:inline define:vars={{ snippet }}>
-  import { downloadFile } from "@/lib/downloadFile";
-
-  const downloadBtn = document.querySelector("download-btn");
-
-  downloadBtn.addEventListener("click", handleDownload);
-
-  function handleDownload() {
-    snippet.data.fragments.map((fragment) => {
-      downloadFile(fragment);
-    });
-  }
-</script>
 
 <style is:inline>
   .time {
