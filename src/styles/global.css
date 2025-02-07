@@ -117,6 +117,22 @@ html {
   }
 }
 
+/* ==== Mobile sidebar button ==== */
+[aria-controls="starlight__sidebar"] {
+  background-color: transparent;
+}
+
+[aria-expanded="true"] [aria-controls="starlight__sidebar"],
+[aria-controls="starlight__sidebar"]:hover {
+  background-color: var(--sl-color-accent);
+}
+
+[aria-controls="starlight__sidebar"] svg {
+  color: var(--sl-color-white);
+}
+
+/* ==== Homepage button colors ==== */
+
 :is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(1) {
   border-color: var(--sl-color-orange);
   color: var(--sl-color-orange-high);
@@ -141,6 +157,7 @@ html {
   border: 1px solid var(--sl-color-blue);
 }
 
+/* ==== Snippet table ==== */
 .snippet-row {
   cursor: pointer;
 }

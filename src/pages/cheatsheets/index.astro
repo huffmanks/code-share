@@ -7,11 +7,40 @@ const cheatsheets = await getCollection("cheatsheets");
 ---
 
 <StarlightPage frontmatter={{ title: "Cheatsheets", tableOfContents: false, prev: false, next: false, pagefind: false }}>
-  {
-    cheatsheets.map((cheatsheet) => (
-      <>
-        <LinkCard title={cheatsheet.data.title} href={`/cheatsheets/${cheatsheet.id}`} description={cheatsheet.data.description} />
-      </>
-    ))
-  }
+  <div class="grid">
+    {cheatsheets.map((cheatsheet) => <LinkCard title={cheatsheet.data.title} href={`/cheatsheets/${cheatsheet.id}`} description={cheatsheet.data.description} />)}
+  </div>
 </StarlightPage>
+
+<style is:inline>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+    gap: 20px;
+    margin: 0 auto;
+  }
+
+  /* ==== Overrides ==== */
+
+  .sl-container {
+    --sl-content-width: 96rem;
+  }
+
+  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+    margin-top: 0;
+  }
+
+  .sl-markdown-content h2:not(:where(.not-content *)) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 50rem) {
+    .header {
+      --__toc-width: unset;
+    }
+  }
+
+  .header :nth-child(2).sl-flex {
+    display: block;
+  }
+</style>

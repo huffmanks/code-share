@@ -1,15 +1,21 @@
 // @ts-check
 import preact from "@astrojs/preact";
 import starlight from "@astrojs/starlight";
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
+  image: {
+    service: passthroughImageService(),
+  },
   integrations: [
     starlight({
       title: "Code Share",
       description: "Code Share is your go-to platform for clear, practical coding guides and reusable code snippets.",
       customCss: ["./src/styles/global.css"],
+      logo: {
+        src: "./src/assets/image.svg",
+      },
       plugins: [starlightThemeRapide()],
       expressiveCode: {
         frames: {

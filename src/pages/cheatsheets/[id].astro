@@ -28,9 +28,15 @@ const { cheatsheet } = Astro.props;
             <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
               <h3>{item.label}</h3>
               <p class="item-description">{item.description}</p>
+
               {item?.example && (
                 <>
                   <code>{item.example}</code>
+                </>
+              )}
+              {item?.comment && (
+                <>
+                  <div class="comment">{item.comment}</div>
                 </>
               )}
               {item?.code && <Code lang="sh" wrap preserveIndent code={item.code} />}
@@ -67,6 +73,14 @@ const { cheatsheet } = Astro.props;
 
   .cheatsheet-card p {
     margin-bottom: 0;
+  }
+
+  .comment {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-family: monospace;
+    line-height: normal;
+    color: var(--sl-color-gray-3);
   }
 
   /* ==== Overrides ==== */

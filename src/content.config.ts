@@ -38,6 +38,7 @@ export const collections = {
               label: z.string(),
               description: z.string(),
               code: z.string().optional(),
+              comment: z.string().optional(),
               example: z.string().optional(),
             })
           ),

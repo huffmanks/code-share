@@ -10,7 +10,7 @@ interface Props {
     position: number;
     code: string;
   }[];
-  codeFragments: Fragment[];
+  codeFragments?: Fragment[];
 }
 
 export default function Tabs({ fragments, codeFragments }: Props) {
@@ -28,7 +28,9 @@ export default function Tabs({ fragments, codeFragments }: Props) {
         ))}
       </ul>
 
-      <div>{codeFragments.map((fragment, index) => (activeTab === fragment.filename ? <div key={fragment.filename + index} dangerouslySetInnerHTML={{ __html: fragment.codeHtml }} /> : null))}</div>
+      {codeFragments && codeFragments.length && (
+        <div>{codeFragments.map((fragment, index) => (activeTab === fragment.filename ? <div key={fragment.filename + index} dangerouslySetInnerHTML={{ __html: fragment.codeHtml }} /> : null))}</div>
+      )}
     </>
   );
 }

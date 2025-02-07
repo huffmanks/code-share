@@ -4,9 +4,9 @@ import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { getLanguagesInfo } from "@/lib/languages";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import Fragments from "@/components/snippet/fragments.astro";
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
+import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
 
 export async function getStaticPaths() {
   const snippets = await getCollection("snippets");
@@ -62,7 +62,23 @@ const time = formatRelativeTime(snippet.data.updatedAt);
       </button>
     </div>
 
-    <Fragments fragments={snippet.data.fragments} codeIsFullHeight />
+    <Tabs>
+      {
+        snippet.data.fragments.map((fragment) => (
+          <TabItem label={fragment.label}>
+            <Code
+              class="fragment-code"
+              code={fragment.code}
+              wrap
+              preserveIndent
+              frame={fragment.language === "sh" ? "terminal" : "auto"}
+              lang={fragment.language}
+              title={`${fragment.filename}.${fragment.language}`}
+            />
+          </TabItem>
+        ))
+      }
+    </Tabs>
   </article>
 </StarlightPage>
 

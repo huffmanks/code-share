@@ -9,14 +9,13 @@ interface Props {
     position: number;
     code: string;
   };
-  codeIsFullHeight?: boolean;
 }
 
-const { fragment, codeIsFullHeight = false } = Astro.props;
+const { fragment } = Astro.props;
 ---
 
 <Code
-  class={`${!codeIsFullHeight ? "fragment-code scrollable scrollbar" : "fragment-code"}`}
+  class="fragment-code scrollable scrollbar"
   code={fragment.code}
   wrap
   preserveIndent

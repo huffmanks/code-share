@@ -1,38 +1,8 @@
 ---
 title: Git
-description: This cheat sheet features the most important and commonly used Git commands for easy reference.
-updatedAt: 2025-01-22 17:56:21
+description: Categorized git commands based on what they affect.
+updatedAt: 2025-02-07 08:44:58
 groups:
-  - title: Setup
-    description: Configuring user information used across all local repositories
-    items:
-      - label: git config --global user.name “[firstname lastname]”
-        description: Set a name that is identifiable for credit when reviewing version history.
-        code: git config --global user.name "John Doe"
-      - label: git config --global user.email “[valid-email]”
-        description: Set an email address that will be associated with each history marker.
-        code: git config --global user.email "john@email.com"
-  - title: Starting a Project
-    description: Commands to kick off a new project or connect to an existing one.
-    items:
-      - label: git init
-        description: Start a new Git repository from scratch in your project folder.
-        code: git init
-      - label: git clone [url]
-        description: Copy (or "clone") a remote repository to your computer.
-        code: git clone https://github.com/user/repo.git
-  - title: Basic Workflow
-    description: The bread and butter of using Git day-to-day.
-    items:
-      - label: git status
-        description: "What's going on? See which changes have been staged, which haven’t, and which files aren’t being tracked."
-        code: git status
-      - label: git add [file]
-        description: "I’m ready to share! Add a file’s changes to the staging area."
-        code: git add file.txt
-      - label: git commit -m "[message]"
-        description: "Seal the deal! Record your changes with a message explaining what you did."
-        code: git commit -m "Added a feature to improve performance"
   - title: Undoing Changes
     description: Fixing mistakes or rolling back changes when things go sideways.
     items:
@@ -45,6 +15,12 @@ groups:
       - label: git revert [commit]
         description: "Clean slate! Create a new commit that undoes changes from a previous one."
         code: git revert abc123
+      - label: git cherry-pick [commit]
+        description: "Steal a commit! Apply changes from a specific commit to your current branch."
+        code: git cherry-pick xyz789
+      - label: git reflog
+        description: "Time machine! See a history of all your local git actions, including resets and checkouts, to recover lost work."
+        code: git reflog
   - title: Branching & Merging
     description: Managing different versions of your project simultaneously.
     items:
@@ -60,16 +36,92 @@ groups:
       - label: git merge [branch-name]
         description: "Bring it together! Combine changes from another branch into your current one."
         code: git merge feature-xyz
+      - label: git rebase [branch-name]
+        description: "Rewrite history! Integrate changes from one branch into another by reapplying commits. Useful for cleaning up history before merging."
+        code: git rebase main
+      - label: git branch -d [branch-name]
+        description: "Delete a branch (if it’s already merged)."
+        code: git branch -d feature-xyz
+      - label: git branch -D [branch-name]
+        description: "Force delete a branch (even if it’s not merged)."
+        code: git branch -D feature-xyz
   - title: Working with Remotes
     description: Commands for collaborating with others on a shared repository.
     items:
       - label: git remote add origin [url]
         description: "Connect your local repository to a remote one."
         code: git remote add origin https://github.com/user/repo.git
+      - label: git fetch
+        description: "Download changes from a remote repository without merging them."
+        code: git fetch origin
       - label: git pull
-        description: "Gimme what’s new! Fetch changes from the remote repository and merge them."
+        description: "Download changes from a remote repository and merge them into your current branch."
         code: git pull origin main
       - label: git push
-        description: "Take my changes! Upload your commits to the remote repository."
+        description: "Upload changes from your local repository to a remote one."
         code: git push origin main
+      - label: git remote -v
+        description: "List all remote connections and their URLs."
+        code: git remote -v
+      - label: git remote update
+        description: "Fetch all changes from all remotes."
+        code: git remote update
+  - title: Stashing
+    description: Temporarily shelve changes you’ve made to your working directory.
+    items:
+      - label: git stash
+        description: "Stash your changes away temporarily."
+        code: git stash
+      - label: git stash list
+        description: "List all your stashed changes."
+        code: git stash list
+      - label: git stash apply [stash-id]
+        description: "Apply a specific stash to your working directory."
+        code: git stash apply stash@{0}
+      - label: git stash pop
+        description: "Apply the most recent stash and remove it from the stash list."
+        code: git stash pop
+      - label: git stash drop [stash-id]
+        description: "Remove a specific stash."
+        code: git stash drop stash@{0}
+      - label: git stash clear
+        description: "Remove all stashed entries."
+        code: git stash clear
+  - title: Rewriting History
+    description: Changing existing commits (use with caution!).
+    items:
+      - label: git commit --amend
+        description: "Modify the most recent commit."
+        code: git commit --amend
+      - label: git rebase -i [commit]
+        description: "Interactive rebase: Edit, squash, or drop commits in a range."
+        code: |
+          # Edit the last 3 commits
+          git rebase -i HEAD~3
+      - label: git filter-branch
+        description: "Rewrite history for a range of commits (powerful, but complex).  Use with extreme caution!"
+        code: |
+          # Very complex, see documentation
+          git filter-branch --tree-filter ’...’ HEAD
+  - title: Other Useful Commands
+    description: Less common but helpful git commands.
+    items:
+      - label: git bisect
+        description: "Binary search to find the commit that introduced a bug."
+        code: git bisect start
+      - label: git blame [file]
+        description: "Show who made changes to each line of a file."
+        code: git blame file.txt
+      - label: git config --global user.name "[name]"
+        description: "Set your global username."
+        code: git config --global user.name "Your Name"
+      - label: git config --global user.email "[email]"
+        description: "Set your global email address."
+        code: git config --global user.email "your.email@example.com"
+      - label: git diff
+        description: "Show changes between commits, branches, etc."
+        code: git diff main feature-xyz
+      - label: git log --graph
+        description: "Visualize the branch and merge history in a graph format."
+        code: git log --graph --decorate --oneline --all
 ---
