@@ -83,7 +83,25 @@ export default defineConfig({
         },
         {
           label: "Cheatsheets",
-          link: "cheatsheets",
+          collapsed: true,
+          items: [
+            {
+              label: "Git",
+              link: "cheatsheets/git",
+            },
+            {
+              label: "Python",
+              link: "cheatsheets/python",
+            },
+            {
+              label: "Regex",
+              link: "cheatsheets/regex",
+            },
+            {
+              label: "Terminal",
+              link: "cheatsheets/terminal",
+            },
+          ],
         },
         {
           label: "Snippets",

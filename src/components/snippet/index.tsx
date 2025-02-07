@@ -6,7 +6,7 @@ import styles from "@/components/snippet/index.module.css";
 import SnippetList from "@/components/snippet/list";
 import SnippetTable from "@/components/snippet/table";
 import { getLanguagesInfo } from "@/lib/languages";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { type JSX } from "preact/jsx-runtime";
 
 export interface Fragment {
@@ -35,12 +35,24 @@ interface SortState {
 }
 
 export default function SnippetContainer({ snippets }: SnippetContainerProps) {
+  function getSearchParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      language: params.get("language") || "",
+      sort: params.get("sort") || "title",
+      direction: params.get("direction") || "asc",
+      view: params.get("view") || "grid",
+    };
+  }
+
+  const initialParams = getSearchParams();
+
   const [sortState, setSortState] = useState<SortState>({
-    field: "title",
-    direction: "asc",
+    field: initialParams.sort as SortField,
+    direction: initialParams.direction as SortDirection,
   });
-  const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [toggleView, setToggleView] = useState("grid");
+  const [selectedLanguage, setSelectedLanguage] = useState(initialParams.language);
+  const [toggleView, setToggleView] = useState(initialParams.view);
 
   const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
 
@@ -71,6 +83,16 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
   function handleToggleView(value: string) {
     setToggleView(value);
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedLanguage) params.set("language", selectedLanguage);
+    params.set("sort", sortState.field);
+    params.set("direction", sortState.direction);
+    params.set("view", toggleView);
+
+    window.history.replaceState(null, "", `?${params.toString()}`);
+  }, [selectedLanguage, sortState, toggleView]);
 
   return (
     <>
