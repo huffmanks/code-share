@@ -1,4 +1,24 @@
-1. list view
-2. table view - (needs to be full width)
-3. snippet grid card - action buttons > (copy, download, view new tab)
-4. code fragment tab items not working on build/preview
+# Todos
+
+---
+
+## Docs
+
+### Linux
+
+- [ ] Add tailscale/headscale setup
+
+### macOS
+
+- [ ] Refactor nix setup
+- [ ] Add homebrew setup
+
+---
+
+## Cheatsheets
+
+- [ ] Add content to docker
+- [ ] Add content to markdown
+- [ ] Add content jq
+- [ ] Add content nano
+- [ ] Add content vim

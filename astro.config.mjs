@@ -45,6 +45,7 @@ export default defineConfig({
           items: [
             {
               label: "Linux",
+              collapsed: true,
               items: [
                 {
                   label: "Getting started",
@@ -77,6 +78,7 @@ export default defineConfig({
             },
             {
               label: "macOS",
+              collapsed: true,
               autogenerate: { directory: "guides/macos" },
             },
           ],
@@ -86,8 +88,24 @@ export default defineConfig({
           collapsed: true,
           items: [
             {
+              label: "Docker",
+              link: "cheatsheets/docker",
+            },
+            {
               label: "Git",
               link: "cheatsheets/git",
+            },
+            {
+              label: "JQ",
+              link: "cheatsheets/jq",
+            },
+            {
+              label: "Markdown",
+              link: "cheatsheets/markdown",
+            },
+            {
+              label: "Nano",
+              link: "cheatsheets/nano",
             },
             {
               label: "Python",
@@ -100,6 +118,10 @@ export default defineConfig({
             {
               label: "Terminal",
               link: "cheatsheets/terminal",
+            },
+            {
+              label: "Vim",
+              link: "cheatsheets/vim",
             },
           ],
         },
