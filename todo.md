@@ -7,6 +7,25 @@
 ### Linux
 
 - [ ] Add tailscale/headscale setup
+- [ ] Add to docker setup
+
+```sh
+sudo systemctl stop docker
+sudo mkdir -p /mnt/flex/docker-data
+sudo mv /var/lib/docker /mnt/flex/docker-data
+sudo nano /etc/docker/daemon.json
+
+# daemon.json
+{
+  "data-root": "/mnt/flex/docker-images"
+}
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+# verify (optional)
+docker info | grep "Docker Root Dir"
+```
 
 ### macOS
 

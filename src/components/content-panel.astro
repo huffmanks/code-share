@@ -1,0 +1,44 @@
+---
+
+---
+
+<div class="content-panel">
+  <div class="sl-container"><slot /></div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username") ?? "user";
+      const ip = localStorage.getItem("ip") ?? "ip_address";
+      const dockerPath = localStorage.getItem("dockerPath") ?? "/path/to/file";
+
+      const bodyContent = document.body.innerHTML;
+      const updatedContent = bodyContent
+        .replace(/{{{username}}}/g, username)
+        .replace(/{{{ip}}}/g, ip)
+        .replace(/{{{dockerPath}}}/g, dockerPath);
+
+      document.body.innerHTML = updatedContent;
+    });
+  </script>
+</div>
+
+<style>
+  .content-panel {
+    padding: 1.5rem var(--sl-content-pad-x);
+  }
+  .content-panel + .content-panel {
+    border-top: 1px solid var(--sl-color-hairline);
+  }
+  .sl-container {
+    max-width: var(--sl-content-width);
+  }
+
+  .sl-container > :global(* + *) {
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 72rem) {
+    .sl-container {
+      margin-inline: var(--sl-content-margin-inline, auto);
+    }
+  }
+</style>

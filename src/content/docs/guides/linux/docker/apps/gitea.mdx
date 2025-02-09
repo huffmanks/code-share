@@ -9,7 +9,8 @@ references:
 ---
 
 import { Code } from "@astrojs/starlight/components";
-import yaml from "/src/docker-compose/gitea.yml?raw";
+import yaml from "/src/files/compose/gitea.yml?raw";
+import env from "/src/files/env/gitea.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -29,15 +30,28 @@ import yaml from "/src/docker-compose/gitea.yml?raw";
 mkdir -p /opt/docker-apps/gitea && cd /opt/docker-apps/gitea
 ```
 
-## Copy docker-compose.yml
-
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
-
 ## Create docker-compose.yml
 
 ```sh
-nano docker-compose.yml
+# *!* Copy content from next command before executing *!*
+
+pbpaste | ssh {{{username}}}@{{{ip}}} 'cat > {{{dockerPath}}}/gitea/docker-compose.yml'
 ```
+
+## Copy docker-compose.yml content
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create .env
+
+```sh
+# *!* Copy content from next command before executing *!*
+pbpaste | ssh {{{username}}}@{{{ip}}} 'cat > {{{dockerPath}}}/gitea/.env'
+```
+
+## Copy gitea .env content
+
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Start container
 
