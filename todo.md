@@ -27,6 +27,10 @@ sudo systemctl restart docker
 docker info | grep "Docker Root Dir"
 ```
 
+#### Docker apps
+
+- [ ] Add rustdesk
+
 ### macOS
 
 - [ ] Refactor nix setup

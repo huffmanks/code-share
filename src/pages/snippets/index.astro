@@ -38,7 +38,7 @@ const snippets = await Promise.all(
 ---
 
 <StarlightPage frontmatter={{ title: "Snippets", tableOfContents: false, prev: false, next: false, pagefind: false }}>
-  <SnippetContainer client:only snippets={snippets} />
+  <SnippetContainer client:load snippets={snippets} />
 </StarlightPage>
 
 <style is:inline>

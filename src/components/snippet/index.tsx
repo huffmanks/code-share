@@ -36,6 +36,8 @@ interface SortState {
 
 export default function SnippetContainer({ snippets }: SnippetContainerProps) {
   function getSearchParams() {
+    if (typeof window === "undefined") return { language: "", sort: "title", direction: "asc", view: "grid" };
+
     const params = new URLSearchParams(window.location.search);
     return {
       language: params.get("language") || "",
