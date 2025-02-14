@@ -4,15 +4,18 @@
     import { LS_PREFIX } from "@/lib/constants";
 
     document.addEventListener("DOMContentLoaded", () => {
-      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? "user";
-      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? "ip_address";
-      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? "/path/to/file";
+      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? "$USERNAME";
+      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? "$IP_ADDRESS";
+      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? "/PATH_TO_DOCKER_APPS";
+      const externalHddPath = localStorage.getItem(`${LS_PREFIX}_external-hdd-path`) ?? "/PATH_TO_EXTERNAL_HDD";
 
       const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
       const updatedContent = markdownContent.innerHTML
-        .replace(/{{{username}}}/g, username)
-        .replace(/{{{ip}}}/g, ip)
-        .replace(/{{{dockerPath}}}/g, dockerPath);
+        .replace(/{{{USERNAME_VAR}}}/g, username)
+        .replace(/{{{IP_ADDRESS_VAR}}}/g, ip)
+        .replace(/{{{DOCKER_PATH_VAR}}}/g, dockerPath)
+        .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, externalHddPath)
+        .replace(/(\/{2,})/g, "/");
 
       markdownContent.innerHTML = updatedContent;
     });

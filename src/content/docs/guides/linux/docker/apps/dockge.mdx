@@ -24,7 +24,7 @@ import yaml from "/src/files/compose/dockge.yml?raw";
 ## Create/change directories for dockge
 
 ```sh
-mkdir -p /opt/stacks /opt/docker-apps/dockge && cd /opt/docker-apps/dockge
+mkdir -p /opt/stacks {{{DOCKER_PATH_VAR}}}/dockge && cd {{{DOCKER_PATH_VAR}}}/dockge
 ```
 
 ## Copy docker-compose.yml

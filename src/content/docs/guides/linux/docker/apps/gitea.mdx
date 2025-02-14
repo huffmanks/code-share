@@ -27,7 +27,7 @@ import env from "/src/files/env/gitea.env?raw";
 ## Create/change directory for Gitea
 
 ```sh
-mkdir -p /opt/docker-apps/gitea && cd /opt/docker-apps/gitea
+mkdir -p {{{DOCKER_PATH_VAR}}}/gitea && cd {{{DOCKER_PATH_VAR}}}/gitea
 ```
 
 ## Create docker-compose.yml
@@ -35,7 +35,7 @@ mkdir -p /opt/docker-apps/gitea && cd /opt/docker-apps/gitea
 ```sh
 # *!* Copy content from next command before executing *!*
 
-pbpaste | ssh {{{username}}}@{{{ip}}} 'cat > {{{dockerPath}}}/gitea/docker-compose.yml'
+pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/gitea/docker-compose.yml'
 ```
 
 ## Copy docker-compose.yml content
@@ -46,7 +46,7 @@ pbpaste | ssh {{{username}}}@{{{ip}}} 'cat > {{{dockerPath}}}/gitea/docker-compo
 
 ```sh
 # *!* Copy content from next command before executing *!*
-pbpaste | ssh {{{username}}}@{{{ip}}} 'cat > {{{dockerPath}}}/gitea/.env'
+pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/gitea/.env'
 ```
 
 ## Copy gitea .env content

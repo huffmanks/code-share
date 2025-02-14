@@ -9,7 +9,7 @@ services:
         limits:
           memory: 1000M
     volumes:
-      - /opt/docker-apps/mealie/data:/app/data
+      - /{{{DOCKER_PATH_VAR}}}/mealie/data:/app/data
     environment:
       - ALLOW_SIGNUP=false
       - PUID=1000

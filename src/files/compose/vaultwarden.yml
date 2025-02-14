@@ -5,7 +5,7 @@ services:
     ports:
       - 8002:80
     volumes:
-      - /opt/docker-apps/vaultwarden/data/:/data/
+      - /{{{DOCKER_PATH_VAR}}}/vaultwarden/data/:/data/
     environment:
       DOMAIN: "https://vw.domain.tld" # update
     restart: unless-stopped

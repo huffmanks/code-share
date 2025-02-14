@@ -3,7 +3,7 @@ services:
     image: docker.io/library/redis:7
     container_name: paperless-ngx-redis
     volumes:
-      - /opt/docker-apps/paperless-ngx/redis/data:/data
+      - /{{{DOCKER_PATH_VAR}}}/paperless-ngx/redis/data:/data
     restart: unless-stopped
 
   webserver:
@@ -14,8 +14,8 @@ services:
     ports:
       - "8001:8000"
     volumes:
-      - /opt/docker-apps/paperless-ngx/data:/usr/src/paperless/data
-      - /opt/docker-apps/paperless-ngx/media:/usr/src/paperless/media
+      - /{{{DOCKER_PATH_VAR}}}/paperless-ngx/data:/usr/src/paperless/data
+      - /{{{DOCKER_PATH_VAR}}}/paperless-ngx/media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
     env_file: docker-compose.env

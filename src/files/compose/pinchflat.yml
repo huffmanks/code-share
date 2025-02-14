@@ -5,8 +5,8 @@ services:
     ports:
       - 8945:8945
     volumes:
-      - /opt/docker-apps/pinchflat/config:/config
-      - /opt/docker-apps/pinchflat/downloads:/downloads
+      - /{{{DOCKER_PATH_VAR}}}/pinchflat/config:/config
+      - /{{{DOCKER_PATH_VAR}}}/pinchflat/downloads:/downloads
     environment:
       - TZ=America/New_York
     restart: unless-stopped

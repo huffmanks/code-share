@@ -26,7 +26,7 @@ sudo blkid /dev/sda1
 A mount point is a directory where your external HDD will be accessed. In this step, you’ll create a directory that will serve as the location for your drive’s mount.
 
 ```sh
-sudo mkdir -p /mnt/flex
+sudo mkdir -p {{{EXTERNAL_HDD_PATH_VAR}}}
 ```
 
 ## Change ownership of mount point
@@ -34,7 +34,7 @@ sudo mkdir -p /mnt/flex
 After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
 
 ```sh
-sudo chown -R $USER:$USER /mnt/flex && sudo chmod -R 755 /mnt/flex
+sudo chown -R $USER:$USER {{{EXTERNAL_HDD_PATH_VAR}}} && sudo chmod -R 755 {{{EXTERNAL_HDD_PATH_VAR}}}
 ```
 
 ## Modify fstab for auto-mount
@@ -50,7 +50,7 @@ sudo nano /etc/fstab
 You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
 
 ```sh
-UUID=22d23d78-272d-4d51-9168-3ac30bfb6353  /mnt/flex       ext4            auto,nofail,noatime,rw,users  0    0
+UUID=22d23d78-272d-4d51-9168-3ac30bfb6353  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users  0    0
 ```
 
 ## Unmount external HDD

@@ -5,7 +5,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - /opt/docker-apps/bytestash/data/snippets:/data/snippets
+      - /{{{DOCKER_PATH_VAR}}}/bytestash/data/snippets:/data/snippets
     environment:
       # See https://github.com/jordan-dalby/ByteStash/wiki/FAQ#environment-variables
       BASE_PATH: ""

@@ -5,7 +5,7 @@ services:
     ports:
       - 3003:3000
     volumes:
-      - /opt/docker-apps/homepage/config:/app/config
+      - /{{{DOCKER_PATH_VAR}}}/homepage/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     environment:
       PUID: 1000

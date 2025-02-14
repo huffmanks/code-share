@@ -90,7 +90,7 @@ Switch from password-based authentication to SSH key-based authentication. This 
 <Steps>
 1. **Client** <Code lang="sh" title="Create key" code={`ssh-keygen -t rsa`} />
 
-2. <Code lang="sh" title="Copy key to server" code={`scp ~/.ssh/id_rsa.pub USER_NAME@DEVICE_IP:~/.ssh/id_rsa.pub`} />
+2. <Code lang="sh" title="Copy key to server" code={`scp ~/.ssh/id_rsa.pub {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}:~/.ssh/id_rsa.pub`} />
 
 3. **Server** <Code lang="sh" title="Add key to authorized keys" code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
 
@@ -140,7 +140,7 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 4. **_Optional_** <Code lang="sh" title="Allow outgoing" code={`sudo ufw default allow outgoing`} />
 
-5. **_Optional_** <Code lang="sh" title="Install ufw" code={`sudo ufw allow from $IP_ADDRESS port $PORT_NUMBER`} />
+5. **_Optional_** <Code lang="sh" title="Install ufw" code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
 
 6. <Code lang="sh" title="Enable ufw" code={`sudo ufw enable`} />
 
