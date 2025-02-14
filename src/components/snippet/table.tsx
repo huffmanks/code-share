@@ -1,7 +1,7 @@
-import type { SnippetWithHtml } from "@/components/snippet";
 import styles from "@/components/snippet/table.module.css";
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
+import type { SnippetWithHtml } from "@/types";
 import { navigate } from "astro:transitions/client";
 
 export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[] }) {

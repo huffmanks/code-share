@@ -1,7 +1,7 @@
 import { LanguageIcon } from "@/components/preact-icons";
 import styles from "@/components/snippet/list.module.css";
-import type { Snippet } from "@/content.config";
 import { getLanguagesInfo } from "@/lib/languages";
+import type { Snippet } from "@/types";
 
 export default function SnippetList({ snippets }: { snippets: Snippet[] }) {
   return (

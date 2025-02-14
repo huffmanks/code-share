@@ -1,22 +1,20 @@
----
-
----
-
 <div class="content-panel">
   <div class="sl-container"><slot /></div>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const username = localStorage.getItem("username") ?? "user";
-      const ip = localStorage.getItem("ip") ?? "ip_address";
-      const dockerPath = localStorage.getItem("dockerPath") ?? "/path/to/file";
+    import { LS_PREFIX } from "@/lib/constants";
 
-      const bodyContent = document.body.innerHTML;
-      const updatedContent = bodyContent
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? "user";
+      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? "ip_address";
+      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? "/path/to/file";
+
+      const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
+      const updatedContent = markdownContent.innerHTML
         .replace(/{{{username}}}/g, username)
         .replace(/{{{ip}}}/g, ip)
         .replace(/{{{dockerPath}}}/g, dockerPath);
 
-      document.body.innerHTML = updatedContent;
+      markdownContent.innerHTML = updatedContent;
     });
   </script>
 </div>

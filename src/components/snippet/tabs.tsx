@@ -1,16 +1,10 @@
-import { type Fragment } from "@/components/snippet";
 import styles from "@/components/snippet/tabs.module.css";
+import { type Fragment, type FragmentWithCodeHtml } from "@/types";
 import { useState } from "preact/hooks";
 
 interface Props {
-  fragments: {
-    filename: string;
-    label: string;
-    language: string;
-    position: number;
-    code: string;
-  }[];
-  codeFragments?: Fragment[];
+  fragments: Fragment[];
+  codeFragments?: FragmentWithCodeHtml[];
 }
 
 export default function Tabs({ fragments, codeFragments }: Props) {

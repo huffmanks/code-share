@@ -1,12 +1,5 @@
 import { languageMap } from "@/lib/languages";
-
-type Fragment = {
-  filename: string;
-  label: string;
-  language: string;
-  position: number;
-  code: string;
-};
+import type { Fragment } from "@/types";
 
 export function downloadFile(fragment: Fragment) {
   const mimeType = languageMap[fragment.language.toLowerCase()].mimeType || "text/plain";

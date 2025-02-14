@@ -1,17 +1,10 @@
 ---
 import SnippetContainer from "@/components/snippet";
-import Fragment from "@/components/snippet/fragment.astro";
+import FragmentCode from "@/components/snippet/fragment-code.astro";
+import type { Fragment } from "@/types";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { experimental_AstroContainer } from "astro/container";
 import { getCollection } from "astro:content";
-
-interface IFragment {
-  filename: string;
-  label: string;
-  language: string;
-  position: number;
-  code: string;
-}
 
 const collection = await getCollection("snippets");
 
@@ -20,8 +13,8 @@ const container = await experimental_AstroContainer.create();
 const snippets = await Promise.all(
   collection.map(async (snippet) => {
     const codeFragments = await Promise.all(
-      snippet.data.fragments.map(async (fragment: IFragment) => {
-        const codeHtml = await container.renderToString(Fragment, {
+      snippet.data.fragments.map(async (fragment: Fragment) => {
+        const codeHtml = await container.renderToString(FragmentCode, {
           props: { fragment },
         });
 

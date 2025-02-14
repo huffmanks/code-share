@@ -1,10 +1,4 @@
-type LanguageInfo = {
-  extension: string;
-  label: string;
-  color: string;
-  aliases: string[];
-  mimeType: string;
-};
+import type { LanguageInfo } from "@/types";
 
 const languages: Record<string, LanguageInfo> = {
   css: {

@@ -8,3 +8,5 @@ export const colorVariants = [
   "var(--sl-color-purple-high)",
   "var(--sl-color-yellow-high)",
 ];
+
+export const LS_PREFIX = "codeshare-v1";

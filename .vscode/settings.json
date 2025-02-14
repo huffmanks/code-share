@@ -1,4 +1,5 @@
 {
+  "typescript.tsdk": "node_modules/typescript/lib",
   "files.associations": {
     "src/content/snippets/**/*.md": "markdown.snippets"
   },
@@ -7,5 +8,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

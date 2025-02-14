@@ -1,14 +1,9 @@
 ---
+import type { Fragment } from "@/types";
 import { Code } from "@astrojs/starlight/components";
 
 interface Props {
-  fragment: {
-    filename: string;
-    label: string;
-    language: string;
-    position: number;
-    code: string;
-  };
+  fragment: Fragment;
 }
 
 const { fragment } = Astro.props;

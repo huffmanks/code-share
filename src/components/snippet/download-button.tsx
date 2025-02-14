@@ -1,6 +1,6 @@
 import { ButtonIcon } from "@/components/preact-icons";
-import type { Snippet } from "@/content.config";
 import { downloadFile } from "@/lib/downloadFile";
+import type { Snippet } from "@/types";
 
 export function DownloadButton({ snippet }: { snippet: Snippet }) {
   function handleDownload() {

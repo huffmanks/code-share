@@ -1,7 +1,7 @@
 import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from "@astrojs/starlight/schema";
 import { glob } from "astro/loaders";
-import { defineCollection, z, type CollectionEntry } from "astro:content";
+import { defineCollection, z } from "astro:content";
 
 export const collections = {
   docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
@@ -47,5 +47,3 @@ export const collections = {
     }),
   }),
 };
-
-export type Snippet = CollectionEntry<"snippets">;

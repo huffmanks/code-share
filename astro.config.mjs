@@ -5,6 +5,7 @@ import { defineConfig, passthroughImageService } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
+  site: "https://codeshare.huffmanks.com",
   image: {
     service: passthroughImageService(),
   },
