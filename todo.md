@@ -6,10 +6,6 @@
 
 - [ ] Add local storage inputs
 
-## Issues
-
-- [ ] [Mount external hdd](./src/content/docs/guides/linux/mount-external-hdd.mdx#l53) {{{EXTERNAL_HDD_PATH_VAR}}} not being replaced
-
 ## Docs
 
 ### Linux

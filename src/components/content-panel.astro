@@ -8,6 +8,7 @@
       const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? "$IP_ADDRESS";
       const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? "/PATH_TO_DOCKER_APPS";
       const externalHddPath = localStorage.getItem(`${LS_PREFIX}_external-hdd-path`) ?? "/PATH_TO_EXTERNAL_HDD";
+      const externalHddUuid = localStorage.getItem(`${LS_PREFIX}_external-hdd-uuid`) ?? "$EXTERNAL_HDD_UUID";
 
       const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
       const updatedContent = markdownContent.innerHTML
@@ -15,7 +16,8 @@
         .replace(/{{{IP_ADDRESS_VAR}}}/g, ip)
         .replace(/{{{DOCKER_PATH_VAR}}}/g, dockerPath)
         .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, externalHddPath)
-        .replace(/(\/{2,})/g, "/");
+        .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, externalHddUuid)
+        .replace(/(?<!:)(\/{2,})/g, "/");
 
       markdownContent.innerHTML = updatedContent;
     });
