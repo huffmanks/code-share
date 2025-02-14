@@ -1,14 +1,14 @@
 <div class="content-panel">
   <div class="sl-container"><slot /></div>
   <script>
-    import { LS_PREFIX } from "@/lib/constants";
+    import { LS_DEFAULT_VALUES, LS_PREFIX } from "@/lib/constants";
 
     document.addEventListener("DOMContentLoaded", () => {
-      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? "$USERNAME";
-      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? "$IP_ADDRESS";
-      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? "/PATH_TO_DOCKER_APPS";
-      const externalHddPath = localStorage.getItem(`${LS_PREFIX}_external-hdd-path`) ?? "/PATH_TO_EXTERNAL_HDD";
-      const externalHddUuid = localStorage.getItem(`${LS_PREFIX}_external-hdd-uuid`) ?? "$EXTERNAL_HDD_UUID";
+      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? LS_DEFAULT_VALUES.USERNAME;
+      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? LS_DEFAULT_VALUES.IP_ADDRESS;
+      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? LS_DEFAULT_VALUES.DOCKER_PATH;
+      const externalHddPath = localStorage.getItem(`${LS_PREFIX}_external-hdd-path`) ?? LS_DEFAULT_VALUES.EXTERNAL_HDD_PATH;
+      const externalHddUuid = localStorage.getItem(`${LS_PREFIX}_external-hdd-uuid`) ?? LS_DEFAULT_VALUES.EXTERNAL_HDD_UUID;
 
       const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
       const updatedContent = markdownContent.innerHTML

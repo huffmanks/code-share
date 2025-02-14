@@ -10,3 +10,11 @@ export const colorVariants = [
 ];
 
 export const LS_PREFIX = "codeshare-v1";
+
+export const LS_DEFAULT_VALUES = {
+  USERNAME: "$USERNAME",
+  IP_ADDRESS: "$IP_ADDRESS",
+  DOCKER_PATH: "/PATH_TO_DOCKER_APPS",
+  EXTERNAL_HDD_PATH: "/PATH_TO_EXTERNAL_HDD",
+  EXTERNAL_HDD_UUID: "$EXTERNAL_HDD_UUID",
+};
