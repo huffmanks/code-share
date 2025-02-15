@@ -38,8 +38,9 @@ export default defineConfig({
         },
       },
       components: {
-        SocialIcons: "./src/components/social-icons.astro",
         ContentPanel: "./src/components/content-panel.astro",
+        SocialIcons: "./src/components/social-icons.astro",
+        ThemeSelect: "./src/components/theme-select.astro",
       },
       sidebar: [
         {

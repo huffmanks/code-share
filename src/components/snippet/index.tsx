@@ -1,9 +1,9 @@
 import { ButtonIcon } from "@/components/preact-icons";
 import SnippetGrid from "@/components/snippet/grid";
-import styles from "@/components/snippet/index.module.css";
 import SnippetList from "@/components/snippet/list";
 import SnippetTable from "@/components/snippet/table";
 import { getLanguagesInfo } from "@/lib/languages";
+import styles from "@/styles/index.module.css";
 import type { SnippetWithHtml, SortDirection, SortField, SortState } from "@/types";
 import { useEffect, useState } from "preact/hooks";
 import { type JSX } from "preact/jsx-runtime";

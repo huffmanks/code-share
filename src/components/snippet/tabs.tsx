@@ -1,4 +1,4 @@
-import styles from "@/components/snippet/tabs.module.css";
+import styles from "@/styles/tabs.module.css";
 import { type Fragment, type FragmentWithCodeHtml } from "@/types";
 import { useState } from "preact/hooks";
 

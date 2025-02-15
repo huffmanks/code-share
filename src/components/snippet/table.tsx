@@ -1,6 +1,6 @@
-import styles from "@/components/snippet/table.module.css";
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { getVariant } from "@/lib/utils";
+import styles from "@/styles/table.module.css";
 import type { SnippetWithHtml } from "@/types";
 import { navigate } from "astro:transitions/client";
 

@@ -34,3 +34,11 @@ export type LanguageInfo = {
   aliases: string[];
   mimeType: string;
 };
+
+export type SettingsForm = {
+  username: string;
+  ipAddress: string;
+  dockerPath: string;
+  externalHddPath: string;
+  externalHddUuid: string;
+};

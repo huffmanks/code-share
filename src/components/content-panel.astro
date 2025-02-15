@@ -1,47 +1,29 @@
-<div class="content-panel">
-  <div class="sl-container"><slot /></div>
-  <script>
-    import { LS_DEFAULT_VALUES, LS_PREFIX } from "@/lib/constants";
+---
+import Default from "@astrojs/starlight/components/ContentPanel.astro";
+import type { Props } from "@astrojs/starlight/props";
+---
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const username = localStorage.getItem(`${LS_PREFIX}_username`) ?? LS_DEFAULT_VALUES.USERNAME;
-      const ip = localStorage.getItem(`${LS_PREFIX}_ip-address`) ?? LS_DEFAULT_VALUES.IP_ADDRESS;
-      const dockerPath = localStorage.getItem(`${LS_PREFIX}_docker-path`) ?? LS_DEFAULT_VALUES.DOCKER_PATH;
-      const externalHddPath = localStorage.getItem(`${LS_PREFIX}_external-hdd-path`) ?? LS_DEFAULT_VALUES.EXTERNAL_HDD_PATH;
-      const externalHddUuid = localStorage.getItem(`${LS_PREFIX}_external-hdd-uuid`) ?? LS_DEFAULT_VALUES.EXTERNAL_HDD_UUID;
+<script>
+  import { defaultSettingsLocalStorage, LS_SETTINGS_KEY } from "@/lib/constants";
+  import { getStoredValues } from "@/lib/getStoredValues";
+  import type { SettingsForm } from "@/types";
 
-      const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
-      const updatedContent = markdownContent.innerHTML
-        .replace(/{{{USERNAME_VAR}}}/g, username)
-        .replace(/{{{IP_ADDRESS_VAR}}}/g, ip)
-        .replace(/{{{DOCKER_PATH_VAR}}}/g, dockerPath)
-        .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, externalHddPath)
-        .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, externalHddUuid)
-        .replace(/(?<!:)(\/{2,})/g, "/");
+  document.addEventListener("DOMContentLoaded", () => {
+    const settings = getStoredValues(LS_SETTINGS_KEY, defaultSettingsLocalStorage) as SettingsForm;
 
-      markdownContent.innerHTML = updatedContent;
-    });
-  </script>
-</div>
+    const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
+    const updatedContent = markdownContent.innerHTML
+      .replace(/{{{USERNAME_VAR}}}/g, settings.username)
+      .replace(/{{{IP_ADDRESS_VAR}}}/g, settings.ipAddress)
+      .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
+      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath)
+      .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, settings.externalHddUuid)
+      .replace(/(?<!:)(\/{2,})/g, "/");
 
-<style>
-  .content-panel {
-    padding: 1.5rem var(--sl-content-pad-x);
-  }
-  .content-panel + .content-panel {
-    border-top: 1px solid var(--sl-color-hairline);
-  }
-  .sl-container {
-    max-width: var(--sl-content-width);
-  }
+    markdownContent.innerHTML = updatedContent;
+  });
+</script>
 
-  .sl-container > :global(* + *) {
-    margin-top: 1.5rem;
-  }
-
-  @media (min-width: 72rem) {
-    .sl-container {
-      margin-inline: var(--sl-content-margin-inline, auto);
-    }
-  }
-</style>
+<Default {...Astro.props}>
+  <slot />
+</Default>

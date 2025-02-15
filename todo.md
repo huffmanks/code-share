@@ -2,10 +2,6 @@
 
 ---
 
-## Features
-
-- [ ] Add local storage inputs
-
 ## Docs
 
 ### Linux
