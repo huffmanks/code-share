@@ -4,7 +4,7 @@ import type { Props } from "@astrojs/starlight/props";
 import Default from "starlight-theme-rapide/overrides/ThemeSelect.astro";
 ---
 
-<div class="social-icons sl-flex" style="margin-inline-start: 0.5rem;">
+<div class="social-icons nav-links" style="margin-inline-start: 0.5rem;">
   <a class="link" href="/settings">
     <span class="sr-only">settings</span>
     <svg aria-hidden="true" height="16" width="16" viewBox="0 0 24 24">
@@ -21,6 +21,10 @@ import Default from "starlight-theme-rapide/overrides/ThemeSelect.astro";
 </div>
 
 <style>
+  .nav-links {
+    display: flex;
+  }
+
   .link {
     display: flex;
     align-items: center;

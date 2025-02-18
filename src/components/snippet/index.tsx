@@ -4,7 +4,7 @@ import SnippetList from "@/components/snippet/list";
 import SnippetTable from "@/components/snippet/table";
 import { getLanguagesInfo } from "@/lib/languages";
 import styles from "@/styles/index.module.css";
-import type { SnippetWithHtml, SortDirection, SortField, SortState } from "@/types";
+import { type SelectedLanguage, type SnippetWithHtml, type SortDirection, type SortField, type SortState, type ToggleView } from "@/types";
 import { useEffect, useState } from "preact/hooks";
 import { type JSX } from "preact/jsx-runtime";
 
@@ -14,14 +14,14 @@ interface SnippetContainerProps {
 
 export default function SnippetContainer({ snippets }: SnippetContainerProps) {
   function getSearchParams() {
-    if (typeof window === "undefined") return { language: "", sort: "title", direction: "asc", view: "grid" };
+    if (typeof window === "undefined") return { language: "" as SelectedLanguage, sort: "title" as SortField, direction: "asc" as SortDirection, view: "grid" as ToggleView };
 
     const params = new URLSearchParams(window.location.search);
     return {
-      language: params.get("language") || "",
-      sort: params.get("sort") || "title",
-      direction: params.get("direction") || "asc",
-      view: params.get("view") || "grid",
+      language: (params.get("language") || "") as SelectedLanguage,
+      sort: (params.get("sort") || "title") as SortField,
+      direction: (params.get("direction") || "asc") as SortDirection,
+      view: (params.get("view") || "grid") as ToggleView,
     };
   }
 
@@ -31,8 +31,8 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
     field: initialParams.sort as SortField,
     direction: initialParams.direction as SortDirection,
   });
-  const [selectedLanguage, setSelectedLanguage] = useState(initialParams.language);
-  const [toggleView, setToggleView] = useState(initialParams.view);
+  const [selectedLanguage, setSelectedLanguage] = useState<SelectedLanguage>(initialParams.language);
+  const [toggleView, setToggleView] = useState<ToggleView>(initialParams.view);
 
   const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
 
@@ -60,7 +60,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
     }));
   }
 
-  function handleToggleView(value: string) {
+  function handleToggleView(value: ToggleView) {
     setToggleView(value);
   }
 

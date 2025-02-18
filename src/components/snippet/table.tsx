@@ -6,7 +6,7 @@ import { navigate } from "astro:transitions/client";
 
 export default function SnippetTable({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (
-    <table className={styles.table} style={{ display: "table" }}>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>Title</th>

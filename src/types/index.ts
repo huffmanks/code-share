@@ -19,6 +19,8 @@ export type SnippetWithHtml = Snippet & {
   codeFragments: FragmentWithCodeHtml[];
 };
 
+export type SelectedLanguage = undefined | string;
+export type ToggleView = "grid" | "list" | "table";
 export type SortField = "title" | "updatedAt";
 export type SortDirection = "asc" | "desc";
 
