@@ -18,6 +18,7 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
       .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath)
       .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, settings.externalHddUuid)
+      .replace(/{{{NIX_DARWIN_SETUP_SCRIPT_VAR}}}/g, settings.nixDarwinSetupScript)
       .replace(/(?<!:)(\/{2,})/g, "/");
 
     markdownContent.innerHTML = updatedContent;

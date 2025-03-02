@@ -43,4 +43,5 @@ export type SettingsForm = {
   dockerPath: string;
   externalHddPath: string;
   externalHddUuid: string;
+  nixDarwinSetupScript: string;
 };
