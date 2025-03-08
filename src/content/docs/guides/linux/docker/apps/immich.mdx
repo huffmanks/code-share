@@ -8,22 +8,17 @@ references:
     label: Docs
 ---
 
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/immich.yml?raw";
+import env from "/src/files/env/immich.env?raw";
 
 <p>{frontmatter.description}</p>
 
 ### References
 
-<ul>
-  {frontmatter.references.map((ref) => (
-    <li>
-      <a href={ref.href} target="_blank" rel="noopener">
-        {ref.label}
-      </a>
-    </li>
-  ))}
-</ul>
+<ReferenceLinks references={frontmatter.references} />
 
 ## Create/change directory for Immich
 
@@ -41,6 +36,16 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/immich && cd {{{DOCKER_PATH_VAR}}}/immich
 nano docker-compose.yml
 ```
 
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
+
+## Create .env
+
+```sh
+nano .env
+```
+
 ## Start container
 
 ```sh
@@ -49,4 +54,4 @@ docker compose up -d
 
 ## Open web ui
 
-{(<a href="http://localhost:2283" target="_blank" rel="noopener">http://localhost:2283</a>)}
+<OpenWebUI port="2283" />

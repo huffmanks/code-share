@@ -6,6 +6,8 @@ references:
     label: GitHub repo
 ---
 
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/pinchflat.yml?raw";
 
@@ -13,15 +15,7 @@ import yaml from "/src/files/compose/pinchflat.yml?raw";
 
 ### References
 
-<ul>
-  {frontmatter.references.map((ref) => (
-    <li>
-      <a href={ref.href} target="_blank" rel="noopener">
-        {ref.label}
-      </a>
-    </li>
-  ))}
-</ul>
+<ReferenceLinks references={frontmatter.references} />
 
 ## Create/change directory for Pinchflat
 
@@ -47,4 +41,4 @@ docker compose up -d
 
 ## Open web ui
 
-{(<a href="http://localhost:8945" target="_blank" rel="noopener">http://localhost:8945</a>)}
+<OpenWebUI port="8945" />

@@ -8,6 +8,8 @@ references:
     label: Docs
 ---
 
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/paperless-ngx.yml?raw";
 
@@ -15,15 +17,7 @@ import yaml from "/src/files/compose/paperless-ngx.yml?raw";
 
 ### References
 
-<ul>
-  {frontmatter.references.map((ref) => (
-    <li>
-      <a href={ref.href} target="_blank" rel="noopener">
-        {ref.label}
-      </a>
-    </li>
-  ))}
-</ul>
+<ReferenceLinks references={frontmatter.references} />
 
 ## Create/change directory for Paperless-ngx
 
@@ -49,4 +43,4 @@ docker compose up -d
 
 ## Open web ui
 
-{(<a href="http://localhost:8001" target="_blank" rel="noopener">http://localhost:8001</a>)}
+<OpenWebUI port="8001" />

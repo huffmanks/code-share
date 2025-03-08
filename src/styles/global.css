@@ -117,10 +117,6 @@ html {
   }
 }
 
-.sl-container .sl-markdown-content a:not(:where(.not-content *)) {
-  color: var(--sl-color-text-accent);
-}
-
 /* ==== Mobile sidebar button ==== */
 [aria-controls="starlight__sidebar"] {
   background-color: transparent;

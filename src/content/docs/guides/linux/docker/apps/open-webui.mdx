@@ -10,6 +10,8 @@ references:
     label: Ollama download
 ---
 
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/open-webui.yml?raw";
 
@@ -17,15 +19,7 @@ import yaml from "/src/files/compose/open-webui.yml?raw";
 
 ### References
 
-<ul>
-  {frontmatter.references.map((ref) => (
-    <li>
-      <a href={ref.href} target="_blank" rel="noopener">
-        {ref.label}
-      </a>
-    </li>
-  ))}
-</ul>
+<ReferenceLinks references={frontmatter.references} />
 
 ## Create/change directory for Open WebUI
 
@@ -51,4 +45,4 @@ docker compose up -d
 
 ## Open web ui
 
-{(<a href="http://localhost:3004" target="_blank" rel="noopener">http://localhost:3004</a>)}
+<OpenWebUI port="3004" />

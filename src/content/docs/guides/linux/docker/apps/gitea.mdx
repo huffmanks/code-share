@@ -10,6 +10,8 @@ references:
     label: Docs
 ---
 
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/gitea.yml?raw";
 import env from "/src/files/env/gitea.env?raw";
@@ -18,15 +20,7 @@ import env from "/src/files/env/gitea.env?raw";
 
 ### References
 
-<ul>
-  {frontmatter.references.map((ref) => (
-    <li>
-      <a href={ref.href} target="_blank" rel="noopener">
-        {ref.label}
-      </a>
-    </li>
-  ))}
-</ul>
+<ReferenceLinks references={frontmatter.references} />
 
 ## Create/change directory for Gitea
 
@@ -34,28 +28,25 @@ import env from "/src/files/env/gitea.env?raw";
 mkdir -p {{{DOCKER_PATH_VAR}}}/gitea && cd {{{DOCKER_PATH_VAR}}}/gitea
 ```
 
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
 ## Create docker-compose.yml
 
 ```sh
-# *!* Copy content from next command before executing *!*
-
-pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/gitea/docker-compose.yml'
+nano docker-compose.yml
 ```
 
-## Copy docker-compose.yml content
+## Copy gitea .env
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Create .env
 
 ```sh
-# *!* Copy content from next command before executing *!*
-pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/gitea/.env'
+nano .env
 ```
-
-## Copy gitea .env content
-
-<Code lang="dotenv" title=".env" code={env} />
 
 ## Create docker network
 
@@ -71,4 +62,4 @@ docker compose up -d
 
 ## Open web ui
 
-{(<a href="http://localhost:3001" target="_blank" rel="noopener">http://localhost:3001</a>)}
+<OpenWebUI port="3001" />

@@ -1,0 +1,27 @@
+---
+type Props = {
+  port: string;
+};
+
+const { port } = Astro.props;
+---
+
+<p>
+  <a class="link" href={`http://localhost:${port}`} target="_blank" rel="noopener">
+    http://localhost:{port}
+  </a>
+  <span> or </span>
+  <a class="link" href={`http://{{{IP_ADDRESS_VAR}}}:${port}`} target="_blank" rel="noopener">
+    {`http://{{{IP_ADDRESS_VAR}}}:${port}`}
+  </a>
+</p>
+
+<style is:inline>
+  .sl-container .sl-markdown-content a:not(:where(.not-content .link)) {
+    color: var(--sl-color-text-accent);
+  }
+
+  .sl-container .sl-markdown-content a:is(:hover, :focus-visible):not(:where(.not-content .link)) {
+    color: var(--sl-color-accent);
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+type Props = {
+  references: {
+    href: string;
+    label: string;
+  }[];
+};
+
+const { references } = Astro.props;
+---
+
+<ul>
+  {
+    references.map((ref) => (
+      <li>
+        <a class="link" href={ref.href} target="_blank" rel="noopener">
+          {ref.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style is:inline>
+  .sl-container .sl-markdown-content a:not(:where(.not-content .link)) {
+    color: var(--sl-color-text-accent);
+  }
+
+  .sl-container .sl-markdown-content a:is(:hover, :focus-visible):not(:where(.not-content .link)) {
+    color: var(--sl-color-accent);
+  }
+</style>
