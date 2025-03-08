@@ -18,7 +18,9 @@ import yaml from "/src/files/compose/keycloak.yml?raw";
 <ul>
   {frontmatter.references.map((ref) => (
     <li>
-      <a href={ref.href}>{ref.label}</a>
+      <a href={ref.href} target="_blank" rel="noopener">
+        {ref.label}
+      </a>
     </li>
   ))}
 </ul>
@@ -47,4 +49,4 @@ docker compose up -d
 
 ## Open web ui
 
-[http://localhost:8082](http://localhost:8082)
+{(<a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a>)}

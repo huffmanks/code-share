@@ -18,7 +18,9 @@ import yaml from "/src/files/compose/homepage.yml?raw";
 <ul>
   {frontmatter.references.map((ref) => (
     <li>
-      <a href={ref.href}>{ref.label}</a>
+      <a href={ref.href} target="_blank" rel="noopener">
+        {ref.label}
+      </a>
     </li>
   ))}
 </ul>
@@ -47,4 +49,4 @@ docker compose up -d
 
 ## Open web ui
 
-[http://localhost:3003](http://localhost:3003)
+{(<a href="http://localhost:3003" target="_blank" rel="noopener">http://localhost:3003</a>)}

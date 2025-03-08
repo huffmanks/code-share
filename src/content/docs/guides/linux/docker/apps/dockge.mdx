@@ -1,6 +1,8 @@
 ---
 title: Dockge
 description: "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager."
+sidebar:
+  order: 2
 references:
   - href: https://github.com/louislam/dockge
     label: GitHub repo
@@ -16,7 +18,9 @@ import yaml from "/src/files/compose/dockge.yml?raw";
 <ul>
   {frontmatter.references.map((ref) => (
     <li>
-      <a href={ref.href}>{ref.label}</a>
+      <a href={ref.href} target="_blank" rel="noopener">
+        {ref.label}
+      </a>
     </li>
   ))}
 </ul>
@@ -45,4 +49,4 @@ docker compose up -d
 
 ## Open web ui
 
-[http://localhost:5001](http://localhost:5001)
+{(<a href="http://localhost:5001" target="_blank" rel="noopener">http://localhost:5001</a>)}

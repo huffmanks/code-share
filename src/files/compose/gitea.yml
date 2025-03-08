@@ -1,6 +1,6 @@
 networks:
-  gitea:
-    external: false
+  gitea-network:
+    external: true
 
 services:
   server:
@@ -16,7 +16,7 @@ services:
       GITEA__database__PASSWD: ${GITEA__database__PASSWD}
       LOCAL_ROOT_URL: ${LOCAL_ROOT_URL}
     networks:
-      - gitea
+      - gitea-network
     ports:
       - "3001:3000"
       - "222:22"
@@ -32,7 +32,7 @@ services:
     image: docker.io/library/mysql:8
     container_name: gitea_db
     networks:
-      - gitea
+      - gitea-network
     volumes:
       - ./mysql:/var/lib/mysql
     environment:

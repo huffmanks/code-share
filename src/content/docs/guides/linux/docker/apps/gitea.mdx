@@ -1,6 +1,8 @@
 ---
 title: Gitea
 description: "Gitea is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry and CI/CD. It is similar to GitHub, Bitbucket and GitLab."
+sidebar:
+  order: 3
 references:
   - href: https://github.com/go-gitea/gitea
     label: GitHub repo
@@ -19,7 +21,9 @@ import env from "/src/files/env/gitea.env?raw";
 <ul>
   {frontmatter.references.map((ref) => (
     <li>
-      <a href={ref.href}>{ref.label}</a>
+      <a href={ref.href} target="_blank" rel="noopener">
+        {ref.label}
+      </a>
     </li>
   ))}
 </ul>
@@ -53,6 +57,12 @@ pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}
 
 <Code lang="dotenv" title=".env" code={env} />
 
+## Create docker network
+
+```sh
+docker network create gitea-network
+```
+
 ## Start container
 
 ```sh
@@ -61,4 +71,4 @@ docker compose up -d
 
 ## Open web ui
 
-[http://localhost:3001](http://localhost:3001)
+{(<a href="http://localhost:3001" target="_blank" rel="noopener">http://localhost:3001</a>)}

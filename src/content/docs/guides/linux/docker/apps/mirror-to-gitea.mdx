@@ -1,0 +1,68 @@
+---
+title: Gitea mirror
+description: "This script automatically mirrors the repositories from a github-user or github-organization to your gitea server. Once started, it will create a mirrored repository under a given token for a gitea user, completely automatically."
+sidebar:
+  order: 4
+references:
+  - href: https://github.com/jaedle/mirror-to-gitea
+    label: GitHub repo
+---
+
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/mirror-to-gitea.yml?raw";
+import env from "/src/files/env/mirror-to-gitea.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ul>
+  {frontmatter.references.map((ref) => (
+    <li>
+      <a href={ref.href} target="_blank" rel="noopener">
+        {ref.label}
+      </a>
+    </li>
+  ))}
+</ul>
+
+## Create/change directory for mirror to Gitea
+
+```sh
+mkdir -p {{{DOCKER_PATH_VAR}}}/mirror-to-gitea && cd {{{DOCKER_PATH_VAR}}}/mirror-to-gitea
+```
+
+## Create docker-compose.yml
+
+```sh
+# *!* Copy content from next command before executing *!*
+
+pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/mirror-to-gitea/docker-compose.yml'
+```
+
+## Copy docker-compose.yml content
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create .env
+
+```sh
+# *!* Copy content from next command before executing *!*
+pbpaste | ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}} 'cat > {{{DOCKER_PATH_VAR}}}/mirror-to-gitea/.env'
+```
+
+## Copy gitea .env content
+
+<Code lang="dotenv" title=".env" code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## View logs
+
+```sh
+docker logs -f mirror-to-gitea
+```
