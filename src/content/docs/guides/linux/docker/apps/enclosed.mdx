@@ -41,6 +41,9 @@ docker run -d --name enclosed --restart unless-stopped -p 8787:8787 \
   -e SERVER_USE_HTTPS=true \
   -e SERVER_HTTPS_KEY="$(cat ./private-key.pem)" \
   -e SERVER_HTTPS_CERT="$(cat ./certificate.pem)" \
+  -e PUBLIC_IS_AUTHENTICATION_REQUIRED=true \
+  -e AUTHENTICATION_JWT_SECRET="$(openssl rand -base64 32 | tr -d '/+=')" \
+  -e AUTHENTICATION_USERS=email@example.com:\$2a\$10\$hVz60OYDiia7wboP1OBYVeS7ZCBoYPgOS.4BnuwQ/Zh1FSTz9w9py \
   corentinth/enclosed
 ```
 
@@ -74,6 +77,17 @@ nano docker-compose-up.sh
 echo "SERVER_USE_HTTPS=true" > .env
 echo "SERVER_HTTPS_KEY=\"$(cat private-key.pem)\"" >> .env
 echo "SERVER_HTTPS_CERT=\"$(cat certificate.pem)\"" >> .env
+echo "PUBLIC_IS_AUTHENTICATION_REQUIRED=true" >> .env
+
+# Generate and add the JWT secret to .env
+AUTHENTICATION_JWT_SECRET=$(openssl rand -base64 32 | tr -d '/+=')
+echo "AUTHENTICATION_JWT_SECRET=\"$AUTHENTICATION_JWT_SECRET\"" >> .env
+
+# Generate and add the hashed user credential to .env
+# https://docs.enclosed.cc/self-hosting/users-authentication-key-generator
+USER_EMAIL="email@example.com"
+USER_PASSWORD='$$2a$$10$$NCkptt9QmnwtijTvg8eWEO0WLCqI.CZvsE/l8seG85upSw8yNSr82'
+echo 'AUTHENTICATION_USERS="'"$USER_EMAIL:$USER_PASSWORD"'"' >> .env
 
 # Run Docker Compose
 docker compose up -d
