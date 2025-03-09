@@ -1,0 +1,13 @@
+services:
+  enclosed:
+    container_name: enclosed
+    image: corentinth/enclosed
+    ports:
+      - 8787:8787
+    environment:
+      SERVER_USE_HTTPS: ${SERVER_USE_HTTPS}
+      SERVER_HTTPS_KEY: ${SERVER_HTTPS_KEY}
+      SERVER_HTTPS_CERT: ${SERVER_HTTPS_CERT}
+    volumes:
+      - ./data:/app/.data
+    restart: unless-stopped

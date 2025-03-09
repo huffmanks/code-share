@@ -50,7 +50,7 @@ sudo nano /etc/fstab
 You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
 
 ```sh
-UUID={{{EXTERNAL_HDD_UUID_VAR}}}  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users  0    0
+UUID={{{EXTERNAL_HDD_UUID_VAR}}}  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users,exec  0    0
 ```
 
 ## Unmount external HDD
@@ -67,4 +67,12 @@ Once all changes are made, reboot your system to apply the fstab modifications a
 
 ```sh
 sudo reboot
+```
+
+## Or remount the HDD
+
+Remount the HDD without rebooting.
+
+```sh
+sudo mount -o remount {{{EXTERNAL_HDD_PATH_VAR}}}
 ```

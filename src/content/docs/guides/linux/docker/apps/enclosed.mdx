@@ -1,0 +1,96 @@
+---
+title: Enclosed
+description: "Enclosed is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential."
+sidebar:
+  order: 3
+references:
+  - href: https://github.com/CorentinTh/enclosed
+    label: GitHub repo
+  - href: https://docs.enclosed.cc/
+    label: Docs
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/enclosed.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+## Create/change directory for Enclosed
+
+```sh
+mkdir -p {{{DOCKER_PATH_VAR}}}/enclosed && cd {{{DOCKER_PATH_VAR}}}/enclosed
+```
+
+## Generate private-key.pem and certificate.pem
+
+```sh
+openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout private-key.pem -out certificate.pem
+```
+
+## Docker run
+
+```sh
+docker run -d --name enclosed --restart unless-stopped -p 8787:8787 \
+  -v ./data:/app/.data \
+  -e SERVER_USE_HTTPS=true \
+  -e SERVER_HTTPS_KEY="$(cat ./private-key.pem)" \
+  -e SERVER_HTTPS_CERT="$(cat ./certificate.pem)" \
+  corentinth/enclosed
+```
+
+## Docker compose
+
+### Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+### Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+### Create docker-compose-up.sh
+
+```sh
+nano docker-compose-up.sh
+```
+
+### Copy script
+
+```sh
+#!/bin/bash
+
+# Clear the contents of the .env file
+> .env
+
+# Add the necessary environment variables to .env
+echo "SERVER_USE_HTTPS=true" > .env
+echo "SERVER_HTTPS_KEY=\"$(cat private-key.pem)\"" >> .env
+echo "SERVER_HTTPS_CERT=\"$(cat certificate.pem)\"" >> .env
+
+# Run Docker Compose
+docker compose up -d
+```
+
+### Make script executable
+
+```sh
+chmod +x docker-compose-up.sh
+```
+
+### Start container
+
+```sh
+./docker-compose-up.sh
+```
+
+## Open web ui
+
+<OpenWebUI port="8787" />

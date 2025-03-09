@@ -2,7 +2,7 @@
 title: Gitea mirror
 description: "This script automatically mirrors the repositories from a github-user or github-organization to your gitea server. Once started, it will create a mirrored repository under a given token for a gitea user, completely automatically."
 sidebar:
-  order: 4
+  order: 5
 references:
   - href: https://github.com/jaedle/mirror-to-gitea
     label: GitHub repo
@@ -25,25 +25,25 @@ import env from "/src/files/env/mirror-to-gitea.env?raw";
 mkdir -p {{{DOCKER_PATH_VAR}}}/mirror-to-gitea && cd {{{DOCKER_PATH_VAR}}}/mirror-to-gitea
 ```
 
-## Copy docker-compose.yml
-
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
-
 ## Create docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy gitea .env
+## Copy docker-compose.yml
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
 
 ## Create .env
 
 ```sh
 nano .env
 ```
+
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Start container
 

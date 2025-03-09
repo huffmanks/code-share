@@ -2,7 +2,7 @@
 title: Gitea
 description: "Gitea is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry and CI/CD. It is similar to GitHub, Bitbucket and GitLab."
 sidebar:
-  order: 3
+  order: 4
 references:
   - href: https://github.com/go-gitea/gitea
     label: GitHub repo
@@ -28,25 +28,25 @@ import env from "/src/files/env/gitea.env?raw";
 mkdir -p {{{DOCKER_PATH_VAR}}}/gitea && cd {{{DOCKER_PATH_VAR}}}/gitea
 ```
 
-## Copy docker-compose.yml
-
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
-
 ## Create docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy gitea .env
+## Copy docker-compose.yml
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
 
 ## Create .env
 
 ```sh
 nano .env
 ```
+
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Create docker network
 

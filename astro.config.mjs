@@ -63,6 +63,10 @@ export default defineConfig({
                   slug: "guides/linux/security",
                 },
                 {
+                  label: "Wake-on-LAN (WOL)",
+                  slug: "guides/linux/wake-on-lan",
+                },
+                {
                   label: "Docker",
                   collapsed: true,
                   items: [

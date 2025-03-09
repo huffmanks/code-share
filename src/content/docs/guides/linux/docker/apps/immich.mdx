@@ -26,25 +26,25 @@ import env from "/src/files/env/immich.env?raw";
 mkdir -p {{{DOCKER_PATH_VAR}}}/immich && cd {{{DOCKER_PATH_VAR}}}/immich
 ```
 
-## Copy docker-compose.yml
-
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
-
 ## Create docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy gitea .env
+## Copy docker-compose.yml
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
 
 ## Create .env
 
 ```sh
 nano .env
 ```
+
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Start container
 
