@@ -1,0 +1,64 @@
+services:
+  pangolin:
+    image: fosrl/pangolin:1.0.1
+    container_name: pangolin
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/"]
+      interval: "3s"
+      timeout: "3s"
+      retries: 5
+
+  gerbil:
+    image: fosrl/gerbil:1.0.0
+    container_name: gerbil
+    restart: unless-stopped
+    depends_on:
+      pangolin:
+        condition: service_healthy
+    command:
+      - --reachableAt=http://gerbil:3003
+      - --generateAndSaveKeyTo=/var/config/key
+      - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
+      - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
+    volumes:
+      - ./config/:/var/config
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - 51820:51820/udp
+      - 443:443
+      - 80:80
+
+  traefik:
+    image: traefik:v3.3.3
+    container_name: traefik
+    restart: unless-stopped
+    network_mode: service:gerbil
+    depends_on:
+      pangolin:
+        condition: service_healthy
+    command:
+      - --configFile=/etc/traefik/traefik_config.yml
+    environment:
+      CLOUDFLARE_DNS_API_TOKEN: ${CLOUDFLARE_DNS_API_TOKEN}
+    volumes:
+      - ./config/traefik:/etc/traefik:ro
+      - ./config/letsencrypt:/letsencrypt
+
+  # newt:
+  #   image: fosrl/newt
+  #   container_name: newt
+  #   restart: unless-stopped
+  #   environment:
+  #     PANGOLIN_ENDPOINT: ${PANGOLIN_ENDPOINT}
+  #     NEWT_ID: ${NEWT_ID}
+  #     NEWT_SECRET: ${NEWT_SECRET}
+
+networks:
+  default:
+    driver: bridge
+    name: pangolin

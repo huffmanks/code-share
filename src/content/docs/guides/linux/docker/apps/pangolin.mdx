@@ -1,0 +1,94 @@
+---
+title: Pangolin
+description: "Pangolin is a self-hosted tunneled reverse proxy server with identity and access control, designed to securely expose private resources on distributed networks. Acting as a central hub, it connects isolated networks — even those behind restrictive firewalls — through encrypted tunnels, enabling easy access to remote services without opening ports."
+references:
+  - href: https://github.com/fosrl/pangolin
+    label: GitHub repo
+  - href: https://docs.fossorial.io/overview
+    label: Docs
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Aside, Code } from "@astrojs/starlight/components";
+import dockerCompose from "/src/files/compose/pangolin.yml?raw";
+import configYml from "/src/files/config/pangolin/config.yml?raw";
+import dynamicConfigYml from "/src/files/config/pangolin/dynamic_config.yml?raw";
+import traefikConfigYml from "/src/files/config/pangolin/traefik_config.yml?raw";
+import env from "/src/files/env/pangolin.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+## Create/change directory for Pangolin
+
+```sh
+mkdir -p {{{DOCKER_PATH_VAR}}}/pangolin/config {{{DOCKER_PATH_VAR}}}/pangolin/traefik && cd {{{DOCKER_PATH_VAR}}}/pangolin
+```
+
+## Create docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+## Copy docker-compose.yml
+
+<Code lang="yml" title="docker-compose.yml" code={dockerCompose} />
+
+## Create ./config/config.yml
+
+```sh
+nano ./config/config.yml
+```
+
+## Copy config.yml
+
+<Code lang="yml" title="config.yml" code={configYml} />
+
+## Create ./traefik/traefik_config.yml
+
+```sh
+nano ./traefik/traefik_config.yml
+```
+
+## Copy traefik_config.yml
+
+<Code lang="yml" title="traefik_config.yml" code={traefikConfigYml} />
+
+## Create ./traefik/dynamic_config.yml
+
+```sh
+nano ./traefik/dynamic_config.yml
+```
+
+## Copy dynamic_config.yml
+
+<Code lang="yml" title="dynamic_config.yml" code={dynamicConfigYml} />
+
+## Create Cloudflare DNS API token
+
+<Aside type="caution">Make sure your API token has the permissions Zone/Zone/Read and Zone/DNS/Edit and make sure it applies to all zones.</Aside>
+
+## Create .env
+
+```sh
+nano .env
+```
+
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="3000" />

@@ -18,7 +18,7 @@ services:
     networks:
       - gitea-network
     ports:
-      - "3001:3000"
+      - "3004:3000"
       - "222:22"
     volumes:
       - ./gitea:/data
