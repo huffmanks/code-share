@@ -6,8 +6,8 @@ services:
       - 5001:5001
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /{{{DOCKER_PATH_VAR}}}/dockge/data:/app/data
-      - /opt/stacks:/opt/stacks
+      - ./data:/app/data
+      - /{{{DOCKER_PATH_VAR}}}/dockge/stacks:{{{DOCKER_PATH_VAR}}}/dockge/stacks
     environment:
-      - DOCKGE_STACKS_DIR=/opt/stacks
+      - DOCKGE_STACKS_DIR=/{{{DOCKER_PATH_VAR}}}/dockge/stacks
     restart: unless-stopped

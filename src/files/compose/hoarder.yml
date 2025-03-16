@@ -5,7 +5,7 @@ services:
     ports:
       - 3005:3000
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/hoarder/data:/data
+      - ./data:/data
     env_file:
       - .env
     environment:
@@ -29,7 +29,7 @@ services:
     image: getmeili/meilisearch:v1.11.1
     container_name: meilisearch
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/meilisearch/data:/meili_data
+      - ./meilisearch/data:/meili_data
     env_file:
       - .env
     environment:

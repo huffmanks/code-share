@@ -12,6 +12,7 @@ import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/bytestash.yml?raw";
+import env from "/src/files/env/bytestash.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -34,6 +35,16 @@ nano docker-compose.yml
 ## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## Create .env
+
+```sh
+nano .env
+```
+
+## Copy gitea .env
+
+<Code lang="dotenv" title=".env" code={env} />
 
 ## Start container
 

@@ -5,11 +5,11 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/bytestash/data/snippets:/data/snippets
+      - ./data/snippets:/data/snippets
     environment:
       # See https://github.com/jordan-dalby/ByteStash/wiki/FAQ#environment-variables
       BASE_PATH: ""
-      JWT_SECRET: your-secret
+      JWT_SECRET: ${JWT_SECRET}
       TOKEN_EXPIRY: 24h
       ALLOW_NEW_ACCOUNTS: "true"
       DEBUG: "true"
