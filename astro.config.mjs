@@ -19,11 +19,11 @@ export default defineConfig({
       head: generateHeadMeta({
         pageTitle: "CodeShare",
         pageDescription: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
-        pageUrl: process.env.NODE_ENV === "development" ? "http://localhost:4321" : "https://codeshare.huffmanks.com",
+        pageUrl: "https://codeshare.huffmanks.com",
       }),
       customCss: ["./src/styles/global.css"],
       logo: {
-        src: "./src/assets/image.svg",
+        src: "./src/assets/logo.svg",
       },
       components: {
         ContentPanel: "./src/components/content-panel.astro",

@@ -2,7 +2,6 @@ type GenerateHeadMetaProps = {
   pageTitle: string;
   pageDescription: string;
   pageUrl: string;
-  imageUrl?: string;
   parentTitle?: string;
 };
 
@@ -12,9 +11,10 @@ type HeadConfig = {
   content?: string;
 };
 
-export function generateHeadMeta({ pageTitle, pageDescription, pageUrl, imageUrl, parentTitle = "" }: GenerateHeadMetaProps): HeadConfig[] {
+export function generateHeadMeta({ pageTitle, pageDescription, pageUrl, parentTitle = "" }: GenerateHeadMetaProps): HeadConfig[] {
   const siteSuffix = " | CodeShare";
   const parentSuffix = parentTitle ? ` - ${parentTitle}` : "";
+  const imageUrl = "https://codeshare.huffmanks.com/meta.png";
 
   return [
     {

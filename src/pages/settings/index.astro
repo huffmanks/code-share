@@ -1,7 +1,6 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 
-import imageUrl from "@/assets/image.svg";
 import { SettingsForm } from "@/components/settings-form";
 import { generateHeadMeta } from "@/lib/generateHeadMeta";
 
@@ -11,7 +10,7 @@ const pageUrl = Astro.url.href;
 <StarlightPage
   frontmatter={{
     title: "Settings",
-    head: generateHeadMeta({ pageTitle: "Settings", pageDescription: "Custom settings for the guides.", pageUrl, imageUrl: imageUrl.src }),
+    head: generateHeadMeta({ pageTitle: "Settings", pageDescription: "Custom settings for the guides.", pageUrl }),
     tableOfContents: false,
     prev: false,
     next: false,
