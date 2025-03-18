@@ -1,9 +1,12 @@
 ---
-import { borderColorVariants, colorVariants } from "@/lib/constants";
-import { getVariant } from "@/lib/utils";
 import { Code } from "@astrojs/starlight/components";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
+
+import imageUrl from "@/assets/image.svg";
+import { borderColorVariants, colorVariants } from "@/lib/constants";
+import { generateHeadMeta } from "@/lib/generateHeadMeta";
+import { getVariant } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const cheatsheets = await getCollection("cheatsheets");
@@ -15,9 +18,18 @@ export async function getStaticPaths() {
 }
 
 const { cheatsheet } = Astro.props;
+const pageUrl = Astro.url.href;
 ---
 
-<StarlightPage frontmatter={{ title: cheatsheet.data.title, tableOfContents: false, prev: false, next: false }}>
+<StarlightPage
+  frontmatter={{
+    title: cheatsheet.data.title,
+    head: generateHeadMeta({ pageTitle: `${cheatsheet.data.title} Cheatsheet`, pageDescription: cheatsheet.data.description, pageUrl, imageUrl: imageUrl.src }),
+    tableOfContents: false,
+    prev: false,
+    next: false,
+  }}>
+  <p style="margin-top: -20px; margin-bottom: 25px;">{cheatsheet.data.description}</p>
   {
     cheatsheet.data.groups.map((group) => (
       <div>
@@ -29,17 +41,39 @@ const { cheatsheet } = Astro.props;
               <h3>{item.label}</h3>
               <p class="item-description">{item.description}</p>
 
-              {item?.example && (
-                <>
-                  <code>{item.example}</code>
-                </>
-              )}
-              {item?.comment && (
-                <>
-                  <div class="comment">{item.comment}</div>
-                </>
-              )}
-              {item?.code && <Code lang="sh" wrap preserveIndent code={item.code} />}
+              <div class="code-example">
+                {item?.example && (
+                  <>
+                    <code>{item.example}</code>
+                  </>
+                )}
+                {item?.commands && (
+                  <>
+                    {item.commands.map((command) => (
+                      <div class="command">
+                        {command.steps.map((step, idx) => (
+                          <>
+                            <kbd class="kbd" style={{ borderColor: getVariant(borderColorVariants, index), boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}` }}>
+                              {step.key}
+                            </kbd>
+                            {idx + 1 !== command.steps.length && <>{command.isAlternative ? <span>or</span> : <span>+</span>}</>}
+                          </>
+                        ))}
+                      </div>
+                    ))}
+                  </>
+                )}
+                {item?.code && (
+                  <>
+                    <Code lang={item.codeLang} wrap preserveIndent code={item.code} />
+                  </>
+                )}
+                {item?.comment && (
+                  <>
+                    <div class="comment">{item.comment}</div>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -56,13 +90,8 @@ const { cheatsheet } = Astro.props;
     margin: 0 auto 30px;
   }
 
-  h2,
-  .item-description {
-    margin-bottom: 10px;
-  }
-
-  .group-description {
-    margin-bottom: 20px;
+  h2 {
+    margin-bottom: 5px;
   }
 
   .cheatsheet-card {
@@ -71,8 +100,19 @@ const { cheatsheet } = Astro.props;
     border: 1px solid var(--sl-color-gray-5);
   }
 
-  .cheatsheet-card p {
-    margin-bottom: 0;
+  .group-description,
+  .item-description {
+    margin-bottom: 10px;
+  }
+
+  .code-example {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .code-example code {
+    width: fit-content;
   }
 
   .comment {
@@ -81,6 +121,23 @@ const { cheatsheet } = Astro.props;
     font-family: monospace;
     line-height: normal;
     color: var(--sl-color-gray-3);
+  }
+
+  .command {
+    display: flex;
+    align-items: center;
+    gap: 0.5ch;
+  }
+
+  .kbd {
+    display: inline-block;
+    padding: 3px 6px;
+    background-color: var(--sl-color-bg-inline-code);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 5px;
+    font-family: monospace;
+    text-align: center;
   }
 
   /* ==== Overrides ==== */

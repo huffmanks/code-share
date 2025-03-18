@@ -1,10 +1,15 @@
 ---
-import SnippetContainer from "@/components/snippet";
-import FragmentCode from "@/components/snippet/fragment-code.astro";
-import type { Fragment } from "@/types";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { experimental_AstroContainer } from "astro/container";
 import { getCollection } from "astro:content";
+
+import imageUrl from "@/assets/image.svg";
+import SnippetContainer from "@/components/snippet";
+import FragmentCode from "@/components/snippet/fragment-code.astro";
+import { generateHeadMeta } from "@/lib/generateHeadMeta";
+import type { Fragment } from "@/types";
+
+const pageUrl = Astro.url.href;
 
 const collection = await getCollection("snippets");
 
@@ -30,7 +35,15 @@ const snippets = await Promise.all(
 );
 ---
 
-<StarlightPage frontmatter={{ title: "Snippets", tableOfContents: false, prev: false, next: false, pagefind: false }}>
+<StarlightPage
+  frontmatter={{
+    title: "Snippets",
+    head: generateHeadMeta({ pageTitle: "Snippets", pageDescription: "A collection of useful code snippets for various programming languages and tasks.", pageUrl, imageUrl: imageUrl.src }),
+    tableOfContents: false,
+    prev: false,
+    next: false,
+    pagefind: false,
+  }}>
   <SnippetContainer client:load snippets={snippets} />
 </StarlightPage>
 

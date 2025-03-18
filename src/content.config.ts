@@ -38,8 +38,21 @@ export const collections = {
               label: z.string(),
               description: z.string(),
               code: z.string().optional(),
+              codeLang: z.string().default("sh"),
               comment: z.string().optional(),
               example: z.string().optional(),
+              commands: z
+                .array(
+                  z.object({
+                    steps: z.array(
+                      z.object({
+                        key: z.string(),
+                      })
+                    ),
+                    isAlternative: z.boolean().default(false),
+                  })
+                )
+                .optional(),
             })
           ),
         })

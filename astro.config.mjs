@@ -4,18 +4,31 @@ import starlight from "@astrojs/starlight";
 import { defineConfig, passthroughImageService } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
 
+import { generateHeadMeta } from "./src/lib/generateHeadMeta";
+
 export default defineConfig({
   site: "https://codeshare.huffmanks.com",
   image: {
     service: passthroughImageService(),
   },
   integrations: [
+    preact(),
     starlight({
-      title: "Code Share",
-      description: "Code Share is your go-to platform for clear, practical coding guides and reusable code snippets.",
+      title: "CodeShare",
+      description: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
+      head: generateHeadMeta({
+        pageTitle: "CodeShare",
+        pageDescription: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
+        pageUrl: process.env.NODE_ENV === "development" ? "http://localhost:4321" : "https://codeshare.huffmanks.com",
+      }),
       customCss: ["./src/styles/global.css"],
       logo: {
         src: "./src/assets/image.svg",
+      },
+      components: {
+        ContentPanel: "./src/components/content-panel.astro",
+        SocialIcons: "./src/components/social-icons.astro",
+        ThemeSelect: "./src/components/theme-select.astro",
       },
       plugins: [starlightThemeRapide()],
       expressiveCode: {
@@ -36,11 +49,6 @@ export default defineConfig({
             tooltipSuccessForeground: "#e3dcdc",
           },
         },
-      },
-      components: {
-        ContentPanel: "./src/components/content-panel.astro",
-        SocialIcons: "./src/components/social-icons.astro",
-        ThemeSelect: "./src/components/theme-select.astro",
       },
       sidebar: [
         {
@@ -138,6 +146,5 @@ export default defineConfig({
         },
       ],
     }),
-    preact(),
   ],
 });
