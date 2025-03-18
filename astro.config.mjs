@@ -4,8 +4,6 @@ import starlight from "@astrojs/starlight";
 import { defineConfig, passthroughImageService } from "astro/config";
 import starlightThemeRapide from "starlight-theme-rapide";
 
-import { generateHeadMeta } from "./src/lib/generateHeadMeta";
-
 export default defineConfig({
   site: "https://codeshare.huffmanks.com",
   image: {
@@ -16,11 +14,32 @@ export default defineConfig({
     starlight({
       title: "CodeShare",
       description: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
-      head: generateHeadMeta({
-        pageTitle: "CodeShare",
-        pageDescription: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
-        pageUrl: "https://codeshare.huffmanks.com",
-      }),
+      head: [
+        {
+          tag: "meta",
+          attrs: {
+            name: "image",
+            property: "image",
+            content: "https://codeshare.huffmanks.com/meta.png",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
+            name: "og:image",
+            property: "og:image",
+            content: "https://codeshare.huffmanks.com/meta.png",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
+            name: "twitter:image",
+            property: "twitter:image",
+            content: "https://codeshare.huffmanks.com/meta.png",
+          },
+        },
+      ],
       customCss: ["./src/styles/global.css"],
       logo: {
         src: "./src/assets/logo.svg",
