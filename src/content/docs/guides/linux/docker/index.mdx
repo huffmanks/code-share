@@ -1,9 +1,15 @@
 ---
 title: Docker
 description: Installing Docker on a Debian-based Linux system is a straightforward process, but ensuring that all dependencies, keyrings and configurations are correctly set up is crucial for a smooth installation. This guide walks you through the steps needed to install Docker, add users to the Docker group and finalize the setup for managing containers on your Debian system. By the end of this guide, your system will be fully ready to run Docker containers efficiently and securely.
+references:
+  - href: https://docs.docker.com/engine/install/debian
+    label: Docker Engine (Debian)
+  - href: https://docs.docker.com/engine/install/ubuntu
+    label: Docker Engine (Ubuntu)
 ---
 
-import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 export const debianAptSource = `
 echo \\
@@ -17,65 +23,72 @@ echo \\
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 `;
+export const daemonJson = `
+{
+  "data-root": "{{{EXTERNAL_HDD_PATH_VAR}}}/docker-data"
+}
+`;
+export const verifyDockerData = `
+# Docker Root Dir: {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data
+docker info | grep "Docker Root Dir"
+`;
 
 ## Getting started
 
 <p>{frontmatter.description}</p>
 
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
 ## Pre-install
 
-### Install required dependencies
+<Steps>
 
-Before installing Docker, ensure your system has all the necessary dependencies. This step installs packages that are essential for Docker to function properly on Debian Linux.
+1. ### Install required dependencies
 
-```sh
-sudo apt install ca-certificates curl -y
-```
+   Before installing Docker, ensure your system has all the necessary dependencies. This step installs packages that are essential for Docker to function properly on Debian Linux.
 
-### Install required keyrings
+   <Code lang="sh" code={`sudo apt install ca-certificates curl -y`} />
 
-Docker requires keyrings to authenticate the software packages during installation. This step ensures that your system has the appropriate keyrings installed to verify Docker’s official package sources.
+2. ### Install required keyrings
 
-```sh
-sudo install -m 0755 -d /etc/apt/keyrings
-```
+   Docker requires keyrings to authenticate the software packages during installation. This step ensures that your system has the appropriate keyrings installed to verify Docker’s official package sources.
 
-### Add Docker GPG key
+   <Code lang="sh" code={`sudo install -m 0755 -d /etc/apt/keyrings`} />
 
-Add the official Docker GPG key to your system’s keyring. This ensures that packages you download are verified as authentic and from the trusted Docker repositories.
+3. ### Add Docker GPG key
 
-```sh wrap
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-```
+   Add the official Docker GPG key to your system’s keyring. This ensures that packages you download are verified as authentic and from the trusted Docker repositories.
 
-### Change file permission
+   <Code lang="sh" code={`sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc`} />
 
-Modify the file permissions to ensure Docker's configuration files and directories are properly accessible. This step is essential for maintaining system security and ensuring Docker operates smoothly.
+4. ### Change file permission
 
-```sh
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-```
+   Modify the file permissions to ensure Docker's configuration files and directories are properly accessible. This step is essential for maintaining system security and ensuring Docker operates smoothly.
 
-### Add docker repository to apt source
+   <Code lang="sh" code={`sudo chmod a+r /etc/apt/keyrings/docker.asc`} />
 
-Add Docker’s official repository to your APT sources. This will allow you to install Docker directly from Docker’s official repository, ensuring you get the latest version.
+5. ### Add docker repository to apt source
 
-<Tabs syncKey="distribution">
-  <TabItem label="Debian">
-    <Code lang="sh" wrap preserveIndent code={debianAptSource} />
-  </TabItem>
-  <TabItem label="Ubuntu">
-    <Code lang="sh" wrap preserveIndent code={ubuntuAptSource} />
-  </TabItem>
-</Tabs>
+   Add Docker’s official repository to your APT sources. This will allow you to install Docker directly from Docker’s official repository, ensuring you get the latest version.
 
-### Update apt package list
+   <Tabs syncKey="distribution">
+     <TabItem label="Debian">
+       <Code lang="sh" wrap preserveIndent code={debianAptSource} />
+     </TabItem>
+     <TabItem label="Ubuntu">
+       <Code lang="sh" wrap preserveIndent code={ubuntuAptSource} />
+     </TabItem>
+   </Tabs>
 
-Run an APT update to refresh your package database and include the new Docker repository. This ensures that your system recognizes Docker as an available package for installation.
+6. ### Update apt package list
 
-```sh
-sudo apt update
-```
+   Run an APT update to refresh your package database and include the new Docker repository. This ensures that your system recognizes Docker as an available package for installation.
+
+   <Code lang="sh" code={`sudo apt update`} />
+
+</Steps>
 
 ## Install Docker
 
@@ -87,77 +100,64 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
 ## Post-install
 
-### Add user to docker group
+<Steps>
 
-Add your user to the docker group. This allows you to run Docker commands without needing sudo each time, streamlining the Docker management process.
+1. ### Add user to docker group
 
-```sh
-sudo groupadd docker
-```
+   Add your user to the docker group. This allows you to run Docker commands without needing sudo each time, streamlining the Docker management process.
 
-### Modify user permissions
+   <Code lang="sh" code={`sudo groupadd docker`} />
 
-Modify user permissions to ensure they have the necessary access rights to interact with Docker. This step ensures that the user has proper control over Docker without compromising system security.
+2. ### Modify user permissions
 
-```sh
-sudo usermod -aG docker $USER
-```
+   Modify user permissions to ensure they have the necessary access rights to interact with Docker. This step ensures that the user has proper control over Docker without compromising system security.
 
-### Reboot the system
+   <Code lang="sh" code={`sudo usermod -aG docker $USER`} />
 
-Finally, reboot your system to ensure all changes take effect. This step ensures that your system is fully prepared to run Docker and any necessary services start properly on boot.
+3. ### Reboot the system
 
-```sh
-sudo reboot
-```
+   Finally, reboot your system to ensure all changes take effect. This step ensures that your system is fully prepared to run Docker and any necessary services start properly on boot.
+
+   <Code lang="sh" code={`sudo reboot`} />
+
+</Steps>
 
 ## Docker data on external HDD (optional)
 
-### Stop docker
+<Steps>
 
-Stop the Docker service.
+1. ### Stop docker
 
-```sh
-sudo systemctl stop docker
-```
+   Stop the Docker service.
 
-### Move docker data
+   <Code lang="sh" code={`sudo systemctl stop docker`} />
 
-Move docker data to the new directory.
+2. ### Move docker data
 
-```sh
-sudo mv /var/lib/docker {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data
-```
+   Move docker data to the new directory.
 
-### Nano daemon.json
+   <Code lang="sh" code={`sudo mv /var/lib/docker {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data`} />
 
-```sh
-sudo nano /etc/docker/daemon.json
-```
+3. ### Open daemon.json
 
-### Modify Docker daemon.json
+   <Code lang="sh" code={`sudo nano /etc/docker/daemon.json`} />
 
-Modify the Docker daemon settings to use the new directory.
+4. ### Modify Docker daemon.json
 
-```json
-{
-  "data-root": "{{{EXTERNAL_HDD_PATH_VAR}}}/docker-data"
-}
-```
+   Modify the Docker daemon settings to use the new directory.
 
-### Restart Docker
+   <Code lang="json" title="/etc/docker/daemon.json" code={daemonJson} />
 
-Restart the Docker service.
+5. ### Restart Docker
 
-```sh
-sudo systemctl daemon-reload && sudo systemctl restart docker
-```
+   Restart the Docker service.
 
-### Verify change
+   <Code lang="sh" code={`sudo systemctl daemon-reload && sudo systemctl restart docker`} />
 
-Check if Docker is now using the new directory.
+6. ### Verify change
 
-```sh
-# Docker Root Dir: {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data
-docker info | grep "Docker Root Dir"
-```
+   Check if Docker is now using the new directory.
+
+   <Code lang="sh" code={verifyDockerData} />
+
+</Steps>

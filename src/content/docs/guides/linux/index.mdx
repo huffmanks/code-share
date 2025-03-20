@@ -3,30 +3,32 @@ title: Linux
 description: Getting started with Linux involves setting up your system for secure access and keeping it up-to-date. This guide walks you through essential initial steps such as configuring SSH login for remote access, ensuring your system is updated with the latest packages and rebooting the system to apply changes. By following these steps, you'll have a secure and up-to-date Linux environment ready for further use.
 ---
 
+import { Code, Steps } from "@astrojs/starlight/components";
+
 ## Getting started
 
 <p>{frontmatter.description}</p>
 
-## SSH login
+<br />
 
-Secure Shell (SSH) allows you to access your Linux system remotely. In this step, you'll configure SSH login, ensuring you can securely connect to your system from another machine.
+<Steps>
 
-```sh
-ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}
-```
+1. ## SSH login
 
-## Update and upgrade system packages
+   Secure Shell (SSH) allows you to access your Linux system remotely. In this step, you'll configure SSH login, ensuring you can securely connect to your system from another machine.
 
-It’s important to keep your system updated to ensure security patches and software improvements are applied. This step shows you how to update your package list and upgrade all installed packages using APT.
+   <Code lang="sh" code={`ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}`} />
 
-```sh
-sudo apt update && sudo apt upgrade -y
-```
+2. ## Update and upgrade system packages
 
-## Reboot the system
+   It’s important to keep your system updated to ensure security patches and software improvements are applied. This step shows you how to update your package list and upgrade all installed packages using APT.
 
-After performing updates or system changes, it's often necessary to reboot your system. This step ensures all updates take effect, and your system is ready for use with the latest configurations and security patches.
+   <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
 
-```sh
-sudo reboot
-```
+3. ## Reboot the system
+
+   After performing updates or system changes, it's often necessary to reboot your system. This step ensures all updates take effect, and your system is ready for use with the latest configurations and security patches.
+
+   <Code lang="sh" code={`sudo reboot`} />
+
+</Steps>

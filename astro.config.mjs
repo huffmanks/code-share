@@ -113,7 +113,16 @@ export default defineConfig({
             {
               label: "macOS",
               collapsed: true,
-              autogenerate: { directory: "guides/macos" },
+              items: [
+                {
+                  label: "Getting started",
+                  slug: "guides/macos",
+                },
+                {
+                  label: "nix-darwin",
+                  slug: "guides/macos/nix-darwin",
+                },
+              ],
             },
           ],
         },

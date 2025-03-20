@@ -21,19 +21,17 @@ import yaml from "/src/files/compose/open-webui.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Open WebUI
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/open-webui && cd {{{DOCKER_PATH_VAR}}}/open-webui
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
-
-## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 

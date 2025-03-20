@@ -20,29 +20,25 @@ import env from "/src/files/env/hoarder.env?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Hoarder
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/hoarder && cd {{{DOCKER_PATH_VAR}}}/hoarder
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy docker-compose.yml
-
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 
-## Create .env
+## .env
 
 ```sh
 nano .env
 ```
-
-## Copy gitea .env
 
 <Code lang="dotenv" title=".env" code={env} />
 

@@ -17,19 +17,17 @@ import yaml from "/src/files/compose/pinchflat.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Pinchflat
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/pinchflat && cd {{{DOCKER_PATH_VAR}}}/pinchflat
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
-
-## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 

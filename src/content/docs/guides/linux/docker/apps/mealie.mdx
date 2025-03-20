@@ -19,19 +19,17 @@ import yaml from "/src/files/compose/mealie.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Mealie
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/mealie && cd {{{DOCKER_PATH_VAR}}}/mealie
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
-
-## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 

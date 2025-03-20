@@ -13,23 +13,7 @@
 ### Linux
 
 - [ ] Add tailscale/headscale setup
-- [ ] Add file tree to pangolin and others
-
-      ```jsx
-
-      import { FileTree } from '@astrojs/starlight/components'
-
-      <FileTree>
-      - astro.config.mjs an **important** file
-      - package.json
-      - README.md
-      - src
-        - components
-          - **Header.astro**
-        - …
-      - pages/
-      </FileTree>
-      ```
+- [ ] Add file tree to docker apps
 
 #### Docker apps
 
@@ -37,5 +21,4 @@
 
 ### macOS
 
-- [ ] Refactor nix setup
-- [ ] Add homebrew setup
+- [ ] embed nix config files using import yaml from "/src/files/compose/minio.yml?raw";

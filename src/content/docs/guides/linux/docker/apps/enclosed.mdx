@@ -21,7 +21,7 @@ import yaml from "/src/files/compose/enclosed.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Enclosed
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/enclosed && cd {{{DOCKER_PATH_VAR}}}/enclosed
@@ -49,23 +49,19 @@ docker run -d --name enclosed --restart unless-stopped -p 8787:8787 \
 
 ## Docker compose
 
-### Create docker-compose.yml
+### docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-### Copy docker-compose.yml
-
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 
-### Create docker-compose-up.sh
+### docker-compose-up.sh
 
 ```sh
 nano docker-compose-up.sh
 ```
-
-### Copy script
 
 ```sh
 #!/bin/bash

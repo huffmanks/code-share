@@ -19,19 +19,17 @@ import yaml from "/src/files/compose/home-assistant.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Home Assistant
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/home-assistant && cd {{{DOCKER_PATH_VAR}}}/home-assistant
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
-
-## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 

@@ -19,29 +19,25 @@ import env from "/src/files/env/mirror-to-gitea.env?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for mirror to Gitea
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/mirror-to-gitea && cd {{{DOCKER_PATH_VAR}}}/mirror-to-gitea
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy docker-compose.yml
-
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 
-## Create .env
+## .env
 
 ```sh
 nano .env
 ```
-
-## Copy gitea .env
 
 <Code lang="dotenv" title=".env" code={env} />
 

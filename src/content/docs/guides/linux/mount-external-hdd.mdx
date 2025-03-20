@@ -3,76 +3,76 @@ title: Mount external HDD
 description: Mounting an external hard drive (HDD) on Linux is a straightforward process, but it requires a few key steps to ensure the drive is properly recognized, mounted and available for use. This guide walks you through how to find your mounted drives, obtain the drive's UUID, create a mount point and configure your system to automatically mount the external HDD on boot. By following these steps, you'll ensure the drive is securely mounted and ready for use.
 ---
 
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
 <p>{frontmatter.description}</p>
 
-## Identify mounted drives
+<br />
 
-The first step is to identify the drives that are currently mounted on your system. This will help you locate the external HDD and determine where it’s currently mounted, if at all.
+<Steps>
 
-```sh
-lsblk
-```
+1.  ## Identify mounted drives
 
-## Obtain drive UUID
+    The first step is to identify the drives that are currently mounted on your system. This will help you locate the external HDD and determine where it’s currently mounted, if at all.
 
-Each drive in Linux has a unique identifier called the UUID. This step shows you how to obtain the UUID of your external HDD, which will be used for reliable mounting.
+    <Code lang="sh" code={`lsblk`} />
 
-```sh
-sudo blkid /dev/sda1
-```
+2.  ## Obtain drive UUID
 
-## Create a mount point
+    Each drive in Linux has a unique identifier called the UUID. This step shows you how to obtain the UUID of your external HDD, which will be used for reliable mounting.
 
-A mount point is a directory where your external HDD will be accessed. In this step, you’ll create a directory that will serve as the location for your drive’s mount.
+    <Code lang="sh" code={`sudo blkid /dev/sda1`} />
 
-```sh
-sudo mkdir -p {{{EXTERNAL_HDD_PATH_VAR}}}
-```
+3.  ## Create a mount point
 
-## Change ownership of mount point
+    A mount point is a directory where your external HDD will be accessed. In this step, you’ll create a directory that will serve as the location for your drive’s mount.
 
-After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
+    <Code lang="sh" code={`sudo mkdir -p {{{EXTERNAL_HDD_PATH_VAR}}}`} />
 
-```sh
-sudo chown -R $USER:$USER {{{EXTERNAL_HDD_PATH_VAR}}} && sudo chmod -R 755 {{{EXTERNAL_HDD_PATH_VAR}}}
-```
+4.  ## Change ownership of mount point
 
-## Modify fstab for auto-mount
+    After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
 
-The /etc/fstab file controls how filesystems are mounted during system boot. This step shows you how to modify fstab to automatically mount your external HDD every time the system starts.
+    <Code lang="sh" code={`sudo chown -R $USER:$USER {{{EXTERNAL_HDD_PATH_VAR}}} && sudo chmod -R 755 {{{EXTERNAL_HDD_PATH_VAR}}}`} />
 
-```sh
-sudo nano /etc/fstab
-```
+5.  ## Modify fstab for auto-mount
 
-## Add mount entry to fstab
+    The /etc/fstab file controls how filesystems are mounted during system boot. This step shows you how to modify fstab to automatically mount your external HDD every time the system starts.
 
-You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
+    <Code lang="sh" code={`sudo nano /etc/fstab`} />
 
-```sh
-UUID={{{EXTERNAL_HDD_UUID_VAR}}}  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users,exec  0    0
-```
+6.  ## Add mount entry to fstab
 
-## Unmount external HDD
+    You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
 
-Before making permanent changes, unmount the drive to ensure it’s safely disconnected from the system. This step avoids any potential data corruption while you edit configuration files.
+    <Code lang="sh" code={`UUID={{{EXTERNAL_HDD_UUID_VAR}}}  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users,exec  0    0`} />
 
-```sh
-sudo umount /dev/sda1
-```
+7.  ## Unmount external HDD
 
-## Reboot the system
+    Before making permanent changes, unmount the drive to ensure it’s safely disconnected from the system. This step avoids any potential data corruption while you edit configuration files.
 
-Once all changes are made, reboot your system to apply the fstab modifications and ensure that your external HDD mounts correctly at startup.
+    <Code lang="sh" code={`sudo umount /dev/sda1`} />
 
-```sh
-sudo reboot
-```
+8.  ## Reboot or remount
 
-## Or remount the HDD
+    <Tabs>
 
-Remount the HDD without rebooting.
+          <TabItem label="Reboot the system">
 
-```sh
-sudo mount -o remount {{{EXTERNAL_HDD_PATH_VAR}}}
-```
+              Once all changes are made, reboot your system to apply the fstab modifications and ensure that your external HDD mounts correctly at startup.
+
+              <Code lang="sh" code={`sudo reboot`} />
+
+          </TabItem>
+
+          <TabItem label="Remount the HDD">
+
+              Remount the HDD without rebooting.
+
+              <Code lang="sh" code={`sudo mount -o remount {{{EXTERNAL_HDD_PATH_VAR}}}`} />
+
+          </TabItem>
+
+    </Tabs>
+
+</Steps>

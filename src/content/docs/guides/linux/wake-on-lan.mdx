@@ -3,24 +3,24 @@ title: Wake-on-LAN (WOL)
 description: If your computer supports Wake-on-LAN (mostly for Ethernet connections), you can send a "magic packet" to wake it up.
 ---
 
+import { Code, Steps } from "@astrojs/starlight/components";
+
 <p>{frontmatter.description}</p>
 
-## Install ethtool
+<br />
 
-```sh
-sudo apt install ethtool
-```
+<Steps>
 
-## Enable WOL
+1. ## Install ethtool
 
-```sh
-sudo ethtool -s eth0 wol g
-```
+   <Code lang="sh" code={`sudo apt install ethtool`} />
 
-## Send a wake-up packer
+2. ## Enable WOL
 
-Send a wake-up packet from another machine.
+   <Code lang="sh" code={`sudo ethtool -s eth0 wol g`} />
 
-```sh
-wakeonlan {{{IP_ADDRESS_VAR}}}
-```
+3. ## Send a wake-up packet
+
+   <Code lang="sh" code={`wakeonlan {{{IP_ADDRESS_VAR}}}`} />
+
+</Steps>

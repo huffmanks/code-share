@@ -19,19 +19,17 @@ import yaml from "/src/files/compose/jellyfin.yml?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for Jellyfin
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/jellyfin && cd {{{DOCKER_PATH_VAR}}}/jellyfin
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
-
-## Copy docker-compose.yml
 
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 

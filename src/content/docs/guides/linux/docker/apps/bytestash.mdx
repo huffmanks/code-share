@@ -20,29 +20,25 @@ import env from "/src/files/env/bytestash.env?raw";
 
 <ReferenceLinks references={frontmatter.references} />
 
-## Create/change directory for ByteStash
+## Make directory
 
 ```sh
 mkdir -p {{{DOCKER_PATH_VAR}}}/bytestash && cd {{{DOCKER_PATH_VAR}}}/bytestash
 ```
 
-## Create docker-compose.yml
+## docker-compose.yml
 
 ```sh
 nano docker-compose.yml
 ```
 
-## Copy docker-compose.yml
-
 <Code lang="yml" title="docker-compose.yml" code={yaml} />
 
-## Create .env
+## .env
 
 ```sh
 nano .env
 ```
-
-## Copy gitea .env
 
 <Code lang="dotenv" title=".env" code={env} />
 

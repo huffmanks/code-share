@@ -2,10 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-mark {
-  background-color: var(--sl-color-accent);
-}
-
 :target {
   scroll-margin-top: 15px;
   padding-top: 15px;

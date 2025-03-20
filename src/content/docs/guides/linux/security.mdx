@@ -61,13 +61,21 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 <Steps>
 
-1. <Code lang="sh" title="Install unattended-upgrades" code={`sudo apt install unattended-upgrades`} />
+1. ### Install
 
-2. <Code lang="sh" title="Nano config" code={`sudo nano /etc/apt/apt.conf.d/02periodic`} />
+   <Code lang="sh" code={`sudo apt install unattended-upgrades`} />
 
-3. <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" preserveIndent code={unattendedUpgradesConfig} />
+2. ### Open config
 
-4. <Code lang="sh" title="Check that it is working" code={`sudo unattended-upgrades -d`} />
+   <Code lang="sh" code={`sudo nano /etc/apt/apt.conf.d/02periodic`} />
+
+3. ### Modify config
+
+   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" preserveIndent code={unattendedUpgradesConfig} />
+
+4. ### Verify
+
+   <Code lang="sh" code={`sudo unattended-upgrades -d`} />
 
 </Steps>
 
@@ -77,9 +85,13 @@ Require users to authenticate with a password before using sudo privileges. This
 
 <Steps>
 
-1. <Code lang="sh" title="Update sudoers config" code={`sudo nano /etc/sudoers.d/010_pi-nopasswd`} />
+1. ### Open config
 
-2. <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" preserveIndent code={sudoersConfig} />
+   <Code lang="sh" code={`sudo nano /etc/sudoers.d/010_pi-nopasswd`} />
+
+2. ### Modify config
+
+   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" preserveIndent code={sudoersConfig} />
 
 </Steps>
 
@@ -88,11 +100,17 @@ Require users to authenticate with a password before using sudo privileges. This
 Switch from password-based authentication to SSH key-based authentication. This method is more secure because it eliminates the risk of brute-force attacks and provides stronger encryption for remote logins.
 
 <Steps>
-1. **Client** <Code lang="sh" title="Create key" code={`ssh-keygen -t rsa`} />
+1. ### Create key (client)
 
-2. <Code lang="sh" title="Copy key to server" code={`scp ~/.ssh/id_rsa.pub {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}:~/.ssh/id_rsa.pub`} />
+    <Code lang="sh" code={`ssh-keygen -t rsa`} />
 
-3. **Server** <Code lang="sh" title="Add key to authorized keys" code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
+2. ### Copy ket to host (client)
+
+   <Code lang="sh" code={`scp ~/.ssh/id_rsa.pub {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}:~/.ssh/id_rsa.pub`} />
+
+3. ### Add key to authorized keys (host)
+
+   <Code lang="sh" code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
 
 </Steps>
 
@@ -102,11 +120,17 @@ The sshd_config file is a key part of securing SSH. By adjusting its settings, y
 
 <Steps>
 
-1. <Code lang="sh" title="Nano config" code={`sudo nano /etc/ssh/sshd_config`} />
+1. ### Open config
 
-2. <Code lang="sh" title="Update sshd_config" frame="terminal" preserveIndent code={sshdConfig} />
+   <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
 
-3. <Code lang="sh" title="Restart ssh" code={`sudo service ssh restart`} />
+2. ### Modify config
+
+   <Code lang="sh" title="/etc/ssh/sshd_config" frame="terminal" preserveIndent code={sshdConfig} />
+
+3. ### Restart ssh
+
+   <Code lang="sh" code={`sudo service ssh restart`} />
 
 </Steps>
 
@@ -116,13 +140,21 @@ Install and configure Fail2Ban to protect your server from brute-force attacks. 
 
 <Steps>
 
-1. <Code lang="sh" title="Install fail2ban" code={`sudo apt install fail2ban`} />
+1. ### Install fail2ban
 
-2. <Code lang="sh" title="Nano config" code={`sudo nano /etc/fail2ban/jail.conf`} />
+   <Code lang="sh" code={`sudo apt install fail2ban`} />
 
-3. <Code lang="sh" title="Optional changes" frame="terminal" preserveIndent code={fail2banConfig} />
+2. ### Open config
 
-4. <Code lang="sh" title="Restart fail2ban service" code={`sudo service fail2ban restart`} />
+   <Code lang="sh" code={`sudo nano /etc/fail2ban/jail.conf`} />
+
+3. ### Modify config (optional)
+
+   <Code lang="sh" frame="terminal" preserveIndent code={fail2banConfig} />
+
+4. ### Restart fail2ban service
+
+   <Code lang="sh" code={`sudo service fail2ban restart`} />
 
 </Steps>
 
@@ -132,18 +164,32 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 <Steps>
 
-1. <Code lang="sh" title="Install ufw" code={`sudo apt install ufw`} />
+1. ### Install
 
-2. <Code lang="sh" title="Allow ssh" code={`sudo ufw allow ssh`} />
+   <Code lang="sh" code={`sudo apt install ufw`} />
 
-3. **_Optional_** <Code lang="sh" title="Deny incoming" code={`sudo ufw default deny incoming`} />
+2. ### Allow ssh
 
-4. **_Optional_** <Code lang="sh" title="Allow outgoing" code={`sudo ufw default allow outgoing`} />
+   <Code lang="sh" code={`sudo ufw allow ssh`} />
 
-5. **_Optional_** <Code lang="sh" title="Install ufw" code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
+3. ### Deny incoming (optional)
 
-6. <Code lang="sh" title="Enable ufw" code={`sudo ufw enable`} />
+   <Code lang="sh" code={`sudo ufw default deny incoming`} />
 
-7. <Code lang="sh" title="Check status" code={`sudo ufw status verbose`} />
+4. ### Allow outgoing (optional)
+
+   <Code lang="sh" code={`sudo ufw default allow outgoing`} />
+
+5. ### Add custom rule (optional)
+
+   <Code lang="sh" code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
+
+6. ### Enable ufw
+
+   <Code lang="sh" code={`sudo ufw enable`} />
+
+7. ### Check status
+
+   <Code lang="sh" code={`sudo ufw status verbose`} />
 
 </Steps>
