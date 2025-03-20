@@ -19,7 +19,6 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   dockerPath: "/PATH_TO_DOCKER_APPS",
   externalHddPath: "/PATH_TO_EXTERNAL_HDD",
   externalHddUuid: "$EXTERNAL_HDD_UUID",
-  nixDarwinSetupScript: "https://raw.githubusercontent.com/username/repo/main/setup.sh",
 };
 
 export const settingsFormFields = [
@@ -58,13 +57,6 @@ export const settingsFormFields = [
     name: "externalHddUuid",
     defaultValue: defaultSettingsLocalStorage.externalHddUuid,
   },
-  {
-    id: "d4d014f6-f9cb-48a7-bfb4-75d08d88b791",
-    label: "nix-darwin setup script url",
-    placeholder: "https://raw.githubusercontent.com/username/repo/main/setup.sh",
-    name: "nixDarwinSetupScript",
-    defaultValue: defaultSettingsLocalStorage.nixDarwinSetupScript,
-  },
 ] as const;
 
 export const defaultSettingsFormValues: SettingsForm = {
@@ -73,5 +65,4 @@ export const defaultSettingsFormValues: SettingsForm = {
   dockerPath: "",
   externalHddPath: "",
   externalHddUuid: "",
-  nixDarwinSetupScript: "",
 };
