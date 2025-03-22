@@ -4,75 +4,67 @@ import SnippetList from "@/components/snippet/list";
 import SnippetTable from "@/components/snippet/table";
 import { getLanguagesInfo } from "@/lib/languages";
 import styles from "@/styles/index.module.css";
-import { type SelectedLanguage, type SnippetWithHtml, type SortDirection, type SortField, type SortState, type ToggleView } from "@/types";
+import { type ParamKeys, type SelectedLanguage, type SnippetWithHtml, type SortDirection, type SortField, type ToggleView } from "@/types";
 import { useEffect, useState } from "preact/hooks";
-import { type JSX } from "preact/jsx-runtime";
 
 interface SnippetContainerProps {
   snippets: SnippetWithHtml[];
 }
 
 export default function SnippetContainer({ snippets }: SnippetContainerProps) {
-  function getSearchParams() {
-    if (typeof window === "undefined") return { language: "" as SelectedLanguage, sort: "title" as SortField, direction: "asc" as SortDirection, view: "grid" as ToggleView };
-
+  function getQueryFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return {
-      language: (params.get("language") || "") as SelectedLanguage,
-      sort: (params.get("sort") || "title") as SortField,
-      direction: (params.get("direction") || "asc") as SortDirection,
-      view: (params.get("view") || "grid") as ToggleView,
+      language: (params.get("language") as SelectedLanguage) || "",
+      field: (params.get("field") as SortField) || "title",
+      direction: (params.get("direction") as SortDirection) || "asc",
+      view: (params.get("view") as ToggleView) || "grid",
     };
   }
 
-  const initialParams = getSearchParams();
-
-  const [sortState, setSortState] = useState<SortState>({
-    field: initialParams.sort as SortField,
-    direction: initialParams.direction as SortDirection,
-  });
-  const [selectedLanguage, setSelectedLanguage] = useState<SelectedLanguage>(initialParams.language);
-  const [toggleView, setToggleView] = useState<ToggleView>(initialParams.view);
+  const [query, setQuery] = useState(getQueryFromUrl);
+  const [formattedSnippets, setFormattedSnippets] = useState(snippets);
 
   const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
 
-  const filteredSnippets = snippets.filter((snippet) => (selectedLanguage ? snippet.data.fragments.some((fragment) => fragment.language === selectedLanguage) : true));
+  function handleChange(key: ParamKeys, value: SelectedLanguage | SortField | SortDirection | ToggleView) {
+    setQuery((prev) => {
+      const isSameField = prev.field === value;
+      const newDirection = isSameField && prev.direction === "asc" ? "desc" : "asc";
 
-  const sortedSnippets = [...filteredSnippets].sort((a, b) => {
-    const { field, direction } = sortState;
-    const aValue = field === "title" ? a.data.title.toLowerCase() : new Date(a.data.updatedAt).getTime();
-    const bValue = field === "title" ? b.data.title.toLowerCase() : new Date(b.data.updatedAt).getTime();
+      const params = new URLSearchParams(window.location.search);
+      params.set(key, value);
+      params.set("direction", newDirection);
 
-    if (aValue < bValue) return direction === "asc" ? -1 : 1;
-    if (aValue > bValue) return direction === "asc" ? 1 : -1;
-    return 0;
-  });
+      window.history.replaceState(null, "", `?${params.toString()}`);
 
-  function handleChangeLanguage(e: JSX.TargetedEvent<HTMLSelectElement, Event>) {
-    const target = e.target as HTMLSelectElement;
-    setSelectedLanguage(target.value);
-  }
-
-  function toggleSort(field: SortField) {
-    setSortState((prev) => ({
-      field,
-      direction: prev.field === field && prev.direction === "asc" ? "desc" : "asc",
-    }));
-  }
-
-  function handleToggleView(value: ToggleView) {
-    setToggleView(value);
+      return { ...prev, [key]: value, direction: newDirection };
+    });
   }
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (selectedLanguage) params.set("language", selectedLanguage);
-    params.set("sort", sortState.field);
-    params.set("direction", sortState.direction);
-    params.set("view", toggleView);
+    function updateSnippets() {
+      const filteredSnippets = snippets.filter((snippet) => (query.language ? snippet.data.fragments.some((fragment) => fragment.language === query.language) : true));
 
-    window.history.replaceState(null, "", `?${params.toString()}`);
-  }, [selectedLanguage, sortState, toggleView]);
+      const sortedSnippets = [...filteredSnippets].sort((a, b) => {
+        const { field, direction } = query;
+        const aValue = field === "title" ? a.data.title.toLowerCase() : new Date(a.data.updatedAt).getTime();
+        const bValue = field === "title" ? b.data.title.toLowerCase() : new Date(b.data.updatedAt).getTime();
+
+        if (aValue < bValue) return direction === "asc" ? -1 : 1;
+        if (aValue > bValue) return direction === "asc" ? 1 : -1;
+        return 0;
+      });
+
+      setFormattedSnippets(sortedSnippets);
+    }
+
+    updateSnippets();
+  }, [query]);
+
+  useEffect(() => {
+    setQuery(getQueryFromUrl());
+  }, []);
 
   return (
     <>
@@ -81,7 +73,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
           <label className="sr-only" htmlFor="language-filter">
             Language filter select
           </label>
-          <select name="language-filter" id="language-filter" value={selectedLanguage} onChange={handleChangeLanguage}>
+          <select name="language-filter" id="language-filter" value={query.language} onChange={(e) => handleChange("language", (e.target as HTMLSelectElement).value)}>
             <option value="">All languages</option>
             {languageOptions.map((option) => (
               <option key={option.extension} value={option.extension}>
@@ -98,11 +90,11 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderRight: 0,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
-                backgroundColor: sortState.field === "title" ? "rgb(39, 39, 42)" : "",
-                color: sortState.field === "title" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: query.field === "title" ? "rgb(39, 39, 42)" : "",
+                color: query.field === "title" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => toggleSort("title")}>
-              {sortState.field !== "title" ? <ButtonIcon.az /> : sortState.direction === "asc" ? <ButtonIcon.azdown /> : <ButtonIcon.azup />}
+              onClick={() => handleChange("field", "title")}>
+              {query.field !== "title" ? <ButtonIcon.az /> : query.direction === "asc" ? <ButtonIcon.azdown /> : <ButtonIcon.azup />}
             </button>
             <button
               className="btn"
@@ -110,11 +102,11 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderLeft: 0,
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                backgroundColor: sortState.field === "updatedAt" ? "rgb(39, 39, 42)" : "",
-                color: sortState.field === "updatedAt" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: query.field === "updatedAt" ? "rgb(39, 39, 42)" : "",
+                color: query.field === "updatedAt" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => toggleSort("updatedAt")}>
-              {sortState.field !== "updatedAt" ? <ButtonIcon.cal /> : sortState.direction === "asc" ? <ButtonIcon.caldown /> : <ButtonIcon.calup />}
+              onClick={() => handleChange("field", "updatedAt")}>
+              {query.field !== "updatedAt" ? <ButtonIcon.cal /> : query.direction === "asc" ? <ButtonIcon.caldown /> : <ButtonIcon.calup />}
             </button>
           </div>
 
@@ -125,10 +117,10 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderRight: 0,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
-                backgroundColor: toggleView === "grid" ? "rgb(39, 39, 42)" : "",
-                color: toggleView === "grid" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: query.view === "grid" ? "rgb(39, 39, 42)" : "",
+                color: query.view === "grid" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => handleToggleView("grid")}>
+              onClick={() => handleChange("view", "grid")}>
               <ButtonIcon.grid />
             </button>
             <button
@@ -137,10 +129,10 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderLeft: 0,
                 borderRight: 0,
                 borderRadius: 0,
-                backgroundColor: toggleView === "list" ? "rgb(39, 39, 42)" : "",
-                color: toggleView === "list" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: query.view === "list" ? "rgb(39, 39, 42)" : "",
+                color: query.view === "list" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => handleToggleView("list")}>
+              onClick={() => handleChange("view", "list")}>
               <ButtonIcon.list />
             </button>
             <button
@@ -149,10 +141,10 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
                 borderLeft: 0,
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                backgroundColor: toggleView === "table" ? "rgb(39, 39, 42)" : "",
-                color: toggleView === "table" ? "var(--sl-color-accent-high)" : "",
+                backgroundColor: query.view === "table" ? "rgb(39, 39, 42)" : "",
+                color: query.view === "table" ? "var(--sl-color-accent-high)" : "",
               }}
-              onClick={() => handleToggleView("table")}>
+              onClick={() => handleChange("view", "table")}>
               <ButtonIcon.table />
             </button>
           </div>
@@ -160,17 +152,17 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
       </div>
 
       <div>
-        {toggleView === "list" ? (
+        {query.view === "list" ? (
           <>
-            <SnippetList snippets={sortedSnippets} />
+            <SnippetList snippets={formattedSnippets} />
           </>
-        ) : toggleView === "table" ? (
+        ) : query.view === "table" ? (
           <>
-            <SnippetTable snippets={sortedSnippets} />
+            <SnippetTable snippets={formattedSnippets} />
           </>
         ) : (
           <>
-            <SnippetGrid snippets={sortedSnippets} />
+            <SnippetGrid snippets={formattedSnippets} />
           </>
         )}
       </div>

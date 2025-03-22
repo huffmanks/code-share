@@ -2,22 +2,30 @@
 
 ---
 
-## Issues
-
-- [ ] Snippets page errors when loading url query params that are not default. also does not update select or buttons with active state. data and logic work appropriately
-
----
-
 ## Docs
 
 ### Linux
 
 - [ ] Add tailscale/headscale setup
-- [ ] Add file tree to docker apps
 
-#### Docker apps
+### Docker
 
-- [ ] Add rustdesk
+- [ ] move docker up one level to be equal with linux and macos
+- [ ] add dockerfile guide
+  - Docker apps
+    - [ ] Add file tree to docker apps
+    - [ ] rustdesk
+    - [ ] glance
+    - [ ] headscale
+    - [ ] archivebox
+    - [ ] excalidraw
+    - [ ] ntfy
+    - [ ] postal
+    - [ ] appwrite
+    - [ ] coolify
+    - [ ] kasm
+    - [ ] healthchecks
+    - [ ] duplicati
 
 ### macOS
 

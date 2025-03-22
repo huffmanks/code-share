@@ -19,15 +19,11 @@ export type SnippetWithHtml = Snippet & {
   codeFragments: FragmentWithCodeHtml[];
 };
 
-export type SelectedLanguage = undefined | string;
+export type ParamKeys = "language" | "field" | "direction" | "view";
+export type SelectedLanguage = string;
 export type ToggleView = "grid" | "list" | "table";
 export type SortField = "title" | "updatedAt";
 export type SortDirection = "asc" | "desc";
-
-export type SortState = {
-  field: SortField;
-  direction: SortDirection;
-};
 
 export type LanguageInfo = {
   extension: string;
