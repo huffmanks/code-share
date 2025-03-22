@@ -14,6 +14,16 @@ export default function SnippetList({ snippets }: { snippets: Snippet[] }) {
             </h2>
 
             <SnippetLanguageItem snippet={snippet} />
+            <div>
+              {new Intl.DateTimeFormat("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              }).format(new Date(snippet.data.updatedAt))}
+            </div>
             <div className={styles.description}>
               <p>{snippet.data.description}</p>
             </div>

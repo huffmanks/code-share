@@ -26,7 +26,3 @@
     - [ ] kasm
     - [ ] healthchecks
     - [ ] duplicati
-
-### macOS
-
-- [ ] embed nix config files using import yaml from "/src/files/compose/minio.yml?raw";

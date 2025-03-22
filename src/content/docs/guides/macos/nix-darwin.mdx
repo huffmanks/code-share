@@ -11,6 +11,7 @@ references:
     label: Determinate Systems (Github repo)
 ---
 
+import NixDarwinConfig from "@/components/guides/nix-darwin-config.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
@@ -51,19 +52,23 @@ done
 
 <Steps>
 
-1.  ### Clone repo
+1.  ### Make directory
 
-        <Code lang="sh" code={`git clone https://github.com/huffmanks/config-stash.git .nix-config && cd .nix-config`} />
+        <Code lang="sh" code={`mkdir ~/.nix-config && cd ~/.nix-config`} />
 
-2.  ### Install nix
+2.  ### Add nix files
+
+        <NixDarwinConfig />
+
+3.  ### Install nix
 
         <Code lang="sh" code={nixInstaller} />
 
-3.  ### Install nix-darwin
+4.  ### Install nix-darwin
 
         <Code lang="sh" code={`nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ok-mac-pro`} />
 
-4.  ### Build
+5.  ### Build
         <Code lang="sh" code={`darwin-rebuild switch --flake .#ok-mac-pro`} />
 
 </Steps>

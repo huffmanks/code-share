@@ -13,6 +13,7 @@ references:
     label: Homebrew
 ---
 
+import MacosDotfiles from "@/components/guides/macos-dotfiles.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps } from "@astrojs/starlight/components";
 
@@ -60,9 +61,6 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 6. ## Update git and shell configs
 
-   <Code
-     lang="sh"
-     code={`curl -fsSL https://github.com/huffmanks/config-stash/tarball/main | tar -xz --strip-components=1 --wildcards '*/.dotfiles/.gitconfig' '*/.dotfiles/.gitignore' '*/.dotfiles/.zshrc' '*/.dotfiles/.zprofile' -C ~`}
-   />
+   <MacosDotfiles />
 
 </Steps>
