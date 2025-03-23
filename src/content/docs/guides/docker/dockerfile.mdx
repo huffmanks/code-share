@@ -1,0 +1,232 @@
+---
+title: Dockerfile
+description: A Dockerfile is a script that contains a set of instructions to automate the creation of Docker container images. It defines the base image, dependencies, configurations and commands needed to build and run an application inside a container.
+references:
+  - href: https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile
+    label: Dockerfile (Docker docs)
+  - href: https://docs.docker.com/build/building/multi-platform
+    label: buildx (Docker docs)
+  - href: https://github.com/slimtoolkit/slim
+    label: Slim (Github repo)
+---
+
+import ParagraphWithLink from "@/components/guides/paragraph-with-link.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+## Creating a Dockerfile
+
+To create a `Dockerfile`, follow these steps:
+
+<Steps>
+
+    1. ### Make directory
+
+        ```sh
+        mkdir my-docker-project && cd my-docker-project
+        ```
+
+    2. ### Create a `Dockerfile`
+
+        ```sh
+        nano Dockerfile
+        ```
+
+    3. ### Edit the `Dockerfile`
+
+        ```dockerfile title=Dockerfile
+        # Use a base image
+        FROM node:20-alpine
+
+        # Set working directory
+        WORKDIR /app
+
+        # Copy package files and install dependencies
+        COPY package.json package-lock.json ./
+        RUN npm install --only=production
+
+        # Copy application source
+        COPY . .
+
+        # Expose port and define start command
+        EXPOSE 3000
+        CMD ["node", "server.js"]
+        ```
+
+</Steps>
+
+## Build the image
+
+Once your `Dockerfile` is ready, build the image using the following command:
+
+```sh
+docker build -t my-app .
+```
+
+- `-t my-app` gives the image a name (`my-app`).
+- `.` specifies the build context (current directory).
+
+To verify the built image:
+
+```sh
+docker images
+```
+
+## Running the container
+
+To run a container from the built image:
+
+```sh
+docker run -d -p 3000:3000 --name my-running-app my-app
+```
+
+- `-d` runs the container in detached mode.
+- `-p 3000:3000` maps the container port to the host.
+- `--name my-running-app` assigns a name to the running container.
+
+To check running containers:
+
+```sh
+docker ps
+```
+
+To stop the container:
+
+```sh
+docker stop my-running-app
+```
+
+## Optimizing with Slim
+
+<ParagraphWithLink
+  href="https://github.com/slimtoolkit/slim"
+  label="Slim (SlimToolkit)"
+  text="helps reduce Docker image size by removing unnecessary files and dependencies and by improving the overall security and performance of the image."
+/>
+
+<Steps>
+
+    1. ### Install
+
+        ```sh
+        curl -sLf https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo sh
+        ```
+
+    2. ### Run Slim
+
+        ```sh
+        slim build --target my-app --tag my-app-slim
+        ```
+
+    3. ### Check the size difference
+
+        ```sh
+        docker images
+        ```
+
+    4. ### Run the optimized image
+
+        ```sh
+        docker run -d -p 3000:3000 my-app-slim
+        ```
+
+</Steps>
+
+## Buildx
+
+If you need to build an image for a different CPU architecture (e.g., ARM on an x86 machine), you can use Docker buildx. Buildx supports multi-platform builds and allows you to cross-compile images. This ensures your image can run on multiple architectures without needing native hardware.
+
+### Enable buildx
+
+Ensure buildx is enabled:
+
+```sh
+docker buildx create --use
+```
+
+### Build for a specific architecture
+
+To build an image for an ARM64 architecture:
+
+```sh
+docker buildx build --platform linux/arm64 -t my-app-arm64 .
+```
+
+### Build multi-platform images
+
+To build for multiple architectures at once:
+
+```sh
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-multiarch-app .
+```
+
+If pushing to a registry (e.g., Docker Hub), add `--push`:
+
+```sh
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-dockerhub-user/my-multiarch-app --push .
+```
+
+## Example Dockerfile
+
+This Dockerfile leverages multi-stage builds, dependency caching and a non-root user to create a secure, lightweight and efficient container.
+
+```dockerfile title=Dockerfile
+# Stage 1: Build
+FROM node:20-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
+# Install dependencies with caching optimization
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy the rest of the application files
+COPY . .
+
+# Build the application (if needed)
+RUN npm run build
+
+# Stage 2: Production-ready Image
+FROM node:20-alpine
+
+# Create and use a non-root user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Set working directory
+WORKDIR /app
+
+# Copy built app and dependencies from builder stage
+COPY --from=builder /app ./
+
+# Expose application port
+EXPOSE 3000
+
+# Use a non-root user for running the application
+CMD ["node", "server.js"]
+```
+
+1. ### Multi-stage build
+
+   - The first stage (`builder`) installs dependencies and builds the app.
+   - The final stage only includes the necessary files, reducing image size.
+
+2. ### Dependency caching
+
+   - `npm ci --only=production` ensures reproducibility and avoids unnecessary package installations.
+   - Copying `package.json` before other files allows Docker to cache dependencies efficiently.
+
+3. ### Security enhancements
+   - **Non-root user:** Runs the container with a dedicated user instead of `root`, reducing attack vectors.
+   - **Minimal base image:** Uses `node:20-alpine` to keep the image small and secure.

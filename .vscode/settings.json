@@ -1,5 +1,4 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
   "files.associations": {
     "src/content/snippets/**/*.md": "markdown.snippets"
   },

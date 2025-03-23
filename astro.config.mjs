@@ -118,6 +118,10 @@ export default defineConfig({
                   slug: "guides/docker",
                 },
                 {
+                  label: "Dockerfile",
+                  slug: "guides/docker/dockerfile",
+                },
+                {
                   label: "Apps",
                   collapsed: true,
                   autogenerate: { directory: "guides/docker/apps", collapsed: true },
