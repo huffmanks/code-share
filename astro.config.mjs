@@ -93,21 +93,6 @@ export default defineConfig({
                   label: "Wake-on-LAN (WOL)",
                   slug: "guides/linux/wake-on-lan",
                 },
-                {
-                  label: "Docker",
-                  collapsed: true,
-                  items: [
-                    {
-                      label: "Getting started",
-                      slug: "guides/linux/docker",
-                    },
-                    {
-                      label: "Apps",
-                      collapsed: true,
-                      autogenerate: { directory: "guides/linux/docker/apps", collapsed: true },
-                    },
-                  ],
-                },
               ],
             },
             {
@@ -121,6 +106,21 @@ export default defineConfig({
                 {
                   label: "nix-darwin",
                   slug: "guides/macos/nix-darwin",
+                },
+              ],
+            },
+            {
+              label: "Docker",
+              collapsed: true,
+              items: [
+                {
+                  label: "Getting started",
+                  slug: "guides/docker",
+                },
+                {
+                  label: "Apps",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/docker/apps", collapsed: true },
                 },
               ],
             },

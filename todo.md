@@ -10,12 +10,10 @@
 
 ### Docker
 
-- [ ] move docker up one level to be equal with linux and macos
 - [ ] add dockerfile guide
   - Docker apps
     - [ ] Add file tree to docker apps
     - [ ] rustdesk
-    - [ ] glance
     - [ ] headscale
     - [ ] archivebox
     - [ ] excalidraw
@@ -24,5 +22,5 @@
     - [ ] appwrite
     - [ ] coolify
     - [ ] kasm
-    - [ ] healthchecks
+    - [ ] restic and healthchecks https://nerdyarticles.com/backup-strategy-with-restic-and-healthchecks-io/
     - [ ] duplicati

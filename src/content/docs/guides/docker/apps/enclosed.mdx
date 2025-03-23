@@ -27,9 +27,9 @@ import yaml from "/src/files/compose/enclosed.yml?raw";
 mkdir -p {{{DOCKER_PATH_VAR}}}/enclosed && cd {{{DOCKER_PATH_VAR}}}/enclosed
 ```
 
-## Generate private-key.pem and certificate.pem
+## Generate key and cert
 
-```sh
+```sh title="private-key.pem + certificate.pem"
 openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout private-key.pem -out certificate.pem
 ```
 
@@ -63,7 +63,7 @@ nano docker-compose.yml
 nano docker-compose-up.sh
 ```
 
-```sh
+```sh title=docker-compose-up.sh
 #!/bin/bash
 
 # Clear the contents of the .env file
