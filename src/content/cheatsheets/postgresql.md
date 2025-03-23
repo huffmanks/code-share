@@ -24,6 +24,21 @@ groups:
         code: GRANT privilege_type ON table_name TO username;
         codeLang: sql
         comment: "Replace `privilege_type` with desired permissions (e.g., SELECT, INSERT, UPDATE)."
+      - label: Grant all privileges to a user
+        description: Grants all privileges on a database to a user.
+        code: GRANT ALL PRIVILEGES ON DATABASE database_name TO username;
+        codeLang: sql
+        comment: "This gives the user full control over the database."
+      - label: Grant privileges on all tables in a schema
+        description: Grants specific privileges on all tables in a schema.
+        code: GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO username;
+        codeLang: sql
+        comment: "Replace `public` with the target schema if needed."
+      - label: Grant role to another user
+        description: Assigns a role to a user.
+        code: GRANT role_name TO username;
+        codeLang: sql
+        comment: "This allows the user to inherit the granted role's privileges."
       - label: Revoke privileges from a user
         description: Revokes specific permissions from a user.
         code: REVOKE privilege_type ON table_name FROM username;
@@ -50,6 +65,19 @@ groups:
         code: \l
         codeLang: sh
         comment: "You can also use `SELECT database_name FROM pg_database;` for a more detailed output."
+  - title: Schema Management
+    description: Commands related to managing schemas in PostgreSQL.
+    items:
+      - label: Create a schema
+        description: Defines a new schema in the database.
+        code: CREATE SCHEMA schema_name;
+        codeLang: sql
+        comment: "Schemas help organize database objects."
+      - label: Drop a schema
+        description: Removes a schema and all objects within it.
+        code: DROP SCHEMA schema_name CASCADE;
+        codeLang: sql
+        comment: "Use `CASCADE` to remove dependent objects."
   - title: Table Management
     description: Commands related to table creation, modification and deletion.
     items:
@@ -93,6 +121,20 @@ groups:
           VALUES ('john_doe', NOW());
         codeLang: sql
         comment: "Make sure values match the column data types."
+      - label: Insert multiple rows
+        description: Inserts multiple rows in a single query.
+        code: |
+          INSERT INTO users (username, created_at)
+          VALUES
+          ('john_doe', NOW()),
+          ('jane_smith', NOW());
+        codeLang: sql
+        comment: "Efficient way to insert multiple records at once."
+      - label: Update a row in a table
+        description: Modifies data in a specific row.
+        code: UPDATE users SET username = 'new_name' WHERE id = 1;
+        codeLang: sql
+        comment: "Ensure the WHERE clause is used to avoid updating all rows."
   - title: Indexing
     description: Commands for creating and managing indexes.
     items:

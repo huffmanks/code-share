@@ -55,6 +55,8 @@ maxretry = 3
 
 <p>{frontmatter.description}</p>
 
+---
+
 ## unattended-upgrades
 
 Ensure your Linux system is automatically updated with security patches. Unattended Upgrades enables automatic installation of critical updates without manual intervention, ensuring your system stays secure against newly discovered vulnerabilities.
@@ -79,6 +81,8 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 </Steps>
 
+---
+
 ## Require password for sudo
 
 Require users to authenticate with a password before using sudo privileges. This simple change adds an extra layer of protection by preventing unauthorized users or scripts from executing commands with elevated privileges.
@@ -94,6 +98,8 @@ Require users to authenticate with a password before using sudo privileges. This
    <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" preserveIndent code={sudoersConfig} />
 
 </Steps>
+
+---
 
 ## Use ssh keys for authentication
 
@@ -114,6 +120,8 @@ Switch from password-based authentication to SSH key-based authentication. This 
 
 </Steps>
 
+---
+
 ## sshd_config
 
 The sshd_config file is a key part of securing SSH. By adjusting its settings, you can control login methods, restrict access and enhance overall SSH security, such as disabling root login and limiting authentication methods.
@@ -133,6 +141,8 @@ The sshd_config file is a key part of securing SSH. By adjusting its settings, y
    <Code lang="sh" code={`sudo service ssh restart`} />
 
 </Steps>
+
+---
 
 ## fail2ban
 
@@ -157,6 +167,8 @@ Install and configure Fail2Ban to protect your server from brute-force attacks. 
    <Code lang="sh" code={`sudo service fail2ban restart`} />
 
 </Steps>
+
+---
 
 ## ufw firewall
 

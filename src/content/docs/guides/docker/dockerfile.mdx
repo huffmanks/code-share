@@ -22,6 +22,8 @@ import { Steps } from "@astrojs/starlight/components";
 
 <ReferenceLinks references={frontmatter.references} />
 
+---
+
 ## Creating a Dockerfile
 
 To create a `Dockerfile`, follow these steps:
@@ -63,6 +65,8 @@ To create a `Dockerfile`, follow these steps:
 
 </Steps>
 
+---
+
 ## Build the image
 
 Once your `Dockerfile` is ready, build the image using the following command:
@@ -79,6 +83,8 @@ To verify the built image:
 ```sh
 docker images
 ```
+
+---
 
 ## Running the container
 
@@ -103,6 +109,8 @@ To stop the container:
 ```sh
 docker stop my-running-app
 ```
+
+---
 
 ## Optimizing with Slim
 
@@ -140,6 +148,8 @@ docker stop my-running-app
 
 </Steps>
 
+---
+
 ## Buildx
 
 If you need to build an image for a different CPU architecture (e.g., ARM on an x86 machine), you can use Docker buildx. Buildx supports multi-platform builds and allows you to cross-compile images. This ensures your image can run on multiple architectures without needing native hardware.
@@ -173,6 +183,8 @@ If pushing to a registry (e.g., Docker Hub), add `--push`:
 ```sh
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-dockerhub-user/my-multiarch-app --push .
 ```
+
+---
 
 ## Example Dockerfile
 

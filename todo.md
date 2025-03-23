@@ -1,13 +1,8 @@
 # Todos
 
----
-
-## Cheatsheets
-
-- [ ] MySQL
-- [ ] PostgreSQL (fine tune)
-
 ## Docs
+
+---
 
 ### Linux
 
@@ -17,6 +12,8 @@
 - [ ] Process management (kill, ps, systemd, etc.)
 - [ ] Networking (iptables, nftables, netplan, etc.)
 - [ ] Cron jobs and automation
+
+---
 
 ### Docker
 
