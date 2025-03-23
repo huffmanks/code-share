@@ -1,5 +1,5 @@
 ---
-title: Regex
+title: regex
 description: Descriptive explanations of commonly used regex patterns.
 updatedAt: 2025-02-07 09:09:01
 groups:

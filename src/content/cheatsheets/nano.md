@@ -1,5 +1,5 @@
 ---
-title: Nano
+title: nano
 description: Essential nano shortcuts for navigation, selecting text, find/replace and more.
 updatedAt: 2025-02-09 14:48:58
 groups:

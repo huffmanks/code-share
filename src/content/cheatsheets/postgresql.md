@@ -1,5 +1,5 @@
 ---
-title: PostgreSQL
+title: postgresql
 description: A quick reference for common PostgreSQL commands and queries.
 updatedAt: 2025-03-23 01:27:02
 groups:

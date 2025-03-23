@@ -1,5 +1,5 @@
 ---
-title: Git
+title: git
 description: Common git commands for undoing changes, branching and merging, stashing changes and more.
 updatedAt: 2025-02-07 08:44:58
 groups:

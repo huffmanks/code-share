@@ -1,5 +1,5 @@
 ---
-title: Markdown
+title: markdown
 description: A quick reference for Markdown syntax, covering text formatting, lists, links, images and more.
 updatedAt: 2025-03-17 20:33:45
 groups:

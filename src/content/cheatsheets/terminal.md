@@ -1,5 +1,5 @@
 ---
-title: Terminal
+title: terminal
 description: A quick reference to common terminal commands.
 updatedAt: 2025-02-07 09:22:11
 groups:

@@ -20,7 +20,11 @@ const cheatsheets = await getCollection("cheatsheets");
     pagefind: false,
   }}>
   <div class="grid">
-    {cheatsheets.map((cheatsheet) => <LinkCard title={cheatsheet.data.title} href={`/cheatsheets/${cheatsheet.id}`} description={cheatsheet.data.description} />)}
+    {
+      cheatsheets
+        .sort((a, b) => a.data.title.localeCompare(b.data.title))
+        .map((cheatsheet) => <LinkCard title={cheatsheet.data.title} href={`/cheatsheets/${cheatsheet.id}`} description={cheatsheet.data.description} />)
+    }
   </div>
 </StarlightPage>
 

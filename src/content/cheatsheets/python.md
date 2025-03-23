@@ -1,5 +1,5 @@
 ---
-title: Python
+title: python
 description: A quick reference to common Python syntax and concepts.
 updatedAt: 2025-02-07 09:10:12
 groups:

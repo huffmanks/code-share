@@ -135,39 +135,43 @@ export default defineConfig({
           collapsed: true,
           items: [
             {
-              label: "Docker",
+              label: "docker",
               link: "cheatsheets/docker",
             },
             {
-              label: "Git",
+              label: "git",
               link: "cheatsheets/git",
             },
             {
-              label: "JQ",
+              label: "jq",
               link: "cheatsheets/jq",
             },
             {
-              label: "Markdown",
+              label: "markdown",
               link: "cheatsheets/markdown",
             },
             {
-              label: "Nano",
+              label: "nano",
               link: "cheatsheets/nano",
             },
             {
-              label: "Python",
+              label: "postgresql",
+              link: "cheatsheets/postgresql",
+            },
+            {
+              label: "python",
               link: "cheatsheets/python",
             },
             {
-              label: "Regex",
+              label: "regex",
               link: "cheatsheets/regex",
             },
             {
-              label: "Terminal",
+              label: "terminal",
               link: "cheatsheets/terminal",
             },
             {
-              label: "Vim",
+              label: "vim",
               link: "cheatsheets/vim",
             },
           ],

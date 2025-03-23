@@ -1,5 +1,5 @@
 ---
-title: Docker
+title: docker
 description: Docker commands categorized for managing containers, images, networks, volumes and more.
 updatedAt: 2025-03-17 21:29:03
 groups:

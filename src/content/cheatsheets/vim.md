@@ -1,5 +1,5 @@
 ---
-title: Vim
+title: vim
 description: Essential Vim shortcuts for navigation, selecting text, editing and more.
 updatedAt: 2025-03-17 14:57:47
 groups:
