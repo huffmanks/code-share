@@ -11,6 +11,20 @@ references:
     label: pnpm
   - href: https://brew.sh
     label: Homebrew
+  - href: https://github.com/sharkdp/bat
+    label: bat
+  - href: https://github.com/FFmpeg/FFmpeg
+    label: ffmpeg
+  - href: https://github.com/cli/cli
+    label: gh
+  - href: https://github.com/jqlang/jq
+    label: jq
+  - href: https://github.com/pypa/pipx
+    label: pipx
+  - href: https://github.com/zsh-users/zsh-autosuggestions
+    label: zsh-autosuggestions
+  - href: https://github.com/zsh-users/zsh-syntax-highlighting
+    label: zsh-syntax-highlighting
 ---
 
 import MacosDotfiles from "@/components/guides/macos-dotfiles.astro";
@@ -59,8 +73,32 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
    <Code lang="sh" code={`brew install ffmpeg jq bat gh pipx zsh-autosuggestions zsh-syntax-highlighting`} />
 
+   - **ffmpeg:** A complete, cross-platform solution to record, convert and stream audio and video.
+
+   - **jq:** A lightweight and powerful command-line JSON processor for parsing, filtering and transforming JSON data.
+
+   - **bat:** a `cat` clone with syntax highlighting, Git integration and other useful features.
+
+   - **gh:** official GitHub CLI tool for managing repositories, pull requests, issues and more from the terminal.
+
+   - **pipx:** tool to install and run Python applications in isolated environments, keeping them separate from system-wide Python packages.
+
+   - **zsh-autosuggestions:** zsh plugin that provides command-line suggestions based on history and completions.
+
+   - **zsh-syntax-highlighting:** zsh plugin that adds syntax highlighting to the terminal, improving readability and reducing mistakes.
+
 6. ## Update git and shell configs
 
    <MacosDotfiles />
+
+7. ## Compile shell
+
+   <Code lang="sh" code="exec zsh && zcompile ~/.zshrc && zcompile ~/.zprofile" />
+
+   - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
+
+   - `zcompile` precompiles `.zshrc` and `.zprofile` into a binary format (`.zshrc.zwc` and `.zprofile.zwc`.
+
+   - When zsh starts, it loads the `.zwc` files instead of parsing the original files, reducing startup time.
 
 </Steps>
