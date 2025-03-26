@@ -149,12 +149,68 @@ html {
 }
 
 :is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(4) {
+  border-color: var(--sl-color-green);
+  color: var(--sl-color-green-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(5) {
   border-color: var(--sl-color-red);
   color: var(--sl-color-red-high);
 }
 
+.card-grid.stagger article:nth-child(1) svg.icon {
+  border: 1px solid var(--sl-color-orange);
+  background-color: var(--sl-color-orange-low);
+}
+
+.card-grid.stagger article:nth-child(2) svg.icon {
+  border: 1px solid var(--sl-color-purple);
+  background-color: var(--sl-color-purple-low);
+}
+
 .card-grid.stagger article:nth-child(3) svg.icon {
   border: 1px solid var(--sl-color-blue);
+  background-color: var(--sl-color-blue-low);
+}
+
+.card-grid.stagger article:nth-child(4) svg.icon {
+  border: 1px solid var(--sl-color-green);
+  background-color: var(--sl-color-green-low);
+}
+
+.card-grid.stagger article:nth-child(5) svg.icon {
+  border: 1px solid var(--sl-color-red);
+  background-color: var(--sl-color-red-low);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(1):is(:hover, :focus-visible) {
+  background-color: var(--sl-color-orange-low);
+  border-color: var(--sl-color-orange-low);
+  color: var(--sl-color-orange-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(2):is(:hover, :focus-visible) {
+  background-color: var(--sl-color-purple-low);
+  border-color: var(--sl-color-purple-low);
+  color: var(--sl-color-purple-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(3):is(:hover, :focus-visible) {
+  background-color: var(--sl-color-blue-low);
+  border-color: var(--sl-color-blue-low);
+  color: var(--sl-color-blue-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(4):is(:hover, :focus-visible) {
+  background-color: var(--sl-color-green-low);
+  border-color: var(--sl-color-green-low);
+  color: var(--sl-color-green-high);
+}
+
+:is(.hero, .sl-markdown-content) .sl-link-button.secondary:nth-of-type(5):is(:hover, :focus-visible) {
+  background-color: var(--sl-color-red-low);
+  border-color: var(--sl-color-red-low);
+  color: var(--sl-color-red-high);
 }
 
 /* ==== Snippet table ==== */
