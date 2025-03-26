@@ -13,11 +13,33 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. ## SSH login
+1. ## ssh
 
    Secure Shell (SSH) allows you to access your Linux system remotely. In this step, you'll configure SSH login, ensuring you can securely connect to your system from another machine.
 
-   <Code lang="sh" code={`ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}`} />
+   <Steps>
+
+   1. ### Verify ssh service is running
+
+      <Code lang="sh" code={`systemctl status ssh`} />
+
+   2. ### Install openssh-server
+
+      <Code lang="sh" code={`sudo apt install openssh-server -y`} />
+
+   3. ### Enable ssh service
+
+      <Code lang="sh" code={`sudo systemctl enable --now ssh`} />
+
+   4. ### ssh login
+
+      <Code lang="sh" code={`ssh {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}`} />
+
+   5. ### Restart ssh service
+
+      <Code lang="sh" code={`sudo systemctl restart ssh`} />
+
+   </Steps>
 
 2. ## Update and upgrade system packages
 

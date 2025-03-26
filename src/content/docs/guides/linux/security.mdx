@@ -53,6 +53,11 @@ findtime = 600
 maxretry = 3
 `
 
+export const allowOpenSSH = `
+# ALLOW IN: 22/tcp (OpenSSH) and 22/tcp (OpenSSH (v6))
+sudo ufw allow OpenSSH
+`;
+
 <p>{frontmatter.description}</p>
 
 ---
@@ -196,11 +201,17 @@ A firewall is your first line of defense against unauthorized access. Installing
 
    <Code lang="sh" code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
 
+   <Code lang="sh" code={allowOpenSSH} />
+
 6. ### Enable ufw
 
    <Code lang="sh" code={`sudo ufw enable`} />
 
-7. ### Check status
+7. ### Reload ufw
+
+   <Code lang="sh" code={`sudo ufw reload`} />
+
+8. ### Check status
 
    <Code lang="sh" code={`sudo ufw status verbose`} />
 
