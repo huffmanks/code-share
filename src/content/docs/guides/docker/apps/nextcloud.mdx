@@ -1,0 +1,84 @@
+---
+title: Nextcloud
+description: "Nextcloud offers a self-hosted file storage and sync platform with powerful collaboration capabilities with desktop, mobile and web interfaces."
+references:
+  - href: https://docs.linuxserver.io/images/docker-nextcloud
+    label: LinuxServer.io
+  - href: https://docs.nextcloud.com/server/latest/admin_manual
+    label: Nextcloud docs
+  - href: https://github.com/nextcloud/all-in-one
+    label: Nextcloud AIO (Github repo)
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/nextcloud.yml?raw";
+import env from "/src/files/env/nextcloud.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh
+mkdir -p {{{DOCKER_PATH_VAR}}}/nextcloud && cd {{{DOCKER_PATH_VAR}}}/nextcloud
+```
+
+## docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+<Code lang="yml" title="docker-compose.yml" code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="8443" />
+
+After completing the web-based installer, restart the Nextcloud container to apply default memory caching and transactional file locking configurations.
+
+## Restart container
+
+```sh
+docker compose restart
+```
+
+Alternatively, you can apply your own configurations by editing `config.php`.
+
+## Modify `config.php`
+
+```sh
+nano ./config/www/nextcloud/config/config.php
+```
+
+```sh title="./config/www/nextcloud/config/config.php"
+'redis' => [
+    'host' => 'nextcloud_redis',
+    'port' => 6379,
+],
+'memcache.local' => '\\OC\\Memcache\\APCu',
+'filelocking.enabled' => true,
+'memcache.locking' => '\\OC\\Memcache\\APCu',
+'upgrade.disable-web' => true,
+```
