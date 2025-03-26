@@ -68,6 +68,121 @@ MKVToolNix is a set of tools to create, alter and inspect Matroska files.
         sudo apt install mkvtoolnix mkvtoolnix-gui
         ```
 
+4.  ### Preferences
+
+        #### GUI
+
+        **Warnings**
+        - [ ] Warn before closing modified tabs
+        - [x] Warn before aborting running jobs
+        - [x] Warn before overwriting existing items (files, jobs etc.)
+
+        #### Often used selections
+
+        **Languages**
+        - Selected
+                - English (en; eng)
+                - Undetermined (und)
+
+        **Countries & regions**
+        - Selected
+                - United States of America (us; 840)
+
+        #### Multiplexer
+
+        **General options**
+        - Clearing settings automatically: `Close current settings`
+        - Warn about missing audio tracks: `If audio tracks are present but none is enabled`
+        - Process priority: `Lower priority`
+        - Probe range percentage: `0.30`
+        - Location of MediaInfo GUI: `blank (default)`
+        - [x] Ensure at least one track of each type has its "track enabled" flag set
+
+        **Adding files**
+        - When adding multiple files via "add source files": `Create one new multiplex settings tab for each file`
+        - When adding files via drag & drop/copy & paste: `Create one new multiplex settings tab for each file`
+        - When adding directories via drag & drop/copy & paste: `Create a new multiplex settings tab for each directory`
+        - [x] Always create new multiplex settings for files containing video tracks
+        - [x] Sort files & tracks by track type when adding files
+        - [x] Detect file name sequences when adding multiple files
+
+        **Attachments**
+        - [ ] Always skip while attaching new files when attachment with same name exists
+
+        #### Default values
+
+        **Defaults for newly added tracks**
+        - [ ] Automatically set the file title from source files
+        - [x] Automatically clear the file title when the last file is removed
+        - [x] Automatically set track delays from source file name
+        - [ ] Disable "default track" flag for subtitle tracks
+        - [ ] Disable additional lossless compression for all track types
+        - [ ] Enable dialog normalization gain removal for audio tracks
+        - [x] Derive "forced display" flag for subtitles from file names: `[[\](){}.+=#-]forced[[\](){}.+=#-]`
+        - [x] Derive "hearing impair" flag for audio/subtitles from file names: `[[\](){}.+=#-](cc | sdh)[[\](){}.+=#-]`
+        - Default subtitle charset to set: `- No selection by default -`
+
+        **Default track languages to set**
+        - Audio tracks: `English (en)`
+        - Video tracks: `English (en)`
+        - Subtitle tracks: `English (en)`
+        - When to set the language: `Also if the language is 'undetermined' ('und')`
+
+        #### Deriving track languages
+
+        **Deriving track languages from file names**
+        - Audio tracks: `Also if the language is 'undetermined' ('und')`
+        - Video tracks: `Never`
+        - Subtitle tracks: `Also if the language is 'undetermined' ('und')`
+
+        #### Destination file name
+
+        **Destination file name**
+        - [x] Automatically set the destination file name
+        - [ ] Only use the first source file that contains a video track
+        - [ ] Use the title as the base file name if a title is set
+        - [ ] Use the input file's directory name instead of the file name
+
+        **Destination directory**
+        - [x] Directory relative to first source file's directory: `./new`
+        - [x] Ensure the file name is unique
+        - [ ] Automatically clear the destination file name when the last file is removed
+
+        #### Enabling items
+
+        **Enable copying of items by their type**
+        - Selected
+                - Audio
+                - Chapters
+                - Global tags
+                - Subtitles
+                - Video
+
+        **Enable copying of tracks by their language**
+        - [x] Only enable copying of tracks with specific languages by default
+        - Selected
+                - English (en; eng)
+
+        **General options**
+        - Always enable copying for all tracks of the following types regardless of their language:
+                - [x] Video
+                - [ ] Audio
+                - [ ] Subtitles
+        - [x] Always enable copying of forced subtitle tracks
+
+        #### Jobs & job queue
+
+        **Jobs and job output**
+        - [ ] Always switch to the job output tool after starting one immediately
+        - [ ] Always use a default description when adding a job to the queue
+        - [x] Show output of all jobs instead of current job only
+        - [ ] Reset the warning and error counters on exit
+        - [ ] Remove the output file when a job ends with errors or when it is aborted
+        - [x] Remove jobs from queue after completion: `Only if the job completed successfully`
+        - [ ] Remove completed jobs from queue on exit
+        - [x] Remove completed jobs older than x days: `14 days`
+        - Maximum number of concurrent jobs: `1`
+
 </Steps>
 
 ---
