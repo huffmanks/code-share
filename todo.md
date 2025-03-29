@@ -6,6 +6,7 @@
 
 ### Linux
 
+- [ ] Refactor getting started, ssh
 - [ ] Add tailscale setup
 - [ ] System monitoring (htop, iotop, btop, etc.)
 - [ ] File permissions and ownership (chmod, chown)
@@ -28,6 +29,7 @@
   - [ ] coolify
   - [ ] duplicati
   - [ ] excalidraw
+  - [ ] filecloud
   - [ ] headscale
   - [ ] kasm
   - [ ] ntfy
