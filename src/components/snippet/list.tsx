@@ -8,7 +8,7 @@ export default function SnippetList({ snippets }: { snippets: Snippet[] }) {
     <>
       <div>
         {snippets.map((snippet) => (
-          <div key={snippet.id} className={styles.listItem}>
+          <div key={snippet.id} className={styles["list-item"]}>
             <h2 className={styles.title} style={{ fontSize: "1.25rem" }}>
               <a href={`/snippets/${snippet.id}`}>{snippet.data.title}</a>
             </h2>

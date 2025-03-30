@@ -120,12 +120,32 @@ const time = formatRelativeTime(snippet.data.updatedAt);
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .action-buttons {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-bottom: 0.25rem;
+  }
+
+  .fragment-code {
+    padding-inline: 8px;
+  }
+
+  .fragment-code.expressive-code .frame.has-title span.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fragment-code.expressive-code .frame.has-title.is-terminal span.title {
+    width: 50%;
+  }
+
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
+    width: 100%;
   }
 
   /* ==== Overrides ==== */
@@ -136,5 +156,9 @@ const time = formatRelativeTime(snippet.data.updatedAt);
 
   .content-panel {
     padding-bottom: 10px;
+  }
+
+  starlight-tabs ul[role="tablist"] a[role="tab"] {
+    white-space: nowrap;
   }
 </style>

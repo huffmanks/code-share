@@ -29,7 +29,7 @@
   height: 14px;
 }
 
-.cardInner {
+.card-inner {
   padding: 10px 15px 15px;
 }
 
@@ -58,16 +58,17 @@
   color: var(--sl-color-gray-3);
 }
 
-.tagsContainer {
-  margin-bottom: 5px;
+.tags-container {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.actionButtons {
+.action-buttons {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-bottom: 0.25rem;
 }

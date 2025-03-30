@@ -12,6 +12,17 @@ interface SnippetContainerProps {
 }
 
 export default function SnippetContainer({ snippets }: SnippetContainerProps) {
+  const [query, setQuery] = useState({
+    language: "",
+    field: "title",
+    direction: "asc",
+    view: "grid",
+  });
+  const [formattedSnippets, setFormattedSnippets] = useState(snippets);
+  const [loading, setLoading] = useState(true);
+
+  const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
+
   function getQueryFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -21,11 +32,6 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
       view: (params.get("view") as ToggleView) || "grid",
     };
   }
-
-  const [query, setQuery] = useState(getQueryFromUrl);
-  const [formattedSnippets, setFormattedSnippets] = useState(snippets);
-
-  const languageOptions = getLanguagesInfo(snippets.flatMap((snippet) => snippet.data.fragments).sort((a, b) => a.language.localeCompare(b.language)));
 
   function handleChange(key: ParamKeys, value: SelectedLanguage | SortField | SortDirection | ToggleView) {
     setQuery((prev) => {
@@ -64,10 +70,11 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
 
   useEffect(() => {
     setQuery(getQueryFromUrl());
+    setLoading(false);
   }, []);
 
   return (
-    <>
+    <div className={loading ? "sr-only" : ""}>
       <div className={styles.toolbar}>
         <div>
           <label className="sr-only" htmlFor="language-filter">
@@ -82,7 +89,7 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
             ))}
           </select>
         </div>
-        <div className={styles.sortViewGroup}>
+        <div className={styles["sort-view-group"]}>
           <div role="group" aria-label="Sort snippet group">
             <button
               className="btn"
@@ -166,6 +173,6 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }

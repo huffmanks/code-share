@@ -43,7 +43,7 @@ const snippets = await Promise.all(
     next: false,
     pagefind: false,
   }}>
-  <SnippetContainer client:only snippets={snippets} />
+  <SnippetContainer client:visible snippets={snippets} />
 </StarlightPage>
 
 <style is:inline>

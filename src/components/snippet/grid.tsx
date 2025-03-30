@@ -40,7 +40,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         </svg>
         <span>{time}</span>
       </div>
-      <div className={styles.cardInner}>
+      <div className={styles["card-inner"]}>
         <h2 id={snippet.id} className={styles.title}>
           {snippet.data.title}
         </h2>
@@ -58,7 +58,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <div className={styles.description}>
           <p className="truncate">{snippet.data.description}</p>
         </div>
-        <div className={styles.tagsContainer}>
+        <div className={styles["tags-container"]}>
           {snippet.data.tags &&
             snippet.data.tags.map((tag: string, index: number) => (
               <div className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
@@ -66,7 +66,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
               </div>
             ))}
         </div>
-        <div className={styles.actionButtons}>
+        <div className={styles["action-buttons"]}>
           <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleDownload}>
             <ButtonIcon.download />
           </button>

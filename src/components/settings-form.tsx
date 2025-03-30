@@ -31,7 +31,7 @@ export function SettingsForm() {
     <div>
       <form onSubmit={handleSubmit}>
         {settingsFormFields.map((field) => (
-          <div key={field.id} className={styles.formItem}>
+          <div key={field.id} className={styles["form-item"]}>
             <label className={styles.label} htmlFor={`${field.id}:form-item-label`}>
               {field.label}
             </label>

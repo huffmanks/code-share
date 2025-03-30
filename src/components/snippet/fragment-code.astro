@@ -38,8 +38,17 @@ const { fragment } = Astro.props;
     height: 148px;
   }
 
-  .expressive-code .copy {
-    inset-inline-end: 4px;
-    inset-block-start: 3.5px;
+  .fragment-code.expressive-code .frame.has-title span.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fragment-code.expressive-code .frame.has-title.is-terminal span.title {
+    width: 50%;
+  }
+
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
+    width: 100%;
   }
 </style>
