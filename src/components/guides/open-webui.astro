@@ -1,18 +1,19 @@
 ---
 type Props = {
   port: string;
+  isHttps?: boolean;
 };
 
-const { port } = Astro.props;
+const { port, isHttps = false } = Astro.props;
 ---
 
 <p>
-  <a class="link" href={`http://localhost:${port}`} target="_blank" rel="noopener">
-    http://localhost:{port}
+  <a class="link" href={`http${isHttps ? "s" : ""}://localhost:${port}`} target="_blank" rel="noopener">
+    http{isHttps ? "s" : ""}://localhost:{port}
   </a>
   <span> or </span>
-  <a class="link" href={`http://{{{IP_ADDRESS_VAR}}}:${port}`} target="_blank" rel="noopener">
-    {`http://{{{IP_ADDRESS_VAR}}}:${port}`}
+  <a class="link" href={`http${isHttps ? "s" : ""}://{{{IP_ADDRESS_VAR}}}:${port}`} target="_blank" rel="noopener">
+    {`http${isHttps ? "s" : ""}://{{{IP_ADDRESS_VAR}}}:${port}`}
   </a>
 </p>
 

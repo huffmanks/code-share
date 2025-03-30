@@ -1,0 +1,14 @@
+services:
+  opencloud:
+    image: opencloudeu/opencloud-rolling:latest
+    container_name: opencloud
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./opencloud-config:/etc/opencloud
+      - ./opencloud-data:/var/lib/opencloud
+    environment:
+      - OC_INSECURE=true
+      - PROXY_HTTP_ADDR=0.0.0.0:9200
+      - OC_URL=https://{{{IP_ADDRESS_VAR}}}:9200
+    restart: unless-stopped
