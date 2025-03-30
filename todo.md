@@ -1,5 +1,12 @@
 # Todos
 
+## Issues
+
+- [ ] Snippets mobile too many tabs doesn't wrap on mobile
+- [ ] Snippets page copy button doesn't work
+
+---
+
 ## Docs
 
 ---
