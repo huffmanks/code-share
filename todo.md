@@ -1,5 +1,13 @@
 # Todos
 
+## Fixes
+
+- [ ] Snippets: if only one command/snippet don't use tabs.
+- [ ] Snippets page (mobile): make `<Code />` component full width of card. Remove card padding.
+- [ ] Code component: ensure wrap and preserveIndent are working (especially on mobile).
+
+---
+
 ## Docs
 
 ---
