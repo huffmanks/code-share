@@ -15,10 +15,9 @@ import type { Props } from "@astrojs/starlight/props";
     const updatedContent = markdownContent.innerHTML
       .replace(/{{{USERNAME_VAR}}}/g, settings.username)
       .replace(/{{{IP_ADDRESS_VAR}}}/g, settings.ipAddress)
-      .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
-      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath)
       .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, settings.externalHddUuid)
-      .replace(/(?<!:)(\/{2,})/g, "/");
+      .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
+      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath);
 
     markdownContent.innerHTML = updatedContent;
   });

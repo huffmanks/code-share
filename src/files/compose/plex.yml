@@ -4,7 +4,7 @@ services:
     container_name: plex
     network_mode: host
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/plex/config:/config
+      - ./config:/config
       - /path/to/tvseries:/tv
       - /path/to/movies-01:/movies/movies-01
       - /path/to/movies-02:/movies/movies-02

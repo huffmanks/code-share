@@ -21,7 +21,7 @@ import yaml from "/src/files/compose/pinchflat.yml?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/pinchflat && cd {{{DOCKER_PATH_VAR}}}/pinchflat
 ```
 
@@ -31,7 +31,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/pinchflat && cd {{{DOCKER_PATH_VAR}}}/pinchflat
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## Start container
 

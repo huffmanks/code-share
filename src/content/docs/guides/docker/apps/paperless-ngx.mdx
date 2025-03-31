@@ -23,7 +23,7 @@ import yaml from "/src/files/compose/paperless-ngx.yml?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/paperless-ngx && cd {{{DOCKER_PATH_VAR}}}/paperless-ngx
 ```
 
@@ -33,7 +33,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/paperless-ngx && cd {{{DOCKER_PATH_VAR}}}/paperle
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## Start container
 

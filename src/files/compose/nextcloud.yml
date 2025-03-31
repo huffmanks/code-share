@@ -24,7 +24,7 @@ services:
       REDIS_HOST_PASSWORD: ${REDIS_HOST_PASSWORD}
     volumes:
       - ./config:/config
-      - /{{{DOCKER_PATH_VAR}}}/nextcloud/data:/data
+      - ./data:/data
     restart: unless-stopped
   nextcloud_db:
     image: postgres:alpine

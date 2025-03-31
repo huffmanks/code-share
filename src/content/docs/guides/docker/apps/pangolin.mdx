@@ -47,7 +47,7 @@ import env from "/src/files/env/pangolin.env?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/pangolin/config {{{DOCKER_PATH_VAR}}}/pangolin/traefik && cd {{{DOCKER_PATH_VAR}}}/pangolin
 ```
 
@@ -57,7 +57,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/pangolin/config {{{DOCKER_PATH_VAR}}}/pangolin/tr
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={dockerCompose} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={dockerCompose} />
 
 ## config.yml
 
@@ -65,7 +65,7 @@ nano docker-compose.yml
 nano ./config/config.yml
 ```
 
-<Code lang="yml" title="./config/config.yml" code={configYml} />
+<Code lang="yml" title="./config/config.yml" wrap preserveIndent code={configYml} />
 
 ## traefik_config.yml
 
@@ -73,7 +73,7 @@ nano ./config/config.yml
 nano ./traefik/traefik_config.yml
 ```
 
-<Code lang="yml" title="./traefik/traefik_config.yml" code={traefikConfigYml} />
+<Code lang="yml" title="./traefik/traefik_config.yml" wrap preserveIndent code={traefikConfigYml} />
 
 ## dynamic_config.yml
 
@@ -81,7 +81,7 @@ nano ./traefik/traefik_config.yml
 nano ./traefik/dynamic_config.yml
 ```
 
-<Code lang="yml" title="./traefik/dynamic_config.yml" code={dynamicConfigYml} />
+<Code lang="yml" title="./traefik/dynamic_config.yml" wrap preserveIndent code={dynamicConfigYml} />
 
 ## Cloudflare DNS API token
 
@@ -93,7 +93,7 @@ nano ./traefik/dynamic_config.yml
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 

@@ -26,7 +26,7 @@ import env from "/src/files/env/gitea.env?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/gitea && cd {{{DOCKER_PATH_VAR}}}/gitea
 ```
 
@@ -36,7 +36,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/gitea && cd {{{DOCKER_PATH_VAR}}}/gitea
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## .env
 
@@ -44,7 +44,7 @@ nano docker-compose.yml
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Create docker network
 

@@ -62,14 +62,14 @@ done
 
 3.  ### Install nix
 
-        <Code lang="sh" code={nixInstaller} />
+        <Code lang="sh" wrap preserveIndent code={nixInstaller} />
 
 4.  ### Install nix-darwin
 
-        <Code lang="sh" code={`nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ok-mac-pro`} />
+        <Code lang="sh" wrap preserveIndent code={`nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ok-mac-pro`} />
 
 5.  ### Build
-        <Code lang="sh" code={`darwin-rebuild switch --flake .#ok-mac-pro`} />
+        <Code lang="sh" wrap preserveIndent code={`darwin-rebuild switch --flake .#ok-mac-pro`} />
 
 </Steps>
 
@@ -85,7 +85,7 @@ done
 
 2.  ### Uninstall nix-darwin
 
-        <Code lang="sh" code={`nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller`} />
+        <Code lang="sh" wrap preserveIndent code={`nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller`} />
 
 3.  ### Uninstall nix
 
@@ -105,15 +105,15 @@ done
 
             If these files haven’t been altered since installing Nix you can simply put the backups back in place.
 
-            <Code lang="sh" code={shellConfigBackups} />
+            <Code lang="sh" wrap preserveIndent code={shellConfigBackups} />
 
         3. #### Stop and remove the Nix daemon services
 
-            <Code lang="sh" code={nixDaemonServices} />
+            <Code lang="sh" wrap preserveIndent code={nixDaemonServices} />
 
         4. #### Remove the nixbld group and the \_nixbuildN users
 
-            <Code lang="sh" code={removeNixGroupUsers} />
+            <Code lang="sh" wrap preserveIndent code={removeNixGroupUsers} />
 
         5. #### Edit fstab
 
@@ -129,7 +129,7 @@ done
 
         8. #### Remove the Nix Store volume
 
-            <Code lang="sh" code={`sudo diskutil apfs deleteVolume /nix`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo diskutil apfs deleteVolume /nix`} />
 
         9. #### Verify
 
@@ -232,7 +232,7 @@ Defaults that aren’t configurable with nix-darwin.
 
 ### Reset finder preferences
 
-```sh
+```sh wrap preserveIndent
 rm ~/Library/Preferences/com.apple.finder.plist
 defaults delete com.apple.finder
 killall Finder

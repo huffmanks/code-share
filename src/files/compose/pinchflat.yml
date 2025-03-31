@@ -5,8 +5,8 @@ services:
     ports:
       - 8945:8945
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/pinchflat/config:/config
-      - /{{{DOCKER_PATH_VAR}}}/pinchflat/downloads:/downloads
+      - ./config:/config
+      - ./downloads:/downloads
     environment:
       - TZ=America/New_York
     restart: unless-stopped

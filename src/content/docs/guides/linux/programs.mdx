@@ -38,7 +38,7 @@ MKVToolNix is a set of tools to create, alter and inspect Matroska files.
         <Tabs syncKey="distribution">
                 <TabItem label="Debian">
 
-                        ```sh
+                        ```sh wrap preserveIndent
                         deb [signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/debian/ bookworm main
                         deb-src [signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/debian/ bookworm main
                         ```
@@ -46,7 +46,7 @@ MKVToolNix is a set of tools to create, alter and inspect Matroska files.
                 </TabItem>
                 <TabItem label="Ubuntu">
 
-                        ```sh
+                        ```sh wrap preserveIndent
                         deb [arch=amd64 signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/ubuntu/ oracular main
                         deb-src [arch=amd64 signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/ubuntu/ oracular main
                         ```
@@ -64,7 +64,7 @@ MKVToolNix is a set of tools to create, alter and inspect Matroska files.
 
 3.  ### Install
 
-        ```sh
+        ```sh wrap preserveIndent
         sudo apt install mkvtoolnix mkvtoolnix-gui
         ```
 
@@ -221,7 +221,7 @@ Connect to any OpenVPN protocol-compatible server or service.
 
                         1. ##### Add keyring
 
-                                ```sh
+                                ```sh wrap preserveIndent
                                 sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://packages.openvpn.net/packages-repo.gpg | sudo tee /etc/apt/keyrings/openvpn.asc
                                 ```
 
@@ -233,7 +233,7 @@ Connect to any OpenVPN protocol-compatible server or service.
 
                         3. ##### Add apt source
 
-                                ```sh
+                                ```sh wrap preserveIndent
                                 echo "deb [signed-by=/etc/apt/keyrings/openvpn.asc] https://packages.openvpn.net/openvpn3/debian $DISTRO main" | sudo tee /etc/apt/sources.list.d/openvpn-packages.list
                                 ```
 
@@ -257,7 +257,7 @@ Connect to any OpenVPN protocol-compatible server or service.
 
 2.  ### Make directory
 
-        ```sh
+        ```sh wrap preserveIndent
         mkdir -p /etc/openvpn/profile && cd /etc/openvpn/profile
         ```
 
@@ -267,7 +267,7 @@ Connect to any OpenVPN protocol-compatible server or service.
         nano server1-tcp80.ovpn
         ```
 
-        ```sh title=server1-tcp80.ovpn
+        ```sh title=server1-tcp80.ovpn wrap preserveIndent
         # Comment out the line below
         # setenv opt block-outside-dns
 
@@ -285,7 +285,7 @@ Connect to any OpenVPN protocol-compatible server or service.
         nano /etc/openvpn/update-resolv-conf
         ```
 
-        ```sh title=update-resolv-conf
+        ```sh title=update-resolv-conf wrap preserveIndent
         # Add after examples
         # Add as many as you like, replace ip address
         foreign_option_1='dhcp-option DNS 208.67.222.222'
@@ -307,7 +307,7 @@ Connect to any OpenVPN protocol-compatible server or service.
 
 6.  ### Connect
 
-        ```sh
+        ```sh wrap preserveIndent
         sudo openvpn --config /etc/openvpn/profile/server1-tcp80.ovpn
         ```
 

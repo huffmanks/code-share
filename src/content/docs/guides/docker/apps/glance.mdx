@@ -38,7 +38,7 @@ import homeYml from "/src/files/config/glance/home.yml?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/glance && cd {{{DOCKER_PATH_VAR}}}/glance
 ```
 
@@ -48,7 +48,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/glance && cd {{{DOCKER_PATH_VAR}}}/glance
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={composeYml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={composeYml} />
 
 ## glance.yml
 
@@ -56,7 +56,7 @@ nano docker-compose.yml
 nano ./config/glance.yml
 ```
 
-<Code lang="yml" title="./config/glance.yml" code={glanceYml} />
+<Code lang="yml" title="./config/glance.yml" wrap preserveIndent code={glanceYml} />
 
 ## home.yml
 
@@ -64,7 +64,7 @@ nano ./config/glance.yml
 nano ./config/home.yml
 ```
 
-<Code lang="yml" title="./config/home.yml" code={homeYml} />
+<Code lang="yml" title="./config/home.yml" wrap preserveIndent code={homeYml} />
 
 ## Start container
 

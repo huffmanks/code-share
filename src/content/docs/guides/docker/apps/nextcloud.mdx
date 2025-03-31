@@ -26,7 +26,7 @@ import env from "/src/files/env/nextcloud.env?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/nextcloud && cd {{{DOCKER_PATH_VAR}}}/nextcloud
 ```
 
@@ -36,7 +36,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/nextcloud && cd {{{DOCKER_PATH_VAR}}}/nextcloud
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## .env
 
@@ -44,7 +44,7 @@ nano docker-compose.yml
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 
@@ -68,11 +68,11 @@ Alternatively, you can apply your own configurations by editing `config.php`.
 
 ## Modify `config.php`
 
-```sh
+```sh wrap preserveIndent
 nano ./config/www/nextcloud/config/config.php
 ```
 
-```sh title="./config/www/nextcloud/config/config.php"
+```sh title="./config/www/nextcloud/config/config.php" wrap preserveIndent
 'redis' => [
     'host' => 'nextcloud_redis',
     'port' => 6379,

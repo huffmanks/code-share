@@ -31,7 +31,7 @@ docker run --rm -it \\
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/opencloud/opencloud-config && mkdir -p {{{DOCKER_PATH_VAR}}}/opencloud/opencloud-data && cd {{{DOCKER_PATH_VAR}}}/opencloud
 ```
 
@@ -41,11 +41,11 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/opencloud/opencloud-config && mkdir -p {{{DOCKER_
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## Initialize
 
-<Code lang="sh" code={initDocker} />
+<Code lang="sh" wrap preserveIndent code={initDocker} />
 
 ## Start container
 

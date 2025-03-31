@@ -25,19 +25,19 @@ import yaml from "/src/files/compose/enclosed.yml?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/enclosed && cd {{{DOCKER_PATH_VAR}}}/enclosed
 ```
 
 ## Generate key and cert
 
-```sh title="private-key.pem + certificate.pem"
+```sh title="private-key.pem + certificate.pem" wrap preserveIndent
 openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout private-key.pem -out certificate.pem
 ```
 
 ## Docker run
 
-```sh
+```sh wrap preserveIndent
 docker run -d --name enclosed --restart unless-stopped -p 8787:8787 \
   -v ./data:/app/.data \
   -e SERVER_USE_HTTPS=true \
@@ -57,7 +57,7 @@ docker run -d --name enclosed --restart unless-stopped -p 8787:8787 \
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ### docker-compose-up.sh
 
@@ -65,7 +65,7 @@ nano docker-compose.yml
 nano docker-compose-up.sh
 ```
 
-```sh title=docker-compose-up.sh
+```sh title=docker-compose-up.sh wrap preserveIndent
 #!/bin/bash
 
 # Clear the contents of the .env file

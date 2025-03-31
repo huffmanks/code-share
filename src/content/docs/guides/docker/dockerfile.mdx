@@ -32,7 +32,7 @@ To create a `Dockerfile`, follow these steps:
 
     1. ### Make directory
 
-        ```sh
+        ```sh wrap preserveIndent
         mkdir my-docker-project && cd my-docker-project
         ```
 
@@ -44,7 +44,7 @@ To create a `Dockerfile`, follow these steps:
 
     3. ### Edit the `Dockerfile`
 
-        ```dockerfile title=Dockerfile
+        ```dockerfile title=Dockerfile wrap preserveIndent
         # Use a base image
         FROM node:20-alpine
 
@@ -90,7 +90,7 @@ docker images
 
 To run a container from the built image:
 
-```sh
+```sh wrap preserveIndent
 docker run -d -p 3000:3000 --name my-running-app my-app
 ```
 
@@ -124,13 +124,13 @@ docker stop my-running-app
 
     1. ### Install
 
-        ```sh
+        ```sh wrap preserveIndent
         curl -sLf https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo sh
         ```
 
     2. ### Run Slim
 
-        ```sh
+        ```sh wrap preserveIndent
         slim build --target my-app --tag my-app-slim
         ```
 
@@ -166,7 +166,7 @@ docker buildx create --use
 
 To build an image for an ARM64 architecture:
 
-```sh
+```sh wrap preserveIndent
 docker buildx build --platform linux/arm64 -t my-app-arm64 .
 ```
 
@@ -174,13 +174,13 @@ docker buildx build --platform linux/arm64 -t my-app-arm64 .
 
 To build for multiple architectures at once:
 
-```sh
+```sh wrap preserveIndent
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-multiarch-app .
 ```
 
 If pushing to a registry (e.g., Docker Hub), add `--push`:
 
-```sh
+```sh wrap preserveIndent
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-dockerhub-user/my-multiarch-app --push .
 ```
 
@@ -190,7 +190,7 @@ docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t my-docker
 
 This Dockerfile leverages multi-stage builds, dependency caching and a non-root user to create a secure, lightweight and efficient container.
 
-```dockerfile title=Dockerfile
+```dockerfile title=Dockerfile wrap preserveIndent
 # Stage 1: Build
 FROM node:20-alpine AS builder
 

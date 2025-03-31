@@ -37,7 +37,7 @@ import env from "/src/files/env/immich.env?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/immich && cd {{{DOCKER_PATH_VAR}}}/immich
 ```
 
@@ -47,7 +47,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/immich && cd {{{DOCKER_PATH_VAR}}}/immich
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## .env
 
@@ -55,7 +55,7 @@ nano docker-compose.yml
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 
@@ -69,7 +69,7 @@ nano .env
   </TabItem>
   <TabItem label="Limit resources">
 
-    ```sh
+    ```sh wrap preserveIndent
     docker compose up -d --cpus="2.0" --memory="4g"
     ```
 

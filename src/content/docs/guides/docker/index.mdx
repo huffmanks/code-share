@@ -73,19 +73,19 @@ For Linux, Docker Desktop is not required. Instead, you can install the Docker E
 
    Docker requires keyrings to authenticate the software packages during installation. This step ensures that your system has the appropriate keyrings installed to verify Docker’s official package sources.
 
-   <Code lang="sh" code={`sudo install -m 0755 -d /etc/apt/keyrings`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo install -m 0755 -d /etc/apt/keyrings`} />
 
 3. #### Add Docker GPG key
 
    Add the official Docker GPG key to your system’s keyring. This ensures that packages you download are verified as authentic and from the trusted Docker repositories.
 
-   <Code lang="sh" code={`sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc`} />
 
 4. #### Change file permission
 
    Modify the file permissions to ensure Docker's configuration files and directories are properly accessible. This step is essential for maintaining system security and ensuring Docker operates smoothly.
 
-   <Code lang="sh" code={`sudo chmod a+r /etc/apt/keyrings/docker.asc`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo chmod a+r /etc/apt/keyrings/docker.asc`} />
 
 5. #### Add docker repository to apt source
 
@@ -154,7 +154,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
    Move docker data to the new directory.
 
-   <Code lang="sh" code={`sudo mv /var/lib/docker {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo mv /var/lib/docker {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data`} />
 
 3. #### Open daemon.json
 
@@ -170,7 +170,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
    Restart the Docker service.
 
-   <Code lang="sh" code={`sudo systemctl daemon-reload && sudo systemctl restart docker`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo systemctl daemon-reload && sudo systemctl restart docker`} />
 
 6. #### Verify change
 

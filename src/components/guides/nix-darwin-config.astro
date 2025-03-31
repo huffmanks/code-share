@@ -11,6 +11,6 @@ const systemNixResponse = await fetch("https://raw.githubusercontent.com/huffman
 const systemNix = await systemNixResponse.text();
 ---
 
-<Code lang="nix" title="flake.nix" code={flakeNix} />
-<Code lang="nix" title="configuration.nix" code={configurationNix} />
-<Code lang="nix" title="system.nix" code={systemNix} />
+<Code lang="nix" title="flake.nix" wrap preserveIndent code={flakeNix} />
+<Code lang="nix" title="configuration.nix" wrap preserveIndent code={configurationNix} />
+<Code lang="nix" title="system.nix" wrap preserveIndent code={systemNix} />

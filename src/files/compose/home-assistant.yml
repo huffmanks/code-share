@@ -6,7 +6,7 @@ services:
     ports:
       - 8123:8123 # optional
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/homeassistant/config:/config
+      - ./config:/config
     devices:
       - /path/to/device:/path/to/device # optional
     environment:

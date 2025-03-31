@@ -49,11 +49,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 2. ## nvm
 
-   <Code lang="sh" code={`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash`} />
+   <Code lang="sh" wrap preserveIndent code={`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash`} />
 
 3. ## pnpm
 
-   <Code lang="sh" code={`curl -fsSL https://get.pnpm.io/install.sh | sh -`} />
+   <Code lang="sh" wrap preserveIndent code={`curl -fsSL https://get.pnpm.io/install.sh | sh -`} />
 
 4. ## Download apps
 
@@ -67,11 +67,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
    ### Install
 
-   <Code lang="sh" code={`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`} />
+   <Code lang="sh" wrap preserveIndent code={`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`} />
 
    ### Add packages
 
-   <Code lang="sh" code={`brew install ffmpeg jq bat gh pipx zsh-autosuggestions zsh-syntax-highlighting`} />
+   <Code lang="sh" wrap preserveIndent code={`brew install ffmpeg jq bat gh pipx zsh-autosuggestions zsh-syntax-highlighting`} />
 
    - **ffmpeg:** A complete, cross-platform solution to record, convert and stream audio and video.
 
@@ -93,7 +93,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 7. ## Compile shell
 
-   <Code lang="sh" code="exec zsh && zcompile ~/.zshrc && zcompile ~/.zprofile" />
+   <Code lang="sh" wrap preserveIndent code="exec zsh && zcompile ~/.zshrc && zcompile ~/.zprofile" />
 
    - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
 

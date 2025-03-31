@@ -23,7 +23,7 @@ import env from "/src/files/env/mirror-to-gitea.env?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/mirror-to-gitea && cd {{{DOCKER_PATH_VAR}}}/mirror-to-gitea
 ```
 
@@ -33,7 +33,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/mirror-to-gitea && cd {{{DOCKER_PATH_VAR}}}/mirro
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## .env
 
@@ -41,7 +41,7 @@ nano docker-compose.yml
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" code={env} />
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 

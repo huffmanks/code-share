@@ -7,8 +7,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - /{{{DOCKER_PATH_VAR}}}/jellyfin/config:/config
-      - /{{{DOCKER_PATH_VAR}}}/jellyfin/cache:/cache
+      - ./config:/config
+      - ./cache:/cache
       - type: bind
         source: /path/to/media
         target: /media

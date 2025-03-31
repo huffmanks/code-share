@@ -78,7 +78,7 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 3. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" preserveIndent code={unattendedUpgradesConfig} />
+   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" wrap preserveIndent code={unattendedUpgradesConfig} />
 
 4. ### Verify
 
@@ -100,7 +100,7 @@ Require users to authenticate with a password before using sudo privileges. This
 
 2. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" preserveIndent code={sudoersConfig} />
+   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" wrap preserveIndent code={sudoersConfig} />
 
 </Steps>
 
@@ -117,11 +117,11 @@ Switch from password-based authentication to SSH key-based authentication. This 
 
 2. ### Copy ket to host (client)
 
-   <Code lang="sh" code={`scp ~/.ssh/id_rsa.pub {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}:~/.ssh/id_rsa.pub`} />
+   <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_rsa.pub {{{USERNAME_VAR}}}@{{{IP_ADDRESS_VAR}}}:~/.ssh/id_rsa.pub`} />
 
 3. ### Add key to authorized keys (host)
 
-   <Code lang="sh" code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
+   <Code lang="sh" wrap preserveIndent code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
 
 </Steps>
 
@@ -165,7 +165,7 @@ Install and configure Fail2Ban to protect your server from brute-force attacks. 
 
 3. ### Modify config (optional)
 
-   <Code lang="sh" frame="terminal" preserveIndent code={fail2banConfig} />
+   <Code lang="sh" frame="terminal" wrap preserveIndent code={fail2banConfig} />
 
 4. ### Restart fail2ban service
 
@@ -199,9 +199,9 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 5. ### Add custom rule (optional)
 
-   <Code lang="sh" code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{{IP_ADDRESS_VAR}}} port $PORT_NUMBER`} />
 
-   <Code lang="sh" code={allowOpenSSH} />
+   <Code lang="sh" wrap preserveIndent code={allowOpenSSH} />
 
 6. ### Enable ufw
 

@@ -25,7 +25,7 @@ import yaml from "/src/files/compose/open-webui.yml?raw";
 
 ## Make directory
 
-```sh
+```sh wrap preserveIndent
 mkdir -p {{{DOCKER_PATH_VAR}}}/open-webui && cd {{{DOCKER_PATH_VAR}}}/open-webui
 ```
 
@@ -35,7 +35,7 @@ mkdir -p {{{DOCKER_PATH_VAR}}}/open-webui && cd {{{DOCKER_PATH_VAR}}}/open-webui
 nano docker-compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" code={yaml} />
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
 ## Start container
 
