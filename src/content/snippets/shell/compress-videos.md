@@ -9,7 +9,7 @@ fragments:
     language: sh
     position: 0
     code: |
-      #!/bin/bash
+      _#!/bin/bash
 
       # Default values
       vcodec="libx265"

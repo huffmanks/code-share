@@ -20,8 +20,8 @@ const { fragment } = Astro.props;
 />
 
 <style is:inline>
-  .fragment-code {
-    padding-inline: 8px;
+  .expressive-code .copy {
+    inset-inline-end: 1rem;
   }
 
   .fragment-code.scrollable {
@@ -46,9 +46,16 @@ const { fragment } = Astro.props;
 
   .fragment-code.expressive-code .frame.has-title.is-terminal span.title {
     width: 50%;
+    text-align: center;
   }
 
   .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
     width: 100%;
+  }
+
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) .header::before,
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title,
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndBtmCol);
   }
 </style>

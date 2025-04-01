@@ -12,17 +12,19 @@ export default function Tabs({ fragments, codeFragments }: Props) {
 
   return (
     <>
-      <div className={styles["tabs-wrapper"]}>
-        <ul role="tablist" className={styles.tabs}>
-          {fragments.map((fragment) => (
-            <li key={fragment.filename} role="presentation" className={styles.tab}>
-              <span role="tab" className={`${styles["tab-label"]} ${fragment.filename === activeTab ? styles.active : ""}`} onClick={() => setActiveTab(fragment.filename)}>
-                {fragment.label}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {fragments.length > 1 && (
+        <div className={styles["tabs-wrapper"]}>
+          <ul role="tablist" className={styles.tabs}>
+            {fragments.map((fragment) => (
+              <li key={fragment.filename} role="presentation" className={styles.tab}>
+                <span role="tab" className={`${styles["tab-label"]} ${fragment.filename === activeTab ? styles.active : ""}`} onClick={() => setActiveTab(fragment.filename)}>
+                  {fragment.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {codeFragments && codeFragments.length && (
         <div>{codeFragments.map((fragment, index) => (activeTab === fragment.filename ? <div key={fragment.filename + index} dangerouslySetInnerHTML={{ __html: fragment.codeHtml }} /> : null))}</div>

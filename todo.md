@@ -2,8 +2,9 @@
 
 ## Fixes
 
-- [ ] Snippets: if only one command/snippet don't use tabs.
-- [ ] Snippets page (mobile): make `<Code />` component full width of card. Remove card padding.
+- [ ] Snippet card: showCopyToClipboardButton: false, add custom copy button to action buttons.
+  - const codeToCopy = document.querySelector(".copy button").getAttribute("data-code");
+- [ ] Snippet card: move action buttons to right of title, to tighten up card.
 
 ---
 

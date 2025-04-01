@@ -66,7 +66,7 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
               </div>
             ))}
         </div>
-        <div className={styles["action-buttons"]}>
+        <div className={styles["action-buttons"]} style={{ marginBottom: snippet.data.fragments.length > 1 ? "0.5rem" : "1.25rem" }}>
           <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleDownload}>
             <ButtonIcon.download />
           </button>
@@ -74,8 +74,8 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
             <ButtonIcon.external />
           </a>
         </div>
-        <Tabs fragments={snippet.data.fragments} codeFragments={snippet.codeFragments} />
       </div>
+      <Tabs fragments={snippet.data.fragments} codeFragments={snippet.codeFragments} />
     </article>
   );
 }

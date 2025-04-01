@@ -30,13 +30,24 @@
 }
 
 .card-inner {
-  padding: 10px 15px 15px;
+  padding: 10px 15px 0;
+}
+
+.card-inner + div {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-inner + div > div {
+  margin-top: auto;
 }
 
 .title {
   margin-bottom: 5px;
   color: var(--sl-color-white);
   line-height: var(--sl-line-height-headings);
+  text-wrap: balance;
 }
 
 .languages {
@@ -70,5 +81,4 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 0.25rem;
 }

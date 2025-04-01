@@ -65,27 +65,41 @@ const time = formatRelativeTime(snippet.data.updatedAt);
           ))
       }
     </div>
-    <div class="action-buttons">
+    <div class="action-buttons" style={{ marginBottom: snippet.data.fragments.length > 1 ? "0.5rem" : "1.25rem" }}>
       <DownloadButton client:load snippet={snippet} />
     </div>
 
-    <Tabs>
-      {
-        snippet.data.fragments.map((fragment) => (
-          <TabItem label={fragment.label}>
-            <Code
-              class="fragment-code"
-              code={fragment.code}
-              wrap
-              preserveIndent
-              frame={fragment.language === "sh" ? "terminal" : "auto"}
-              lang={fragment.language}
-              title={`${fragment.filename}.${fragment.language}`}
-            />
-          </TabItem>
-        ))
-      }
-    </Tabs>
+    {
+      snippet.data.fragments.length > 1 ? (
+        <Tabs>
+          {snippet.data.fragments.map((fragment) => (
+            <TabItem label={fragment.label}>
+              <Code
+                class="fragment-code"
+                code={fragment.code}
+                wrap
+                preserveIndent
+                frame={fragment.language === "sh" ? "terminal" : "auto"}
+                lang={fragment.language}
+                title={`${fragment.filename}.${fragment.language}`}
+              />
+            </TabItem>
+          ))}
+        </Tabs>
+      ) : (
+        <>
+          <Code
+            class="fragment-code"
+            code={snippet.data.fragments[0].code}
+            wrap
+            preserveIndent
+            frame={snippet.data.fragments[0].language === "sh" ? "terminal" : "auto"}
+            lang={snippet.data.fragments[0].language}
+            title={`${snippet.data.fragments[0].filename}.${snippet.data.fragments[0].language}`}
+          />
+        </>
+      )
+    }
   </article>
 </StarlightPage>
 
@@ -127,11 +141,15 @@ const time = formatRelativeTime(snippet.data.updatedAt);
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 0.25rem;
   }
 
-  .fragment-code {
-    padding-inline: 8px;
+  .expressive-code .copy {
+    inset-inline-end: 1rem;
+  }
+
+  .fragment-code figure.frame {
+    border-radius: 0.25rem;
+    overflow: hidden;
   }
 
   .fragment-code.expressive-code .frame.has-title span.title {
@@ -142,10 +160,20 @@ const time = formatRelativeTime(snippet.data.updatedAt);
 
   .fragment-code.expressive-code .frame.has-title.is-terminal span.title {
     width: 50%;
+    text-align: center;
   }
 
   .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
     width: 100%;
+  }
+
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title::after {
+    border: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndBtmCol);
+  }
+
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) .header::before,
+  .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
+    border: none;
   }
 
   /* ==== Overrides ==== */

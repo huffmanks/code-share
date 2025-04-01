@@ -17,7 +17,8 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{{{IP_ADDRESS_VAR}}}/g, settings.ipAddress)
       .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, settings.externalHddUuid)
       .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
-      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath);
+      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath)
+      .replace(/_#!\/bin\/bash/g, "#!/bin/bash");
 
     markdownContent.innerHTML = updatedContent;
   });
