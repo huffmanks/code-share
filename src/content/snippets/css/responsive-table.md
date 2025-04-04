@@ -4,7 +4,7 @@ description: Responsive table that stacks on mobile.
 tags: ["table"]
 updatedAt: 2025-01-14 10:26:25
 fragments:
-  - filename: responsive-table-styles
+  - filename: responsive-table
     label: Styles
     language: css
     position: 0
@@ -30,7 +30,7 @@ fragments:
               border-top: none;
           }
       }
-  - filename: responsive-table-markup
+  - filename: responsive-table
     label: Markup
     language: html
     position: 1
