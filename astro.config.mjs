@@ -82,6 +82,10 @@ export default defineConfig({
                   slug: "guides/linux",
                 },
                 {
+                  label: "Format external HDD",
+                  slug: "guides/linux/format-external-hdd",
+                },
+                {
                   label: "Mount external HDD",
                   slug: "guides/linux/mount-external-hdd",
                 },

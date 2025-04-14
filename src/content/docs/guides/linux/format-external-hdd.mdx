@@ -1,0 +1,67 @@
+---
+title: Format external HDD
+description: This guide will set up a GPT partitioned disk with an exFAT filesystem, compatible with Windows, macOS and Linux. See the steps to format a disk with GPT and exFAT using gdisk and mkfs.exfat below.
+---
+
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+export const identifyDrive = `
+# Identify the target drive, i.e., /dev/sde
+lsblk
+`;
+
+<p>{frontmatter.description}</p>
+
+<br />
+
+<Steps>
+
+1. ## Identify drive
+
+   <Code lang="sh" code={identifyDrive} />
+
+2. ## Unmount the partition
+
+   <Code lang="sh" code={`sudo umount /dev/sde*`} />
+
+3. ## Install gdisk
+
+   <Code lang="sh" code={`sudo apt install gdisk`} />
+
+4. ## Start gdisk on the disk
+
+   Make sure you use the disk `/dev/sde` not the partition `/dev/sde1`
+
+   <Code lang="sh" code={`sudo gdisk /dev/sde`} />
+
+5. ## Delete the existing partition
+
+   - Type `d` to delete the existing partition (/dev/sde1).
+   - Confirm deletion with `v`.
+
+6. ## Create a new partition table
+
+   - Type `o` to create a new GPT partition table.
+
+7. ## Create the partition
+
+   - Type `n` to create a new partition.
+   - Follow the prompts to create a partition with the default values:
+     - Partition number: press `Enter` (default is 1)
+     - First sector: press `Enter` (default)
+     - Last sector: press `Enter` (default)
+     - Partition type: `0700` (Microsoft basic data)
+
+8. ## Write changes
+
+   - Type `w` to write the changes.
+   - Confirm with `Y`.
+
+9. ## Format partition as exFAT
+
+   <Code lang="sh" code={`sudo mkfs.exfat -n MYDRIVE /dev/sde1`} />
+
+10. ## Verify partition and filesystem
+    <Code lang="sh" code={`sudo parted /dev/sde print`} />
+
+</Steps>
