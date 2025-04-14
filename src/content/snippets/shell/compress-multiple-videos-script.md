@@ -1,10 +1,10 @@
 ---
-title: Compress videos
+title: Compress multiple videos script
 description: A script to compress all videos in a directory using ffmpeg.
 tags: ["ffmpeg", "script"]
 updatedAt: 2025-01-19 20:41:00
 fragments:
-  - filename: compress-videos-script
+  - filename: compress-multiple-videos-script
     label: Shell script
     language: sh
     position: 0
@@ -85,7 +85,7 @@ fragments:
       ffmpeg -i "$file" -vcodec "$vcodec" -crf "$crf" -preset "$preset" -acodec "$acodec" "output/${formatted_timestamp}.${output_format}"
       done
 
-  - filename: compress-videos-commands
+  - filename: compress-multiple-videos-commands
     label: Commands
     language: sh
     position: 1
