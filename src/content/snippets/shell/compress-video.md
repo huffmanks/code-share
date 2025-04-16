@@ -9,5 +9,5 @@ fragments:
     language: sh
     position: 0
     code: |
-      ffmpeg -i input.mp4 -vcodec libx265 -crf 28 -preset medium output.mp4
+      ffmpeg -i input.mp4 -vcodec libx265 -crf 28 -preset medium -tag:v hvc1 output.mp4
 ---
