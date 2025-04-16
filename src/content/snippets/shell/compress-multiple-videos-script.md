@@ -14,16 +14,27 @@ fragments:
       # Default values
       vcodec="libx265"
       acodec="aac"
+      abitrate="128k"
       output_format="mkv"
       crf=28
       preset="medium"
+
+      # Dynamic video tag variable
+      if [[ "$vcodec" == "libx265" ]]; then
+        video_tag="-tag:v hvc1"
+      elif [[ "$vcodec" == "libx264" ]]; then
+        video_tag="-tag:v avc1"
+      else
+        video_tag=""
+      fi
 
       # Function to show usage
       usage() {
       echo "Usage: $0 [options]"
       echo "Options:"
       echo "  --vcodec [libx264|libx265]   Video codec (default: libx265)"
-      echo "  --acodec [aac|...]           Audio codec (default: aac)"
+      echo "  --acodec [aac|mp3]           Audio codec (default: aac)"
+      echo "  --abitrate [128k|192k]       Audio bitrate (default: 128k)"
       echo "  --output-format [mp4|mkv]    Output format (default: mkv)"
       echo "  --crf [value]                Constant Rate Factor (default: 28)"
       echo "  --preset [preset]            Encoding preset (default: medium)"
@@ -40,6 +51,10 @@ fragments:
           ;;
           --acodec)
           acodec="$2"
+          shift 2
+          ;;
+          --abitrate)
+          abitrate="$2"
           shift 2
           ;;
           --output-format)
@@ -82,7 +97,7 @@ fragments:
       [ -z "$formatted_timestamp" ] && formatted_timestamp=$(date "+%Y-%m-%d-%H-%M-%S")
 
       # Compress the video
-      ffmpeg -i "$file" -vcodec "$vcodec" -crf "$crf" -preset "$preset" -acodec "$acodec" "output/${formatted_timestamp}.${output_format}"
+      ffmpeg -i "$file" -vcodec "$vcodec" -crf "$crf" -preset "$preset" -c:a aac "$acodec" -b:a "$abitrate" "$video_tag" "output/${formatted_timestamp}.${output_format}"
       done
 
   - filename: compress-multiple-videos-commands
