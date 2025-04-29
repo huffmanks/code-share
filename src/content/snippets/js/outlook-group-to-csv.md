@@ -17,6 +17,7 @@ fragments:
           .split(";")
           .map((entry) => entry.trim())
           .filter(Boolean)
+          .map((entry) => entry.replace(/\b(Jr\.?|Sr\.?|II|III|IV|V),?/gi, "").trim())
           .map((entry) => {
             const match = entry.match(/^(.*?),\s*(.*?)\s*<([^>]+)>$/);
             if (!match) return null;
