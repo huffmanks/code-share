@@ -17,5 +17,5 @@ fragments:
       # Audio bitrate: 128k (default), 96k|128k|192k|320k
       # Video tag: hvc1, can help with compatibility issues
       # Output: output.mp4
-      ffmpeg -i input.mp4 -vcodec libx265 -crf 28 -preset medium -c:a aac -b:a 128k -tag:v hvc1 output.mp4
+      ffmpeg -i input.mp4 -vcodec libx265 -crf 28 -preset medium -c:a aac -b:a 128k -tag:v hvc1 -metadata creation_time="2024-05-12T14:33:00Z" output.mp4
 ---
