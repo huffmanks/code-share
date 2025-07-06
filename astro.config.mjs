@@ -147,6 +147,10 @@ export default defineConfig({
               link: "cheatsheets/docker",
             },
             {
+              label: "ffmpeg",
+              link: "cheatsheets/ffmpeg",
+            },
+            {
               label: "git",
               link: "cheatsheets/git",
             },
