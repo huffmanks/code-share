@@ -1,6 +1,6 @@
 ---
 title: regex
-description: Descriptive explanations of commonly used regex patterns.
+description: Pattern-matching expressions for extracting, replacing or validating text.
 updatedAt: 2025-02-07 09:09:01
 groups:
   - title: Matching Basics

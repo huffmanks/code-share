@@ -1,6 +1,6 @@
 ---
 title: postgresql
-description: A quick reference for common PostgreSQL commands and queries.
+description: Common SQL queries and commands for working with PostgreSQL databases and schemas.
 updatedAt: 2025-03-23 01:27:02
 groups:
   - title: User Authentication

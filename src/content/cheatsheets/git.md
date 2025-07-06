@@ -1,6 +1,6 @@
 ---
 title: git
-description: Common git commands for undoing changes, branching and merging, stashing changes and more.
+description: Commands for version control, branches, staging, history and undoing changes.
 updatedAt: 2025-02-07 08:44:58
 groups:
   - title: Undoing Changes

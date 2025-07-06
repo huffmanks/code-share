@@ -1,6 +1,6 @@
 ---
 title: docker
-description: Docker commands categorized for managing containers, images, networks, volumes and more.
+description: CLI commands to build, run, manage containers, images, networks, volumes and Dockerfiles.
 updatedAt: 2025-03-17 21:29:03
 groups:
   - title: Containers

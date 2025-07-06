@@ -1,6 +1,6 @@
 ---
 title: jq
-description: Commonly used jq commands for parsing and transforming JSON data.
+description: Syntax for filtering, mapping and restructuring JSON data from the command line.
 updatedAt: 2025-03-17 14:55:50
 groups:
   - title: Basic Filters

@@ -1,6 +1,6 @@
 ---
 title: terminal
-description: A quick reference to common terminal commands.
+description: Frequently used shell commands for file navigation, permissions, networking and more.
 updatedAt: 2025-02-07 09:22:11
 groups:
   - title: Navigation

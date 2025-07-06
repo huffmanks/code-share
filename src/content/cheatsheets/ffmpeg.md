@@ -1,7 +1,7 @@
 ---
 title: ffmpeg
-description: Commonly used ffmpeg commands for processing and transforming video, audio and metadata.
-updatedAt: 2025-07-06 18:45:00
+description: Video, audio and media commands for conversion, editing, compression and streaming.
+updatedAt: 2025-07-06 19:19:20
 groups:
   - title: Basic Usage
     description: Simple one-liners to perform basic ffmpeg operations.

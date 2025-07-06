@@ -1,6 +1,6 @@
 ---
 title: nano
-description: Essential nano shortcuts for navigation, selecting text, find/replace and more.
+description: Shortcut keys for editing, navigating and managing text inside the Nano editor.
 updatedAt: 2025-02-09 14:48:58
 groups:
   - title: Navigation

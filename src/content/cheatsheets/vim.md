@@ -1,6 +1,6 @@
 ---
 title: vim
-description: Essential Vim shortcuts for navigation, selecting text, editing and more.
+description: Navigation, editing and command shortcuts to work efficiently in Vim.
 updatedAt: 2025-03-17 14:57:47
 groups:
   - title: Navigation

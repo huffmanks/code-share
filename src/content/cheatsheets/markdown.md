@@ -1,6 +1,6 @@
 ---
 title: markdown
-description: A quick reference for Markdown syntax, covering text formatting, lists, links, images and more.
+description: Formatting rules for text, lists, links, code blocks and other Markdown elements.
 updatedAt: 2025-03-17 20:33:45
 groups:
   - title: Text Formatting
