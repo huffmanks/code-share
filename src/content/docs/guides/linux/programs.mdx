@@ -2,6 +2,8 @@
 title: Programs
 description: A guide to installing and setting up various Linux programs.
 references:
+  - href: https://github.com/qarmin/czkawka/blob/master/czkawka_gui/README.md
+    label: czkawka
   - href: https://mkvtoolnix.download/downloads.html
     label: mkvtoolnix
   - href: https://openvpn.net/cloud-docs/tutorials/configuration-tutorials/connectors/operating-systems/linux/tutorial--learn-to-install-and-control-the-openvpn-3-client.html
@@ -22,6 +24,42 @@ import { Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 ### References
 
 <ReferenceLinks references={frontmatter.references} />
+
+---
+
+## czkawka
+
+Czkawka helps organize media libraries by finding duplicate images, similar photos and videos, corrupted files and more.
+
+<br />
+
+<Steps>
+
+1.  ### Prebuild binaries
+
+        ```sh
+        sudo apt install libgtk-4-bin libheif1 libraw-bin ffmpeg -y
+        ```
+
+2.  ### Add repo to apt source
+
+        ```sh
+        sudo add-apt-repository ppa:xtradeb/apps && sudo apt update
+        ```
+
+3.  ### Install
+
+        ```sh
+        sudo apt install czkawka
+        ```
+
+4.  ### Run GUI
+
+        ```sh
+        czkawka_gui
+        ```
+
+</Steps>
 
 ---
 

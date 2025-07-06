@@ -1,0 +1,19 @@
+services:
+  tinymediamanager:
+    image: tinymediamanager/tinymediamanager:latest
+    container_name: tinymediamanager
+    ports:
+      - 5900:5900 # VNC port
+      - 4000:4000 # Webinterface
+    volumes:
+      - ./data:/data
+      - /path/to/movies:/media/movies
+      - /path/to/tv_shows:/media/tv_shows
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=100
+      - ALLOW_DIRECT_VNC=true
+      - LC_ALL=en_US.UTF-8
+      - LANG=en_US.UTF-8
+      - PASSWORD=password
+    restart: unless-stopped

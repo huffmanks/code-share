@@ -1,0 +1,44 @@
+---
+title: tinyMediaManager
+description: "tinyMediaManager is a media management tool designed to provide metadata for media centers like Jellyfin and Plex."
+references:
+  - href: https://gitlab.com/tinyMediaManager/tinyMediaManager
+    label: GitLab repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/tinymediamanager.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{{DOCKER_PATH_VAR}}}/tinymediamanager && cd {{{DOCKER_PATH_VAR}}}/tinymediamanager
+```
+
+## docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="4000" />
