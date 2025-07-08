@@ -4,6 +4,8 @@ description: A guide to installing and setting up various Linux programs.
 references:
   - href: https://github.com/qarmin/czkawka/blob/master/czkawka_gui/README.md
     label: czkawka
+  - href: https://freefilesync.org/download.php
+    label: FreeFileSync
   - href: https://mkvtoolnix.download/downloads.html
     label: mkvtoolnix
   - href: https://openvpn.net/cloud-docs/tutorials/configuration-tutorials/connectors/operating-systems/linux/tutorial--learn-to-install-and-control-the-openvpn-3-client.html
@@ -58,6 +60,55 @@ Czkawka helps organize media libraries by finding duplicate images, similar phot
         ```sh
         czkawka_gui
         ```
+
+</Steps>
+
+---
+
+## FreeFileSync
+
+FreeFileSync is a folder comparison and synchronization software that creates and manages backup copies of all your important files.
+
+<br />
+
+<Steps>
+
+1.  ### Download Linux.tar.gz
+
+        ```sh
+        wget -P ~/Downloads https://freefilesync.org/download/FreeFileSync_14.3_Linux.tar.gz
+        ```
+
+2.  ### Extract
+
+        ```sh
+        tar -xvzf ~/Downloads/FreeFileSync_14.3_Linux.tar.gz
+        ```
+
+3.  ### Make executeable
+
+        ```sh
+        chmod +x ~/Downloads/FreeFileSync_14.3_Install.run
+        ```
+
+4.  ### Run
+
+        ```sh
+        ./FreeFileSync_14.3_Install.run
+        ```
+
+5.  ### Accept license
+
+        ```sh
+        y
+        ```
+
+6.  ### Change install settings (optional)
+
+        - Press `1` to disable for all users.
+        - Press `2` to change installation directory.
+        - Press `3` to disable desktop shortcuts.
+        - Press `Enter` to begin installtion.
 
 </Steps>
 
