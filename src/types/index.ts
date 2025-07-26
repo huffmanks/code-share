@@ -35,7 +35,8 @@ export type LanguageInfo = {
 
 export type SettingsForm = {
   username: string;
-  ipAddress: string;
+  serverIpAddress: string;
+  clientIpAddress: string;
   dockerPath: string;
   externalHddPath: string;
   externalHddUuid: string;

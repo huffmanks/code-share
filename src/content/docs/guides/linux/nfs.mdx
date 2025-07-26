@@ -19,29 +19,23 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" code={`sudo apt update && sudo apt install nfs-kernel-server -y`} />
 
-2.  ### Set permissions
-
-    Ensure the shared directory has appropriate permissions for read access.
-
-    <Code lang="sh" code={`sudo chmod 755 {{NFS_SHARE_VAR}}`} />
-
-3.  ### Add export
+2.  ### Add export
 
     Define the directory to share and specify client access in the NFS exports file.
 
-    <Code lang="sh" code={`echo "{{NFS_SHARE_VAR}} {{IP_ADDRESS_VAR}}(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports`} />
+    <Code lang="sh" code={`echo "{{NFS_SHARE_VAR}} {{CLIENT_IP_VAR}}(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports`} />
 
-4.  ### Apply export
+3.  ### Apply export
 
     Reload the NFS exports to apply the changes.
 
     <Code lang="sh" code={`sudo exportfs -ra`} />
 
-5.  ### Allow through firewall
+4.  ### Allow through firewall (optional)
 
     Open the NFS port to allow access from the specified client IP.
 
-    <Code lang="sh" code={`sudo ufw allow from {{IP_ADDRESS_VAR}} to any port nfs`} />
+    <Code lang="sh" code={`sudo ufw allow from {{CLIENT_IP_VAR}} to any port nfs`} />
 
 </Steps>
 
@@ -65,12 +59,14 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Mount the shared directory manually from the server to the local mount point.
 
-    <Code lang="sh" code={`sudo mount {{IP_ADDRESS_VAR}}:{{NFS_SHARE_VAR}} {{NFS_MOUNT_VAR}}`} />
+    <Code lang="sh" code={`sudo mount {{SERVER_IP_VAR}}:{{NFS_SHARE_VAR}} {{NFS_MOUNT_VAR}}`} />
 
 4.  ### Automount
 
     Add an entry to `/etc/fstab` to mount the share automatically on boot.
 
-    <Code lang="sh" code={`{IP_ADDRESS_VAR}:{{NFS_SHARE_VAR}} {{NFS_MOUNT_VAR}} nfs defaults,nofail,x-systemd.automount 0 0`} />
+    <Code lang="sh" code={`sudo nano /etc/fstab`} />
+
+    <Code lang="sh" code={`{SERVER_IP_VAR}:{{NFS_SHARE_VAR}}	{{NFS_MOUNT_VAR}}	nfs	noauto,x-systemd.automount,_netdev,nofail,timeo=5,retrans=2	0	0`} />
 
 </Steps>

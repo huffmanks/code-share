@@ -15,7 +15,8 @@ export const LS_SETTINGS_KEY = "codeshare-v1-settings";
 
 export const defaultSettingsLocalStorage: SettingsForm = {
   username: "$USERNAME",
-  ipAddress: "$IP_ADDRESS",
+  serverIpAddress: "$SERVER_IP_ADDRESS",
+  clientIpAddress: "$CLIENT_IP_ADDRESS",
   dockerPath: "/PATH_TO_DOCKER_APPS",
   externalHddPath: "/PATH_TO_EXTERNAL_HDD",
   externalHddUuid: "$EXTERNAL_HDD_UUID",
@@ -33,10 +34,17 @@ export const settingsFormFields = [
   },
   {
     id: "e10ff1e0-3211-4730-afbc-9bb7ac290b19",
-    label: "IP address",
-    placeholder: "192.168.1.2",
-    name: "ipAddress",
-    defaultValue: defaultSettingsLocalStorage.ipAddress,
+    label: "Server IP address",
+    placeholder: "192.168.0.100",
+    name: "serverIpAddress",
+    defaultValue: defaultSettingsLocalStorage.serverIpAddress,
+  },
+  {
+    id: "645786c3-c668-4369-a33f-bba7f477579c",
+    label: "Client IP address",
+    placeholder: "192.168.0.101",
+    name: "clientIpAddress",
+    defaultValue: defaultSettingsLocalStorage.clientIpAddress,
   },
   {
     id: "2acef3b3-bc47-4c1f-a12a-b7b10183bea7",
@@ -77,7 +85,8 @@ export const settingsFormFields = [
 
 export const defaultSettingsFormValues: SettingsForm = {
   username: "",
-  ipAddress: "",
+  serverIpAddress: "",
+  clientIpAddress: "",
   dockerPath: "",
   externalHddPath: "",
   externalHddUuid: "",

@@ -117,7 +117,7 @@ Switch from password-based authentication to SSH key-based authentication. This 
 
 2. ### Copy ket to host (client)
 
-   <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_rsa.pub {{USERNAME_VAR}}@{{IP_ADDRESS_VAR}}:~/.ssh/id_rsa.pub`} />
+   <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_rsa.pub {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:~/.ssh/id_rsa.pub`} />
 
 3. ### Add key to authorized keys (host)
 
@@ -199,7 +199,7 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 5. ### Add custom rule (optional)
 
-   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{IP_ADDRESS_VAR}} port $PORT_NUMBER`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
 
    <Code lang="sh" wrap preserveIndent code={allowOpenSSH} />
 
