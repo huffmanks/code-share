@@ -90,6 +90,10 @@ export default defineConfig({
                   slug: "guides/linux/mount-external-hdd",
                 },
                 {
+                  label: "NFS",
+                  slug: "guides/linux/nfs",
+                },
+                {
                   label: "Security",
                   slug: "guides/linux/security",
                 },

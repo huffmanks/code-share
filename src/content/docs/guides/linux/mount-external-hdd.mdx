@@ -27,13 +27,13 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
     A mount point is a directory where your external HDD will be accessed. In this step, you’ll create a directory that will serve as the location for your drive’s mount.
 
-    <Code lang="sh" code={`sudo mkdir -p {{{EXTERNAL_HDD_PATH_VAR}}}`} />
+    <Code lang="sh" code={`sudo mkdir -p {{EXTERNAL_HDD_PATH_VAR}}`} />
 
 4.  ## Change ownership of mount point
 
     After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
 
-    <Code lang="sh" wrap preserveIndent code={`sudo chown -R $USER:$USER {{{EXTERNAL_HDD_PATH_VAR}}} && sudo chmod -R 755 {{{EXTERNAL_HDD_PATH_VAR}}}`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo chown -R $USER:$USER {{EXTERNAL_HDD_PATH_VAR}} && sudo chmod -R 755 {{EXTERNAL_HDD_PATH_VAR}}`} />
 
 5.  ## Modify fstab for auto-mount
 
@@ -45,7 +45,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
     You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
 
-    <Code lang="sh" preserveIndent code={`UUID={{{EXTERNAL_HDD_UUID_VAR}}}  {{{EXTERNAL_HDD_PATH_VAR}}}       ext4            auto,nofail,noatime,rw,users,exec  0    0`} />
+    <Code lang="sh" preserveIndent code={`UUID={{EXTERNAL_HDD_UUID_VAR}}  {{EXTERNAL_HDD_PATH_VAR}}       ext4            auto,nofail,noatime,rw,users,exec  0    0`} />
 
 7.  ## Unmount external HDD
 
@@ -69,7 +69,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
               Remount the HDD without rebooting.
 
-              <Code lang="sh" code={`sudo mount -o remount {{{EXTERNAL_HDD_PATH_VAR}}}`} />
+              <Code lang="sh" code={`sudo mount -o remount {{EXTERNAL_HDD_PATH_VAR}}`} />
 
           </TabItem>
 

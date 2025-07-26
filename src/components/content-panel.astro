@@ -13,11 +13,14 @@ import type { Props } from "@astrojs/starlight/props";
 
     const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
     const updatedContent = markdownContent.innerHTML
-      .replace(/{{{USERNAME_VAR}}}/g, settings.username)
-      .replace(/{{{IP_ADDRESS_VAR}}}/g, settings.ipAddress)
-      .replace(/{{{EXTERNAL_HDD_UUID_VAR}}}/g, settings.externalHddUuid)
-      .replace(/{{{DOCKER_PATH_VAR}}}/g, settings.dockerPath)
-      .replace(/{{{EXTERNAL_HDD_PATH_VAR}}}/g, settings.externalHddPath)
+      .replace(/{{USERNAME_VAR}}/g, settings.username)
+      .replace(/{{IP_ADDRESS_VAR}}/g, settings.ipAddress)
+      .replace(/{IP_ADDRESS_VAR}/g, settings.ipAddress)
+      .replace(/{{EXTERNAL_HDD_UUID_VAR}}/g, settings.externalHddUuid)
+      .replace(/{{DOCKER_PATH_VAR}}/g, settings.dockerPath)
+      .replace(/{{EXTERNAL_HDD_PATH_VAR}}/g, settings.externalHddPath)
+      .replace(/{{NFS_SHARE_VAR}}/g, settings.nfsSharePath)
+      .replace(/{{NFS_MOUNT_VAR}}/g, settings.nfsMountPath)
       .replace(/_#!\/bin\/bash/g, "#!/bin/bash");
 
     markdownContent.innerHTML = updatedContent;

@@ -31,11 +31,11 @@ echo \\
 `;
 export const daemonJson = `
 {
-  "data-root": "{{{EXTERNAL_HDD_PATH_VAR}}}/docker-data"
+  "data-root": "{{EXTERNAL_HDD_PATH_VAR}}/docker-data"
 }
 `;
 export const verifyDockerData = `
-# Docker Root Dir: {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data
+# Docker Root Dir: {{EXTERNAL_HDD_PATH_VAR}}/docker-data
 docker info | grep "Docker Root Dir"
 `;
 
@@ -154,7 +154,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
    Move docker data to the new directory.
 
-   <Code lang="sh" wrap preserveIndent code={`sudo mv /var/lib/docker {{{EXTERNAL_HDD_PATH_VAR}}}/docker-data`} />
+   <Code lang="sh" wrap preserveIndent code={`sudo mv /var/lib/docker {{EXTERNAL_HDD_PATH_VAR}}/docker-data`} />
 
 3. #### Open daemon.json
 

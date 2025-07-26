@@ -10,5 +10,5 @@ services:
     environment:
       - OC_INSECURE=true
       - PROXY_HTTP_ADDR=0.0.0.0:9200
-      - OC_URL=https://{{{IP_ADDRESS_VAR}}}:9200
+      - OC_URL=https://{{IP_ADDRESS_VAR}}:9200
     restart: unless-stopped

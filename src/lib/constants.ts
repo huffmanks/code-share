@@ -19,6 +19,8 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   dockerPath: "/PATH_TO_DOCKER_APPS",
   externalHddPath: "/PATH_TO_EXTERNAL_HDD",
   externalHddUuid: "$EXTERNAL_HDD_UUID",
+  nfsSharePath: "/PATH_TO_NFS_SHARE",
+  nfsMountPath: "/PATH_TO_NFS_MOUNT",
 };
 
 export const settingsFormFields = [
@@ -57,6 +59,20 @@ export const settingsFormFields = [
     name: "externalHddUuid",
     defaultValue: defaultSettingsLocalStorage.externalHddUuid,
   },
+  {
+    id: "e41d238a-34ec-4e14-bed3-ea8d55ac989d",
+    label: "NFS share path",
+    placeholder: "/home/user/Videos",
+    name: "nfsSharePath",
+    defaultValue: defaultSettingsLocalStorage.nfsSharePath,
+  },
+  {
+    id: "7211b2bf-2984-4b7e-9394-d6d244824772",
+    label: "NFS mount path",
+    placeholder: "/home/user/videos-nfs",
+    name: "nfsMountPath",
+    defaultValue: defaultSettingsLocalStorage.nfsMountPath,
+  },
 ] as const;
 
 export const defaultSettingsFormValues: SettingsForm = {
@@ -65,4 +81,6 @@ export const defaultSettingsFormValues: SettingsForm = {
   dockerPath: "",
   externalHddPath: "",
   externalHddUuid: "",
+  nfsSharePath: "",
+  nfsMountPath: "",
 };
