@@ -1,0 +1,72 @@
+---
+title: Convex
+description: "Convex is the open-source reactive database designed to make life easy for web app developers, whether human or LLM. Fetch data and perform business logic with strong consistency by writing pure TypeScript."
+sidebar:
+  order: 2
+references:
+  - href: https://docs.convex.dev/self-hosting
+    label: Self-hosting docs
+  - href: https://github.com/get-convex/convex-backend
+    label: GitHub repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/convex.yml?raw";
+import envLocal from "/src/files/env/convex.env.local?raw";
+import env from "/src/files/env/convex.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/convex && cd {{DOCKER_PATH_VAR}}/convex
+```
+
+## docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Generate admin keys
+
+```sh
+docker compose exec backend ./generate_admin_key.sh
+```
+
+## .env.local
+
+```sh
+nano .env.local
+```
+
+<Code lang="dotenv" title=".env.local" wrap preserveIndent code={envLocal} />
+
+## Open web ui
+
+<OpenWebUI port="6791" />
