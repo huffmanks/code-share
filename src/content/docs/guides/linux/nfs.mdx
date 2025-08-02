@@ -69,4 +69,10 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" code={`{SERVER_IP_VAR}:{{NFS_SHARE_VAR}}	{{NFS_MOUNT_VAR}}	nfs	noauto,x-systemd.automount,_netdev,nofail,timeo=5,retrans=2	0	0`} />
 
+5.  ### Unmount
+
+    Unmount the shared directory. The `-l` (lazy) flag defers unmounting until the directory is no longer in use.
+
+    <Code lang="sh" code={`sudo umount -l {{NFS_MOUNT_VAR}}`} />
+
 </Steps>
