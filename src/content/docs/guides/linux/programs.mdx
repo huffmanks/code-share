@@ -122,33 +122,16 @@ MKVToolNix is a set of tools to create, alter and inspect Matroska files.
 
 <Steps>
 
-1.  ### Add apt source
+1.  ### Import public GPG key
 
-        <Tabs syncKey="distribution">
-                <TabItem label="Debian">
+        ```sh wrap preserveIndent
+        sudo wget -O /etc/apt/keyrings/gpg-pub-moritzbunkus.gpg https://mkvtoolnix.download/gpg-pub-moritzbunkus.gpg
+        ```
 
-                        ```sh wrap preserveIndent
-                        deb [signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/debian/ bookworm main
-                        deb-src [signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/debian/ bookworm main
-                        ```
+2.  ### Add to apt source
 
-                </TabItem>
-                <TabItem label="Ubuntu">
-
-                        ```sh wrap preserveIndent
-                        deb [arch=amd64 signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/ubuntu/ oracular main
-                        deb-src [arch=amd64 signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/ubuntu/ oracular main
-                        ```
-
-                </TabItem>
-        </Tabs>
-
-        <br />
-
-2.  ### Update apt
-
-        ```sh
-        sudo apt update
+        ```sh wrap preserveIndent
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/gpg-pub-moritzbunkus.gpg] https://mkvtoolnix.download/ubuntu/ noble main" | sudo tee /etc/apt/sources.list.d/mkvtoolnix.download.list
         ```
 
 3.  ### Install
