@@ -1,13 +1,13 @@
 ---
 import { Code } from "@astrojs/starlight/components";
 
-const flakeNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/flake.nix");
+const flakeNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/nix/flake.nix");
 const flakeNix = await flakeNixResponse.text();
 
-const configurationNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/configuration.nix");
+const configurationNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/nix/configuration.nix");
 const configurationNix = await configurationNixResponse.text();
 
-const systemNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/system.nix");
+const systemNixResponse = await fetch("https://raw.githubusercontent.com/huffmanks/config-stash/refs/heads/main/nix/system.nix");
 const systemNix = await systemNixResponse.text();
 ---
 
