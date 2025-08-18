@@ -1,0 +1,40 @@
+---
+title: puddletag
+description: puddletag is an audio tag editor similar to the Windows program Mp3tag.
+references:
+  - href: https://docs.puddletag.net
+    label: Docs
+  - href: https://github.com/puddletag/puddletag
+    label: GitHub repo
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Install
+
+        ```sh
+        sudo apt install puddletag -y
+        ```
+
+2.  ## Overwrite config
+
+        ```sh
+        mv config.json ~/.config/puddletag/config.json
+        ```
+
+</Steps>

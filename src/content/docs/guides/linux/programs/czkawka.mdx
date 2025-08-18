@@ -1,0 +1,52 @@
+---
+title: Czkawka
+description: Czkawka helps organize media libraries by finding duplicate images, similar photos and videos, corrupted files and more.
+references:
+  - href: https://github.com/qarmin/czkawka
+    label: GitHub repo
+  - href: https://github.com/qarmin/czkawka/blob/master/czkawka_gui/README.md
+    label: GUI install docs
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Prebuild binaries
+
+        ```sh
+        sudo apt install libgtk-4-bin libheif1 libraw-bin ffmpeg -y
+        ```
+
+2.  ## Add repo to apt source
+
+        ```sh
+        sudo add-apt-repository ppa:xtradeb/apps && sudo apt update
+        ```
+
+3.  ## Install
+
+        ```sh
+        sudo apt install czkawka
+        ```
+
+4.  ## Run GUI
+
+        ```sh
+        czkawka_gui
+        ```
+
+</Steps>

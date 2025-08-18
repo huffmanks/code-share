@@ -1,0 +1,150 @@
+---
+title: OpenVPN
+description: Connect to any OpenVPN protocol-compatible server or service.
+references:
+  - href: https://openvpn.net/cloud-docs/tutorials/configuration-tutorials/connectors/operating-systems/linux/tutorial--learn-to-install-and-control-the-openvpn-3-client.html
+    label: openvpn (v3 docs)
+tableOfContents:
+  maxHeadingLevel: 5
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Select version
+
+        <Tabs>
+
+                <TabItem label="openvpn">
+
+                        ### openvpn 2.x
+
+                        #### Install
+
+                        ```sh
+                        sudo apt install openvpn -y
+                        ```
+
+                </TabItem>
+
+                <TabItem label="openvpn3">
+
+                        ### openvpn3
+
+                        <br />
+
+                        <Steps>
+
+                        1. #### Add keyring
+
+                                ```sh wrap preserveIndent
+                                sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://packages.openvpn.net/packages-repo.gpg | sudo tee /etc/apt/keyrings/openvpn.asc
+                                ```
+
+                        2. #### Assign `DISTO` variable
+
+                                ```sh
+                                DISTRO=$(lsb_release -c -s)
+                                ```
+
+                        3. #### Add apt source
+
+                                ```sh wrap preserveIndent
+                                echo "deb [signed-by=/etc/apt/keyrings/openvpn.asc] https://packages.openvpn.net/openvpn3/debian $DISTRO main" | sudo tee /etc/apt/sources.list.d/openvpn-packages.list
+                                ```
+
+                        4. #### Update apt
+
+                                ```sh
+                                sudo apt update
+                                ```
+
+                        5. #### Install
+
+                                ```sh
+                                sudo apt install openvpn3 -y
+                                ```
+
+                        </Steps>
+
+                </TabItem>
+
+        </Tabs>
+
+2.  ## Make directory
+
+        ```sh wrap preserveIndent
+        mkdir -p /etc/openvpn/profile && cd /etc/openvpn/profile
+        ```
+
+3.  ## Modify .ovpn files
+
+        ```sh
+        nano server1-tcp80.ovpn
+        ```
+
+        ```sh title=server1-tcp80.ovpn wrap preserveIndent
+        # Comment out the line below
+        # setenv opt block-outside-dns
+
+        # Add after `route 0.0.0.0 0.0.0.0`
+        setenv PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        script-security 2
+        up /etc/openvpn/update-resolv-conf
+        down /etc/openvpn/update-resolv-conf
+        down-pre
+        ```
+
+4.  ## Modify update-resolv-conf
+
+        ```sh
+        nano /etc/openvpn/update-resolv-conf
+        ```
+
+        ```sh title=update-resolv-conf wrap preserveIndent
+        # Add after examples
+        # Add as many as you like, replace ip address
+        foreign_option_1='dhcp-option DNS 208.67.222.222'
+        foreign_option_2='dhcp-option DNS 208.67.222.220'
+        foreign_option_3='dhcp-option DNS 146.112.128.66'
+        ```
+
+5.  ## Create auth.txt
+
+        ```sh
+        nano auth.txt
+        ```
+
+        ```sh title="auth.txt"
+        # Edit username and password
+        username
+        password
+        ```
+
+6.  ## Connect
+
+        ```sh wrap preserveIndent
+        sudo openvpn --config /etc/openvpn/profile/server1-tcp80.ovpn
+        ```
+
+7.  ## Kill
+
+        ```sh
+        sudo killall openvpn
+        ```
+
+</Steps>

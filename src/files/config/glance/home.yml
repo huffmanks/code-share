@@ -78,8 +78,8 @@
 
         - type: releases
           cache: 1d
-          # Without authentication the Github API allows for up to 60 requests per hour. You can create a
-          # read-only token from your Github account settings and use it here to increase the limit.
+          # Without authentication the GitHub API allows for up to 60 requests per hour. You can create a
+          # read-only token from your GitHub account settings and use it here to increase the limit.
           # token: ...
           repositories:
             - glanceapp/glance

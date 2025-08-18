@@ -82,12 +82,8 @@ export default defineConfig({
                   slug: "guides/linux",
                 },
                 {
-                  label: "Format external HDD",
-                  slug: "guides/linux/format-external-hdd",
-                },
-                {
-                  label: "Mount external HDD",
-                  slug: "guides/linux/mount-external-hdd",
+                  label: "External HDD setup",
+                  slug: "guides/linux/external-hdd-setup",
                 },
                 {
                   label: "NFS",
@@ -99,7 +95,8 @@ export default defineConfig({
                 },
                 {
                   label: "Programs",
-                  slug: "guides/linux/programs",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/linux/programs", collapsed: true },
                 },
                 {
                   label: "Wake-on-LAN (WOL)",

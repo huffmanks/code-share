@@ -1,0 +1,70 @@
+---
+title: Gickup
+description: Gickup is a tool that allows you to clone/mirror repositories from one hoster to another. This is useful if you want to have a backup of your repositories on another hoster or to a local server.
+references:
+  - href: https://cooperspencer.github.io/gickup-documentation
+    label: Docs
+  - href: https://github.com/cooperspencer/gickup
+    label: GitHub repo
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Download tarball
+
+        ```sh
+        wget https://github.com/stefanprodan/gickup/releases/download/v0.10.39/gickup_0.10.39_linux_amd64.tar.gz
+        ```
+
+2.  ## Verify checksum
+
+        ```sh
+        echo "c3d3e647189c4379d8d70b9223bd4fe5eb293b289ece5931ff2e10064b063a67  gickup_0.10.39_linux_amd64.tar.gz" | sha256sum -c -
+        ```
+
+3.  ## Extract and move
+
+        ```sh
+        tar -xzf gickup_0.10.39_linux_amd64.tar.gz && sudo mv gickup /usr/local/bin/gickup
+        ```
+
+4.  ## Make executeable
+
+        ```sh
+        sudo chmod +x /usr/local/bin/gickup
+        ```
+
+5.  ## Create backup directory
+
+        ```sh
+        mkdir -p ~/gickup-backups
+        ```
+
+6.  ## Run
+
+        - Replace YOUR_TOKEN with your GitHub PAT.
+        - Token requires these permissions:
+                - `repo` - Full control of private repositories (required to access and clone private repos).
+                - `read:org` - Read-only access to organization membership and repos (needed if backing up org repos).
+                - `read:user` - (Optional) Read user profile info if needed for some API calls.
+
+        ```sh
+        gickup backup --token YOUR_TOKEN --all --output ~/gickup-backups
+        ```
+
+</Steps>

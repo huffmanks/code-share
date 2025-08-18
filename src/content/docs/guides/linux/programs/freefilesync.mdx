@@ -1,0 +1,63 @@
+---
+title: FreeFileSync
+description: FreeFileSync is a folder comparison and synchronization software that creates and manages backup copies of all your important files.
+references:
+  - href: https://freefilesync.org/download.php
+    label: Download
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Download Linux.tar.gz
+
+        ```sh
+        wget -P ~/Downloads https://freefilesync.org/download/FreeFileSync_14.3_Linux.tar.gz
+        ```
+
+2.  ## Extract
+
+        ```sh
+        tar -xvzf ~/Downloads/FreeFileSync_14.3_Linux.tar.gz
+        ```
+
+3.  ## Make executeable
+
+        ```sh
+        chmod +x ~/Downloads/FreeFileSync_14.3_Install.run
+        ```
+
+4.  ## Run
+
+        ```sh
+        ./FreeFileSync_14.3_Install.run
+        ```
+
+5.  ## Install
+
+        ### Accept license
+        - Press `y` to agree and continue.
+        - Press `s` to show details.
+        - Press `n` to cancel.
+
+        ### Change install settings (optional)
+        - Press `1` to disable for all users.
+        - Press `2` to change installation directory.
+        - Press `3` to disable desktop shortcuts.
+        - Press `Enter` to begin installtion.
+
+</Steps>
