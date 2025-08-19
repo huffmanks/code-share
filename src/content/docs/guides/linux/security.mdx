@@ -2,12 +2,14 @@
 title: Security
 description: Linux Security is a critical aspect of maintaining a secure and stable server or personal environment. This page provides a comprehensive guide on key security practices to harden a Linux system, reduce vulnerabilities and protect against common threats. By following these best practices, you can ensure that your system is well-defended from unauthorized access, malware and potential exploits.
 next: "Install apps"
+tableOfContents:
+  maxHeadingLevel: 4
 ---
 
 import { Code, Steps } from "@astrojs/starlight/components";
 
 export const unattendedUpgradesConfig = `
-# Update these lines
+\# Update below:
 APT::Periodic::Enable "1";
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
@@ -17,23 +19,29 @@ APT::Periodic::Verbose "2";
 `;
 
 export const sudoersConfig = `
-# Update this line
-# pi ALL=(ALL) NOPASSWD: ALL
-pi ALL=(ALL) PASSWD: ALL
+\# Optionally allow sudo without password (less secure)
+{USERNAME_VAR} ALL=(ALL) NOPASSWD: ALL
+
+\# Require password for sudo (recommended)
+{USERNAME_VAR} ALL=(ALL) PASSWD: ALL
 `;
 
 export const sshdConfig = `
 \# Disable password auth
-#PasswordAuthentication yes
+\# PasswordAuthentication yes
 PasswordAuthentication no
 
-\# Uncomment below to prevent root login
-#PermitRootLogin prohibit-password
-PermitRootLogin prohibit-password
+\# Uncomment below to allow only key-based login for root
+\# PermitRootLogin prohibit-password
+\# Or prevent root login entirely (recommended)
+PermitRootLogin no
 
 \# Uncomment and change port (optional)
-#Port 22
+\# Port 22
 Port 2222
+
+\# Only allow these users to log in via SSH (optional)
+AllowUsers username1 username2
 `
 
 export const fail2banConfig = `
@@ -44,17 +52,28 @@ port = ssh
 filter = sshd
 
 \# Number of seconds that a host is banned
-bantime = 600
+bantime = 3600
 
 \# A host is banned if it has generated maxretry during the last findtime
 findtime = 600
 
 \# How many attempts until host is banned
 maxretry = 3
+
+\# Whitelist multiple IPs or subnets separated by spaces.
+ignoreip = 127.0.0.1/8 ::1 203.0.113.42 192.168.1.0/24
+`
+
+export const getIps = `
+\# Find external IP
+curl ifconfig.me
+
+\# Network’s internal subnet (for LAN)
+ip addr show
 `
 
 export const allowOpenSSH = `
-# ALLOW IN: 22/tcp (OpenSSH) and 22/tcp (OpenSSH (v6))
+\# ALLOW IN: 22/tcp (OpenSSH)
 sudo ufw allow OpenSSH
 `;
 
@@ -96,11 +115,11 @@ Require users to authenticate with a password before using sudo privileges. This
 
 1. ### Open config
 
-   <Code lang="sh" code={`sudo nano /etc/sudoers.d/010_pi-nopasswd`} />
+   <Code lang="sh" code={`sudo nano /etc/sudoers.d/010_user`} />
 
 2. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_pi-nopasswd" wrap preserveIndent code={sudoersConfig} />
+   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_user" wrap preserveIndent code={sudoersConfig} />
 
 </Steps>
 
@@ -111,17 +130,25 @@ Require users to authenticate with a password before using sudo privileges. This
 Switch from password-based authentication to SSH key-based authentication. This method is more secure because it eliminates the risk of brute-force attacks and provides stronger encryption for remote logins.
 
 <Steps>
-1. ### Create key (client)
+1. ### Client
 
-    <Code lang="sh" code={`ssh-keygen -t rsa`} />
+      #### Create key
 
-2. ### Copy ket to host (client)
+      <Code lang="sh" code={`ssh-keygen -t ed25519`} />
 
-   <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_rsa.pub {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:~/.ssh/id_rsa.pub`} />
+      #### Copy key to host
 
-3. ### Add key to authorized keys (host)
+      <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_ed25519.pub {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:~/.ssh/id_ed25519.pub`} />
 
-   <Code lang="sh" wrap preserveIndent code={`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`} />
+2. ### Host
+
+   #### Add key to authorized keys
+
+   <Code lang="sh" wrap preserveIndent code={`cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys`} />
+
+   #### Secure authorized_keys
+
+   <Code lang="sh" wrap preserveIndent code={`chmod 600 ~/.ssh/authorized_keys`} />
 
 </Steps>
 
@@ -165,7 +192,9 @@ Install and configure Fail2Ban to protect your server from brute-force attacks. 
 
 3. ### Modify config (optional)
 
-   <Code lang="sh" frame="terminal" wrap preserveIndent code={fail2banConfig} />
+   <Code lang="sh" title="/etc/fail2ban/jail.conf" frame="terminal" wrap preserveIndent code={fail2banConfig} />
+
+   <Code lang="sh" title="Get IPs" frame="terminal" wrap preserveIndent code={getIps} />
 
 4. ### Restart fail2ban service
 

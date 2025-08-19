@@ -14,6 +14,7 @@ import type { Props } from "@astrojs/starlight/props";
     const markdownContent = document.querySelector("main .sl-markdown-content") as HTMLDivElement;
     const updatedContent = markdownContent.innerHTML
       .replace(/{{USERNAME_VAR}}/g, settings.username)
+      .replace(/{USERNAME_VAR}/g, settings.username)
       .replace(/{{SERVER_IP_VAR}}/g, settings.serverIpAddress)
       .replace(/{SERVER_IP_VAR}/g, settings.serverIpAddress)
       .replace(/{{CLIENT_IP_VAR}}/g, settings.clientIpAddress)

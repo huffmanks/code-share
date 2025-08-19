@@ -15,6 +15,12 @@
 ### Linux
 
 - [ ] Refactor getting started, ssh
+- [ ] Update security page with more content:
+  - [ ] AppArmor / SELinux: Could add a section recommending enabling AppArmor profiles.
+  - [ ] Automatic log rotation: logrotate for SSH, Fail2Ban logs.
+  - [ ] Regular audit tools: Recommend lynis or chkrootkit for periodic audits.
+  - [ ] Strong password policy: Could include libpam-pwquality or PAM rules for local accounts.
+  - [ ] Kernel / sysctl hardening: Add /etc/sysctl.d/ tweaks (disable IP forwarding, limit ICMP, protect against SYN floods, etc.).
 - [ ] Add tailscale setup
 - [ ] System monitoring (htop, iotop, btop, etc.)
 - [ ] File permissions and ownership (chmod, chown)

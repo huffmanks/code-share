@@ -94,13 +94,13 @@ export default defineConfig({
                   slug: "guides/linux/security",
                 },
                 {
+                  label: "Wake-on-LAN (WOL)",
+                  slug: "guides/linux/wake-on-lan",
+                },
+                {
                   label: "Programs",
                   collapsed: true,
                   autogenerate: { directory: "guides/linux/programs", collapsed: true },
-                },
-                {
-                  label: "Wake-on-LAN (WOL)",
-                  slug: "guides/linux/wake-on-lan",
                 },
               ],
             },
