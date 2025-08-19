@@ -1,0 +1,69 @@
+---
+title: Radarr
+description: Radarr is a movie collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new movies and will interface with clients and indexers to grab, sort and rename them.
+references:
+  - href: https://wiki.servarr.com/radarr/installation/linux
+    label: Installation
+  - href: https://github.com/Radarr/Radarr
+    label: GitHub repo
+  - href: https://wiki.servarr.com/radarr
+    label: Wiki
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+<Steps>
+
+1.  ## Install
+
+    Run the install script for Debian-based systems:
+
+    ```sh
+    curl -o- https://raw.githubusercontent.com/huffmanks/code-share/main/src/files/scripts/radarr.sh | sudo bash
+
+    ```
+
+2.  ## Add user to groups
+
+    Give your user and Radarr permission to access the `media` group and each other’s files:
+
+    ```sh
+    sudo usermod -aG media {{USERNAME_VAR}}
+    sudo usermod -aG media radarr
+    ```
+
+3.  ## Set folder group and permissions
+
+    Change group ownership of your `Videos` directory and restrict access so only members of the group can read/write:
+
+    ```sh
+    sudo chgrp -R media /home/{{USERNAME_VAR}}/Videos
+    sudo chmod -R 775 /home/{{USERNAME_VAR}}/Videos
+    ```
+
+4.  ## Make directories inherit group
+
+    Ensures that any new folders created under `Videos` will automatically use the `media` group:
+
+    ```sh
+    sudo find /home/{{USERNAME_VAR}}/Videos -type d -exec chmod g+s {} +
+    ```
+
+5.  ## Open web ui
+
+    <OpenWebUI port="7878" />
+
+</Steps>

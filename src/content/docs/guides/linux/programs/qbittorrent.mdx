@@ -1,0 +1,56 @@
+---
+title: qBittorrent
+description: qBittorrent is a free, open-source BitTorrent client that is lightweight, cross-platform and supports all common BitTorrent protocols.
+references:
+  - href: https://github.com/qbittorrent/qBittorrent
+    label: GitHub repo
+  - href: https://github.com/jagannatharjun/qbt-theme
+    label: Themes
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Add repository
+
+    ```sh
+    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
+    ```
+
+2.  ## Install
+
+    ```sh
+    sudo apt update && sudo apt install qbittorrent
+    ```
+
+3.  ## Restore settings
+
+    `(Optional)` If you have a backup of your settings, move your saved config into qBittorrent’s config directory:
+
+    ```sh
+    mv qBittorrent.conf /home/{{USERNAME_VAR}}/.config/qBittorrent/qBittorrent.conf
+    ```
+
+4.  ## Set theme
+
+    `(Optional)` In qBittorrent, go to:
+
+    - **Tools → Options → Behavior → Interface**
+    - Select your `.qbtheme` file.
+    - Restart qBittorrent for the theme to apply.
+
+</Steps>

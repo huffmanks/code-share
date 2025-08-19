@@ -1,0 +1,69 @@
+---
+title: Sonarr
+description: Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
+references:
+  - href: https://sonarr.tv/#downloads-linux-ubuntu
+    label: Download
+  - href: https://github.com/Sonarr/Sonarr
+    label: GitHub repo
+  - href: https://wiki.servarr.com/sonarr
+    label: Wiki
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Steps } from "@astrojs/starlight/components";
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Install
+
+    Run the official install script for Debian-based systems:
+
+    ```sh
+    curl -o- https://raw.githubusercontent.com/Sonarr/Sonarr/develop/distribution/debian/install.sh | sudo bash
+    ```
+
+2.  ## Add user to groups
+
+    Give your user and Sonarr permission to access the `media` group and each other’s files:
+
+    ```sh
+    sudo usermod -aG media {{USERNAME_VAR}}
+    sudo usermod -aG media sonarr
+    ```
+
+3.  ## Set folder group and permissions
+
+    Change group ownership of your `Videos` directory and restrict access so only members of the group can read/write:
+
+    ```sh
+    sudo chgrp -R media /home/{{USERNAME_VAR}}/Videos
+    sudo chmod -R 775 /home/{{USERNAME_VAR}}/Videos
+    ```
+
+4.  ## Make directories inherit group
+
+    Ensures that any new folders created under `Videos` will automatically use the `media` group:
+
+    ```sh
+    sudo find /home/{{USERNAME_VAR}}/Videos -type d -exec chmod g+s {} +
+    ```
+
+5.  ## Open web ui
+
+    <OpenWebUI port="8989" />
+
+</Steps>
