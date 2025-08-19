@@ -1,4 +1,21 @@
 #!/bin/bash
+### Description: Radarr .NET Debian install
+### Originally written for Radarr by: DoctorArr - doctorarr@the-rowlands.co.uk on 2021-10-01 v1.0
+### Updates for servarr suite made by Bakerboy448, DoctorArr, brightghost, aeramor and VP-EN
+### Version v1.0.0 2023-12-29 - StevieTV - adapted from servarr script for Sonarr installs
+### Version V1.0.1 2024-01-02 - StevieTV - remove UTF8-BOM
+### Version V1.0.2 2024-01-03 - markus101 - Get user input from /dev/tty
+### Version V1.0.3 2024-01-06 - StevieTV - exit script when it is ran from install directory
+
+### Boilerplate Warning
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+#NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+#LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+#OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+#WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 scriptversion="1.0.3"
 scriptdate="2024-01-06"
 
