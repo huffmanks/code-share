@@ -2,8 +2,6 @@
 
 ## Fixes
 
-- [ ] Snippet card: showCopyToClipboardButton: false, add custom copy button to action buttons.
-  - const codeToCopy = document.querySelector(".copy button").getAttribute("data-code");
 - [ ] Snippet card: move action buttons to right of title, to tighten up card.
 
 ---
@@ -14,7 +12,6 @@
 
 ### Linux
 
-- [ ] Refactor getting started, ssh
 - [ ] Update security page with more content:
   - [ ] AppArmor / SELinux: Could add a section recommending enabling AppArmor profiles.
   - [ ] Automatic log rotation: logrotate for SSH, Fail2Ban logs.
@@ -33,6 +30,8 @@
 ### Docker
 
 - [ ] Docker security best practices
+  - [ ] rootless
+  - [ ] distroless
 - [ ] Docker secrets and environment variables
 - [ ] Docker Swarm basics
 - [ ] Networking and custom bridge networks
