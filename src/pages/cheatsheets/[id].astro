@@ -34,48 +34,57 @@ const pageUrl = Astro.url.href;
       <div>
         <h2>{group.title}</h2>
         <p class="group-description">{group.description}</p>
-        <div class="grid">
-          {group.items.map((item, index) => (
-            <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
-              <h3>{item.label}</h3>
-              <p class="item-description">{item.description}</p>
 
-              <div class="code-example">
-                {item?.example && (
-                  <>
-                    <code>{item.example}</code>
-                  </>
-                )}
-                {item?.commands && (
-                  <>
-                    {item.commands.map((command) => (
-                      <div class="command">
-                        {command.steps.map((step, idx) => (
-                          <>
-                            <kbd class="kbd" style={{ borderColor: getVariant(borderColorVariants, index), boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}` }}>
-                              {step.key}
-                            </kbd>
-                            {idx + 1 !== command.steps.length && <>{command.isAlternative ? <span>or</span> : <span>+</span>}</>}
-                          </>
-                        ))}
-                      </div>
-                    ))}
-                  </>
-                )}
-                {item?.code && (
-                  <>
-                    <Code lang={item.codeLang} wrap preserveIndent code={item.code} />
-                  </>
-                )}
-                {item?.comment && (
-                  <>
-                    <div class="comment">{item.comment}</div>
-                  </>
-                )}
+        {group?.syntax && (
+          <div class="no-copy" style="margin-bottom: 20px;">
+            <Code lang="sh" preserveIndent code={group.syntax} />
+          </div>
+        )}
+
+        {group?.items && (
+          <div class="grid">
+            {group.items.map((item, index) => (
+              <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
+                <h3>{item.label}</h3>
+                <p class="item-description">{item.description}</p>
+
+                <div class="code-example">
+                  {item?.example && (
+                    <>
+                      <code>{item.example}</code>
+                    </>
+                  )}
+                  {item?.commands && (
+                    <>
+                      {item.commands.map((command) => (
+                        <div class="command">
+                          {command.steps.map((step, idx) => (
+                            <>
+                              <kbd class="kbd" style={{ borderColor: getVariant(borderColorVariants, index), boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}` }}>
+                                {step.key}
+                              </kbd>
+                              {idx + 1 !== command.steps.length && <>{command.isAlternative ? <span>or</span> : <span>+</span>}</>}
+                            </>
+                          ))}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                  {item?.code && (
+                    <>
+                      <Code lang={item.codeLang} wrap preserveIndent code={item.code} />
+                    </>
+                  )}
+                  {item?.comment && (
+                    <>
+                      <div class="comment">{item.comment}</div>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     ))
   }
@@ -137,6 +146,10 @@ const pageUrl = Astro.url.href;
     border-radius: 5px;
     font-family: monospace;
     text-align: center;
+  }
+
+  .no-copy .copy {
+    display: none;
   }
 
   /* ==== Overrides ==== */

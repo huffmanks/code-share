@@ -19,11 +19,6 @@
   - [ ] Strong password policy: Could include libpam-pwquality or PAM rules for local accounts.
   - [ ] Kernel / sysctl hardening: Add /etc/sysctl.d/ tweaks (disable IP forwarding, limit ICMP, protect against SYN floods, etc.).
 - [ ] Add tailscale setup
-- [ ] System monitoring (htop, iotop, btop, etc.)
-- [ ] File permissions and ownership (chmod, chown)
-- [ ] Process management (kill, ps, systemd, etc.)
-- [ ] Networking (iptables, nftables, netplan, etc.)
-- [ ] Cron jobs and automation
 
 ---
 

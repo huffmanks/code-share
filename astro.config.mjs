@@ -144,6 +144,10 @@ export default defineConfig({
           collapsed: true,
           items: [
             {
+              label: "cron",
+              link: "cheatsheets/cron",
+            },
+            {
               label: "docker",
               link: "cheatsheets/docker",
             },
@@ -166,6 +170,10 @@ export default defineConfig({
             {
               label: "nano",
               link: "cheatsheets/nano",
+            },
+            {
+              label: "networking",
+              link: "cheatsheets/networking",
             },
             {
               label: "postgresql",

@@ -64,28 +64,31 @@ export const collections = {
         z.object({
           title: z.string(),
           description: z.string(),
-          items: z.array(
-            z.object({
-              label: z.string(),
-              description: z.string(),
-              code: z.string().optional(),
-              codeLang: z.string().default("sh"),
-              comment: z.string().optional(),
-              example: z.string().optional(),
-              commands: z
-                .array(
-                  z.object({
-                    steps: z.array(
-                      z.object({
-                        key: z.string(),
-                      })
-                    ),
-                    isAlternative: z.boolean().default(false),
-                  })
-                )
-                .optional(),
-            })
-          ),
+          syntax: z.string().optional(),
+          items: z
+            .array(
+              z.object({
+                label: z.string(),
+                description: z.string().optional(),
+                code: z.string().optional(),
+                codeLang: z.string().default("sh"),
+                comment: z.string().optional(),
+                example: z.string().optional(),
+                commands: z
+                  .array(
+                    z.object({
+                      steps: z.array(
+                        z.object({
+                          key: z.string(),
+                        })
+                      ),
+                      isAlternative: z.boolean().default(false),
+                    })
+                  )
+                  .optional(),
+              })
+            )
+            .optional(),
         })
       ),
     }),

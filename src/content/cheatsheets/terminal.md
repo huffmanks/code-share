@@ -1,7 +1,7 @@
 ---
 title: terminal
 description: Frequently used shell commands for file navigation, permissions, networking and more.
-updatedAt: 2025-02-07 09:22:11
+updatedAt: 2025-08-20 10:08:03
 groups:
   - title: Navigation
     description: Moving around the file system.
@@ -87,6 +87,43 @@ groups:
       - label: which [command]
         description: Show the location of a command.
         code: which ls
+  - title: File Permissions and Ownership
+    description: Managing file access rights and ownership.
+    syntax: |
+      # chmod numeric permissions overview:
+      # Each digit represents permissions for: [Owner][Group][Others]
+      # Add values for read(4), write(2), execute(1)
+      #
+      # Examples:
+      # 7 = 4+2+1 = read, write, execute
+      # 6 = 4+2   = read, write
+      # 5 = 4+1   = read, execute
+      # 4 = 4     = read
+      # 3 = 2+1   = write, execute
+      # 2 = 2     = write
+      # 1 = 1     = execute
+      # 0 = none
+      #
+      # Common chmod values:
+      # 755 = rwx for owner, rx for group, rx for others
+      # 644 = rw for owner, r for group, r for others
+      # 700 = rwx for owner, none for group/others
+    items:
+      - label: chmod [mode] [file]
+        description: Change file permissions (numeric or symbolic).
+        code: chmod 644 myfile.txt
+      - label: chmod +x [file]
+        description: Make a file executable.
+        code: chmod +x script.sh
+      - label: chown [owner]:[group] [file]
+        description: Change file owner and group.
+        code: chown user:staff myfile.txt
+      - label: ls -l
+        description: View file permissions and ownership.
+        code: ls -l
+      - label: stat [file]
+        description: Show detailed file status including permissions and ownership.
+        code: stat myfile.txt
   - title: System Information
     description: Getting information about the system.
     items:
@@ -105,6 +142,21 @@ groups:
       - label: ps aux
         description: List all running processes.
         code: ps aux
+      - label: kill [pid]
+        description: Terminate a process by its PID.
+        code: kill 1234
+      - label: kill -9 [pid]
+        description: Force kill a process by its PID.
+        code: kill -9 1234
+      - label: pkill [name]
+        description: Kill processes by name.
+        code: pkill firefox
+      - label: systemctl status [service]
+        description: Show status of a systemd service.
+        code: systemctl status nginx
+      - label: systemctl restart [service]
+        description: Restart a systemd service.
+        code: systemctl restart nginx
   - title: Networking
     description: Commands related to network operations.
     items:
@@ -126,22 +178,40 @@ groups:
       - label: wget [url]
         description: Download a file from a URL.
         code: wget https://www.example.com/file.zip
-  - title: Package Management (macOS - Homebrew)
-    description: Managing software packages with Homebrew.
+  - title: Archiving and Compression
+    description: Creating and extracting tarballs and zip files.
+    syntax: |
+      # tar common flags overview:
+      # c = create new archive
+      # x = extract archive
+      # v = verbose (show files being processed)
+      # f = specify filename of archive
+      # z = compress with gzip (.tar.gz)
+      # j = compress with bzip2 (.tar.bz2)
+      # J = compress with xz (.tar.xz)
+      #
+      # Examples:
+      # tar -cvf archive.tar files/   -> create tar
+      # tar -xvf archive.tar          -> extract tar
+      # tar -czvf archive.tar.gz dir/ -> create gzipped tar
+      # tar -xzvf archive.tar.gz      -> extract gzipped tar
     items:
-      - label: brew install [package]
-        description: Install a package.
-        code: brew install wget
-      - label: brew uninstall [package]
-        description: Uninstall a package.
-        code: brew uninstall wget
-      - label: brew update
-        description: Update Homebrew and its packages.
-        code: brew update
-      - label: brew search [package]
-        description: Search for a package.
-        code: brew search wget
-      - label: brew list
-        description: List installed packages.
-        code: brew list
+      - label: tar -cvf [archive.tar] [files]
+        description: Create a tar archive from files or directories.
+        code: tar -cvf archive.tar myfolder
+      - label: tar -xvf [archive.tar]
+        description: Extract a tar archive.
+        code: tar -xvf archive.tar
+      - label: tar -czvf [archive.tar.gz] [files]
+        description: Create a compressed tarball (gzip).
+        code: tar -czvf archive.tar.gz myfolder
+      - label: tar -xzvf [archive.tar.gz]
+        description: Extract a gzipped tarball.
+        code: tar -xzvf archive.tar.gz
+      - label: zip [archive.zip] [files]
+        description: Create a zip archive.
+        code: zip archive.zip myfile.txt myfolder/*
+      - label: unzip [archive.zip]
+        description: Extract a zip archive.
+        code: unzip archive.zip
 ---
