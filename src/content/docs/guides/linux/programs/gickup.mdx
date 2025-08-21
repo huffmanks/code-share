@@ -9,7 +9,8 @@ references:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import { Steps } from "@astrojs/starlight/components";
+import { Code, Steps } from "@astrojs/starlight/components";
+import yaml from "/src/files/config/gickup/config.yaml?raw";
 
 ## Getting started
 
@@ -49,22 +50,33 @@ import { Steps } from "@astrojs/starlight/components";
         sudo chmod +x /usr/local/bin/gickup
         ```
 
-5.  ## Create backup directory
+5.  ## Create backup/config directory
 
         ```sh
-        mkdir -p ~/gickup-backups
+        mkdir -p ~/gickup-backups && mkdir -p ~/.config/gickup
         ```
 
-6.  ## Run
-
-        - Replace YOUR_TOKEN with your GitHub PAT.
-        - Token requires these permissions:
-                - `repo` - Full control of private repositories (required to access and clone private repos).
-                - `read:org` - Read-only access to organization membership and repos (needed if backing up org repos).
-                - `read:user` - (Optional) Read user profile info if needed for some API calls.
+6.  ## Create config
 
         ```sh
-        gickup backup --token YOUR_TOKEN --all --output ~/gickup-backups
+        nano ~/.config/gickup/config.yaml
+        ```
+
+        - Replace PATH_TO_LOCAL_BACKUP.
+        - Replace YOUR_GITHUB_TOKEN.
+        - Token requires these permissions:
+                - `repo` - Full control of private repositories (required to access and clone private repos).
+                - `gist` - Read user gists.
+                - `read:org` - (Optional) Read-only access to organization membership and repos (needed if backing up org repos).
+
+
+
+        <Code lang="yml" title="config.yaml" wrap preserveIndent code={yaml} />
+
+7.  ## Run
+
+        ```sh
+        gickup ~/.config/gickup/config.yaml
         ```
 
 </Steps>
