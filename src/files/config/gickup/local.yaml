@@ -12,13 +12,3 @@ destination:
       structured: true
       bare: true
       mirror: true
-
-  # gitea:
-  #   - token: "YOUR_GITEA_TOKEN"
-  #     user: "YOUR_GITEA_USERNAME"
-  #     url: http://localhost:3004
-  #     mirrorinterval: 2h0m0s
-  #     lfs: false
-  #     mirror:
-  #       enabled: true
-  #       mirrorinterval: 2h0m0s

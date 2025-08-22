@@ -4,7 +4,7 @@ networks:
 
 services:
   server:
-    image: docker.gitea.com/gitea:1.23.5
+    image: gitea/gitea:latest
     container_name: gitea
     environment:
       USER_UID: ${USER_UID}
@@ -29,7 +29,7 @@ services:
       - db
 
   db:
-    image: docker.io/library/mysql:8
+    image: mariadb:10.6
     container_name: gitea_db
     networks:
       - gitea-network
