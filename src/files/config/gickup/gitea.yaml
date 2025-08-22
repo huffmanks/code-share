@@ -4,7 +4,7 @@ source:
       wiki: false
       issues: false
       starred: false
-      gists: true
+      gists: false
 
 destination:
   gitea:
