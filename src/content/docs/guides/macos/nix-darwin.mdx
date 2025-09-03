@@ -64,12 +64,17 @@ done
 
         <Code lang="sh" wrap preserveIndent code={nixInstaller} />
 
+        - Insert `Y` to install Determinate Nix or `N` for NixOS.
+        - Insert `Y` to continue.
+
+        <br />
+
 4.  ### Install nix-darwin
 
-        <Code lang="sh" wrap preserveIndent code={`nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ok-mac-pro`} />
+        <Code lang="sh" wrap preserveIndent code={`nix run nix-darwin/master#darwin-rebuild -- switch --flake .#{{HOSTNAME_VAR}}`} />
 
 5.  ### Build
-        <Code lang="sh" wrap preserveIndent code={`darwin-rebuild switch --flake .#ok-mac-pro`} />
+        <Code lang="sh" wrap preserveIndent code={`darwin-rebuild switch --flake .#{{HOSTNAME_VAR}}`} />
 
 </Steps>
 

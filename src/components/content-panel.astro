@@ -18,6 +18,7 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{{SERVER_IP_VAR}}/g, settings.serverIpAddress)
       .replace(/{SERVER_IP_VAR}/g, settings.serverIpAddress)
       .replace(/{{CLIENT_IP_VAR}}/g, settings.clientIpAddress)
+      .replace(/{{HOSTNAME_VAR}}/g, settings.hostname)
       .replace(/{{EXTERNAL_HDD_UUID_VAR}}/g, settings.externalHddUuid)
       .replace(/{{DOCKER_PATH_VAR}}/g, settings.dockerPath)
       .replace(/{{EXTERNAL_HDD_PATH_VAR}}/g, settings.externalHddPath)

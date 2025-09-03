@@ -37,6 +37,7 @@ export type SettingsForm = {
   username: string;
   serverIpAddress: string;
   clientIpAddress: string;
+  hostname: string;
   dockerPath: string;
   externalHddPath: string;
   externalHddUuid: string;
