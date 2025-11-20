@@ -1,0 +1,53 @@
+---
+title: Pastebox
+description: "A lightweight, self-hostable alternative to Pastebin for sharing text and files on your local network. Perfect for quick file transfers and text sharing between devices without leaving your network."
+references:
+  - href: https://github.com/huffmanks/pastebox
+    label: GitHub repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/pastebox.yml?raw";
+import env from "/src/files/env/pastebox.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/pastebox && cd {{DOCKER_PATH_VAR}}/pastebox
+```
+
+## docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="3000" />
