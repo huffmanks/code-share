@@ -112,14 +112,53 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
         - **Domain name:** `*.lan.your-domain.tld`.
         - **IP address:** Enter your device IP <code>{serverIp}</code>.
 
+        ### Blocklists (optional)
+
+        - Go to Filters > DNS Blocklists > **Add Blocklist:** `Choose from the list`.
+                - [x] AdGuard DNS filter
+                - [x] AdAway Default Blocklist
+                - [x] HaGeZi's Pro++ Blocklist
+                - [x] OISD Blocklist Small
+                - [x] OISD Blocklist Big
+                - [x] HaGeZi's Samsung Tracker Blocklist
+
+        ### General settings (optional)
+
+        - Go to Settings > **General Settings**.
+                - [x] Use AdGuard `browsing security` web service.
+                - [x] Use AdGuard `parental control` web service.
+                - [x] Use `Safe Search`.
+
+
         ### DNS settings (optional)
 
         - Go to Settings > **DNS Settings**.
-        - Scroll down to **Access Settings**.
-        - **Allowed clients:**
-            - **Tailscale IP range:** `100.64.0.0/10`.
-            - **Device IP range:** `192.168.100.0/24`.
-            - *Or leave blank to allow all.*
+
+                - **Upstream DNS servers**.
+
+                        ```txt
+                        https://dns.quad9.net/dns-query
+                        https://dns.cloudflare.com/dns-query
+                        https://dns.adguard-dns.com/dns-query
+                        ```
+                        - Enter the **DNS providers** above.
+                        - Click `apply`.
+                        <br />
+
+                - **DNS server configuration**.
+                        - [x] Enable DNSSEC.
+                        - Click `save`.
+                        <br />
+
+                - Access Settings > **Allowed clients**.
+
+                        ```txt
+                        100.64.0.0/10
+                        192.168.100.0/24
+                        ```
+                        - Add **Tailscale and device IP ranges** above.
+                        - Leave blank to allow all.
+                        - Click `Save configuration`.
 
         <br />
 
