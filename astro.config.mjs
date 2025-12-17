@@ -90,6 +90,10 @@ export default defineConfig({
                   slug: "guides/linux/nfs",
                 },
                 {
+                  label: "Remote & local access",
+                  slug: "guides/linux/remote-local-access",
+                },
+                {
                   label: "Security",
                   slug: "guides/linux/security",
                 },

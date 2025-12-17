@@ -1,0 +1,167 @@
+---
+title: Remote & local Access
+description: "Access your home services via a secure URL from anywhere in the world. This guide covers setting up AdGuard Home for custom DNS, Nginx Proxy Manager for wildcard SSL certificates via Cloudflare and Tailscale for a zero-config VPN mesh."
+references:
+  - href: https://github.com/AdguardTeam/AdGuardHome
+    label: AdGuard Home (GitHub)
+  - href: https://github.com/NginxProxyManager/nginx-proxy-manager
+    label: Nginx Proxy Manager (GitHub)
+  - href: https://tailscale.com/kb
+    label: Tailscale (Docs)
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code, Steps } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/dns-proxy.yml?raw";
+
+export const serverIp = `{{SERVER_IP_VAR}}`;
+export const npmServerLink = `http://${serverIp}:81`;
+export const adguardSetupLink = `http://${serverIp}:3000`;
+export const adguardAdminLink = `http://${serverIp}:8080`;
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Tailscale
+
+        ### Install
+
+            ```sh
+            curl -fsSL https://tailscale.com/install.sh | sh
+            ```
+
+        ### Start
+
+            ```sh
+            sudo tailscale up --accept-dns=true --advertise-exit-node
+            ```
+
+2.  ## Network configs (optional)
+
+        ### networkd-dispatcher
+
+        ```sh
+        sudo apt install networkd-dispatcher
+        sudo systemctl enable systemd-networkd.service
+        sudo systemctl start systemd-networkd.service
+        ```
+
+        ### Enable IP forwarding
+
+        ```sh
+        echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+        echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+        sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
+        ```
+
+3.  ## Docker
+
+        ### Make directory
+
+        ```sh wrap preserveIndent
+        mkdir -p {{DOCKER_PATH_VAR}}/dns-proxy && cd {{DOCKER_PATH_VAR}}/dns-proxy
+        ```
+
+        ### docker-compose.yml
+
+        ```sh
+        nano docker-compose.yml
+        ```
+
+        <Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+
+        ### Start container
+
+        ```sh
+        docker compose up -d
+        ```
+
+4.  ## Cloudflare
+
+        - Go to Dashboard > My Profile > **API Tokens**.
+        - **Create Token:** Use the `Edit zone DNS template`.
+        - **Permissions:** Select `Zone` | `DNS` | `Edit`.
+        - **Zone Resources:** Select `Include` | `Specific zone` | `your-domain.tld`.
+
+        <br />
+
+5.  ## AdGuard Home
+
+        ### Initial setup
+
+        - Go to <a class="link" href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> or <a class="link" href={adguardSetupLink} target="_blank" rel="noopener">{adguardSetupLink}</a>
+        - Admin Web Interface
+            - **Listen interface:** Select `All interfaces`.
+            - **Port:** Change to `8080`.
+
+        ### DNS rewrites
+
+        - Go to <a class="link" href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> or <a class="link" href={adguardAdminLink} target="_blank" rel="noopener">{adguardAdminLink}</a>
+        - Go to Filters > **DNS Rewrites**.
+        - Click **Add DNS rewrite**.
+        - **Domain name:** `*.lan.your-domain.tld`.
+        - **IP address:** Enter your device IP <code>{serverIp}</code>.
+
+        ### DNS settings (optional)
+
+        - Go to Settings > **DNS Settings**.
+        - Scroll down to **Access Settings**.
+        - **Allowed clients:**
+            - **Tailscale IP range:** `100.64.0.0/10`.
+            - **Device IP range:** `192.168.100.0/24`.
+            - *Or leave blank to allow all.*
+
+        <br />
+
+6.  ## Nginx Proxy Manager
+
+        ### Certificate
+
+            - Go to <a class="link" href="http://localhost:81" target="_blank" rel="noopener">http://localhost:81</a> or <a class="link" href={npmServerLink} target="_blank" rel="noopener">{npmServerLink}</a>
+            - Go to Certificates > Add Certificate > **Let’s Encrypt via DNS**.
+            - **Domain Names:** Enter `*.lan.your-domain.tld`.
+            - **DNS Provider:** Select `Cloudflare`.
+            - **Credentials File Content:** Replace `dns_cloudflare_api_token=YOUR_CLOUDFLARE_API_KEY`.
+            - **Agree to terms** and click `Save`.
+
+        ### Proxy host
+
+            - In NPM, go to Hosts > Proxy Hosts > **Add Proxy Host**.
+            - **Domain Names:** `adguard.lan.your-domain.tld`.
+            - **Scheme:** `http`.
+            - **Forward IP:** <code>{serverIp}</code>.
+            - **Forward Port:** `8080`.
+            - **Block common exploits and Websockets support:** toggle to `ON`.
+            - **SSL Tab:** Select the certificate you created.
+            - **Force SSL and HTTP/2 Support:** toggle to `ON`.
+            - Click `Save`.
+
+        <br />
+
+7.  ## Tailscale admin console
+
+        - Go to <a class="link" href="https://login.tailscale.com" target="_blank" rel="noopener">https://login.tailscale.com</a>.
+        - Go to DNS > **Nameservers**.
+        - **Add Nameserver:** Select `Custom`.
+        - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
+        - **Override Local DNS:** toggle to `ON`.
+
+        <br />
+
+8.  ## Router config
+
+        - Update the **Primary DNS:** *(Often located under LAN, DHCP or DNS Settings)*.
+        - **Primary DNS:** <code>{serverIp}</code> *(Your device’s Local LAN IP, not the Tailscale one)*.
+        - **Secondary DNS:** `1.1.1.1` *(Fail-safe so your internet still works if your device is turned off)*.
+
+</Steps>
