@@ -61,3 +61,13 @@ docker compose up -d
 ## Open web ui
 
 <OpenWebUI port="9091" />
+
+## Nginx Proxy Manager
+
+- Create a Proxy Host in NPM for `auth.lan.your-domain.tld` pointing to authelia port `9091`.
+- For every service you want to protect:
+  - Open the Proxy Host in NPM.
+  - Go to the Advanced tab.
+  - Paste this snippet.
+
+<Code lang="txt" wrap preserveIndent code={npmService} />
