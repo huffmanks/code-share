@@ -1,0 +1,8 @@
+users:
+  huffmanks:
+    displayname: "Admin"
+    password: "PASTE_YOUR_HASH_HERE" # docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password 'your_secure_password'
+    email: "admin@huffmanks.com"
+    groups:
+      - admins
+      - dev

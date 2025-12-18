@@ -1,0 +1,46 @@
+server:
+  address: "tcp://0.0.0.0:9091/"
+
+log:
+  level: info
+
+jwt_secret: "PASTE_JWT_SECRET_HERE" # openssl rand -hex 32
+
+default_redirection_url: https://adguard.lan.huffmanks.com
+
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+
+session:
+  name: authelia_session
+  domain: lan.huffmanks.com # This allows SSO across all subdomains
+  same_site: lax
+  secret: "PASTE_SESSION_SECRET_HERE" # openssl rand -hex 32
+  expiration: 1h
+  inactivity: 5m
+  remember_me_duration: 1M
+  redis:
+    host: redis
+    port: 6379
+
+storage:
+  encryption_key: "PASTE_STORAGE_KEY_HERE" # openssl rand -hex 32
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  filesystem:
+    filename: /config/notification.txt
+
+access_control:
+  default_policy: one_factor # two_factor
+  rules:
+    - domain: "auth.lan.huffmanks.com"
+      policy: bypass
+# Uncomment if using 2FA
+# totp:
+#   disable: false
+#   issuer: "Authelia" # This name shows up in your Authenticator App
+#   period: 30
+#   skew: 1

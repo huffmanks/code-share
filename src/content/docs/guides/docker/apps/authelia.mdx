@@ -1,0 +1,63 @@
+---
+title: Authelia
+description: "Authelia is an open-source authentication and authorization server providing two-factor authentication and single sign-on (SSO) for your applications via a web portal. It acts as a companion for reverse proxies by allowing, denying or redirecting requests."
+references:
+  - href: https://github.com/authelia/authelia
+    label: GitHub repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import dockerCompose from "/src/files/compose/authelia.yml?raw";
+import configuration from "/src/files/config/auth/authelia/configuration.yml?raw";
+import usersDatabase from "/src/files/config/auth/authelia/users_database.yml?raw";
+import npmService from "/src/files/config/auth/npm/service.txt?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/authelia && cd {{DOCKER_PATH_VAR}}/authelia
+```
+
+## docker-compose.yml
+
+```sh
+nano docker-compose.yml
+```
+
+<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={dockerCompose} />
+
+## configuration.yml
+
+```sh
+mkdir authelia && nano ./authelia/configuration.yml
+```
+
+<Code lang="yml" title="./authelia/configuration.yml" wrap preserveIndent code={configuration} />
+
+## users-database.yml
+
+```sh
+mkdir authelia && nano ./authelia/users-database.yml
+```
+
+<Code lang="yml" title="./authelia/users-database.yml" wrap preserveIndent code={usersDatabase} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="9091" />

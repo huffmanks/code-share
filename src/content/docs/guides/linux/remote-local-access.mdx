@@ -13,7 +13,7 @@ references:
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps } from "@astrojs/starlight/components";
-import yaml from "/src/files/compose/dns-proxy.yml?raw";
+import yaml from "/src/files/compose/remote-local-access.yml?raw";
 
 export const serverIp = `{{SERVER_IP_VAR}}`;
 export const npmServerLink = `http://${serverIp}:81`;
@@ -36,15 +36,26 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
 
         ### Install
 
-            ```sh
-            curl -fsSL https://tailscale.com/install.sh | sh
-            ```
+        ```sh
+        curl -fsSL https://tailscale.com/install.sh | sh
+        ```
 
         ### Start
 
-            ```sh
-            sudo tailscale up --accept-dns=true --advertise-exit-node
-            ```
+        ```sh
+        sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=true --advertise-exit-node
+        ```
+
+        ### Admin console
+
+        - Go to <a class="link" href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">https://login.tailscale.com/admin/machines</a>.
+        - Approve `exit node` and `subnet routes` for your device.
+        - Go to DNS > **Nameservers**.
+        - **Add Nameserver:** Select `Custom`.
+        - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
+        - **Override Local DNS:** toggle to `ON`.
+
+        <br />
 
 2.  ## Network configs (optional)
 
@@ -129,7 +140,6 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
                 - [x] Use AdGuard `parental control` web service.
                 - [x] Use `Safe Search`.
 
-
         ### DNS settings (optional)
 
         - Go to Settings > **DNS Settings**.
@@ -187,17 +197,7 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
 
         <br />
 
-7.  ## Tailscale admin console
-
-        - Go to <a class="link" href="https://login.tailscale.com" target="_blank" rel="noopener">https://login.tailscale.com</a>.
-        - Go to DNS > **Nameservers**.
-        - **Add Nameserver:** Select `Custom`.
-        - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
-        - **Override Local DNS:** toggle to `ON`.
-
-        <br />
-
-8.  ## Router config
+7.  ## Router config
 
         - Update the **Primary DNS:** *(Often located under LAN, DHCP or DNS Settings)*.
         - **Primary DNS:** <code>{serverIp}</code> *(Your device’s Local LAN IP, not the Tailscale one)*.

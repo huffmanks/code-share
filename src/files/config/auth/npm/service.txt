@@ -1,0 +1,15 @@
+location /internal/authelia/authz {
+    internal;
+    set $upstream_authelia http://authelia:9091/api/authz/auth-request;
+    proxy_pass $upstream_authelia;
+    proxy_set_header X-Original-Method $request_method;
+    proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+}
+
+auth_request /internal/authelia/authz;
+auth_request_set $target_url $scheme://$http_host$request_uri;
+error_page 401 = @go_auth;
+
+location @go_auth {
+    return 302 https://auth.lan.huffmanks.com/?rd=$target_url;
+}

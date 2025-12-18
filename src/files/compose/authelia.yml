@@ -1,0 +1,18 @@
+services:
+  authelia:
+    image: authelia/authelia
+    container_name: authelia
+    volumes:
+      - ./authelia:/config
+    networks:
+      - dns-proxy-network
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+
+  redis:
+    image: redis:alpine
+    container_name: authelia-redis
+    networks:
+      - dns-proxy-network
+    restart: unless-stopped
