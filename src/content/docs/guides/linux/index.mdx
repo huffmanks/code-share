@@ -1,11 +1,37 @@
 ---
-title: Linux
-description: Getting started with Linux involves setting up your system for secure access and keeping it up-to-date. This guide walks you through essential initial steps such as configuring SSH login for remote access, ensuring your system is updated with the latest packages and rebooting the system to apply changes. By following these steps, you’ll have a secure and up-to-date Linux environment ready for further use.
+title: Getting started
+description: Initial system setup and secure remote access configuration using SSH keys and custom aliases.
 ---
 
 import { Code, Steps } from "@astrojs/starlight/components";
 
-## Getting started
+export const sshdConfig = `
+\# Disable password auth
+PasswordAuthentication no
+
+\# Prevent root login entirely
+PermitRootLogin no
+
+\# Custom SSH port (optional)
+Port 2222
+
+\# Only allow specific users (optional)
+AllowUsers {{USERNAME_VAR}} $USERNAME2 $USERNAME3
+`;
+
+export const sshConfig = `
+\# Default settings for all hosts
+Host *
+\tServerAliveInterval 60
+\tServerAliveCountMax 5
+
+\# Example host
+Host $ALIAS_NAME
+\tHostName {{SERVER_IP_VAR}}
+\tUser {{USERNAME_VAR}}
+\tPort 2222
+\tIdentityFile ~/.ssh/id\*{{HOSTNAME_VAR}}
+`;
 
 <p>{frontmatter.description}</p>
 
@@ -15,44 +41,90 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. ## Update and upgrade system
+1. ## Update and upgrade
 
-   It’s important to keep your system updated to ensure security patches and software improvements are applied. This step shows you how to update your package list and upgrade all installed packages using APT.
+   Fetch the latest package lists and apply security patches.
 
    <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
 
-2. ## ssh
+2. ## Reboot
 
-   Secure Shell (SSH) allows you to access your Linux system remotely. In this step, you’ll configure SSH login, ensuring you can securely connect to your system from another machine.
+   Apply kernel updates and restart services to ensure a clean state.
+
+   <Code lang="sh" code={`sudo reboot`} />
+
+3. ## SSH key management (client)
+
+   Generate unique keys for each device to improve security and auditability.
 
    <Steps>
 
-   1. ### Verify ssh service is running
+   1. ### Generate named key
 
-      <Code lang="sh" code={`systemctl status ssh`} />
+      Instead of the default name, label the key after the hostname (e.g., `hp-laptop` or `macbook-pro`).
 
-   2. ### Install openssh-server
+      <Code lang="sh" code={`ssh-keygen -t ed25519 -f ~/.ssh/id_{{HOSTNAME_VAR}}`} />
 
-      <Code lang="sh" code={`sudo apt install openssh-server -y`} />
+   2. ### Copy key to server
 
-   3. ### Enable ssh service
+      Use `ssh-copy-id` to automatically handle directory creation and permissions on the remote server.
 
-      <Code lang="sh" code={`sudo systemctl enable --now ssh`} />
-
-   4. ### ssh login
-
-      <Code lang="sh" code={`ssh {{USERNAME_VAR}}@{{SERVER_IP_VAR}}`} />
-
-   5. ### Restart ssh service
-
-      <Code lang="sh" code={`sudo systemctl restart ssh`} />
+      <Code lang="sh" code={`ssh-copy-id -i ~/.ssh/id_{{HOSTNAME_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}`} />
 
    </Steps>
 
-3. ## Reboot the system
+4. ## Server security (host)
 
-   After performing updates or system changes, it’s often necessary to reboot your system. This step ensures all updates take effect, and your system is ready for use with the latest configurations and security patches.
+   Once your key is verified, disable password logins to prevent brute-force attacks.
 
-   <Code lang="sh" code={`sudo reboot`} />
+   <Steps>
+
+   1. ### Install SSH server
+
+      Ensure the OpenSSH server is installed and active.
+
+      <Code lang="sh" code={`sudo apt install openssh-server -y && sudo systemctl enable --now ssh`} />
+
+   2. ### Configure SSH daemon
+
+      Edit the server configuration to enforce key-based authentication.
+
+      <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
+
+      <Code lang="sh" title="/etc/ssh/sshd_config" code={sshdConfig} />
+
+   3. ### Verify and restart
+
+      Always check the status before exiting to ensure you aren’t locked out.
+
+      <Code lang="sh" code={`sudo systemctl restart ssh && systemctl status ssh`} />
+
+   </Steps>
+
+5. ## SSH client (local)
+
+   Simplify your workflow by creating aliases. This allows you to type `ssh $ALIAS_NAME` instead of remembering IPs and key paths.
+
+   <Steps>
+
+   1. ### Edit config
+
+      Open (or create) the SSH config file on your **local** machine.
+
+      <Code lang="sh" code={`nano ~/.ssh/config`} />
+
+   2. ### Add host alias
+
+      Define your server details. Now you can connect using just the alias name.
+
+      <Code lang="sh" title="~/.ssh/config" code={sshConfig} />
+
+   3. ### Connect via alias
+
+      Test the new configuration.
+
+      <Code lang="sh" code={`ssh $ALIAS_NAME`} />
+
+   </Steps>
 
 </Steps>

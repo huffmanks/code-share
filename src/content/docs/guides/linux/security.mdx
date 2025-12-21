@@ -25,24 +25,6 @@ export const sudoersConfig = `
 {USERNAME_VAR} ALL=(ALL) PASSWD: ALL
 `;
 
-export const sshdConfig = `
-\# Disable password auth
-\# PasswordAuthentication yes
-PasswordAuthentication no
-
-\# Uncomment below to allow only key-based login for root
-\# PermitRootLogin prohibit-password
-\# Or prevent root login entirely (recommended)
-PermitRootLogin no
-
-\# Uncomment and change port (optional)
-\# Port 22
-Port 2222
-
-\# Only allow these users to log in via SSH (optional)
-AllowUsers username1 username2
-`
-
 export const fail2banConfig = `
 enabled = true
 
@@ -71,9 +53,13 @@ curl ifconfig.me
 ip addr show
 `
 
-export const allowOpenSSH = `
-\# ALLOW IN: 22/tcp (OpenSSH)
-sudo ufw allow OpenSSH
+export const ufwBeforeRules = `
+\# NAT table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+\# Forward traffic from Tailscale through the public interface
+-A POSTROUTING -s 100.64.0.0/10 -o eth0 -j MASQUERADE
+COMMIT
 `;
 
 <p>{frontmatter.description}</p>
@@ -124,57 +110,6 @@ Require users to authenticate with a password before using sudo privileges. This
 
 ---
 
-## Use ssh keys for authentication
-
-Switch from password-based authentication to SSH key-based authentication. This method is more secure because it eliminates the risk of brute-force attacks and provides stronger encryption for remote logins.
-
-<Steps>
-1. ### Client
-
-      #### Create key
-
-      <Code lang="sh" code={`ssh-keygen -t ed25519`} />
-
-      #### Copy key to host
-
-      <Code lang="sh" wrap preserveIndent code={`scp ~/.ssh/id_ed25519.pub {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:~/.ssh/id_ed25519.pub`} />
-
-2. ### Host
-
-   #### Add key to authorized keys
-
-   <Code lang="sh" wrap preserveIndent code={`cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys`} />
-
-   #### Secure authorized_keys
-
-   <Code lang="sh" wrap preserveIndent code={`chmod 600 ~/.ssh/authorized_keys`} />
-
-</Steps>
-
----
-
-## sshd_config
-
-The sshd_config file is a key part of securing SSH. By adjusting its settings, you can control login methods, restrict access and enhance overall SSH security, such as disabling root login and limiting authentication methods.
-
-<Steps>
-
-1. ### Open config
-
-   <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
-
-2. ### Modify config
-
-   <Code lang="sh" title="/etc/ssh/sshd_config" frame="terminal" preserveIndent code={sshdConfig} />
-
-3. ### Restart ssh
-
-   <Code lang="sh" code={`sudo service ssh restart`} />
-
-</Steps>
-
----
-
 ## fail2ban
 
 Install and configure Fail2Ban to protect your server from brute-force attacks. Fail2Ban monitors log files for suspicious activity and blocks IPs that repeatedly fail authentication, preventing attackers from gaining access.
@@ -213,34 +148,86 @@ A firewall is your first line of defense against unauthorized access. Installing
 
    <Code lang="sh" code={`sudo apt install ufw`} />
 
-2. ### Allow ssh
-
-   <Code lang="sh" code={`sudo ufw allow ssh`} />
-
-3. ### Deny incoming (optional)
+2. ### Deny incoming
 
    <Code lang="sh" code={`sudo ufw default deny incoming`} />
 
-4. ### Allow outgoing (optional)
+3. ### Allow outgoing
 
    <Code lang="sh" code={`sudo ufw default allow outgoing`} />
 
-5. ### Add custom rule (optional)
+4. ### Allow SSH
+
+   Replace port number if your SSH port is different.
+
+   <Code lang="sh" code={`sudo ufw allow 22/tcp`} />
+
+5. ### Tailscale (optional)
+
+   <br />
+
+     <Steps>
+
+   1. #### Allow routed traffic
+
+      Required for exit node/subnet routing.
+
+      <Code lang="sh" code={`sudo ufw default allow routed`} />
+
+   2. #### Allow Tailscale network
+
+      Allow everything coming in from your Tailscale network.
+
+      <Code lang="sh" code={`sudo ufw allow in on tailscale0`} />
+
+   3. #### Tailscale performance (optional)
+
+      Helps Tailscale make direct “peer-to-peer” connections.
+
+      <Code lang="sh" code={`sudo ufw allow 41641/udp`} />
+
+   4. #### Enable packet forwarding
+
+      Tell the kernel to allow packets to be routed through the server. Open the UFW sysctl configuration:
+
+      <Code lang="sh" code={`sudo nano /etc/ufw/sysctl.conf`} />
+
+      Uncomment the following line:
+
+      <Code lang="sh" title="/etc/ufw/sysctl.conf" code={`net/ipv4/ip_forward=1`} />
+
+   5. #### Add NAT masquerading
+
+      This allows Tailscale devices to “hide” behind the server’s public IP. Open the `before.rules` file:
+
+      <Code lang="sh" code={`sudo nano /etc/ufw/before.rules`} />
+
+      Add this block at the very top of the file, **above** the `*filter` line (replace `eth0` with your internet interface name):
+
+      <Code lang="text" title="/etc/ufw/before.rules" code={ufwBeforeRules} />
+
+     </Steps>
+
+6. ### Allow web access (optional)
+
+   Required for web server (e.g., Nginx Proxy Manager, Caddy)
+
+   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow 80,443/tcp`} />
+
+7. ### Add custom rule (optional)
 
    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
 
-   <Code lang="sh" wrap preserveIndent code={allowOpenSSH} />
-
-6. ### Enable ufw
+8. ### Enable ufw
 
    <Code lang="sh" code={`sudo ufw enable`} />
 
-7. ### Reload ufw
+9. ### Reload ufw
 
    <Code lang="sh" code={`sudo ufw reload`} />
 
-8. ### Check status
+10. ### Check status
 
-   <Code lang="sh" code={`sudo ufw status verbose`} />
+    <Code lang="sh" code={`sudo ufw status verbose`} />
 
 </Steps>
