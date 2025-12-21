@@ -19,7 +19,8 @@ services:
       REPLICA_URL: ${REPLICA_URL}
       REPLICA_USERNAME: ${REPLICA_USERNAME}
       REPLICA_PASSWORD: ${REPLICA_PASSWORD}
-      CRON: "*/30 * * * *"
+      CRON: "*/10 * * * *"
+      RUN_ON_START: "true"
 
   npm:
     image: "jc21/nginx-proxy-manager:latest"
