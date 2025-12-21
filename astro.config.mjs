@@ -86,6 +86,10 @@ export default defineConfig({
                   slug: "guides/linux/external-hdd-setup",
                 },
                 {
+                  label: "Miscellaneous",
+                  slug: "guides/linux/miscellaneous",
+                },
+                {
                   label: "NFS",
                   slug: "guides/linux/nfs",
                 },
@@ -94,12 +98,12 @@ export default defineConfig({
                   slug: "guides/linux/remote-local-access",
                 },
                 {
-                  label: "Security",
-                  slug: "guides/linux/security",
+                  label: "Rsync",
+                  slug: "guides/linux/rsync",
                 },
                 {
-                  label: "Wake-on-LAN (WOL)",
-                  slug: "guides/linux/wake-on-lan",
+                  label: "Security",
+                  slug: "guides/linux/security",
                 },
                 {
                   label: "Programs",

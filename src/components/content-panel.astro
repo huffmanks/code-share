@@ -24,6 +24,8 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{{EXTERNAL_HDD_PATH_VAR}}/g, settings.externalHddPath)
       .replace(/{{NFS_SHARE_VAR}}/g, settings.nfsSharePath)
       .replace(/{{NFS_MOUNT_VAR}}/g, settings.nfsMountPath)
+      .replace(/{{RSYNC_LOCAL_PATH_VAR}}/g, settings.rsyncLocalPath)
+      .replace(/{{RSYNC_REMOTE_PATH_VAR}}/g, settings.rsyncRemotePath)
       .replace(/_#!\/bin\/bash/g, "#!/bin/bash");
 
     markdownContent.innerHTML = updatedContent;

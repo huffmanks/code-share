@@ -1,0 +1,109 @@
+---
+title: Miscellaneous
+description: A collection of system configurations, tweaks and quick fixes for Linux environments.
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+export const logindConf = `
+# Uncomment and change these
+HandleSuspendKey=ignore
+HandleLidSwitch=ignore
+HandleLidSwitchDocked=ignore
+`;
+
+export const wolService = `
+[Unit]
+Description=Enable Wake On Lan
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ethtool -s $INTERFACE_NAME wol g
+
+[Install]
+WantedBy=basic.target
+`;
+
+<p>{frontmatter.description}</p>
+
+---
+
+<br />
+
+## Laptop lid behavior
+
+Prevent the laptop from suspending or shutting down when the lid is closed.
+
+<Steps>
+
+1. ### Open configuration
+
+   Access the systemd login manager configuration file.
+
+   <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
+
+2. ### Modify settings
+
+   Update the following lines to `ignore` to keep the system awake.
+
+   <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
+
+3. ### Apply changes
+
+   Restart the login service to apply the new behavior without rebooting.
+
+   <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
+
+</Steps>
+
+---
+
+## Wake-on-LAN (WOL)
+
+If your computer supports Wake-on-LAN, you can send a “magic packet” to wake it from a powered-down state. This is primarily supported on Ethernet connections.
+
+<Steps>
+
+1. ### Identify network interface
+
+   Find the name of your Ethernet adapter. Look for names starting with `e` (e.g., `eth0` or `enp3s0`).
+
+   <Code lang="sh" code={`ip link show`} />
+
+2. ### Install ethtool
+
+   Install the utility required to manage network hardware settings.
+
+   <Code lang="sh" code={`sudo apt update && sudo apt install ethtool -y`} />
+
+3. ### Check support
+
+   Verify if your hardware supports the magic packet. Look for `g` in the “Supports Wake-on” line.
+
+   <Code lang="sh" code={`sudo ethtool $INTERFACE_NAME`} />
+
+4. ### Enable WOL (temporary)
+
+   Enable WOL manually to test the configuration. This setting will reset after a reboot.
+
+   <Code lang="sh" code={`sudo ethtool -s $INTERFACE_NAME wol g`} />
+
+5. ### Persist with systemd
+
+   Create a service to ensure WOL is re-enabled automatically on every boot.
+
+   <Code lang="sh" title="/etc/systemd/system/wol.service" code={wolService} />
+
+6. ### Enable the service
+
+   Reload systemd and enable the new service.
+
+   <Code lang="sh" code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
+
+7. ### Send Wake-up packet
+
+   From another device on the network, trigger the boot sequence using the target’s MAC address.
+
+   <Code lang="sh" code={`wakeonlan $MAC_ADDRESS`} />
+
+</Steps>

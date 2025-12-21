@@ -1,0 +1,78 @@
+---
+title: rsync
+description: Guide for synchronizing files and directories between systems using rsync over SSH.
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+<br />
+
+## Local to remote
+
+<Steps>
+
+1.  ### Install
+
+    Ensure rsync is installed on both the local (source) and remote (destination) systems.
+
+    <Code lang="sh" code={`sudo apt update && sudo apt install rsync -y`} />
+
+2.  ### Basic sync
+
+    Synchronize a local directory to a remote server. The `-a` flag preserves permissions/links, and `-v` provides verbose output.
+
+    <Code lang="sh" code={`rsync -av {{RSYNC_LOCAL_PATH_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}}`} />
+
+3.  ### Sync with compression and progress
+
+    Use `-z` to compress data during transfer and `-P` to show a progress bar and allow resuming partial transfers.
+
+    <Code lang="sh" code={`rsync -avzP {{RSYNC_LOCAL_PATH_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}}`} />
+
+4.  ### Delete extraneous files
+
+    Use the `--delete` flag to remove files on the destination that no longer exist on the source, keeping them perfectly in sync.
+
+    <Code lang="sh" code={`rsync -av --delete {{RSYNC_LOCAL_PATH_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}}`} />
+
+</Steps>
+
+## Remote to local (pull)
+
+<Steps>
+
+1.  ### Pull files
+
+    Download a directory from a remote server to your local machine.
+
+    <Code lang="sh" code={`rsync -av {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}} {{RSYNC_LOCAL_PATH_VAR}}`} />
+
+2.  ### Custom SSH port
+
+    If the remote server uses a non-standard SSH port, specify it using the `-e` flag.
+
+    <Code lang="sh" code={`rsync -av -e 'ssh -p 2222' {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}} {{RSYNC_LOCAL_PATH_VAR}}`} />
+
+</Steps>
+
+## Maintenance
+
+<Steps>
+
+1.  ### Dry run
+
+    Always perform a dry run before executing a command with `--delete` to see what changes will be made without actually transferring files.
+
+    <Code lang="sh" code={`rsync -av --dry-run {{RSYNC_LOCAL_PATH_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}}`} />
+
+2.  ### Exclude files
+
+    Exclude specific files or directories (like `node_modules` or `.git`) from being synchronized.
+
+    <Code lang="sh" code={`rsync -av --exclude '{{PATTERN_VAR}}' {{RSYNC_LOCAL_PATH_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}:{{RSYNC_REMOTE_PATH_VAR}}`} />
+
+</Steps>
