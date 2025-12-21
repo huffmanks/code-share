@@ -30,7 +30,7 @@ Host $ALIAS_NAME
 \tHostName {{SERVER_IP_VAR}}
 \tUser {{USERNAME_VAR}}
 \tPort 2222
-\tIdentityFile ~/.ssh/id\*{{HOSTNAME_VAR}}
+\tIdentityFile ~/.ssh/id\_{{HOSTNAME_VAR}}
 `;
 
 <p>{frontmatter.description}</p>
@@ -61,7 +61,7 @@ Host $ALIAS_NAME
 
    1. ### Generate named key
 
-      Instead of the default name, label the key after the hostname (e.g., `hp-laptop` or `macbook-pro`).
+      Instead of the default name, label the key after the hostname (e.g., `id_hp-laptop` or `id_macbook-pro`).
 
       <Code lang="sh" code={`ssh-keygen -t ed25519 -f ~/.ssh/id_{{HOSTNAME_VAR}}`} />
 

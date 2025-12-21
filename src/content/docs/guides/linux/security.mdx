@@ -18,39 +18,25 @@ APT::Periodic::Verbose "2";
 `;
 
 export const sudoersConfig = `
-\# Optionally allow sudo without password (less secure)
+\# Comment out line below to require password for sudo (recommended)
 {USERNAME_VAR} ALL=(ALL) NOPASSWD: ALL
-
-\# Require password for sudo (recommended)
-{USERNAME_VAR} ALL=(ALL) PASSWD: ALL
 `;
 
 export const fail2banConfig = `
-enabled = true
+[DEFAULT]
+bantime.increment = true
+bantime.factor = 1
+bantime.maxtime = 5w
 
-\# This must change if using a custom ssh port
+[sshd]
+enabled = true
 port = ssh
 filter = sshd
-
-\# Number of seconds that a host is banned
-bantime = 3600
-
-\# A host is banned if it has generated maxretry during the last findtime
-findtime = 600
-
-\# How many attempts until host is banned
+backend = systemd
 maxretry = 3
-
-\# Whitelist multiple IPs or subnets separated by spaces.
-ignoreip = 127.0.0.1/8 ::1 203.0.113.42 192.168.1.0/24
-`
-
-export const getIps = `
-\# Find external IP
-curl ifconfig.me
-
-\# Network’s internal subnet (for LAN)
-ip addr show
+findtime = 600
+bantime = 3600
+ignoreip = 127.0.0.1/8 ::1 192.168.100.0/24
 `
 
 export const ufwBeforeRules = `
@@ -74,15 +60,15 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 1. ### Install
 
-   <Code lang="sh" code={`sudo apt install unattended-upgrades`} />
+   <Code lang="sh" code={`sudo apt install unattended-upgrades -y`} />
 
 2. ### Open config
 
-   <Code lang="sh" code={`sudo nano /etc/apt/apt.conf.d/02periodic`} />
+   <Code lang="sh" code={`sudo nano /etc/apt/apt.conf.d/20auto-upgrades`} />
 
 3. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/02periodic" wrap preserveIndent code={unattendedUpgradesConfig} />
+   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/20auto-upgrades" wrap preserveIndent code={unattendedUpgradesConfig} />
 
 4. ### Verify
 
@@ -100,11 +86,11 @@ Require users to authenticate with a password before using sudo privileges. This
 
 1. ### Open config
 
-   <Code lang="sh" code={`sudo nano /etc/sudoers.d/010_user`} />
+   <Code lang="sh" code={`sudo visudo -f /etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd`} />
 
 2. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_user" wrap preserveIndent code={sudoersConfig} />
+   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd" wrap preserveIndent code={sudoersConfig} />
 
 </Steps>
 
@@ -118,21 +104,23 @@ Install and configure Fail2Ban to protect your server from brute-force attacks. 
 
 1. ### Install fail2ban
 
-   <Code lang="sh" code={`sudo apt install fail2ban`} />
+   <Code lang="sh" code={`sudo apt install fail2ban -y`} />
 
 2. ### Open config
 
-   <Code lang="sh" code={`sudo nano /etc/fail2ban/jail.conf`} />
+   <Code lang="sh" code={`sudo nano /etc/fail2ban/jail.local`} />
 
 3. ### Modify config (optional)
 
-   <Code lang="sh" title="/etc/fail2ban/jail.conf" frame="terminal" wrap preserveIndent code={fail2banConfig} />
+   <Code lang="toml" title="/etc/fail2ban/jail.local" wrap preserveIndent code={fail2banConfig} />
 
-   <Code lang="sh" title="Get IPs" frame="terminal" wrap preserveIndent code={getIps} />
+4. ### Restart service
 
-4. ### Restart fail2ban service
+   <Code lang="sh" code={`sudo systemctl restart fail2ban`} />
 
-   <Code lang="sh" code={`sudo service fail2ban restart`} />
+5. ### Check status
+
+   <Code lang="sh" code={`sudo fail2ban-client status sshd`} />
 
 </Steps>
 
@@ -146,7 +134,7 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 1. ### Install
 
-   <Code lang="sh" code={`sudo apt install ufw`} />
+   <Code lang="sh" code={`sudo apt install ufw -y`} />
 
 2. ### Deny incoming
 
