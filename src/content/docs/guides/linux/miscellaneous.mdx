@@ -1,16 +1,39 @@
 ---
 title: Miscellaneous
 description: A collection of system configurations, tweaks and quick fixes for Linux environments.
+tableOfContents:
+  maxHeadingLevel: 5
 ---
 
 import { Code, Steps } from "@astrojs/starlight/components";
 
 export const logindConf = `
-# Uncomment and change these
 HandleSuspendKey=ignore
 HandleLidSwitch=ignore
 HandleLidSwitchDocked=ignore
 `;
+
+export const noSleepConfig = `
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowSuspendThenHibernate=no
+AllowHybridSleep=no
+`;
+
+export const wifiPowerSaveConfig = `
+[connection]
+wifi.powersave = 2
+`;
+
+export const netplanConfig = `
+network:
+  version: 2
+  ethernets:
+    enp3s0:
+      dhcp4: true
+      optional: true
+`
 
 export const wolService = `
 [Unit]
@@ -28,31 +51,115 @@ WantedBy=basic.target
 
 ---
 
-<br />
+## Laptop optimization
 
-## Laptop lid behavior
-
-Prevent the laptop from suspending or shutting down when the lid is closed.
+This ensures your laptop stays awake with the lid closed, maintains a stable network connection and boots quickly by ignoring unused network interfaces.
 
 <Steps>
 
-1. ### Open configuration
+1. ### Lid and sleep configuration
 
-   Access the systemd login manager configuration file.
+   These steps prevent the system from suspending or shutting down when the lid is closed or the power button is pressed.
 
-   <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
+   <Steps>
 
-2. ### Modify settings
+   1. #### Open logind config
 
-   Update the following lines to `ignore` to keep the system awake.
+      <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
 
-   <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
+   2. #### Update config
 
-3. ### Apply changes
+      Update the following lines to `ignore` to keep the system awake.
 
-   Restart the login service to apply the new behavior without rebooting.
+      <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
 
-   <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
+   3. #### Restart logind
+
+      <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
+
+   </Steps>
+
+2. ### Disable system-wide sleep
+
+   To prevent the kernel from attempting to sleep even if triggered by software, create a “no-sleep” override.
+
+   <Steps>
+
+   1. #### Create nosuspend config
+
+      <Code lang="sh" code={`sudo mkdir -p /etc/systemd/sleep.conf.d/ && sudo nano /etc/systemd/sleep.conf.d/nosuspend.conf`} />
+
+   2. #### Add config
+
+      <Code lang="sh" title="/etc/systemd/sleep.conf.d/nosuspend.conf" code={noSleepConfig} />
+
+   3. #### Reload daemon
+
+      <Code lang="sh" code={`sudo systemctl daemon-reload`} />
+
+   </Steps>
+
+3. ### Network stability & driver fixes
+
+   Force NetworkManager to keep the Wi-Fi card at full power and stabilize Broadcom wireless drivers.
+
+   <Steps>
+
+   1. #### Check power management on network interfaces
+
+      <Code lang="sh" code={`iwconfig`} />
+
+   2. #### Open NetworkManager config
+
+      <Code lang="sh" code={`sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf`} />
+
+   3. #### Disable Wi-Fi power management
+
+      Change the value from `3` (on) to `2` (off).
+
+      <Code lang="sh" title="/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf" code={wifiPowerSaveConfig} />
+
+   4. #### Restart NetworkManager
+
+      <Code lang="sh" code={`sudo systemctl restart NetworkManager`} />
+
+   5. #### Create Broadcom drivers config
+
+      <Code lang="sh" code={`sudo nano /etc/modprobe.d/broadcom-sta.conf`} />
+
+   6. #### Add config
+
+      This prevents antenna-switching bugs.
+
+      <Code lang="text" code={`options wl one_ant_disable=1`} />
+
+   7. #### Reinstall the driver
+
+      <Code lang="sh" code={`sudo apt update && sudo apt install --reinstall bcmwl-kernel-source`} />
+
+   </Steps>
+
+4. ### Boot optimization
+
+   Reduces the startup time by preventing the system from waiting for a internet connection.
+
+   <Steps>
+
+   1. #### Open Netplan config
+
+      <Code lang="sh" code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+
+   2. #### Update config
+
+      Add `optional: true` to your ethernet interface.
+
+      <Code lang="yaml" title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
+
+   3. #### Apply the config
+
+      <Code lang="sh" code={`sudo netplan apply`} />
+
+   </Steps>
 
 </Steps>
 
