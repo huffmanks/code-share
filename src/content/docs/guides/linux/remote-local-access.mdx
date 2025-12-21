@@ -14,6 +14,7 @@ import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/remote-local-access.yml?raw";
+import env from "/src/files/env/remote-local-access.env?raw";
 
 export const serverIp = `{{SERVER_IP_VAR}}`;
 export const npmServerLink = `http://${serverIp}:81`;
@@ -90,6 +91,14 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
         ```
 
         <Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+
+        ## .env
+
+        ```sh
+        nano .env
+        ```
+
+        <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
         ### Start container
 
