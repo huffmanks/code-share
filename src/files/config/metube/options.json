@@ -1,0 +1,22 @@
+{
+  "format": "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best",
+  "merge_output_format": "mp4",
+  "writethumbnail": true,
+  "writeinfojson": true,
+  "writedescription": true,
+  "write_playlist_metafiles": true,
+  "writallthumbnails": true,
+  "embedthumbnail": true,
+  "addmetadata": true,
+  "postprocessors": [
+    {
+      "key": "FFmpegThumbnailsConvertor",
+      "format": "jpg"
+    },
+    {
+      "key": "FFmpegMetadata",
+      "add_chapters": true,
+      "add_metadata": true
+    }
+  ]
+}
