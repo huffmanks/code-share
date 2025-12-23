@@ -27,7 +27,6 @@ references:
     label: zsh-syntax-highlighting
 ---
 
-import MacosDotfiles from "@/components/guides/macos-dotfiles.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps } from "@astrojs/starlight/components";
 
@@ -89,7 +88,29 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 6. ## Update git and shell configs
 
-   <MacosDotfiles />
+   ### Quick install
+
+   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh)" />
+
+   ### Custom install (with exports)
+
+   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports all" />
+
+   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports docker nvm pnpm" />
+
+   ### Config options
+
+   | Flag                | Description                    |
+   | ------------------- | ------------------------------ |
+   | --exports           | Add exports to .zshrc          |
+   | all                 | Enable every tool listed below |
+   | bun                 | Bun environment exports        |
+   | docker              | Docker aliases and paths       |
+   | go                  | Go (GOPATH/bin) exports        |
+   | java-android-studio | Java and Android Studio paths  |
+   | nvm                 | Node Version Manager config    |
+   | pipx                | Pipx binary paths              |
+   | pnpm                | PNPM home and path config      |
 
 7. ## Compile shell
 
@@ -97,7 +118,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
    - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
 
-   - `zcompile` precompiles `.zshrc` and `.zprofile` into a binary format (`.zshrc.zwc` and `.zprofile.zwc`.
+   - `zcompile` precompiles `.zshrc` and `.zprofile` into a binary format `.zshrc.zwc` and `.zprofile.zwc`.
 
    - When zsh starts, it loads the `.zwc` files instead of parsing the original files, reducing startup time.
 

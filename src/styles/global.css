@@ -213,6 +213,15 @@ html {
   color: var(--sl-color-red-high);
 }
 
+/* ==== Global table ==== */
+.sl-markdown-content :is(th:first-child, td:first-child):not(:where(.not-content *)) {
+  padding-inline-start: 1rem;
+}
+
+.sl-markdown-content :is(th:last-child, td:last-child):not(:where(.not-content *)) {
+  padding-inline-end: 1rem;
+}
+
 /* ==== Snippet table ==== */
 .snippet-row {
   cursor: pointer;
