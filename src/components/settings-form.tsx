@@ -5,7 +5,7 @@ import type { SettingsForm } from "@/types";
 import { useState } from "preact/hooks";
 
 export function SettingsForm() {
-  const [settings, setSettings] = useState<SettingsForm>(getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues));
+  const [settings, setSettings] = useState<SettingsForm>(() => getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues));
 
   const handleChange = (event: InputEvent) => {
     const target = event.target as HTMLInputElement;
@@ -16,15 +16,22 @@ export function SettingsForm() {
     }));
   };
 
-  const handleSubmit = (event: SubmitEvent) => {
+  const handleSubmit = (event: Event) => {
     event.preventDefault();
+    event.stopPropagation();
 
-    const settingsToStore = settingsFormFields.reduce((acc, field) => {
-      acc[field.name] = settings[field.name] || field.defaultValue;
-      return acc;
-    }, {} as SettingsForm);
+    try {
+      const settingsToStore = settingsFormFields.reduce((acc, field) => {
+        acc[field.name] = settings[field.name] || field.defaultValue;
+        return acc;
+      }, {} as SettingsForm);
 
-    localStorage.setItem(LS_SETTINGS_KEY, JSON.stringify(settingsToStore));
+      localStorage.setItem(LS_SETTINGS_KEY, JSON.stringify(settingsToStore));
+
+      setSettings(settingsToStore);
+    } catch (error) {
+      console.error("Failed to save settings:", error);
+    }
   };
 
   return (
@@ -41,6 +48,7 @@ export function SettingsForm() {
               id={`${field.id}:form-item-label`}
               value={settings[field.name]}
               name={field.name}
+              onFocus={(e) => (e.target as HTMLInputElement).select()}
               onInput={handleChange}
               aria-describedby={`${field.id}:form-item-description`}
             />

@@ -2,7 +2,7 @@ services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    user: uid:gid
+    user: "1000:1000"
     network_mode: host
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -22,6 +22,6 @@ services:
       #   target: /usr/local/share/fonts/custom
       #   read_only: true
     environment:
-      # optional
+      - TZ=America/New_York
       # - JELLYFIN_PublishedServerUrl=http://example.com
     restart: unless-stopped
