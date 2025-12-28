@@ -21,18 +21,25 @@ AllowSuspendThenHibernate=no
 AllowHybridSleep=no
 `;
 
-export const wifiPowerSaveConfig = `
-[connection]
-wifi.powersave = 2
-`;
-
 export const netplanConfig = `
 network:
   version: 2
+  renderer: networkd
   ethernets:
     enp3s0:
       dhcp4: true
       optional: true
+      dhcp4-overrides:
+        route-metric: 100
+  wifis:
+    wlan0:
+      dhcp4: true
+      optional: true
+      dhcp4-overrides:
+        route-metric: 600
+      access-points:
+        "Your_SSID_Name":
+          password: "Your_Password"
 `
 
 export const wolService = `
@@ -99,67 +106,79 @@ This ensures your laptop stays awake with the lid closed, maintains a stable net
 
    </Steps>
 
-3. ### Network stability & driver fixes
+</Steps>
 
-   Force NetworkManager to keep the Wi-Fi card at full power and stabilize Broadcom wireless drivers.
+---
 
-   <Steps>
+## Configure ethernet and Wi-Fi
 
-   1. #### Check power management on network interfaces
+This process configures your server to use Netplan and systemd-resolved to manage both ethernet and Wi-Fi connections through a single, unified configuration file.
 
-      <Code lang="sh" code={`iwconfig`} />
+<Steps>
 
-   2. #### Open NetworkManager config
+1. ### Install network driver (if applicable)
 
-      <Code lang="sh" code={`sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf`} />
+   <Code lang="sh" code={`lspci -nnk | grep -iA 3 net`} />
 
-   3. #### Disable Wi-Fi power management
+   If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
 
-      Change the value from `3` (on) to `2` (off).
+   <Code lang="sh" code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`} />
 
-      <Code lang="sh" title="/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf" code={wifiPowerSaveConfig} />
+   For changes to take effect, reboot the system.
 
-   4. #### Restart NetworkManager
+   <Code lang="sh" code={`sudo reboot`} />
 
-      <Code lang="sh" code={`sudo systemctl restart NetworkManager`} />
+   Verify the driver is active by running `ip link`. A wireless interface, typically `wlan0`, should now appear in the list.
 
-   5. #### Create Broadcom drivers config
+2. ### Install and enable wpa_supplicant
 
-      <Code lang="sh" code={`sudo nano /etc/modprobe.d/broadcom-sta.conf`} />
+   <Code lang="sh" code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`} />
 
-   6. #### Add config
+3. ### Create symlink to systemd-resolved
 
-      This prevents antenna-switching bugs.
+   <Code lang="sh" code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
 
-      <Code lang="text" code={`options wl one_ant_disable=1`} />
+4. ### Open Netplan config
 
-   7. #### Reinstall the driver
+   <Code lang="sh" code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
 
-      <Code lang="sh" code={`sudo apt update && sudo apt install --reinstall bcmwl-kernel-source`} />
+5. ### Update config
 
-   </Steps>
+   - Replace `enp3s0` with your ethernet ID from `ip link`.
+   - Replace `wlan0` with your Wi-Fi ID from `ip link`.
+   - Replace `Your_SSID_Name` and `Your_Password` under access-points.
 
-4. ### Boot optimization
+   <Code lang="yaml" title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
 
-   Reduces the startup time by preventing the system from waiting for a internet connection.
+6. ### Apply the config
 
-   <Steps>
+   <Code lang="sh" code={`sudo netplan apply`} />
 
-   1. #### Open Netplan config
+7. ### Restart systemd-resolved
 
-      <Code lang="sh" code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+   <Code lang="sh" code={`sudo systemctl restart systemd-resolved`} />
 
-   2. #### Update config
+</Steps>
 
-      Add `optional: true` to your ethernet interface.
+---
 
-      <Code lang="yaml" title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
+## Expand storage to full capacity
 
-   3. #### Apply the config
+This process extends the logical volume and resizes the filesystem to utilize all remaining unallocated space on your primary hard drive.
 
-      <Code lang="sh" code={`sudo netplan apply`} />
+<Steps>
 
-   </Steps>
+1. ### Extend the logical volume
+
+   <Code lang="sh" code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`} />
+
+2. ### Resize the filesystem
+
+   <Code lang="sh" code={`sudo resize2fs /dev/ubuntu-vg/ubuntu-lv`} />
+
+3. ### Verify
+
+   <Code lang="sh" code={`df -h /`} />
 
 </Steps>
 

@@ -1,6 +1,8 @@
 ---
 title: Remote & local Access
 description: "Access your home services via a secure URL from anywhere in the world. This guide covers setting up AdGuard Home for custom DNS, Nginx Proxy Manager for wildcard SSL certificates via Cloudflare and Tailscale for a zero-config VPN mesh."
+tableOfContents:
+  maxHeadingLevel: 5
 references:
   - href: https://github.com/AdguardTeam/AdGuardHome
     label: AdGuard Home (GitHub)
@@ -21,6 +23,22 @@ export const npmServerLink = `http://${serverIp}:81`;
 export const adguardSetupLink = `http://${serverIp}:3000`;
 export const adguardAdminLink = `http://${serverIp}:8080`;
 
+export const ethtool = `
+NETDEV=$(ip -o route get 1.1.1.1 | cut -f 5 -d " ")
+sudo ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
+`;
+
+export const networkdDispatcher = `
+printf '#!/bin/sh\n\nethtool -K %s rx-udp-gro-forwarding on rx-gro-list off \n' "$(ip -o route get 1.1.1.1 | cut -f 5 -d " ")" | sudo tee /etc/networkd-dispatcher/routable.d/50-tailscale
+sudo chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
+`;
+
+export const ipForwarding = `
+echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
+`;
+
 <p>{frontmatter.description}</p>
 
 ### References
@@ -35,78 +53,106 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
 
 1.  ## Tailscale
 
-        ### Install
+        Install and configure the Tailscale client to establish a secure mesh network and manage node connectivity.
 
-        ```sh
-        curl -fsSL https://tailscale.com/install.sh | sh
-        ```
+        <Steps>
 
-        ### Start
+        1. ### Install
 
-        ```sh
-        sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=true --advertise-exit-node
-        ```
+                ```sh
+                curl -fsSL https://tailscale.com/install.sh | sh
+                ```
 
-        ### Admin console
+        2. ### Optimizations for subnet routers and exit nodes (optional)
 
-        - Go to <a class="link" href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">https://login.tailscale.com/admin/machines</a>.
-        - Approve `exit node` and `subnet routes` for your device.
-        - Go to DNS > **Nameservers**.
-        - **Add Nameserver:** Select `Custom`.
-        - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
-        - **Override Local DNS:** toggle to `ON`.
+                Enable IP forwarding and adjust network interface offloading to maximize throughput for routed traffic.
+
+                #### Network performance
+
+                <Code lang="sh" code={ethtool} />
+
+                #### Persist on reboot
+
+                <Code lang="sh" code={networkdDispatcher} />
+
+                #### Enable IP forwarding
+
+                <Code lang="sh" code={ipForwarding} />
+
+        3. ### Start
+
+                ```sh
+                sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=false --advertise-exit-node
+                ```
+
+        4. ### Admin console
+
+                - Go to <a class="link" href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">https://login.tailscale.com/admin/machines</a>.
+                - Approve `exit node` and `subnet routes` for your device.
+                - Go to DNS > **Nameservers**.
+                - **Add Nameserver:** Select `Custom`.
+                - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
+                - **Override Local DNS:** toggle to `ON`.
+
+        </Steps>
 
         <br />
 
-2.  ## Network configs (optional)
+2.  ## Docker
 
-        ### networkd-dispatcher
+        Deploy AdGuard Home and Nginx Proxy Manager as containerized services for network filtering and reverse proxying.
 
-        ```sh
-        sudo apt install networkd-dispatcher -y
-        sudo systemctl enable systemd-networkd.service
-        sudo systemctl start systemd-networkd.service
-        ```
+        <Steps>
 
-        ### Enable IP forwarding
+        1. ### Make directory
 
-        ```sh
-        echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
-        echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
-        sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
-        ```
+                ```sh wrap preserveIndent
+                mkdir -p {{DOCKER_PATH_VAR}}/dns-proxy && cd {{DOCKER_PATH_VAR}}/dns-proxy
+                ```
 
-3.  ## Docker
+        2. ### docker-compose.yml
 
-        ### Make directory
+                ```sh
+                nano docker-compose.yml
+                ```
 
-        ```sh wrap preserveIndent
-        mkdir -p {{DOCKER_PATH_VAR}}/dns-proxy && cd {{DOCKER_PATH_VAR}}/dns-proxy
-        ```
+                <Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
 
-        ### docker-compose.yml
+        3. ### .env
 
-        ```sh
-        nano docker-compose.yml
-        ```
+                ```sh
+                nano .env
+                ```
 
-        <Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+                <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
-        ### .env
+        4. ### Fix port conflict (53)
 
-        ```sh
-        nano .env
-        ```
+                #### Disable the stub listener
 
-        <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+                ```sh
+                sudo nano /etc/systemd/resolved.conf
+                ```
 
-        ### Start container
+                Set `DNSStubListener=no`
 
-        ```sh
-        docker compose up -d
-        ```
+                #### Restart systemd-resolved
 
-4.  ## Cloudflare
+                ```sh
+                sudo systemctl restart systemd-resolved
+                ```
+
+        5. ### Start container
+
+                ```sh
+                docker compose up -d
+                ```
+
+        </Steps>
+
+3.  ## Cloudflare
+
+        Generate a scoped API token to automate DNS record management and SSL certificate validation.
 
         - Go to Dashboard > My Profile > **API Tokens**.
         - **Create Token:** Use the `Edit zone DNS template`.
@@ -115,100 +161,113 @@ export const adguardAdminLink = `http://${serverIp}:8080`;
 
         <br />
 
-5.  ## AdGuard Home
+4.  ## AdGuard Home
 
-        ### Initial setup
+        Complete the initial web setup to manage network-wide DNS filtering and security rules.
 
-        - Go to <a class="link" href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> or <a class="link" href={adguardSetupLink} target="_blank" rel="noopener">{adguardSetupLink}</a>
-        - Admin Web Interface
-            - **Listen interface:** Select `All interfaces`.
-            - **Port:** Change to `8080`.
+        <Steps>
 
-        ### DNS rewrites
+        1. ### Initial setup
 
-        - Go to <a class="link" href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> or <a class="link" href={adguardAdminLink} target="_blank" rel="noopener">{adguardAdminLink}</a>
-        - Go to Filters > **DNS Rewrites**.
-        - Click **Add DNS rewrite**.
-        - **Domain name:** `*.lan.your-domain.tld`.
-        - **IP address:** Enter your device IP <code>{serverIp}</code>.
+                - Go to <a class="link" href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> or <a class="link" href={adguardSetupLink} target="_blank" rel="noopener">{adguardSetupLink}</a>
+                - Admin Web Interface
+                - **Listen interface:** Select `All interfaces`.
+                - **Port:** Change to `8080`.
 
-        ### Blocklists (optional)
+        2. ### DNS rewrites
 
-        - Go to Filters > DNS Blocklists > **Add Blocklist:** `Choose from the list`.
-                - [x] AdGuard DNS filter
-                - [x] AdAway Default Blocklist
-                - [x] HaGeZi's Pro++ Blocklist
-                - [x] OISD Blocklist Small
-                - [x] OISD Blocklist Big
-                - [x] HaGeZi's Samsung Tracker Blocklist
+                - Go to <a class="link" href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> or <a class="link" href={adguardAdminLink} target="_blank" rel="noopener">{adguardAdminLink}</a>
+                - Go to Filters > **DNS Rewrites**.
+                - Click **Add DNS rewrite**.
+                - **Domain name:** `*.lan.your-domain.tld`.
+                - **IP address:** Enter your device IP <code>{serverIp}</code>.
 
-        ### General settings (optional)
+        3. ### Blocklists (optional)
 
-        - Go to Settings > **General Settings**.
-                - [x] Use AdGuard `browsing security` web service.
-                - [x] Use AdGuard `parental control` web service.
-                - [x] Use `Safe Search`.
+                - Go to Filters > DNS Blocklists > **Add Blocklist:** `Choose from the list`.
+                        - [x] AdGuard DNS filter
+                        - [x] AdAway Default Blocklist
+                        - [x] HaGeZi's Pro++ Blocklist
+                        - [x] OISD Blocklist Small
+                        - [x] OISD Blocklist Big
+                        - [x] HaGeZi's Samsung Tracker Blocklist
 
-        ### DNS settings (optional)
+        4. ### General settings (optional)
 
-        - Go to Settings > **DNS Settings**.
+                - Go to Settings > **General Settings**.
+                        - [x] Use AdGuard `browsing security` web service.
+                        - [x] Use AdGuard `parental control` web service.
+                        - [x] Use `Safe Search`.
 
-                - **Upstream DNS servers**.
+        5. ### DNS settings (optional)
 
-                        ```txt
-                        https://dns.quad9.net/dns-query
-                        https://dns.cloudflare.com/dns-query
-                        https://dns.adguard-dns.com/dns-query
-                        ```
-                        - Enter the **DNS providers** above.
-                        - Click `apply`.
-                        <br />
+                - Go to Settings > **DNS Settings**.
 
-                - **DNS server configuration**.
-                        - [x] Enable DNSSEC.
-                        - Click `save`.
-                        <br />
+                        - **Upstream DNS servers**.
 
-                - Access Settings > **Allowed clients**.
+                                ```txt
+                                https://dns.quad9.net/dns-query
+                                https://dns.cloudflare.com/dns-query
+                                https://dns.adguard-dns.com/dns-query
+                                ```
+                                - Enter the **DNS providers** above.
+                                - Click `apply`.
+                                <br />
 
-                        ```txt
-                        100.64.0.0/10
-                        192.168.100.0/24
-                        ```
-                        - Add **Tailscale and device IP ranges** above.
-                        - Leave blank to allow all.
-                        - Click `Save configuration`.
+                        - **DNS server configuration**.
+                                - [x] Enable DNSSEC.
+                                - Click `save`.
+                                <br />
 
-        <br />
+                        - Access Settings > **Allowed clients**.
 
-6.  ## Nginx Proxy Manager
+                                ```txt
+                                100.64.0.0/10
+                                192.168.100.0/24
+                                ```
+                                - Add **Tailscale and device IP ranges** above.
+                                - Leave blank to allow all.
+                                - Click `Save configuration`.
 
-        ### Certificate
-
-            - Go to <a class="link" href="http://localhost:81" target="_blank" rel="noopener">http://localhost:81</a> or <a class="link" href={npmServerLink} target="_blank" rel="noopener">{npmServerLink}</a>
-            - Go to Certificates > Add Certificate > **Let’s Encrypt via DNS**.
-            - **Domain Names:** Enter `*.lan.your-domain.tld`.
-            - **DNS Provider:** Select `Cloudflare`.
-            - **Credentials File Content:** Replace `dns_cloudflare_api_token=YOUR_CLOUDFLARE_API_KEY`.
-            - **Agree to terms** and click `Save`.
-
-        ### Proxy host
-
-            - In NPM, go to Hosts > Proxy Hosts > **Add Proxy Host**.
-            - **Domain Names:** `adguard.lan.your-domain.tld`.
-            - **Scheme:** `http`.
-            - **Forward IP:** <code>{serverIp}</code>.
-            - **Forward Port:** `8080`.
-            - **Block common exploits and Websockets support:** toggle to `ON`.
-            - **SSL Tab:** Select the certificate you created.
-            - **Force SSL and HTTP/2 Support:** toggle to `ON`.
-            - Click `Save`.
+        </Steps>
 
         <br />
 
-7.  ## Router config
+5.  ## Nginx Proxy Manager
 
-        - Update the **Primary DNS:** *(Often located under LAN, DHCP or DNS Settings)*.
+        Access the administrative dashboard to route incoming traffic and manage SSL certificates for your services.
+
+        <Steps>
+
+        1. ### Certificate
+
+                - Go to <a class="link" href="http://localhost:81" target="_blank" rel="noopener">http://localhost:81</a> or <a class="link" href={npmServerLink} target="_blank" rel="noopener">{npmServerLink}</a>
+                - Go to Certificates > Add Certificate > **Let’s Encrypt via DNS**.
+                - **Domain Names:** Enter `*.lan.your-domain.tld`.
+                - **DNS Provider:** Select `Cloudflare`.
+                - **Credentials File Content:** Replace `dns_cloudflare_api_token=YOUR_CLOUDFLARE_API_KEY`.
+                - **Agree to terms** and click `Save`.
+
+        2. ### Proxy host
+
+                - In NPM, go to Hosts > Proxy Hosts > **Add Proxy Host**.
+                - **Domain Names:** `adguard.lan.your-domain.tld`.
+                - **Scheme:** `http`.
+                - **Forward IP:** <code>{serverIp}</code>.
+                - **Forward Port:** `8080`.
+                - **Block common exploits and Websockets support:** toggle to `ON`.
+                - **SSL Tab:** Select the certificate you created.
+                - **Force SSL and HTTP/2 Support:** toggle to `ON`.
+                - Click `Save`.
+
+        </Steps>
+
+        <br />
+
+6.  ## Router config
+
+        Update the **Primary DNS**, often located under LAN, DHCP or DNS Settings.
+
         - **Primary DNS:** <code>{serverIp}</code> *(Your device’s Local LAN IP, not the Tailscale one)*.
         - **Secondary DNS:** `1.1.1.1` *(Fail-safe so your internet still works if your device is turned off)*.
 
