@@ -10,4 +10,13 @@ services:
       - ./downloads:/downloads
     environment:
       - TZ=America/New_York
+    depends_on:
+      - pot-provider
     restart: unless-stopped
+  pot-provider:
+    image: brainicism/bgutil-ytdlp-pot-provider:latest
+    container_name: pot-provider
+    init: true
+    ports:
+      - 4416:4416
+    restart: always

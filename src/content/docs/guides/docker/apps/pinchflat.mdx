@@ -10,6 +10,7 @@ import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/pinchflat.yml?raw";
+import ytdlpBaseConfig from "/src/files/config/pinchflat/base-config.txt?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -22,16 +23,26 @@ import yaml from "/src/files/compose/pinchflat.yml?raw";
 ## Make directory
 
 ```sh wrap preserveIndent
-mkdir -p {{DOCKER_PATH_VAR}}/pinchflat && cd {{DOCKER_PATH_VAR}}/pinchflat
+mkdir -p {{DOCKER_PATH_VAR}}/pinchflat/config/extras/yt-dlp-configs \
+&& mkdir -p {{DOCKER_PATH_VAR}}/pinchflat/downloads \
+&& cd {{DOCKER_PATH_VAR}}/pinchflat
 ```
 
-## docker-compose.yml
+## compose.yml
 
 ```sh
-nano docker-compose.yml
+nano compose.yml
 ```
 
-<Code lang="yml" title="docker-compose.yml" wrap preserveIndent code={yaml} />
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## base-config.txt
+
+```sh
+nano ./config/extras/yt-dlp-configs/base-config.txt
+```
+
+<Code lang="sh" title="base-config.txt" wrap preserveIndent code={ytdlpBaseConfig} />
 
 ## Start container
 

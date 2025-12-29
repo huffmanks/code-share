@@ -1,0 +1,7 @@
+--extractor-args "youtubepot-bgutilhttp:base_url=http://bgutil-provider:4416"
+--extractor-args "youtube:player_client=mweb,android;player_skip=webpage,configs"
+
+# without pots
+#--extractor-args "youtube:player_client=web_safari,mweb,android;player_skip=webpage,configs"
+#--extractor-args "youtubetab:skip=webpage"
+#--force-ipv4
