@@ -1,0 +1,82 @@
+---
+title: NodeCast TV
+description: "A modern, web-based IPTV player featuring Live TV, EPG, Movies (VOD) and Series support. Built with performance and user experience in mind."
+references:
+  - href: https://github.com/technomancer702/nodecast-tv
+    label: NodeCast TV (GitHub repo)
+  - href: https://github.com/iptv-org/iptv
+    label: iptv-org (GitHub repo)
+  - href: https://iptv-epg.org
+    label: iptv-epg sources
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/nodecast-tv.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/nodecast-tv && cd {{DOCKER_PATH_VAR}}/nodecast-tv
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="5001" />
+
+## Settings
+
+### M3U Playlists
+
+**IPTV (US)**
+
+```txt
+https://iptv-org.github.io/iptv/countries/us.m3u
+```
+
+**Movies**
+
+```txt
+https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u
+```
+
+**TV Shows**
+
+```txt
+https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/trending-series.m3u
+```
+
+### EPG Sources
+
+**IPTV (US)**
+
+```txt
+https://iptv-epg.org/files/epg-us.xml.gz
+```
+
+```txt
+https://iptv-epg.org/files/epg-us.xml
+```
