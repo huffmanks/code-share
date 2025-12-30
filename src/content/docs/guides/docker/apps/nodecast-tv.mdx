@@ -53,30 +53,35 @@ docker compose up -d
 
 **IPTV (US)**
 
-```txt
+```sh
 https://iptv-org.github.io/iptv/countries/us.m3u
 ```
 
 **Movies**
 
-```txt
+```sh
 https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u
 ```
 
 **TV Shows**
 
-```txt
+```sh
 https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/trending-series.m3u
 ```
 
 ### EPG Sources
 
-**IPTV (US)**
+**Works with iptv-org**
 
-```txt
-https://iptv-epg.org/files/epg-us.xml.gz
+```sh
+# US only
+# https://epgshare01.online/epgshare01/epg_ripper_US2.xml.gz
+https://epgshare01.online/epgshare01/epg_ripper_ALL_SOURCES1.xml.gz
 ```
 
-```txt
+**Additional**
+
+```sh
+# gzipped: https://iptv-epg.org/files/epg-us.xml.gz
 https://iptv-epg.org/files/epg-us.xml
 ```
