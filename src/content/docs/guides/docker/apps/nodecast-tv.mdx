@@ -49,39 +49,49 @@ docker compose up -d
 
 ## Settings
 
-### M3U Playlists
-
-**IPTV (US)**
-
-```sh
-https://iptv-org.github.io/iptv/countries/us.m3u
-```
-
-**Movies**
-
-```sh
-https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u
-```
-
-**TV Shows**
-
-```sh
-https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/trending-series.m3u
-```
-
-### EPG Sources
-
-**Works with iptv-org**
-
-```sh
-# US only
-# https://epgshare01.online/epgshare01/epg_ripper_US2.xml.gz
-https://epgshare01.online/epgshare01/epg_ripper_ALL_SOURCES1.xml.gz
-```
-
-**Additional**
-
-```sh
-# gzipped: https://iptv-epg.org/files/epg-us.xml.gz
-https://iptv-epg.org/files/epg-us.xml
-```
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>M3U playlists</th>
+      <th>EPG sources</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Samsung TV Plus</td>
+      <td>[Link](https://apsattv.com/ssungusa.m3u)</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Xumo TV</td>
+      <td>[Link](https://raw.githubusercontent.com/BuddyChewChew/xumo-playlist-generator/refs/heads/main/playlists/xumo_playlist.m3u)</td>
+      <td>[Link](https://raw.githubusercontent.com/BuddyChewChew/xumo-playlist-generator/main/playlists/xumo_epg.xml.gz)</td>
+    </tr>
+    <tr>
+      <td>Top movies</td>
+      <td>[Link](https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u)</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Trending series</td>
+      <td>[Link](https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/trending-series.m3u)</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>IPTV.org</td>
+      <td>[US](https://iptv-org.github.io/iptv/countries/us.m3u)</td>
+      <td>[All](https://epgshare01.online/epgshare01/epg_ripper_ALL_SOURCES1.xml.gz) - [US](https://epgshare01.online/epgshare01/epg_ripper_US2.xml.gz)</td>
+    </tr>
+    <tr>
+      <td>Pluto TV</td>
+      <td>[Link](https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/us_pluto.m3u)</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>EPG Hub</td>
+      <td>N/A</td>
+      <td>[Link](https://epghub.xyz/epg/EPG-US-US-LOCALS-US-SPORTS.xml.gz)</td>
+    </tr>
+  </tbody>
+</table>
