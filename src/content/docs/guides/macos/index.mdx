@@ -114,12 +114,10 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 7. ## Compile shell
 
-   <Code lang="sh" wrap preserveIndent code="exec zsh && zcompile ~/.zshrc && zcompile ~/.zprofile" />
-
-   - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
+   <Code lang="sh" wrap preserveIndent code="zcompile ~/.zshrc && zcompile ~/.zprofile && exec zsh" />
 
    - `zcompile` precompiles `.zshrc` and `.zprofile` into a binary format `.zshrc.zwc` and `.zprofile.zwc`.
-
+   - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
    - When zsh starts, it loads the `.zwc` files instead of parsing the original files, reducing startup time.
 
 </Steps>
