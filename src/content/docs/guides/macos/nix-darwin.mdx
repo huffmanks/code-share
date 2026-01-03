@@ -11,9 +11,11 @@ references:
     label: Determinate Systems (GitHub repo)
 ---
 
-import NixDarwinConfig from "@/components/guides/nix-darwin-config.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+import configurationNix from "/src/files/config/nix/configuration.nix?raw";
+import flakeNix from "/src/files/config/nix/flake.nix?raw";
+import systemNix from "/src/files/config/nix/system.nix?raw";
 
 export const nixInstaller = `
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
@@ -58,7 +60,9 @@ done
 
 2.  ### Add nix files
 
-        <NixDarwinConfig />
+        <Code lang="nix" title="flake.nix" wrap preserveIndent code={flakeNix} />
+        <Code lang="nix" title="configuration.nix" wrap preserveIndent code={configurationNix} />
+        <Code lang="nix" title="system.nix" wrap preserveIndent code={systemNix} />
 
 3.  ### Install nix
 
