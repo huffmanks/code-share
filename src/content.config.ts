@@ -50,7 +50,7 @@ export const collections = {
           ]),
           position: z.number().default(0),
           code: z.string(),
-        })
+        }),
       ),
     }),
   }),
@@ -80,16 +80,16 @@ export const collections = {
                       steps: z.array(
                         z.object({
                           key: z.string(),
-                        })
+                        }),
                       ),
                       isAlternative: z.boolean().default(false),
-                    })
+                    }),
                   )
                   .optional(),
-              })
+              }),
             )
             .optional(),
-        })
+        }),
       ),
     }),
   }),

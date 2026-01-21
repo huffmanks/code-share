@@ -2,12 +2,12 @@
 title: Force quit app
 description: Kill a running application process from the command line using pkill.
 tags: ["pkill"]
-updatedAt: 2025-01-30 14:53:14
+updatedAt: 2026-01-21 12:22:32
 fragments:
   - filename: force-quit-app
     label: Command
     language: sh
     position: 0
     code: |
-      pkill -f "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
+      pkill -f "/Applications/Google Chrome.app"
 ---

@@ -1,10 +1,10 @@
 ---
-title: Photoshop batch script
+title: Photoshop batch resize images
 description: Batch resize images to a specific canvas size, centers them and exports them as a png or jpg.
 tags: ["batch", "images", "photoshop"]
-updatedAt: 2025-05-04 18:48:03
+updatedAt: 2026-01-21 12:22:43
 fragments:
-  - filename: photoshop-batch-script
+  - filename: photoshop-batch-resize-images
     label: Paste in browser console
     language: jsx
     code: |
