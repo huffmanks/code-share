@@ -1,0 +1,129 @@
+---
+title: Qt Configuration Tool
+description: A comprehensive guide to styling Qt5 and Qt6 applications on Linux using the Qt Configuration Tool (qt5ct/qt6ct) with custom color palettes.
+references:
+  - href: https://github.com/desktop-app/qt5ct
+    label: Qt5 (GitHub repo)
+  - href: https://github.com/trialuser02/qt6ct
+    label: Qt6 (GitHub repo)
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+export const oneDarkProConf = `
+[ColorScheme]
+active_colors=#abb2bf, #282c34, #3a3f4b, #21252b, #4b5363, #3c4049, #abb2bf, #ffffff, #abb2bf, #282c34, #282c34, #181a1f, #3e4451, #abb2bf, #61afef, #c678dd, #21252b, #abb2bf, #282c34, #abb2bf, #14161a
+disabled_colors=#5c6370, #21252b, #282c34, #1c1f24, #3c4049, #282c34, #5c6370, #ffffff, #5c6370, #21252b, #21252b, #121417, #21252b, #5c6370, #3e4451, #c678dd, #1c1f24, #5c6370, #21252b, #5c6370, #101214
+inactive_colors=#abb2bf, #282c34, #3a3f4b, #21252b, #4b5363, #3c4049, #abb2bf, #ffffff, #abb2bf, #282c34, #282c34, #181a1f, #3e4451, #abb2bf, #61afef, #c678dd, #21252b, #abb2bf, #282c34, #abb2bf, #14161a
+
+[Style]
+style=Fusion
+palette=OneDarkPro
+`
+
+export const macOSDarkConf = `
+[ColorScheme]
+active_colors=#ffffff, #1e1e1e, #323232, #262626, #454545, #3a3a3a, #ffffff, #ffffff, #ffffff, #1e1e1e, #1e1e1e, #000000, #4a4a4a, #ffffff, #4a4a4a, #af52de, #262626, #ffffff, #1e1e1e, #ffffff, #181818
+disabled_colors=#757575, #1c1c1c, #262626, #1c1c1c, #3a3a3a, #1c1c1c, #757575, #ffffff, #757575, #1c1c1c, #1c1c1c, #000000, #323232, #757575, #323232, #af52de, #1c1c1c, #757575, #1c1c1c, #757575, #121212
+inactive_colors=#ffffff, #1e1e1e, #323232, #262626, #454545, #3a3a3a, #ffffff, #ffffff, #ffffff, #1e1e1e, #1e1e1e, #000000, #4a4a4a, #ffffff, #4a4a4a, #af52de, #262626, #ffffff, #1e1e1e, #ffffff, #181818
+
+[Style]
+style=Fusion
+palette=MacOSDark
+`
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Install
+
+        <Tabs syncKey="qtVersion">
+            <TabItem label="Qt5">
+            <Code lang="sh" wrap preserveIndent code="sudo apt update && sudo apt install qt5ct -y" />
+            </TabItem>
+            <TabItem label="Qt6">
+            <Code lang="sh" wrap preserveIndent code="sudo apt update && sudo apt install qt6ct -y" />
+            </TabItem>
+        </Tabs>
+
+        <br />
+
+2.  ## Update environment
+
+        <Code lang="sh" wrap preserveIndent code="sudo nano /etc/environment" />
+
+        Add the following line to the file, then save and log out to apply changes:
+
+        <Tabs syncKey="qtVersion">
+            <TabItem label="Qt5">
+            <Code lang="sh" wrap preserveIndent code="QT_QPA_PLATFORMTHEME=qt5ct" />
+            </TabItem>
+            <TabItem label="Qt6">
+            <Code lang="sh" wrap preserveIndent code="QT_QPA_PLATFORMTHEME=qt6ct" />
+            </TabItem>
+        </Tabs>
+
+        <br />
+
+3.  ## Create custom palettes
+
+        Create the configuration directory and paste your color definitions into a new `.conf` file.
+
+        ### MacOSDark
+
+        <Tabs syncKey="qtVersion">
+            <TabItem label="Qt5">
+            <Code lang="sh" wrap preserveIndent code="mkdir -p ~/.config/qt5ct/colors && nano ~/.config/qt5ct/colors/MacOSDark.conf" />
+            </TabItem>
+            <TabItem label="Qt6">
+            <Code lang="sh" wrap preserveIndent code="mkdir -p ~/.config/qt6ct/colors && nano ~/.config/qt6ct/colors/MacOSDark.conf" />
+            </TabItem>
+        </Tabs>
+
+        <Code lang="ini" wrap preserveIndent code={macOSDarkConf} />
+
+        ### OneDarkPro
+
+        <Tabs syncKey="qtVersion">
+            <TabItem label="Qt5">
+            <Code lang="sh" wrap preserveIndent code="nano ~/.config/qt5ct/colors/OneDarkPro.conf" />
+            </TabItem>
+            <TabItem label="Qt6">
+            <Code lang="sh" wrap preserveIndent code="nano ~/.config/qt6ct/colors/OneDarkPro.conf" />
+            </TabItem>
+        </Tabs>
+
+        <Code lang="ini" wrap preserveIndent code={oneDarkProConf} />
+
+        <br />
+
+4.  ## Apply settings
+
+        Launch the graphical interface to select your new palette and set the “Fusion” style.
+
+        <Tabs syncKey="qtVersion">
+            <TabItem label="Qt5">
+            <Code lang="sh" wrap preserveIndent code="qt5ct" />
+            </TabItem>
+            <TabItem label="Qt6">
+            <Code lang="sh" wrap preserveIndent code="qt6ct" />
+            </TabItem>
+        </Tabs>
+
+        **Note:** Within the tool, navigate to the **Appearance** tab.
+            - Set the **Style** to `Fusion`.
+            - Select **Custom** and choose your `Palette`.
+
+</Steps>
