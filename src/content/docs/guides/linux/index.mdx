@@ -21,16 +21,10 @@ AllowUsers {{USERNAME_VAR}} $USERNAME2 $USERNAME3
 
 export const sshConfig = `
 \# Default settings for all hosts
-Host *
-\n\tServerAliveInterval 60
-\n\tServerAliveCountMax 5
+Host *\n\tServerAliveInterval 60\n\tServerAliveCountMax 5
 
 \# Example host
-Host $ALIAS_NAME
-\n\tHostName {{SERVER_IP_VAR}}
-\n\tUser {{USERNAME_VAR}}
-\n\tPort 2222
-\n\tIdentityFile ~/.ssh/id\_{{HOSTNAME_VAR}}
+Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\tPort 22\n\tIdentityFile ~/.ssh/id\_{{HOSTNAME_VAR}}
 `;
 
 <p>{frontmatter.description}</p>
@@ -123,7 +117,7 @@ Host $ALIAS_NAME
 
       Test the new configuration.
 
-      <Code lang="sh" code={`ssh $ALIAS_NAME`} />
+      <Code lang="sh" code={`ssh {{HOSTNAME_VAR}}`} />
 
    </Steps>
 
