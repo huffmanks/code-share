@@ -1,0 +1,53 @@
+---
+title: EchoLink
+description: "A self-hosted client app for Linkding, designed for a fast, clean and modern bookmarking experience across your devices."
+references:
+  - href: https://github.com/huffmanks/echo-link
+    label: GitHub repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/echo-link.yml?raw";
+import env from "/src/files/env/echo-link.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/echo-link && cd {{DOCKER_PATH_VAR}}/echo-link
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="3002" />

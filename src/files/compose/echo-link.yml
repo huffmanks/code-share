@@ -1,0 +1,25 @@
+services:
+  linkding:
+    image: sissbruecker/linkding:latest
+    container_name: linkding
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./data:/etc/linkding/data
+    environment:
+      LD_SUPERUSER_NAME: ${LD_SUPERUSER_NAME}
+      LD_SUPERUSER_PASSWORD: ${LD_SUPERUSER_PASSWORD}
+      LD_CSRF_TRUSTED_ORIGINS: ${LD_CSRF_TRUSTED_ORIGINS}
+      LD_USE_X_FORWARDED_HOST: "true"
+    restart: unless-stopped
+  echo-link:
+    image: huffmanks/echo-link:latest
+    container_name: echo-link
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    environment:
+      APP_PORT: ${APP_PORT}
+      LINKDING_CONTAINER_URL: ${LINKDING_CONTAINER_URL}
+    depends_on:
+      - linkding
+    restart: unless-stopped
