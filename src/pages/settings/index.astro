@@ -5,18 +5,31 @@ import { SettingsForm } from "@/components/settings-form";
 import { generateHeadMeta } from "@/lib/generateHeadMeta";
 
 const pageUrl = Astro.url.href;
+const pageDescription = "Tailor all documentation and guides to your specific environment. Enter your paths, IP’s and more to generate ready-to-use code snippets.";
+
+const headings = [
+  { depth: 3, slug: "networking", text: "Networking" },
+  { depth: 3, slug: "docker", text: "Docker" },
+  { depth: 3, slug: "hdd", text: "HDD" },
+  { depth: 3, slug: "file-sharing", text: "File Sharing" },
+];
 ---
 
 <StarlightPage
   frontmatter={{
     title: "Settings",
-    head: generateHeadMeta({ pageTitle: "Settings", pageDescription: "Custom settings for the guides.", pageUrl }),
-    tableOfContents: false,
+    head: generateHeadMeta({
+      pageTitle: "Settings",
+      pageDescription,
+      pageUrl,
+    }),
+    tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
     prev: false,
     next: false,
     pagefind: false,
-  }}>
-  <SettingsForm client:only />
+  }}
+  headings={headings}>
+  <SettingsForm client:only pageDescription={pageDescription} />
 </StarlightPage>
 
 <style is:inline>

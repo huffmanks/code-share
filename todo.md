@@ -6,6 +6,12 @@
 
 ---
 
+## Settings
+
+- [ ] Add tabs for package manager in guides. e.g. apt, dnf, homebrew, macports, pacman
+
+---
+
 ## Docs
 
 ---
