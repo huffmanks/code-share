@@ -1,0 +1,22 @@
+services:
+  arcane:
+    image: ghcr.io/getarcaneapp/arcane:latest
+    container_name: arcane
+    ports:
+      - "3552:3552"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+      APP_URL: ${APP_URL}
+      PROJECTS_DIRECTORY: ${PROJECTS_DIRECTORY}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - arcane-data:/app/data
+      - ${PROJECTS_DIRECTORY}:${PROJECTS_DIRECTORY}
+    restart: unless-stopped
+
+volumes:
+  arcane-data:

@@ -1,20 +1,20 @@
 ---
-title: Dockge
-description: "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager."
+title: Arcane
+description: "A beautiful, intuitive interface for managing your Docker containers, images, networks and volumes."
 references:
-  - href: https://github.com/louislam/dockge
+  - href: https://github.com/getarcaneapp/arcane
     label: GitHub repo
+  - href: https://getarcane.app/docs
+    label: Docs
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
-import yaml from "/src/files/compose/dockge.yml?raw";
+import yaml from "/src/files/compose/arcane.yml?raw";
+import env from "/src/files/env/arcane.env?raw";
 
 <p>{frontmatter.description}</p>
-
-<ServiceNotice serviceName="Arcane" linkPath="/guides/docker/apps/arcane" />
 
 ### References
 
@@ -25,7 +25,7 @@ import yaml from "/src/files/compose/dockge.yml?raw";
 ## Make directory
 
 ```sh wrap preserveIndent
-mkdir -p {{DOCKER_PATH_VAR}}/dockge && cd {{DOCKER_PATH_VAR}}/dockge
+mkdir -p {{DOCKER_PATH_VAR}}/arcane && cd {{DOCKER_PATH_VAR}}/arcane
 ```
 
 ## compose.yml
@@ -36,6 +36,14 @@ nano compose.yml
 
 <Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
 
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
 ## Start container
 
 ```sh
@@ -44,4 +52,4 @@ docker compose up -d
 
 ## Open web ui
 
-<OpenWebUI port="5001" />
+<OpenWebUI port="3552" />

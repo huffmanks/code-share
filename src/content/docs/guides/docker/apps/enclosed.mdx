@@ -10,10 +10,13 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/enclosed.yml?raw";
 
 <p>{frontmatter.description}</p>
+
+<ServiceNotice serviceName="pastebox" linkPath="/guides/docker/apps/pastebox" />
 
 ### References
 

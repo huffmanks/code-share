@@ -1,0 +1,9 @@
+---
+import { Aside } from "@astrojs/starlight/components";
+
+const { serviceName, linkPath } = Astro.props;
+---
+
+<Aside type="caution">
+  I no longer use this service and have migrated to {serviceName}. While this guide may still work, I recommend following the <a href={linkPath}>{serviceName} guide</a> instead.
+</Aside>
