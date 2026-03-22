@@ -106,6 +106,10 @@ export default defineConfig({
                   slug: "guides/linux/security",
                 },
                 {
+                  label: "SMB",
+                  slug: "guides/linux/smb",
+                },
+                {
                   label: "Programs",
                   collapsed: true,
                   autogenerate: { directory: "guides/linux/programs", collapsed: true },

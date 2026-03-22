@@ -23,6 +23,7 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   externalHddUuid: "$EXTERNAL_HDD_UUID",
   nfsSharePath: "/PATH_TO_NFS_SHARE",
   nfsMountPath: "/PATH_TO_NFS_MOUNT",
+  smbSharePath: "/PATH_TO_SMB_SHARE",
   rsyncLocalPath: "/PATH_TO_RSYNC_LOCAL_PATH",
   rsyncRemotePath: "/PATH_TO_RSYNC_REMOTE_PATH",
 };
@@ -92,6 +93,13 @@ export const settingsFormFields = [
     defaultValue: defaultSettingsLocalStorage.nfsMountPath,
   },
   {
+    id: "a6ad266d-441b-4881-b0c2-2437f916883f",
+    label: "SMB share path",
+    placeholder: "/home/user/Videos",
+    name: "smbSharePath",
+    defaultValue: defaultSettingsLocalStorage.smbSharePath,
+  },
+  {
     id: "7682f870-cdae-4d8b-90c7-83942c3c2d3c",
     label: "Rsync local path",
     placeholder: "/home/user/Videos",
@@ -117,6 +125,7 @@ export const defaultSettingsFormValues: SettingsForm = {
   externalHddUuid: "",
   nfsSharePath: "",
   nfsMountPath: "",
+  smbSharePath: "",
   rsyncLocalPath: "",
   rsyncRemotePath: "",
 };

@@ -43,6 +43,7 @@ export type SettingsForm = {
   externalHddUuid: string;
   nfsSharePath: string;
   nfsMountPath: string;
+  smbSharePath: string;
   rsyncLocalPath: string;
   rsyncRemotePath: string;
 };

@@ -1,0 +1,91 @@
+---
+title: SMB
+description: Setup guide for sharing files over a local network using Samba (SMB/CIFS) between Linux and other devices.
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+export const smbConf = `
+[shared]
+   path = {{SMB_SHARE_VAR}}
+   read only = no
+   browsable = yes
+   guest ok = no
+`;
+
+<p>{frontmatter.description}</p>
+
+---
+
+<br />
+
+## Server
+
+<Steps>
+
+1.  ### Install
+
+    Install the SMB server package to enable file sharing.
+
+    <Code lang="sh" code={`sudo apt update && sudo apt install samba -y`} />
+
+2.  ### Set SMB password
+
+    Samba uses its own password database. It must be set manually, even if it’s the same as your login password.
+
+    <Code lang="sh" code={`sudo smbpasswd -a {{USERNAME_VAR}}`} />
+
+    Enable the user (usually automatic, but safe to ensure):
+
+    <Code lang="sh" code={`sudo smbpasswd -e {{USERNAME_VAR}}`} />
+
+3.  ### smb.conf
+
+    <Code lang="sh" code={`sudo nano /etc/samba/smb.conf`} />
+
+    <Code lang="yml" title="/etc/samba/smb.conf" wrap preserveIndent code={smbConf} />
+
+4.  ### Restart service
+
+    <Code lang="sh" code={`sudo systemctl restart smbd`} />
+
+    Optionally enable on boot:
+
+    <Code lang="sh" code={`sudo systemctl enable smbd`} />
+
+5.  ### Allow through firewall (optional)
+
+    Allow access for SMB traffic.
+
+    <Code lang="sh" code={`sudo ufw allow samba`} />
+
+</Steps>
+
+## Client
+
+<Steps>
+
+1.  ### Access share
+
+    <Code lang="txt" code={`smb://{{SERVER_IP_VAR}}/shared`} />
+
+    Or using hostname (if mDNS/Avahi is working):
+
+    <Code lang="txt" code={`smb://{{HOSTNAME_VAR}}.local/shared`} />
+
+    **Notes:**
+    - Replace `shared` with your share name.
+    - `.local` requires Avahi (`avahi-daemon`) on the server and client.
+    - If hostname does not resolve, use the server IP instead.
+
+    <br />
+
+2.  ### Connect via terminal (temporary)
+
+    Install required packages for terminal access:
+
+    <Code lang="sh" code={`sudo apt install smbclient cifs-utils -y`} />
+
+    <Code lang="sh" code={`smbclient //{{SERVER_IP_VAR}}/shared -U {{USERNAME_VAR}}`} />
+
+</Steps>
