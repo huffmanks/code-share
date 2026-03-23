@@ -1,0 +1,11 @@
+# Base configuration
+base-url: "http://localhost:8383"
+listen-http: ":80"
+
+# Auth settings
+auth-file: "/var/lib/ntfy/user.db"
+auth-default-access: "deny-all"
+
+# Cache settings
+cache-file: "/var/cache/ntfy/cache.db"
+cache-duration: "12h"

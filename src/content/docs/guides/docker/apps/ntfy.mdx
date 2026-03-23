@@ -1,0 +1,94 @@
+---
+title: ntfy
+description: "ntfy lets you send push notifications to your phone or desktop via scripts from any computer, using simple HTTP PUT or POST requests."
+references:
+  - href: https://docs.ntfy.sh
+    label: Docs
+  - href: https://github.com/binwiederhier/ntfy
+    label: GitHub repo
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/ntfy.yml?raw";
+import serverYml from "/src/files/config/ntfy/server.yml?raw";
+
+export const exampleHttp = `
+curl -X POST "http://localhost:8383/test_topic" \\
+  -H "Authorization: Bearer <tk_your_token>" \\
+  -H "Title: Test Title" \\
+  -H "Tags: rocket,star" \\
+  -H "Priority: default" \\
+  -d "Message using a token"
+`;
+
+export const exampleCli = `
+ntfy publish \\
+  --host="http://localhost:8383" \\
+  --token="<tk_your_token>" \\
+  --title="Test Title" \\
+  --tags="rocket,star" \\
+  --priority="default" \\
+  test_topic "Message using a token"
+`;
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/ntfy && cd {{DOCKER_PATH_VAR}}/ntfy
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## ./config/server.yml
+
+```sh
+nano ./config/server.yml
+```
+
+<Code lang="yml" title="./config/server.yml" wrap preserveIndent code={serverYml} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Create admin user
+
+<Code lang="sh" code={`docker exec -it ntfy ntfy user add --role=admin {{USERNAME_VAR}}`} />
+
+## Create token
+
+<Code lang="sh" code={`docker exec -it ntfy ntfy token add {{USERNAME_VAR}}`} />
+
+## Example usage
+
+### HTTP
+
+<Code lang="sh" wrap preserveIndent code={exampleHttp} />
+
+### CLI
+
+_Requires CLI to be installed through your package manager._
+
+<Code lang="sh" wrap preserveIndent code={exampleCli} />
+
+## Open web ui
+
+<OpenWebUI port="8383/test_topic" />
