@@ -7,10 +7,11 @@ services:
     volumes:
       - ./data:/etc/linkding/data
     environment:
-      LD_SUPERUSER_NAME: ${LD_SUPERUSER_NAME}
-      LD_SUPERUSER_PASSWORD: ${LD_SUPERUSER_PASSWORD}
       LD_CSRF_TRUSTED_ORIGINS: ${LD_CSRF_TRUSTED_ORIGINS}
       LD_USE_X_FORWARDED_HOST: "true"
+      # optional
+      LD_SUPERUSER_NAME: ${LD_SUPERUSER_NAME}
+      LD_SUPERUSER_PASSWORD: ${LD_SUPERUSER_PASSWORD}
     restart: unless-stopped
   echo-link:
     image: huffmanks/echo-link:latest
@@ -20,6 +21,7 @@ services:
     environment:
       APP_PORT: ${APP_PORT}
       LINKDING_CONTAINER_URL: ${LINKDING_CONTAINER_URL}
+      LINKDING_API_TOKEN: ${LINKDING_API_TOKEN}
     depends_on:
       - linkding
     restart: unless-stopped
