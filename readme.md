@@ -1,42 +1,40 @@
 # CodeShare
 
-**Code Smarter. Build Faster.** ⚡
+**Code smarter. Build faster.**
 
-CodeShare is your go-to platform for clear, practical coding guides and reusable code. Whether you're setting up a fresh dev environment or need that one-liner you always forget, CodeShare helps you move faster with confidence — and a little less Googling. 😉
-
----
-
-## 🌐 Visit the Site
-
-👉 [codeshare.huffmanks.com](https://codeshare.huffmanks.com)
+CodeShare is your go to platform for clear, practical coding guides and reusable code. Whether you’re setting up a fresh dev environment or need that one-liner you always forget, CodeShare helps you move faster with confidence.
 
 ---
 
-## 🚀 What You'll Find
+## Visit the site
 
-- ### 🔧 Setup Guides
+[codeshare.huffmanks.com](https://codeshare.huffmanks.com)
 
-  Step-by-step instructions to configure and optimize:
+---
 
-  - 🐧 Linux
-  - 🍎 macOS
-  - 🐳 Docker environments
+## What you’ll find
 
-- ### ✂️ Code Snippets
+- ### Setup guides
 
-  Reusable code snippets that solve real problems — from automation to quick hacks you’ll actually use.
+  Step by step instructions to configure and optimize:
+  - Linux
+  - macOS
+  - Docker environments
 
-- ### 📚 Cheatsheets
+- ### Code snippets
 
-  Quick-reference guides so you can stop tabbing between docs and get back to building:
+  Reusable code snippets and quick hacks you’ll actually use.
 
-  - 🐳 Docker
-  - 🧠 Git
-  - 🔍 jq
-  - 📝 Markdown
-  - ⌨️ Nano
-  - 🐘 PostgreSQL
-  - 🐍 Python
-  - 🔣 Regex
-  - 💻 Terminal
-  - 🧙 Vim
+- ### Cheatsheets
+
+  Quick reference guides so you can stop tabbing between docs and get back to building:
+  - Docker
+  - Git
+  - jq
+  - Markdown
+  - Nano
+  - PostgreSQL
+  - Python
+  - Regex
+  - Terminal
+  - Vim

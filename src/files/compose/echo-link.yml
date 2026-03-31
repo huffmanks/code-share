@@ -22,6 +22,9 @@ services:
       APP_PORT: ${APP_PORT}
       LINKDING_CONTAINER_URL: ${LINKDING_CONTAINER_URL}
       LINKDING_API_TOKEN: ${LINKDING_API_TOKEN}
+      # optional
+      ECHOLINK_USER_NAME: ${ECHOLINK_USER_NAME}
+      LINKDING_EXTERNAL_URL: ${LINKDING_EXTERNAL_URL}
     depends_on:
       - linkding
     restart: unless-stopped
