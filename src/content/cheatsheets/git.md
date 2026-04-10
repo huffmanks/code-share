@@ -1,8 +1,20 @@
 ---
 title: git
 description: Commands for version control, branches, staging, history and undoing changes.
-updatedAt: 2025-02-07 08:44:58
+updatedAt: 2026-04-10 09:21:53
 groups:
+  - title: Update Last Commit and Force Push
+    description: Stage all changes, amend the latest commit and safely force push to remote.
+    items:
+      - label: git add .
+        description: "Stage all modified and new files."
+        code: git add .
+      - label: git commit --amend --no-edit
+        description: "Amend the most recent commit without changing its message."
+        code: git commit --amend --no-edit
+      - label: git push origin [branch] --force-with-lease
+        description: "Force push changes safely, ensuring no unexpected remote updates are overwritten."
+        code: git push origin main --force-with-lease
   - title: Undoing Changes
     description: Fixing mistakes or rolling back changes when things go sideways.
     items:
