@@ -3,7 +3,7 @@ services:
     image: huffmanks/pastebox
     container_name: pastebox
     ports:
-      - "3000:3000"
+      - "3006:3000"
     volumes:
       - uploads:/app/uploads
       - data:/app/data

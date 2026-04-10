@@ -2,9 +2,20 @@
 import preact from "@astrojs/preact";
 import starlight from "@astrojs/starlight";
 import { defineConfig, passthroughImageService } from "astro/config";
+import { fileURLToPath, URL } from "node:url";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
+  vite: {
+    resolve: {
+      alias: [
+        {
+          find: "@",
+          replacement: fileURLToPath(new URL("./src", import.meta.url)),
+        },
+      ],
+    },
+  },
   site: "https://codeshare.huffmanks.com",
   image: {
     service: passthroughImageService(),

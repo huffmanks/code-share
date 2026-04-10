@@ -6,15 +6,22 @@ references:
     label: GitHub repo
   - href: https://docs.gitea.com/
     label: Docs
+sidebar:
+  badge:
+    text: "Archived"
+    variant: "caution"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/gitea.yml?raw";
 import env from "/src/files/env/gitea.env?raw";
 
 <p>{frontmatter.description}</p>
+
+<ServiceNotice serviceName="Forgejo" linkPath="/guides/docker/apps/forgejo" />
 
 ### References
 
