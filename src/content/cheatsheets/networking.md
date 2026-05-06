@@ -1,5 +1,5 @@
 ---
-title: Networking
+title: networking
 description: Common networking commands and configuration tools including connectivity tests, interface management, firewalls and routing.
 updatedAt: 2025-08-20 10:30:12
 groups:

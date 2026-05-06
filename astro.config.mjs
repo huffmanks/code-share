@@ -199,6 +199,10 @@ export default defineConfig({
               link: "cheatsheets/networking",
             },
             {
+              label: "pdf",
+              link: "cheatsheets/pdf",
+            },
+            {
               label: "postgresql",
               link: "cheatsheets/postgresql",
             },
