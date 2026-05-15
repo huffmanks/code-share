@@ -30,76 +30,123 @@ import localYaml from "/src/files/config/gickup/local.yaml?raw";
 
 1.  ## Download tarball
 
-        ```sh
+        ```sh wrap preserveIndent
         wget https://github.com/stefanprodan/gickup/releases/download/v0.10.39/gickup_0.10.39_linux_amd64.tar.gz
         ```
 
 2.  ## Verify checksum
 
-        ```sh
+        ```sh wrap preserveIndent
         echo "c3d3e647189c4379d8d70b9223bd4fe5eb293b289ece5931ff2e10064b063a67  gickup_0.10.39_linux_amd64.tar.gz" | sha256sum -c -
         ```
 
 3.  ## Extract and move
 
-        ```sh
+        ```sh wrap preserveIndent
         tar -xzf gickup_0.10.39_linux_amd64.tar.gz && sudo mv gickup /usr/local/bin/gickup
         ```
 
 4.  ## Make executeable
 
-        ```sh
+        ```sh wrap preserveIndent
         sudo chmod +x /usr/local/bin/gickup
         ```
 
 5.  ## Create backup/config directory
 
-        ```sh
+        ```sh wrap preserveIndent
         mkdir -p ~/.config/gickup
         ```
 
-6.  ## Create config
-
-        ```sh
-        nano ~/.config/gickup/config.yaml
-        ```
+6.  ## Create token(s)
 
         <Tabs syncKey="gitbackup">
                 <TabItem label="Local">
 
-                        - Replace YOUR_GITHUB_TOKEN. Token requires these permissions:
-                                - `all:repo` - Full control of public and private repositories.
-                                - `read:gist` - Read user gists.
-                                - `read:org` - (Optional) Read-only access to organization membership and repos.
-                        - Replace PATH_TO_LOCAL_BACKUP.
+                        **GitHub token**
 
-                        <Code lang="yml" title="config.yaml" wrap preserveIndent code={localYaml} />
+                        Requires these permissions:
+
+                        - `all:repo` - Full control of public and private repositories.
+                        - `read:gist` - Read user gists.
+                        - `read:org` - (Optional) Read-only access to organization membership and repos.
 
                 </TabItem>
 
                 <TabItem label="Gitea">
 
-                        - Replace YOUR_GITHUB_TOKEN. Token requires these permissions:
-                                - `all:repo` - Full control of public and private repositories.
-                                - `read:gist` - Read user gists.
-                                - `read:org` - (Optional) Read-only access to organization membership and repos.
-                        - Replace YOUR_GITEA_TOKEN. Token requires these permissions:
-                                - `write:org` - Read/write access to organization membership and repos.
-                                - `write:repo` - Full control of public and private repositories.
-                                - `write:user` - Read/write access to user.
-                        - Replace YOUR_GITEA_USERNAME.
+                        **GitHub token**
 
-                        <Code lang="yml" title="config.yaml" wrap preserveIndent code={giteaYaml} />
+                        Requires these permissions:
+
+                        - `all:repo` - Full control of public and private repositories.
+                        - `read:gist` - Read user gists.
+                        - `read:org` - (Optional) Read-only access to organization membership and repos.
+
+                        **Gitea token**
+
+                        Requires these permissions:
+
+                        - `write:org` - Read/write access to organization membership and repos.
+                        - `write:repo` - Full control of public and private repositories.
+                        - `write:user` - Read/write access to user.
 
                 </TabItem>
 
         </Tabs>
+
         <br />
 
-7.  ## Run
+7.  ## Create config
 
-        ```sh
-        gickup ~/.config/gickup/config.yaml
-        ```
+        <Tabs syncKey="gitbackup">
+
+                <TabItem label="Local">
+
+                        ```sh
+                        nano ~/.config/gickup/local.config.yaml
+                        ```
+
+                        <Code lang="yml" title="local.config.yaml" wrap preserveIndent code={localYaml} />
+
+                </TabItem>
+
+                <TabItem label="Gitea">
+
+                        ```sh
+                        nano ~/.config/gickup/gitea.config.yaml
+                        ```
+
+                        <Code lang="yml" title="gitea.config.yaml" wrap preserveIndent code={giteaYaml} />
+
+                </TabItem>
+
+        </Tabs>
+
+        <br />
+
+8.  ## Run
+
+        <Tabs syncKey="gitbackup">
+
+                <TabItem label="Local">
+
+                        ```sh
+                        gickup ~/.config/gickup/local.config.yaml
+                        ```
+
+                </TabItem>
+
+                <TabItem label="Gitea">
+
+                        ```sh
+                        gickup ~/.config/gickup/gitea.config.yaml
+                        ```
+
+                </TabItem>
+
+        </Tabs>
+
+        <br />
 
 </Steps>

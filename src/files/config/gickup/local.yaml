@@ -8,7 +8,7 @@ source:
 
 destination:
   local:
-    - path: "PATH_TO_LOCAL_BACKUP"
+    - path: "/home/{USERNAME_VAR}/Documents/gh-backup"
       structured: true
       bare: true
       mirror: true
