@@ -1,6 +1,5 @@
-import { type SettingsFormField } from "@/lib/constants";
 import styles from "@/styles/settings-select.module.css";
-import type { SettingsForm } from "@/types";
+import type { SettingsForm, SettingsFormField } from "@/types";
 import type { Dispatch, StateUpdater } from "preact/hooks";
 
 interface SettingsSelectProps {

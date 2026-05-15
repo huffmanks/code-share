@@ -1,4 +1,4 @@
-import type { SettingsForm } from "@/types";
+import type { Category, CategorySlug, SettingsForm, SettingsFormField, TimeZone } from "@/types";
 
 export const borderColorVariants = ["var(--sl-color-blue)", "var(--sl-color-red)", "var(--sl-color-green)", "var(--sl-color-orange)", "var(--sl-color-purple)", "var(--sl-color-yellow)"];
 
@@ -29,23 +29,20 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   smbSharePath: "/PATH_TO_SMB_SHARE",
 };
 
-export type Category = "Networking" | "Docker" | "HDD" | "File sharing";
-export type CategorySlug = "networking" | "docker" | "hdd" | "file-sharing";
-
-export type TimeZone = {
-  identifier: string;
-  offset: string;
-};
-
-export type SettingsFormField = {
-  id: string;
-  label: string;
-  placeholder: string;
-  name: keyof SettingsForm;
-  selectOptions?: Array<TimeZone>;
-  defaultValue: string;
-  category: Category;
-  categorySlug: CategorySlug;
+export const defaultSettingsFormValues: SettingsForm = {
+  username: "",
+  serverIpAddress: "",
+  clientIpAddress: "",
+  hostname: "",
+  timeZone: "",
+  dockerPath: "",
+  externalHddPath: "",
+  externalHddUuid: "",
+  nfsSharePath: "",
+  nfsMountPath: "",
+  rsyncLocalPath: "",
+  rsyncRemotePath: "",
+  smbSharePath: "",
 };
 
 export const timeZones: Array<TimeZone> = [
@@ -204,18 +201,35 @@ export const settingsFormFields: Array<SettingsFormField> = [
   },
 ];
 
-export const defaultSettingsFormValues: SettingsForm = {
-  username: "",
-  serverIpAddress: "",
-  clientIpAddress: "",
-  hostname: "",
-  timeZone: "",
-  dockerPath: "",
-  externalHddPath: "",
-  externalHddUuid: "",
-  nfsSharePath: "",
-  nfsMountPath: "",
-  rsyncLocalPath: "",
-  rsyncRemotePath: "",
-  smbSharePath: "",
+export const appPorts = {
+  arcane: 3552,
+  bytestash: 5000,
+  convexBackend: 3210,
+  convexDashboard: 6791,
+  dockge: 5001,
+  echoLinkBackend: 9090,
+  echoLinkFrontend: 3008,
+  enclosed: 8787,
+  forgejo: 3004,
+  gitea: 3004,
+  glance: 8080,
+  homeAssistant: 8123,
+  immichServer: 2283,
+  itTools: 8081,
+  jellyfin: 8096,
+  mealie: 9925,
+  nextcloud: 8443,
+  ntfy: 8383,
+  openWebUi: 3007,
+  opencloud: 9200,
+  pangolinServer: 51820,
+  pangolinHttps: 443,
+  pangolinHttp: 80,
+  paperlessNgx: 8001,
+  pastebox: 3006,
+  pinchflat: 8945,
+  plex: 32400,
+  tinyMediaManagerWeb: 4000,
+  tinyMediaManagerVnc: 5900,
+  vaultWarden: 8002,
 };

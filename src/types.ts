@@ -48,3 +48,22 @@ export type SettingsForm = {
   rsyncLocalPath: string;
   rsyncRemotePath: string;
 };
+
+export type Category = "Networking" | "Docker" | "HDD" | "File sharing";
+export type CategorySlug = "networking" | "docker" | "hdd" | "file-sharing";
+
+export type TimeZone = {
+  identifier: string;
+  offset: string;
+};
+
+export type SettingsFormField = {
+  id: string;
+  label: string;
+  placeholder: string;
+  name: keyof SettingsForm;
+  selectOptions?: Array<TimeZone>;
+  defaultValue: string;
+  category: Category;
+  categorySlug: CategorySlug;
+};

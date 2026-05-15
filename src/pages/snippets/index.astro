@@ -26,11 +26,11 @@ const snippets = await Promise.all(
           ...fragment,
           codeHtml,
         };
-      })
+      }),
     );
 
     return { ...snippet, codeFragments };
-  })
+  }),
 );
 ---
 
