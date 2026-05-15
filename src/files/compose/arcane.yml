@@ -7,7 +7,7 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      TZ: America/New_York
+      TZ: "{{TIME_ZONE_VAR}}"
       APP_URL: ${APP_URL}
       PROJECTS_DIRECTORY: ${PROJECTS_DIRECTORY}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}

@@ -9,7 +9,7 @@ services:
       - ./config:/config
       - ./downloads:/downloads
     environment:
-      - TZ=America/New_York
+      - TZ={{TIME_ZONE_VAR}}
     depends_on:
       - pot-provider
     restart: unless-stopped

@@ -17,47 +17,6 @@ h3.section-title {
   margin-bottom: 1.5rem;
 }
 
-.label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: var(--sl-text-sm);
-  font-weight: 500;
-  line-height: 1;
-}
-
-.input {
-  display: block;
-  width: 100%;
-  max-width: 22rem;
-  height: 2.5rem;
-  margin-bottom: 0.25rem;
-  padding-block: 0.5rem;
-  padding-inline: 0.75rem;
-  background-color: var(--sl-color-black);
-  color: var(--sl-color-white);
-  font: inherit;
-  font-family: var(--sl-font-system-mono);
-  font-size: var(--sl-text-sm);
-  border: 1px solid var(--sl-color-gray-5);
-  border-radius: 0.5rem;
-  outline: none;
-}
-
-.input::placeholder {
-  color: var(--sl-color-gray-3);
-}
-
-.input:hover,
-.input:focus-within {
-  border-color: var(--sl-color-text-accent);
-}
-
-.description {
-  padding-inline-start: 0.5rem;
-  color: var(--sl-color-gray-3);
-  font-size: var(--sl-text-sm);
-}
-
 .button {
   padding-block: 0.5rem;
   padding-inline: 0.75rem;

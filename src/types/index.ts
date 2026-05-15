@@ -38,6 +38,7 @@ export type SettingsForm = {
   serverIpAddress: string;
   clientIpAddress: string;
   hostname: string;
+  timeZone: string;
   dockerPath: string;
   externalHddPath: string;
   externalHddUuid: string;

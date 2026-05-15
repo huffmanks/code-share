@@ -22,6 +22,6 @@ services:
       #   target: /usr/local/share/fonts/custom
       #   read_only: true
     environment:
-      - TZ=America/New_York
+      - TZ={{TIME_ZONE_VAR}}
       # - JELLYFIN_PublishedServerUrl=http://example.com
     restart: unless-stopped

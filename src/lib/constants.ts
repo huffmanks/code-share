@@ -18,6 +18,7 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   serverIpAddress: "$SERVER_IP_ADDRESS",
   clientIpAddress: "$CLIENT_IP_ADDRESS",
   hostname: "$HOSTNAME",
+  timeZone: "$TIME_ZONE",
   dockerPath: "/PATH_TO_DOCKER_APPS",
   externalHddPath: "/PATH_TO_EXTERNAL_HDD",
   externalHddUuid: "$EXTERNAL_HDD_UUID",
@@ -31,7 +32,58 @@ export const defaultSettingsLocalStorage: SettingsForm = {
 export type Category = "Networking" | "Docker" | "HDD" | "File sharing";
 export type CategorySlug = "networking" | "docker" | "hdd" | "file-sharing";
 
-export const settingsFormFields = [
+export type TimeZone = {
+  identifier: string;
+  offset: string;
+};
+
+export type SettingsFormField = {
+  id: string;
+  label: string;
+  placeholder: string;
+  name: keyof SettingsForm;
+  selectOptions?: Array<TimeZone>;
+  defaultValue: string;
+  category: Category;
+  categorySlug: CategorySlug;
+};
+
+export const timeZones: Array<TimeZone> = [
+  { identifier: "America/Anchorage", offset: "UTC -9" },
+  { identifier: "America/Chicago", offset: "UTC -6" },
+  { identifier: "America/Denver", offset: "UTC -7" },
+  { identifier: "America/Halifax", offset: "UTC -4" },
+  { identifier: "America/Los_Angeles", offset: "UTC -8" },
+  { identifier: "America/New_York", offset: "UTC -5" },
+  { identifier: "America/Noronha", offset: "UTC -2" },
+  { identifier: "America/Phoenix", offset: "UTC -7" },
+  { identifier: "America/Sao_Paulo", offset: "UTC -3" },
+  { identifier: "Atlantic/Azores", offset: "UTC -1" },
+  { identifier: "Europe/Athens", offset: "UTC +2" },
+  { identifier: "Europe/Berlin", offset: "UTC +1" },
+  { identifier: "Europe/London", offset: "UTC +0" },
+  { identifier: "Europe/Moscow", offset: "UTC +3" },
+  { identifier: "Europe/Paris", offset: "UTC +1" },
+  { identifier: "Africa/Cairo", offset: "UTC +2" },
+  { identifier: "Africa/Johannesburg", offset: "UTC +2" },
+  { identifier: "Africa/Lagos", offset: "UTC +1" },
+  { identifier: "Asia/Bangkok", offset: "UTC +7" },
+  { identifier: "Asia/Dhaka", offset: "UTC +6" },
+  { identifier: "Asia/Dubai", offset: "UTC +4" },
+  { identifier: "Asia/Karachi", offset: "UTC +5" },
+  { identifier: "Asia/Kolkata", offset: "UTC +5:30" },
+  { identifier: "Asia/Seoul", offset: "UTC +9" },
+  { identifier: "Asia/Shanghai", offset: "UTC +8" },
+  { identifier: "Asia/Singapore", offset: "UTC +8" },
+  { identifier: "Asia/Tokyo", offset: "UTC +9" },
+  { identifier: "Australia/Hobart", offset: "UTC +11" },
+  { identifier: "Australia/Perth", offset: "UTC +8" },
+  { identifier: "Australia/Sydney", offset: "UTC +10" },
+  { identifier: "Pacific/Auckland", offset: "UTC +12" },
+  { identifier: "Pacific/Honolulu", offset: "UTC -10" },
+];
+
+export const settingsFormFields: Array<SettingsFormField> = [
   {
     id: "799b2c11-b269-43cd-8e05-f29a641d26eb",
     label: "Username",
@@ -47,6 +99,16 @@ export const settingsFormFields = [
     placeholder: "ok-mac-pro",
     name: "hostname",
     defaultValue: defaultSettingsLocalStorage.hostname,
+    category: "Networking" as Category,
+    categorySlug: "networking" as CategorySlug,
+  },
+  {
+    id: "b5ec8740-a206-409d-9bce-0e711b87c85a",
+    label: "Time zone",
+    placeholder: "America/New_York",
+    name: "timeZone",
+    selectOptions: timeZones,
+    defaultValue: defaultSettingsLocalStorage.timeZone,
     category: "Networking" as Category,
     categorySlug: "networking" as CategorySlug,
   },
@@ -140,13 +202,14 @@ export const settingsFormFields = [
     category: "File sharing" as Category,
     categorySlug: "file-sharing" as CategorySlug,
   },
-] as const;
+];
 
 export const defaultSettingsFormValues: SettingsForm = {
   username: "",
   serverIpAddress: "",
   clientIpAddress: "",
   hostname: "",
+  timeZone: "",
   dockerPath: "",
   externalHddPath: "",
   externalHddUuid: "",

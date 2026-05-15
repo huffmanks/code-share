@@ -12,7 +12,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ={{TIME_ZONE_VAR}}
       - VERSION=docker
       - PLEX_CLAIM= #optional
     restart: unless-stopped
