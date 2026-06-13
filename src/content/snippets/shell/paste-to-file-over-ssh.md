@@ -10,5 +10,5 @@ fragments:
     position: 0
     code: |
       # Content must be on your clipboard before executing
-      pbpaste | ssh USERNAME@IP_ADDRESS 'cat > /path/to/file/compose.yml'
+      pbpaste | ssh {{USERNAME_VAR}}@{{CLIENT_IP_VAR}} 'cat > /path/to/file'
 ---
