@@ -4,8 +4,8 @@ description: Scripts for finding files by name, building transfer lists and sync
 tags: ["bash", "files", "rsync", "shell", "utils"]
 updatedAt: 2026-06-13 18:04:20
 fragments:
-  - filename: send_files
-    label: File script
+  - filename: send_movies
+    label: Movies script
     language: sh
     position: 0
     code: |
@@ -14,13 +14,9 @@ fragments:
       set -Eeuo pipefail
 
       START_DIR="/path/to/your/directory"
-      FILENAME_LIST="./files-list.txt"
-      DESTINATION="{{HOSTNAME_VAR}}:~/incoming/files/"
+      FILENAME_LIST="./movies.txt"
+      DESTINATION="{{HOSTNAME_VAR}}:~/incoming/movies/"
       ERROR_LOG="./error.log"
-
-      # --- TIER 2 CONFIGURATION ---
-      # Add or remove any extensions you want Tier 2 to look for (do not include the dot)
-      EXTENSIONS=("mp4" "mkv")
 
       : > "$ERROR_LOG"
 
@@ -40,86 +36,67 @@ fragments:
           exit 1
       }
 
-      declare -a file_paths=()
+      declare -a movie_paths=()
 
       while IFS= read -r filename || [[ -n "$filename" ]]; do
-          filename="${filename%$'\r'}"
-
           [[ -z "$filename" ]] && continue
           [[ "${filename:0:1}" == "#" ]] && continue
 
           matches=()
 
-          # --- TIER 1: Match Exact Filename with Extension ---
           while IFS= read -r path; do
               matches+=("$path")
           done < <(
-              find "$START_DIR" -type f -iname "$filename" -exec realpath {} \; 2>>"$ERROR_LOG"
+              find "$START_DIR" -type f \
+                  \( -iname "${filename}.mp4" -o -iname "${filename}.mkv" \) \
+                  -exec realpath {} \; \
+                  2>>"$ERROR_LOG"
           )
 
-          # --- TIER 2: Match Without Extension (Fallback via Config Array) ---
           if [[ ${#matches[@]} -eq 0 ]]; then
-              base_name="${filename%.*}"
-
-              # Dynamically build the find arguments for the extensions
-              find_args=()
-              for ext in "${EXTENSIONS[@]}"; do
-                  if [[ ${#find_args[@]} -gt 0 ]]; then
-                      find_args+=("-o")
-                  fi
-                  find_args+=("-iname" "${base_name}.${ext}")
-              fi
-
-              # Only run find if the EXTENSIONS array isn't empty
-              if [[ ${#find_args[@]} -gt 0 ]]; then
-                  while IFS= read -r path; do
-                      matches+=("$path")
-                  done < <(
-                      find "$START_DIR" -type f \( "${find_args[@]}" \) -exec realpath {} \; 2>>"$ERROR_LOG"
-                  )
-              fi
-          fi
-
-          # --- FALLBACK: Skip and Log if absolutely nothing matches ---
-          if [[ ${#matches[@]} -eq 0 ]]; then
-              log_error "No matches found for exact file or video extensions: $filename"
+              log_error "No matches found for: $filename"
               continue
           fi
 
-          file_paths+=("${matches[@]}")
+          movie_paths+=("${matches[@]}")
 
       done < "$FILENAME_LIST"
 
-      mapfile -t file_paths < <(
-          printf '%s\n' "${file_paths[@]}" | sort -u
+      mapfile -t movie_paths < <(
+          printf '%s\n' "${movie_paths[@]}" | sort -u
       )
 
-      if [[ ${#file_paths[@]} -eq 0 ]]; then
+      if [[ ${#movie_paths[@]} -eq 0 ]]; then
           log_error "No files matched any entries."
           exit 1
       fi
 
-      echo "Found ${#file_paths[@]} files."
+      echo "Found ${#movie_paths[@]} files."
       echo "Files to transfer:"
-      printf '  %s\n' "${file_paths[@]}"
-      echo "Sending files to $DESTINATION..."
+      printf '  %s\n' "${movie_paths[@]}"
 
-      rsync -avh --progress \
-          --no-relative \
-          --files-from=<(printf '%s\n' "${file_paths[@]}") \
-          / \
-          "$DESTINATION" \
-          2>>"$ERROR_LOG"
-  - filename: files-list
-    label: Files list
+      for src in "${movie_paths[@]}"; do
+          filename=$(basename "$src")
+          movie_dir="${filename%.*}"
+
+          echo "Copying:"
+          echo "  $src"
+          echo "  -> ${DESTINATION}${movie_dir}/"
+
+          rsync -avh --progress \
+              "$src" \
+              "${DESTINATION}${movie_dir}/" \
+              2>>"$ERROR_LOG"
+      done
+  - filename: movies-list
+    label: Movies list
     language: txt
     position: 1
     code: |
-      # Files
-      Final Destinations Bloodlines (2025).mp4
-      my-pdf-file.pdf
-      My Document
-      my-results 2026-05
+      # MOVIES
+      # e.g. Black Hawk Down (2001)
+      Final Destinations Bloodlines (2025)
+      Happy Gilmore 2 (2025)
 
   - filename: send_tv_shows
     label: TV shows script
@@ -140,6 +117,8 @@ fragments:
       log_error() {
           echo "[$(date '+%F %T')] $*" >> "$ERROR_LOG"
       }
+
+      trap 'log_error "Script failed on line $LINENO with exit code $?"' ERR
 
       while IFS='|' read -r SHOW SEASON_RANGE || [[ -n "$SHOW" ]]; do
           echo "PROCESSING: '$SHOW' '$SEASON_RANGE'"
@@ -180,7 +159,6 @@ fragments:
               tv_paths+=("${matches[@]}")
           done
 
-          echo "$SHOW: found ${#tv_paths[@]} files"
           if [[ ${#tv_paths[@]} -eq 0 ]]; then
               log_error "No matches for: $SHOW ($SEASON_RANGE)"
               continue
@@ -188,15 +166,29 @@ fragments:
 
           mapfile -t tv_paths < <(printf '%s\n' "${tv_paths[@]}" | sort -u)
 
-          echo "Sending ${#tv_paths[@]} files for $SHOW -> $DESTINATION"
-          printf '%s\n' "${tv_paths[@]}"
+          echo "$SHOW: found ${#tv_paths[@]} files"
+          echo "Sending ${#tv_paths[@]} files for $SHOW"
 
-          rsync -avh --progress \
-              --no-relative \
-              --files-from=<(printf '%s\n' "${tv_paths[@]}") \
-              / \
-              "$DESTINATION" \
-              2>>"$ERROR_LOG"
+          for src in "${tv_paths[@]}"; do
+              filename=$(basename "$src")
+
+              if [[ "$filename" =~ [Ss]([0-9]{2})[Ee][0-9]{2} ]]; then
+                  season_num="${BASH_REMATCH[1]}"
+                  season_dir="Season ${season_num}"
+              else
+                  log_error "Could not determine season from filename: $filename"
+                  continue
+              fi
+
+              echo "Copying:"
+              echo "  $src"
+              echo "  -> ${DESTINATION}${season_dir}/"
+
+              rsync -avh --progress \
+                  "$src" \
+                  "${DESTINATION}${season_dir}/" \
+                  2>>"$ERROR_LOG"
+          done
 
       done < "$INPUT_FILE"
   - filename: tv-shows
