@@ -1,7 +1,7 @@
 ---
 title: Compress multiple videos script
 description: A script to compress all videos in a directory using ffmpeg.
-tags: ["ffmpeg", "script"]
+tags: ["compression", "ffmpeg", "script", "video"]
 updatedAt: 2025-01-19 20:41:00
 fragments:
   - filename: compress-multiple-videos-script
