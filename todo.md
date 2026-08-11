@@ -16,6 +16,12 @@
 
 ---
 
+### Cheatsheets
+
+- [ ] Fix nano cheatsheet with alternative commands.
+
+---
+
 ### Linux
 
 - [ ] Update security page with more content:

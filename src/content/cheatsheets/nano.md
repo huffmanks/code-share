@@ -12,12 +12,18 @@ groups:
           - steps:
               - key: CTRL
               - key: y
+          - steps:
+              - key: ESC
+              - key: \
       - label: Move to last line
         description: Moves to the last line of the file.
         commands:
           - steps:
               - key: CTRL
               - key: v
+          - steps:
+              - key: ESC
+              - key: /
       - label: Move to beginning of line
         description: Moves the cursor to the start of the current line.
         commands:
@@ -42,9 +48,21 @@ groups:
           - steps:
               - key: CTRL
               - key: n
+      - label: Move to previous word
+        description: Moves the cursor backward one word at a time.
+        commands:
+          - steps:
+              - key: CTRL
+              - key: ←
+          - steps:
+              - key: ALT
+              - key: SPACE
       - label: Move to next word
         description: Moves the cursor forward one word at a time.
         commands:
+          - steps:
+              - key: CTRL
+              - key: →
           - steps:
               - key: CTRL
               - key: SPACE
@@ -54,6 +72,9 @@ groups:
           - steps:
               - key: CTRL
               - key: _
+          - steps:
+              - key: ESC
+              - key: g
   - title: Selecting Text
     description: Commands for selecting and cutting text.
     items:
@@ -63,6 +84,18 @@ groups:
           - steps:
               - key: CTRL
               - key: SHIFT
+              - key: "6"
+          - steps:
+              - key: ESC
+              - key: a
+      - label: Copy selected text
+        description: Copies the selected text and stores it in the buffer.
+        commands:
+          - steps:
+              - key: ALT
+              - key: "6"
+          - steps:
+              - key: ESC
               - key: "6"
       - label: Cut selected text
         description: Cuts the selected text and stores it in the buffer.
@@ -86,6 +119,9 @@ groups:
               - key: CTRL
               - key: w
           - steps:
+              - key: ESC
+              - key: f
+          - steps:
               - key: type word
               - key: ENTER
       - label: Search and replace
@@ -95,11 +131,23 @@ groups:
               - key: CTRL
               - key: "\\"
           - steps:
+              - key: ESC
+              - key: r
+          - steps:
               - key: search term
               - key: ENTER
           - steps:
               - key: replacement
               - key: ENTER
+      - label: Find next occurrence
+        description: Jump to the next match in the current search.
+        commands:
+          - steps:
+              - key: ALT
+              - key: w
+          - steps:
+              - key: ESC
+              - key: w
   - title: Exiting Nano
     description: How to quit Nano safely.
     items:
@@ -129,4 +177,22 @@ groups:
           - steps:
               - key: CTRL
               - key: g
+      - label: Undo
+        description: Revert the most recent change.
+        commands:
+          - steps:
+              - key: ALT
+              - key: u
+          - steps:
+              - key: ESC
+              - key: u
+      - label: Redo
+        description: Reapply the most recently undone change.
+        commands:
+          - steps:
+              - key: ALT
+              - key: e
+          - steps:
+              - key: ESC
+              - key: e
 ---
