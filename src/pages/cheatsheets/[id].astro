@@ -23,7 +23,11 @@ const pageUrl = Astro.url.href;
 <StarlightPage
   frontmatter={{
     title: cheatsheet.data.title,
-    head: generateHeadMeta({ pageTitle: `${cheatsheet.data.title} Cheatsheet`, pageDescription: cheatsheet.data.description, pageUrl }),
+    head: generateHeadMeta({
+      pageTitle: `${cheatsheet.data.title} Cheatsheet`,
+      pageDescription: cheatsheet.data.description,
+      pageUrl,
+    }),
     tableOfContents: false,
     prev: false,
     next: false,
@@ -44,7 +48,12 @@ const pageUrl = Astro.url.href;
         {group?.items && (
           <div class="grid">
             {group.items.map((item, index) => (
-              <div class="cheatsheet-card" style={{ borderColor: getVariant(borderColorVariants, index), color: getVariant(colorVariants, index) }}>
+              <div
+                class="cheatsheet-card"
+                style={{
+                  borderColor: getVariant(borderColorVariants, index),
+                  color: getVariant(colorVariants, index),
+                }}>
                 <h3>{item.label}</h3>
                 <p class="item-description">{item.description}</p>
 
@@ -55,25 +64,47 @@ const pageUrl = Astro.url.href;
                     </>
                   )}
                   {item?.commands && (
-                    <>
-                      {item.commands.map((command) => (
-                        <div class="command">
-                          {command.steps.map((step, idx) => (
-                            <>
-                              <kbd class="kbd" style={{ borderColor: getVariant(borderColorVariants, index), boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}` }}>
-                                {step.key}
-                              </kbd>
-                              {idx + 1 !== command.steps.length && <>{command.isAlternative ? <span>or</span> : <span>+</span>}</>}
-                            </>
-                          ))}
-                        </div>
+                    <div class="commands-wrapper">
+                      {item.commands.map((keys, cmdIdx) => (
+                        <>
+                          {cmdIdx > 0 && <span class="or-separator">or</span>}
+                          <div class="command">
+                            {keys.map((key, keyIdx) => (
+                              <>
+                                <kbd
+                                  class="kbd"
+                                  style={{
+                                    borderColor: getVariant(borderColorVariants, index),
+                                    boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}`,
+                                  }}>
+                                  {key}
+                                </kbd>
+                                {keyIdx + 1 !== keys.length && <span>+</span>}
+                              </>
+                            ))}
+                          </div>
+                        </>
                       ))}
-                    </>
+                    </div>
                   )}
                   {item?.code && (
                     <>
                       <Code lang={item.codeLang} wrap preserveIndent code={item.code} />
                     </>
+                  )}
+                  {item?.regex?.steps && (
+                    <div class="regex-wrapper">
+                      {item.regex.steps.map((step) => (
+                        <div class="regex-step">
+                          <div>
+                            <Code title="Find" wrap preserveIndent code={step.find} />
+                          </div>
+                          <div>
+                            <Code title="Replace" wrap preserveIndent code={step.replace} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   )}
                   {item?.comment && (
                     <>
@@ -121,6 +152,17 @@ const pageUrl = Astro.url.href;
 
   .code-example code {
     width: fit-content;
+    margin-bottom: 10px;
+  }
+
+  .regex-wrapper {
+    display: grid;
+    gap: 35px;
+  }
+
+  .regex-step {
+    display: grid;
+    gap: 10px;
   }
 
   .comment {
@@ -158,7 +200,9 @@ const pageUrl = Astro.url.href;
     --sl-content-width: 80rem;
   }
 
-  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+  .sl-markdown-content
+    :not(a, strong, em, del, span, input, code, br)
+    + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
     margin-top: 0;
   }
 </style>

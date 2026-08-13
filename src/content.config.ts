@@ -74,17 +74,18 @@ export const collections = {
                 codeLang: z.string().default("sh"),
                 comment: z.string().optional(),
                 example: z.string().optional(),
-                commands: z
-                  .array(
-                    z.object({
-                      steps: z.array(
+                commands: z.array(z.array(z.string())).optional(),
+                regex: z
+                  .object({
+                    steps: z
+                      .array(
                         z.object({
-                          key: z.string(),
+                          find: z.string(),
+                          replace: z.string(),
                         }),
-                      ),
-                      isAlternative: z.boolean().default(false),
-                    }),
-                  )
+                      )
+                      .min(1),
+                  })
                   .optional(),
               }),
             )

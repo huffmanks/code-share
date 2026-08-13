@@ -17,8 +17,7 @@ groups:
       - label: "Flatten Image"
         description: "Merges all layers and paths into a single background layer to ensure instant loading."
         commands:
-          - steps:
-              - key: "Layer > Flatten Image"
+          - ["Layer > Flatten Image"]
         codeLang: "text"
       - label: "Save configuration"
         description: "Use the Photoshop PDF format with specific compression settings."
@@ -35,32 +34,27 @@ groups:
             - Options: Check Convert 16-bit to 8-bit
         codeLang: "text"
         commands:
-          - steps:
-              - key: "File > Save As > Select Photoshop PDF"
+          - ["File > Save As > Select Photoshop PDF"]
   - title: "Standardize PDF page sizes"
     description: "A workflow to scale inconsistent document pages to a uniform standard dimension."
     items:
       - label: "Open preflight"
         description: "Navigate to the print production suite to begin the fixup."
         commands:
-          - steps:
-              - key: "Tools > Print Production > Preflight"
+          - ["Tools > Print Production > Preflight"]
       - label: "Select profile library"
         description: "Set the library to the correct versioning for scaling tools."
         commands:
-          - steps:
-              - key: "Select ‘Acrobat Pro DC 2015 Profiles’"
+          - ["Select ‘Acrobat Pro DC 2015 Profiles’"]
         comment: "Found in the top dropdown menu of the Preflight window."
       - label: "Access scaling tools"
         description: "Switch to the fixup menu to find page adjustment options."
         commands:
-          - steps:
-              - key: "Click wrench button"
+          - ["Click wrench button"]
       - label: "Select Scale Tool"
         description: "Locate the specific page scaling fixup within the Pages category."
         commands:
-          - steps:
-              - key: "Pages > Scale pages to specified size > Edit"
+          - ["Pages > Scale pages to specified size > Edit"]
       - label: "Define dimensions"
         description: "Input the exact millimeter values for the desired output size."
         code: |
@@ -72,12 +66,9 @@ groups:
       - label: "Execute fix"
         description: "Run the fixup and verify the results."
         commands:
-          - steps:
-              - key: "Click wrench fix (bottom)"
+          - ["Click wrench fix (bottom)"]
       - label: "Finalize"
         description: "Save the document once the page sizes are verified."
         commands:
-          - steps:
-              - key: "CMD"
-              - key: "S"
+          - ["CMD", "S"]
 ---
