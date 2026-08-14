@@ -1,0 +1,23 @@
+---
+import type { IconName } from "@/types";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"svg"> {
+  name: IconName;
+  size?: number | string;
+  spritePath?: string;
+}
+
+const { name, size = "1em", spritePath = "/icons.svg", class: className, ...props } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  role="presentation"
+  aria-hidden="true"
+  style={{ display: "inline-block", verticalAlign: "middle" }}
+  {...props}>
+  <use href={`${spritePath}#${name}`}></use>
+</svg>

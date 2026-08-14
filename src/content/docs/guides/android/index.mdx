@@ -1,0 +1,138 @@
+---
+title: Getting started
+description: "Set up a fresh Android environment with stash, zsh and essential development tools."
+lastUpdated: 2026-08-14 16:24:34
+references:
+  - href: https://github.com/huffmanks/stash
+    label: Stash
+    icon: github-icon
+  - href: https://play.google.com/store/apps/details?id=de.danoeh.antennapod
+    label: AntennaPod
+    icon: google-play-icon
+  - href: https://github.com/MetrolistGroup/Metrolist/releases
+    label: Metrolist
+    icon: github-icon
+  - href: https://play.google.com/store/apps/details?id=com.celzero.bravedns
+    label: Rethink DNS
+    icon: google-play-icon
+  - href: https://play.google.com/store/apps/details?id=code.name.monkey.retromusic
+    label: Retro Music
+    icon: google-play-icon
+  - href: https://github.com/fast4x/RiPlay/releases
+    label: RiPlay
+    icon: github-icon
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import Icon from "@/components/icon.astro";
+import { Code, Steps } from "@astrojs/starlight/components";
+
+export const bashrc = `
+if [ -x "$(command -v zsh)" ]; then
+  export SHELL=$(command -v zsh)
+  exec $(command -v zsh) -l
+fi
+`;
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Terminal
+
+    <br />
+
+        <Steps>
+
+        1. ### Update and upgrade
+
+            Fetch the latest package lists and apply security patches.
+
+            <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
+
+        2. ### Install stash
+
+            Download and run the stash installer.
+
+            <Code lang="sh" code={`curl -sSL https://raw.githubusercontent.com/huffmanks/stash/main/install.sh | bash`} />
+
+        3. ### Run stash
+
+            Run stash to create `.zshrc`, the global `.gitconfig` and `.gitignore` files and help install the necessary packages.
+
+            <Code lang="sh" code={`stash`} />
+
+        4. ### Update .bashrc
+
+            Add this to `.bashrc` so Bash automatically starts zsh as a login shell.
+
+            <Code lang="sh" code={`nano ~/.bashrc`} />
+
+            <Code lang="sh" title=".bashrc" code={bashrc} />
+
+        5. ### Change default shell
+
+            Set zsh as the default login shell.
+
+            <Code lang="sh" code={`chsh -s $(which zsh)`} />
+
+        6. ### Compile .zshrc
+
+            Compile `.zshrc` and restart zsh to apply the changes.
+
+            <Code lang="sh" code={`zcompile ~/.zshrc && exec zsh`} />
+
+        </Steps>
+
+2.  ## Apps (restore backups)
+
+    <br />
+
+        <Steps>
+
+        1. ### AntennaPod
+
+            - <a href="https://play.google.com/store/apps/details?id=de.danoeh.antennapod">Install AntennaPod <Icon name="google-play-icon" /></a>
+            - Settings > Backup & restore
+            - Database import
+            - Select file `AntennaPodBackup-*.db`
+
+        2. ### Metrolist
+
+            - <a href="https://github.com/MetrolistGroup/Metrolist/releases">Install Metrolist <Icon name="github-icon" /></a>
+            - Profile > Settings > Backup and restore
+            - Restore
+            - Select file `Metrolist_*.backup`
+
+        3. ### Rethink DNS
+
+            - <a href="https://play.google.com/store/apps/details?id=com.celzero.bravedns">Install Rethink DNS <Icon name="google-play-icon" /></a>
+            - Settings > Backup & Restore
+            - Restore
+            - Select file `Rethink_*.rbk`
+
+        4. ### Retro Music
+
+            - <a href="https://play.google.com/store/apps/details?id=code.name.monkey.retromusic">Install Retro Music<Icon name="google-play-icon" /></a>
+            - Settings > Backup & Restore
+            - Restore
+            - Select file `*_Retro Music_*.rmbak`
+
+        5. ### RiPlay
+
+            - <a href="https://github.com/fast4x/RiPlay/releases">Install RiPlay <Icon name="github-icon" /></a>
+            - Settings > Backup & Restore
+            - Restore
+            - Select file `riplay_*.db`
+
+        </Steps>
+
+</Steps>

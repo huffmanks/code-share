@@ -3,6 +3,8 @@ import type { CollectionEntry } from "astro:content";
 export type Snippet = CollectionEntry<"snippets">;
 export type Cheatsheet = CollectionEntry<"cheatsheets">;
 
+export type IconName = "github-icon" | "linkedin-icon" | "huffmanks-icon" | "google-play-icon";
+
 export type Fragment = {
   filename: string;
   label: string;

@@ -1,8 +1,12 @@
 ---
+import Icon from "@/components/icon.astro";
+import type { IconName } from "@/types";
+
 type Props = {
   references: {
     href: string;
     label: string;
+    icon?: IconName;
   }[];
 };
 
@@ -14,7 +18,7 @@ const { references } = Astro.props;
     references.map((ref) => (
       <li>
         <a class="link" href={ref.href} target="_blank" rel="noopener">
-          {ref.label}
+          {ref.label} {ref?.icon && <Icon name={ref.icon} />}
         </a>
       </li>
     ))
@@ -24,6 +28,9 @@ const { references } = Astro.props;
 <style is:inline>
   .sl-container .sl-markdown-content a:not(:where(.not-content .link)) {
     color: var(--sl-color-text-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
   }
 
   .sl-container .sl-markdown-content a:is(:hover, :focus-visible):not(:where(.not-content .link)) {
