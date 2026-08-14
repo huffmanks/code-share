@@ -3,6 +3,21 @@ title: "pdf"
 description: "A quick reference guide covering PDF techniques and repeatable workflows."
 updatedAt: "2026-05-06"
 groups:
+  - title: "Reduce PDF file sizes"
+    description: "Reduce PDF file size while balancing image quality and document fidelity."
+    items:
+      - label: "Compress with Ghostscript"
+        description: "Compress a PDF using Ghostscript while preserving the original color space."
+        code: |
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dPDFSETTINGS=/ebook -dColorConversionStrategy=/LeaveColorUnchanged -dDownsampleColorImages=true -dColorImageResolution=150 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=compressed.pdf input.pdf
+        codeLang: "sh"
+        comment: "-dColorImageResolution=(72 | 96 | 150 | 300)"
+      - label: "Compress with JPEG conversion"
+        description: "Convert PDF pages to JPEG images and rebuild them into a smaller PDF."
+        code: |
+          pdftoppm -r 150 -jpeg -jpegopt quality=90 input.pdf page && img2pdf page-*.jpg -o compressed.pdf && rm page-*.jpg
+        codeLang: "sh"
+        comment: "Adjust quality as necessary (1-100)"
   - title: "Flatten high-quality print PDFs"
     description: "Workflow for rasterizing complex vector documents to ensure instant loading and maximum compatibility without sacrificing visual clarity."
     items:
