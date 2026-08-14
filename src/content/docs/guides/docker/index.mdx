@@ -4,13 +4,17 @@ description: Installing Docker on a Debian-based Linux system is a straightforwa
 lastUpdated: 2025-07-26 16:40:50
 references:
   - href: https://docs.docker.com/desktop/setup/install/mac-install
-    label: Docker Desktop (macOS)
+    label: Docker Desktop
+    icon: "apple-icon"
   - href: https://docs.docker.com/desktop/setup/install/windows-install
-    label: Docker Desktop (Windows)
+    label: Docker Desktop
+    icon: "windows-icon"
   - href: https://docs.docker.com/engine/install/debian
-    label: Docker Engine (Debian)
+    label: Docker Engine
+    icon: "debian-icon"
   - href: https://docs.docker.com/engine/install/ubuntu
-    label: Docker Engine (Ubuntu)
+    label: Docker Engine
+    icon: "ubuntu-icon"
 tableOfContents:
   maxHeadingLevel: 4
 ---
@@ -80,7 +84,12 @@ For Linux, Docker Desktop is not required. Instead, you can install the Docker E
 
    Add the official Docker GPG key to your system’s keyring. This ensures that packages you download are verified as authentic and from the trusted Docker repositories.
 
-   <Code lang="sh" wrap preserveIndent code={`sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc`} />
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc`}
+   />
 
 4. #### Change file permission
 

@@ -3,7 +3,45 @@ import type { CollectionEntry } from "astro:content";
 export type Snippet = CollectionEntry<"snippets">;
 export type Cheatsheet = CollectionEntry<"cheatsheets">;
 
-export type IconName = "github-icon" | "linkedin-icon" | "huffmanks-icon" | "google-play-icon";
+export type IconName =
+  | "github-icon"
+  | "linkedin-icon"
+  | "huffmanks-icon"
+  | "google-play-icon"
+  | "debian-icon"
+  | "ubuntu-icon"
+  | "docker-icon"
+  | "windows-icon"
+  | "apple-icon"
+  | "codeberg-icon"
+  | "openvpn-icon"
+  | "sonarr-icon"
+  | "radarr-icon"
+  | "tailscale-icon"
+  | "linux-server-icon"
+  | "nextcloud-icon"
+  | "convex-icon"
+  | "jellyfin-icon"
+  | "immich-icon"
+  | "ntfy-icon"
+  | "ollama-icon"
+  | "pangolin-icon"
+  | "gitlab-icon"
+  | "home-assistant-icon"
+  | "plex-icon"
+  | "pipx-icon"
+  | "ffmpeg-icon"
+  | "homebrew-icon"
+  | "pnpm-icon"
+  | "nvm-icon"
+  | "xcode-icon"
+  | "bat-icon"
+  | "arcane-icon"
+  | "forgejo-icon"
+  | "gitea-icon"
+  | "mealie-icon"
+  | "opencloud-icon"
+  | "paperless-icon";
 
 export type Fragment = {
   filename: string;

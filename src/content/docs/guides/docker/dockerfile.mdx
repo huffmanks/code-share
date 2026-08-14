@@ -4,11 +4,14 @@ description: A Dockerfile is a script that contains a set of instructions to aut
 lastUpdated: 2025-08-18 11:08:59
 references:
   - href: https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile
-    label: Dockerfile (Docker docs)
+    label: Dockerfile
+    icon: "docker-icon"
   - href: https://docs.docker.com/build/building/multi-platform
-    label: buildx (Docker docs)
+    label: buildx
+    icon: "docker-icon"
   - href: https://github.com/slimtoolkit/slim
-    label: Slim (GitHub repo)
+    label: Slim
+    icon: "github-icon"
 ---
 
 import ParagraphWithLink from "@/components/guides/paragraph-with-link.astro";
@@ -231,12 +234,10 @@ CMD ["node", "server.js"]
 ```
 
 1. ### Multi-stage build
-
    - The first stage (`builder`) installs dependencies and builds the app.
    - The final stage only includes the necessary files, reducing image size.
 
 2. ### Dependency caching
-
    - `npm ci --only=production` ensures reproducibility and avoids unnecessary package installations.
    - Copying `package.json` before other files allows Docker to cache dependencies efficiently.
 

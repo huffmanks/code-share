@@ -4,9 +4,11 @@ description: "Pangolin is a self-hosted tunneled reverse proxy server with ident
 lastUpdated: 2026-04-10 16:12:53
 references:
   - href: https://github.com/fosrl/pangolin
-    label: GitHub repo
+    label: GitHub
+    icon: "github-icon"
   - href: https://docs.fossorial.io/overview
     label: Docs
+    icon: "pangolin-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
@@ -86,7 +88,9 @@ nano ./traefik/dynamic_config.yml
 
 ## Cloudflare DNS API token
 
-<Aside type="caution">Make sure your API token has the permissions Zone/Zone/Read and Zone/DNS/Edit and make sure it applies to all zones.</Aside>
+<Aside type="caution">
+  Make sure your API token has the permissions Zone/Zone/Read and Zone/DNS/Edit and make sure it applies to all zones.
+</Aside>
 
 ## .env
 

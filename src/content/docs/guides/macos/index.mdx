@@ -6,26 +6,36 @@ prev: false
 references:
   - href: https://developer.apple.com/download/all/?q=xcode%20command%20line%20tools
     label: Xcode command line tools
+    icon: "xcode-icon"
   - href: https://github.com/nvm-sh/nvm
     label: nvm
+    icon: "nvm-icon"
   - href: https://pnpm.io/installation
     label: pnpm
+    icon: "pnpm-icon"
   - href: https://brew.sh
     label: Homebrew
+    icon: "homebrew-icon"
   - href: https://github.com/sharkdp/bat
     label: bat
+    icon: "bat-icon"
   - href: https://github.com/FFmpeg/FFmpeg
     label: ffmpeg
+    icon: "ffmpeg-icon"
   - href: https://github.com/cli/cli
     label: gh
+    icon: "github-icon"
   - href: https://github.com/jqlang/jq
     label: jq
   - href: https://github.com/pypa/pipx
     label: pipx
+    icon: "pipx-icon"
   - href: https://github.com/zsh-users/zsh-autosuggestions
     label: zsh-autosuggestions
+    icon: "github-icon"
   - href: https://github.com/zsh-users/zsh-syntax-highlighting
     label: zsh-syntax-highlighting
+    icon: "github-icon"
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
@@ -49,14 +59,18 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 2. ## nvm
 
-   <Code lang="sh" wrap preserveIndent code={`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash`} />
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash`}
+   />
 
 3. ## pnpm
 
    <Code lang="sh" wrap preserveIndent code={`curl -fsSL https://get.pnpm.io/install.sh | sh -`} />
 
 4. ## Download apps
-
    - [Chrome](https://www.google.com/chrome/dr/download)
    - [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
    - [VS Code](https://code.visualstudio.com/download)
@@ -67,37 +81,53 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
    ### Install
 
-   <Code lang="sh" wrap preserveIndent code={`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`} />
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`}
+   />
 
    ### Add packages
 
-   <Code lang="sh" wrap preserveIndent code={`brew install ffmpeg jq bat gh pipx zsh-autosuggestions zsh-syntax-highlighting`} />
-
-   - **ffmpeg:** A complete, cross-platform solution to record, convert and stream audio and video.
-
-   - **jq:** A lightweight and powerful command-line JSON processor for parsing, filtering and transforming JSON data.
-
-   - **bat:** a `cat` clone with syntax highlighting, Git integration and other useful features.
-
-   - **gh:** official GitHub CLI tool for managing repositories, pull requests, issues and more from the terminal.
-
-   - **pipx:** tool to install and run Python applications in isolated environments, keeping them separate from system-wide Python packages.
-
-   - **zsh-autosuggestions:** zsh plugin that provides command-line suggestions based on history and completions.
-
-   - **zsh-syntax-highlighting:** zsh plugin that adds syntax highlighting to the terminal, improving readability and reducing mistakes.
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`brew install ffmpeg jq bat gh pipx zsh-autosuggestions zsh-syntax-highlighting`}
+   />
+   - **ffmpeg:** A complete, cross-platform solution to record, convert and stream audio and video. - **jq:** A
+   lightweight and powerful command-line JSON processor for parsing, filtering and transforming JSON data. - **bat:** a
+   `cat` clone with syntax highlighting, Git integration and other useful features. - **gh:** official GitHub CLI tool
+   for managing repositories, pull requests, issues and more from the terminal. - **pipx:** tool to install and run
+   Python applications in isolated environments, keeping them separate from system-wide Python packages. -
+   **zsh-autosuggestions:** zsh plugin that provides command-line suggestions based on history and completions. -
+   **zsh-syntax-highlighting:** zsh plugin that adds syntax highlighting to the terminal, improving readability and
+   reducing mistakes.
 
 6. ## Update git and shell configs
 
    ### Quick install
 
-   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh)" />
+   <Code
+     lang="sh"
+     wrap
+     code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh)"
+   />
 
    ### Custom install (with exports)
 
-   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports all" />
+   <Code
+     lang="sh"
+     wrap
+     code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports all"
+   />
 
-   <Code lang="sh" wrap code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports docker nvm pnpm" />
+   <Code
+     lang="sh"
+     wrap
+     code="bash <(curl -fsSL https://raw.githubusercontent.com/huffmanks/config-stash/main/scripts/get-dotfiles.sh) -- --exports docker nvm pnpm"
+   />
 
    ### Config options
 
@@ -115,10 +145,9 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 7. ## Compile shell
 
-   <Code lang="sh" wrap preserveIndent code="zcompile ~/.zshrc && zcompile ~/.zprofile && exec zsh" />
-
-   - `zcompile` precompiles `.zshrc` and `.zprofile` into a binary format `.zshrc.zwc` and `.zprofile.zwc`.
-   - `exec zsh` fully restarts the shell session and clears any temporary shell variables or functions.
-   - When zsh starts, it loads the `.zwc` files instead of parsing the original files, reducing startup time.
+   <Code lang="sh" wrap preserveIndent code="zcompile ~/.zshrc && zcompile ~/.zprofile && exec zsh" />- `zcompile`
+   precompiles `.zshrc` and `.zprofile` into a binary format `.zshrc.zwc` and `.zprofile.zwc`. - `exec zsh` fully
+   restarts the shell session and clears any temporary shell variables or functions. - When zsh starts, it loads the
+   `.zwc` files instead of parsing the original files, reducing startup time.
 
 </Steps>
