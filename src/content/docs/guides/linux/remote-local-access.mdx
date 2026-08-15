@@ -18,8 +18,10 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import { Code, Steps } from "@astrojs/starlight/components";
-import yaml from "/src/files/compose/remote-local-access.yml?raw";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+import composeYml from "/src/files/compose/remote-local-access.yml?raw";
+import composeWithSyncYml from "/src/files/compose/remote-local-access_sync.yml?raw";
+import npmSyncConfigYml from "/src/files/config/npm-sync/config.yml?raw";
 import env from "/src/files/env/remote-local-access.env?raw";
 
 export const serverIp = `{{SERVER_IP_VAR}}`;
@@ -73,21 +75,20 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 
                 #### Network performance
 
-                <Code lang="sh" code={ethtool} />
+                <Code lang="sh"  wrap preserveIndent code={ethtool} />
 
                 #### Persist on reboot
 
-                <Code lang="sh" code={networkdDispatcher} />
+                <Code lang="sh"  wrap preserveIndent code={networkdDispatcher} />
 
                 #### Enable IP forwarding
 
-                <Code lang="sh" code={ipForwarding} />
+                <Code lang="sh"  wrap preserveIndent code={ipForwarding} />
 
         3. ### Start
 
-                ```sh
-                sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=false --advertise-exit-node
-                ```
+                <Code lang="sh" wrap preserveIndent code={`sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=false --advertise-exit-node --accept-routes=false`} />
+
 
         4. ### Admin console
 
@@ -120,7 +121,29 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
                 nano compose.yml
                 ```
 
-                <Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+                <Tabs syncKey="adguard-npm-compose">
+
+                        <TabItem label="Standalone">
+
+                                <Code lang="yml" title="compose.yml" wrap preserveIndent code={composeYml} />
+
+                        </TabItem>
+
+                        <TabItem label="With sync">
+
+                                <Code lang="yml" title="compose.yml" wrap preserveIndent code={composeWithSyncYml} />
+
+                                ```sh
+                                nano config.yml
+                                ```
+
+                                <Code lang="yml" title="config.yml" wrap preserveIndent code={npmSyncConfigYml} />
+
+                        </TabItem>
+
+                </Tabs>
+
+                <br />
 
         3. ### .env
 

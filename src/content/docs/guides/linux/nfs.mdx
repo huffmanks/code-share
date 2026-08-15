@@ -26,7 +26,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Define the directory to share and specify client access in the NFS exports file.
 
-    <Code lang="sh" code={`echo "{{NFS_SHARE_VAR}} {{CLIENT_IP_VAR}}(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports`} />
+    <Code
+      lang="sh"
+      wrap
+      code={`echo "{{NFS_SHARE_VAR}} {{CLIENT_IP_VAR}}(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports`}
+    />
 
 3.  ### Apply export
 
@@ -62,7 +66,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Mount the shared directory manually from the server to the local mount point.
 
-    <Code lang="sh" code={`sudo mount {{SERVER_IP_VAR}}:{{NFS_SHARE_VAR}} {{NFS_MOUNT_VAR}}`} />
+    <Code lang="sh" wrap code={`sudo mount {{SERVER_IP_VAR}}:{{NFS_SHARE_VAR}} {{NFS_MOUNT_VAR}}`} />
 
 4.  ### Automount
 
@@ -70,7 +74,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" code={`sudo nano /etc/fstab`} />
 
-    <Code lang="sh" code={`{SERVER_IP_VAR}:{{NFS_SHARE_VAR}}	{{NFS_MOUNT_VAR}}	nfs	noauto,x-systemd.automount,_netdev,nofail,timeo=5,retrans=2	0	0`} />
+    <Code
+      lang="sh"
+      wrap
+      code={`{SERVER_IP_VAR}:{{NFS_SHARE_VAR}}	{{NFS_MOUNT_VAR}}	nfs	noauto,x-systemd.automount,_netdev,nofail,timeo=5,retrans=2	0	0`}
+    />
 
 5.  ### Unmount
 

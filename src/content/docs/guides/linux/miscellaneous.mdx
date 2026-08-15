@@ -6,7 +6,7 @@ tableOfContents:
   maxHeadingLevel: 5
 ---
 
-import { Code, Steps } from "@astrojs/starlight/components";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 export const logindConf = `
 HandleSuspendKey=ignore
@@ -22,6 +22,14 @@ AllowSuspendThenHibernate=no
 AllowHybridSleep=no
 `;
 
+export const systemdResolvedConfig = `
+[Resolve]
+DNS=1.1.1.1 8.8.8.8
+FallbackDNS=1.0.0.1 8.8.4.4
+Domains=~.
+DNSStubListener=no
+`;
+
 export const netplanConfig = `
 network:
   version: 2
@@ -32,16 +40,22 @@ network:
       optional: true
       dhcp4-overrides:
         route-metric: 100
+        use-dns: false
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
   wifis:
     wlan0:
       dhcp4: true
       optional: true
       dhcp4-overrides:
         route-metric: 600
+        use-dns: false
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
       access-points:
         "Your_SSID_Name":
           password: "Your_Password"
-`
+`;
 
 export const wolService = `
 [Unit]
@@ -65,47 +79,51 @@ This ensures your laptop stays awake with the lid closed, maintains a stable net
 
 <Steps>
 
-1. ### Lid and sleep configuration
+1.  ### Lid and sleep configuration
 
-   These steps prevent the system from suspending or shutting down when the lid is closed or the power button is pressed.
+    These steps prevent the system from suspending or shutting down when the lid is closed or the power button is pressed.
 
-   <Steps>
+       <Steps>
 
-   1. #### Open logind config
+          1. #### Open logind config
 
-      <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
+             <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
 
-   2. #### Update config
+          2. #### Update config
 
-      Update the following lines to `ignore` to keep the system awake.
+             Update the following lines to `ignore` to keep the system awake.
 
-      <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
+             <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
 
-   3. #### Restart logind
+          3. #### Restart logind
 
-      <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
+             <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
 
-   </Steps>
+       </Steps>
 
-2. ### Disable system-wide sleep
+2.  ### Disable system-wide sleep
 
-   To prevent the kernel from attempting to sleep even if triggered by software, create a “no-sleep” override.
+    To prevent the kernel from attempting to sleep even if triggered by software, create a “no-sleep” override.
 
-   <Steps>
+       <Steps>
 
-   1. #### Create nosuspend config
+          1. #### Create nosuspend config
 
-      <Code lang="sh" code={`sudo mkdir -p /etc/systemd/sleep.conf.d/ && sudo nano /etc/systemd/sleep.conf.d/nosuspend.conf`} />
+             <Code
+             lang="sh"
+             wrap
+             code={`sudo mkdir -p /etc/systemd/sleep.conf.d/ && sudo nano /etc/systemd/sleep.conf.d/nosuspend.conf`}
+             />
 
-   2. #### Add config
+          2. #### Add config
 
-      <Code lang="sh" title="/etc/systemd/sleep.conf.d/nosuspend.conf" code={noSleepConfig} />
+             <Code lang="sh" wrap title="/etc/systemd/sleep.conf.d/nosuspend.conf" code={noSleepConfig} />
 
-   3. #### Reload daemon
+          3. #### Reload daemon
 
-      <Code lang="sh" code={`sudo systemctl daemon-reload`} />
+             <Code lang="sh" code={`sudo systemctl daemon-reload`} />
 
-   </Steps>
+       </Steps>
 
 </Steps>
 
@@ -117,47 +135,96 @@ This process configures your server to use Netplan and systemd-resolved to manag
 
 <Steps>
 
-1. ### Install network driver (if applicable)
+1.  ### Install network driver (if applicable)
 
-   <Code lang="sh" code={`lspci -nnk | grep -iA 3 net`} />
+    <Code lang="sh" code={`lspci -nnk | grep -iA 3 net`} />
 
-   If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
+    If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
 
-   <Code lang="sh" code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`} />
+    <Code
+      lang="sh"
+      wrap
+      code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`}
+    />
 
-   For changes to take effect, reboot the system.
+    For changes to take effect, reboot the system.
 
-   <Code lang="sh" code={`sudo reboot`} />
+    <Code lang="sh" code={`sudo reboot`} />
 
-   Verify the driver is active by running `ip link`. A wireless interface, typically `wlan0`, should now appear in the list.
+    Verify the driver is active by running `ip link`. A wireless interface, typically `wlan0`, should now appear in the list.
 
-2. ### Install and enable wpa_supplicant
+2.  ### Install and enable wpa_supplicant
 
-   <Code lang="sh" code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`} />
+    <Code lang="sh" wrap code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`} />
 
-3. ### Create symlink to systemd-resolved
+3.  ### Create symlink to systemd-resolved
 
-   <Code lang="sh" code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
+    <Code lang="sh" wrap code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
 
-4. ### Open Netplan config
+4.  ### Network configuration
 
-   <Code lang="sh" code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+      <Tabs syncKey="network-config">
 
-5. ### Update config
+         <TabItem label="systemd-resolved">
 
-   - Replace `enp3s0` with your ethernet ID from `ip link`.
-   - Replace `wlan0` with your Wi-Fi ID from `ip link`.
-   - Replace `Your_SSID_Name` and `Your_Password` under access-points.
+            #### systemd-resolved
 
-   <Code lang="yaml" title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
+               <Steps>
 
-6. ### Apply the config
+               1. Open netplan config
 
-   <Code lang="sh" code={`sudo netplan apply`} />
+                     <Code lang="sh" wrap code={`sudo nano /etc/systemd/resolved.conf.d/10-override-dns.conf`} />
 
-7. ### Restart systemd-resolved
+               2.  Update config
 
-   <Code lang="sh" code={`sudo systemctl restart systemd-resolved`} />
+                     <Code lang="yaml" wrap preserveIndent title="/etc/systemd/resolved.conf.d/10-override-dns.conf" code={systemdResolvedConfig} />
+
+               </Steps>
+
+         </TabItem>
+
+         <TabItem label="netplan">
+
+            #### netplan
+
+               <Steps>
+
+               1. Open netplan config
+
+                     <Code lang="sh" wrap code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+
+               2.  Update config
+
+                     - Replace `enp3s0` with your ethernet ID from `ip link`.
+                     - Replace `wlan0` with your Wi-Fi ID from `ip link`.
+                     - Replace `Your_SSID_Name` and `Your_Password` under access-points.
+
+                     <Code lang="yaml" wrap preserveIndent title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
+
+               3.  Apply the config
+
+                     <Code lang="sh" code={`sudo netplan apply`} />
+
+
+               </Steps>
+
+         </TabItem>
+
+      </Tabs>
+
+    <br />
+
+5.  ### Restart systemd-resolved
+
+    <Code lang="sh" code={`sudo systemctl restart systemd-resolved`} />
+
+6.  ### Enable systemd-networkd-wait-online
+
+    <Code lang="sh" wrap code={`sudo systemctl enable systemd-networkd-wait-online.service`} />
+
+7.  ### Reboot the system
+
+    <Code lang="sh" code={`sudo reboot`} />
 
 </Steps>
 
@@ -169,17 +236,17 @@ This process extends the logical volume and resizes the filesystem to utilize al
 
 <Steps>
 
-1. ### Extend the logical volume
+1.  ### Extend the logical volume
 
-   <Code lang="sh" code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`} />
+    <Code lang="sh" code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`} />
 
-2. ### Resize the filesystem
+2.  ### Resize the filesystem
 
-   <Code lang="sh" code={`sudo resize2fs /dev/ubuntu-vg/ubuntu-lv`} />
+    <Code lang="sh" code={`sudo resize2fs /dev/ubuntu-vg/ubuntu-lv`} />
 
-3. ### Verify
+3.  ### Verify
 
-   <Code lang="sh" code={`df -h /`} />
+    <Code lang="sh" code={`df -h /`} />
 
 </Steps>
 
@@ -191,46 +258,46 @@ If your computer supports Wake-on-LAN, you can send a “magic packet” to wake
 
 <Steps>
 
-1. ### Identify network interface
+1.  ### Identify network interface
 
-   Find the name of your Ethernet adapter. Look for names starting with `e` (e.g., `eth0` or `enp3s0`).
+    Find the name of your Ethernet adapter. Look for names starting with `e` (e.g., `eth0` or `enp3s0`).
 
-   <Code lang="sh" code={`ip link show`} />
+    <Code lang="sh" code={`ip link show`} />
 
-2. ### Install ethtool
+2.  ### Install ethtool
 
-   Install the utility required to manage network hardware settings.
+    Install the utility required to manage network hardware settings.
 
-   <Code lang="sh" code={`sudo apt update && sudo apt install ethtool -y`} />
+    <Code lang="sh" code={`sudo apt update && sudo apt install ethtool -y`} />
 
-3. ### Check support
+3.  ### Check support
 
-   Verify if your hardware supports the magic packet. Look for `g` in the “Supports Wake-on” line.
+    Verify if your hardware supports the magic packet. Look for `g` in the “Supports Wake-on” line.
 
-   <Code lang="sh" code={`sudo ethtool $INTERFACE_NAME`} />
+    <Code lang="sh" code={`sudo ethtool $INTERFACE_NAME`} />
 
-4. ### Enable WOL (temporary)
+4.  ### Enable WOL (temporary)
 
-   Enable WOL manually to test the configuration. This setting will reset after a reboot.
+    Enable WOL manually to test the configuration. This setting will reset after a reboot.
 
-   <Code lang="sh" code={`sudo ethtool -s $INTERFACE_NAME wol g`} />
+    <Code lang="sh" code={`sudo ethtool -s $INTERFACE_NAME wol g`} />
 
-5. ### Persist with systemd
+5.  ### Persist with systemd
 
-   Create a service to ensure WOL is re-enabled automatically on every boot.
+    Create a service to ensure WOL is re-enabled automatically on every boot.
 
-   <Code lang="sh" title="/etc/systemd/system/wol.service" code={wolService} />
+    <Code lang="sh" title="/etc/systemd/system/wol.service" code={wolService} />
 
-6. ### Enable the service
+6.  ### Enable the service
 
-   Reload systemd and enable the new service.
+    Reload systemd and enable the new service.
 
-   <Code lang="sh" code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
+    <Code lang="sh" wrap code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
 
-7. ### Send Wake-up packet
+7.  ### Send Wake-up packet
 
-   From another device on the network, trigger the boot sequence using the target’s MAC address.
+    From another device on the network, trigger the boot sequence using the target’s MAC address.
 
-   <Code lang="sh" code={`wakeonlan $MAC_ADDRESS`} />
+    <Code lang="sh" code={`wakeonlan $MAC_ADDRESS`} />
 
 </Steps>

@@ -36,90 +36,141 @@ Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\t
 
 <Steps>
 
-1. ## Update and upgrade
+1.  ## Update and upgrade
 
-   Fetch the latest package lists and apply security patches.
+    Fetch the latest package lists and apply security patches.
 
-   <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
+    <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
 
-2. ## Reboot
+2.  ## Reboot
 
-   Apply kernel updates and restart services to ensure a clean state.
+    Apply kernel updates and restart services to ensure a clean state.
 
-   <Code lang="sh" code={`sudo reboot`} />
+    <Code lang="sh" code={`sudo reboot`} />
 
-3. ## SSH key management (client)
+3.  ## SSH key management (client)
 
-   Generate unique keys for each device to improve security and auditability.
+    Generate unique keys for each device to improve security and auditability.
 
-   <Steps>
+       <Steps>
 
-   1. ### Generate named key
+          1. ### Generate named key
 
-      Instead of the default name, label the key after the hostname (e.g., `id_hp-laptop` or `id_macbook-pro`).
+             Instead of the default name, label the key after the hostname (e.g., `id_hp-laptop` or `id_macbook-pro`).
 
-      <Code lang="sh" code={`ssh-keygen -t ed25519 -f ~/.ssh/id_{{HOSTNAME_VAR}}`} />
+             <Code lang="sh" wrap code={`ssh-keygen -t ed25519 -f ~/.ssh/id_{{HOSTNAME_VAR}}`} />
 
-   2. ### Copy key to server
+          2. ### Copy key to server
 
-      Use `ssh-copy-id` to automatically handle directory creation and permissions on the remote server.
+             Use `ssh-copy-id` to automatically handle directory creation and permissions on the remote server.
 
-      <Code lang="sh" code={`ssh-copy-id -i ~/.ssh/id_{{HOSTNAME_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}`} />
+             <Code lang="sh" wrap code={`ssh-copy-id -i ~/.ssh/id_{{HOSTNAME_VAR}} {{USERNAME_VAR}}@{{SERVER_IP_VAR}}`} />
 
-   </Steps>
+       </Steps>
 
-4. ## Server security (host)
+4.  ## Server security (host)
 
-   Once your key is verified, disable password logins to prevent brute-force attacks.
+    Once your key is verified, disable password logins to prevent brute-force attacks.
 
-   <Steps>
+       <Steps>
 
-   1. ### Install SSH server
+          1. ### Install SSH server
 
-      Ensure the OpenSSH server is installed and active.
+             Ensure the OpenSSH server is installed and active.
 
-      <Code lang="sh" code={`sudo apt install openssh-server -y && sudo systemctl enable --now ssh`} />
+             <Code lang="sh" wrap code={`sudo apt install openssh-server -y && sudo systemctl enable --now ssh`} />
 
-   2. ### Configure SSH daemon
+          2. ### Configure SSH daemon
 
-      Edit the server configuration to enforce key-based authentication.
+             Edit the server configuration to enforce key-based authentication.
 
-      <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
+             <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
 
-      <Code lang="sh" title="/etc/ssh/sshd_config" code={sshdConfig} />
+             <Code lang="sh" title="/etc/ssh/sshd_config" code={sshdConfig} />
 
-   3. ### Verify and restart
+          3. ### Verify and restart
 
-      Always check the status before exiting to ensure you aren’t locked out.
+             Always check the status before exiting to ensure you aren’t locked out.
 
-      <Code lang="sh" code={`sudo systemctl restart ssh && systemctl status ssh`} />
+             <Code lang="sh" wrap code={`sudo systemctl restart ssh && systemctl status ssh`} />
 
-   </Steps>
+       </Steps>
 
-5. ## SSH client (local)
+5.  ## SSH client (local)
 
-   Simplify your workflow by creating aliases. This allows you to type `ssh $ALIAS_NAME` instead of remembering IPs and key paths.
+    Simplify your workflow by creating aliases. This allows you to type `ssh $ALIAS_NAME` instead of remembering IPs and key paths.
 
-   <Steps>
+       <Steps>
 
-   1. ### Edit config
+          1. ### Edit config
 
-      Open (or create) the SSH config file on your **local** machine.
+             Open (or create) the SSH config file on your **local** machine.
 
-      <Code lang="sh" code={`nano ~/.ssh/config`} />
+             <Code lang="sh" code={`nano ~/.ssh/config`} />
 
-   2. ### Add host alias
+          2. ### Add host alias
 
-      Define your server details. Now you can connect using just the alias name.
+             Define your server details. Now you can connect using just the alias name.
 
-      <Code lang="sh" title="~/.ssh/config" code={sshConfig} />
+             <Code lang="sh" title="~/.ssh/config" code={sshConfig} />
 
-   3. ### Connect via alias
+          3. ### Connect via alias
 
-      Test the new configuration.
+             Test the new configuration.
 
-      <Code lang="sh" code={`ssh {{HOSTNAME_VAR}}`} />
+             <Code lang="sh" code={`ssh {{HOSTNAME_VAR}}`} />
 
-   </Steps>
+       </Steps>
+
+6.  ## TODO (optional)
+
+    TODO
+
+       <Steps>
+
+          1. ### SSH serivce
+
+             Ensure SSH is enabled as a system service.
+
+             <Code lang="sh" code={`sudo systemctl enable ssh --now`} />
+
+          2. ### Global keys directory
+
+             Create a global keys directory.
+
+             <Code lang="sh" code={`sudo mkdir -p /etc/ssh/authorized_keys`} />
+
+          3. ### Copy authorized keys
+
+             Copy your authorized keys file and set strict permissions.
+
+             <Code lang="sh" wrap code={`sudo cp ~/.ssh/authorized_keys /etc/ssh/authorized_keys/$USER`} />
+             <Code lang="sh" wrap code={`sudo chown root:root /etc/ssh/authorized_keys/$USER`} />
+             <Code lang="sh" wrap code={`sudo chmod 644 /etc/ssh/authorized_keys/$USER`} />
+
+          4. ### Edit config
+
+             Open (or create) the global SSH config file on your **local** machine.
+
+             <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
+
+          5. ### Add AuthorizedKeysFile
+
+             Add or update this line in config.
+
+             <Code
+             lang="sh"
+             wrap
+             title="/etc/ssh/sshd_config"
+             code={`AuthorizedKeysFile /etc/ssh/authorized_keys/%u .ssh/authorized_keys`}
+             />
+
+          6. ### Restart SSH
+
+             Test configuration and restart the SSH service.
+
+             <Code lang="sh" wrap code={`sudo sshd -t && sudo systemctl restart ssh`} />
+
+       </Steps>
 
 </Steps>
