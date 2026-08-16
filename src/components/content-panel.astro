@@ -18,6 +18,7 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{{SERVER_IP_VAR}}/g, settings.serverIpAddress)
       .replace(/{SERVER_IP_VAR}/g, settings.serverIpAddress)
       .replace(/{{CLIENT_IP_VAR}}/g, settings.clientIpAddress)
+      .replace(/{{VIRTUAL_IP_VAR}}/g, settings.virtualIpAddress)
       .replace(/{{HOSTNAME_VAR}}/g, settings.hostname)
       .replace(/{{TIME_ZONE_VAR}}/g, settings.timeZone)
       .replace(/{{EXTERNAL_HDD_UUID_VAR}}/g, settings.externalHddUuid)

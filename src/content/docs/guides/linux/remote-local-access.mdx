@@ -21,10 +21,10 @@ import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 import composeYml from "/src/files/compose/remote-local-access.yml?raw";
 import composeWithSyncYml from "/src/files/compose/remote-local-access_sync.yml?raw";
-import npmSyncConfigYml from "/src/files/config/npm-sync/config.yml?raw";
 import env from "/src/files/env/remote-local-access.env?raw";
 
 export const serverIp = `{{SERVER_IP_VAR}}`;
+export const virtualIp = `{{VIRTUAL_IP_VAR}}`;
 export const npmServerLink = `http://${serverIp}:81`;
 export const adguardSetupLink = `http://${serverIp}:3000`;
 export const adguardAdminLink = `http://${serverIp}:8080`;
@@ -134,10 +134,10 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
                                 <Code lang="yml" title="compose.yml" wrap preserveIndent code={composeWithSyncYml} />
 
                                 ```sh
-                                nano config.yml
+                                nano .env
                                 ```
 
-                                <Code lang="yml" title="config.yml" wrap preserveIndent code={npmSyncConfigYml} />
+                                <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
                         </TabItem>
 
@@ -145,15 +145,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 
                 <br />
 
-        3. ### .env
-
-                ```sh
-                nano .env
-                ```
-
-                <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
-
-        4. ### Fix port conflict (53)
+        3. ### Fix port conflict (53)
 
                 #### Disable the stub listener
 
@@ -169,7 +161,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
                 sudo systemctl restart systemd-resolved
                 ```
 
-        5. ### Start container
+        4. ### Start container
 
                 ```sh
                 docker compose up -d
@@ -207,7 +199,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
                 - Go to Filters > **DNS Rewrites**.
                 - Click **Add DNS rewrite**.
                 - **Domain name:** `*.lan.your-domain.tld`.
-                - **IP address:** Enter your device IP <code>{serverIp}</code>.
+                - **IP address:** Enter your device IP <code>{serverIp}</code> or virtual IP <code>{virtualIp}</code>.
 
         3. ### Blocklists (optional)
 
@@ -295,7 +287,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 
         Update the **Primary DNS**, often located under LAN, DHCP or DNS Settings.
 
-        - **Primary DNS:** <code>{serverIp}</code> *(Your device’s Local LAN IP, not the Tailscale one)*.
+        - **Primary DNS:** <code>{serverIp}</code> or <code>{virtualIp}</code> *(Your device’s Local LAN IP or virtual IP, not the Tailscale one)*.
         - **Secondary DNS:** `1.1.1.1` *(Fail-safe so your internet still works if your device is turned off)*.
 
 </Steps>

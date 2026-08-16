@@ -36,11 +36,20 @@ services:
     environment:
       - DB_SQLITE_FILE=/data/database.sqlite
 
-  npm-sync:
-    image: ghcr.io/jeffersonraimon/npm-sync:latest
-    container_name: npm-sync
+  keepalived:
+    image: osixia/keepalived:latest
+    container_name: keepalived
     restart: unless-stopped
-    volumes:
-      - ./config.yml:/app/config.yml:ro
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
     environment:
-      - TZ={{TIME_ZONE_VAR}}
+      - KEEPALIVED_STATE=MASTER # MASTER | BACKUP
+      - KEEPALIVED_INTERFACE=enp3s0 # eth0 | enp3s0 | wlan0
+      - KEEPALIVED_VIRTUAL_ROUTER_ID=51
+      - KEEPALIVED_PRIORITY=101
+      - KEEPALIVED_UNICAST_PEERS={{CLIENT_IP_VAR}} # Peers/other devices
+      - KEEPALIVED_VIRTUAL_IPS={{VIRTUAL_IP_VAR}}/24
+      - KEEPALIVED_PASSWORD=${KEEPALIVED_PASSWORD}

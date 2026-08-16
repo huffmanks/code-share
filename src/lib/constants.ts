@@ -1,6 +1,13 @@
 import type { Category, CategorySlug, SettingsForm, SettingsFormField, TimeZone } from "@/types";
 
-export const borderColorVariants = ["var(--sl-color-blue)", "var(--sl-color-red)", "var(--sl-color-green)", "var(--sl-color-orange)", "var(--sl-color-purple)", "var(--sl-color-yellow)"];
+export const borderColorVariants = [
+  "var(--sl-color-blue)",
+  "var(--sl-color-red)",
+  "var(--sl-color-green)",
+  "var(--sl-color-orange)",
+  "var(--sl-color-purple)",
+  "var(--sl-color-yellow)",
+];
 
 export const colorVariants = [
   "var(--sl-color-blue-high)",
@@ -17,6 +24,7 @@ export const defaultSettingsLocalStorage: SettingsForm = {
   username: "$USERNAME",
   serverIpAddress: "$SERVER_IP_ADDRESS",
   clientIpAddress: "$CLIENT_IP_ADDRESS",
+  virtualIpAddress: "$VIRTUAL_IP_ADDRESS",
   hostname: "$HOSTNAME",
   timeZone: "$TIME_ZONE",
   dockerPath: "/PATH_TO_DOCKER_APPS",
@@ -33,6 +41,7 @@ export const defaultSettingsFormValues: SettingsForm = {
   username: "",
   serverIpAddress: "",
   clientIpAddress: "",
+  virtualIpAddress: "",
   hostname: "",
   timeZone: "",
   dockerPath: "",
@@ -124,6 +133,15 @@ export const settingsFormFields: Array<SettingsFormField> = [
     placeholder: "192.168.100.101",
     name: "clientIpAddress",
     defaultValue: defaultSettingsLocalStorage.clientIpAddress,
+    category: "Networking" as Category,
+    categorySlug: "networking" as CategorySlug,
+  },
+  {
+    id: "2596cf1b-635d-40aa-b567-7319ff984b08",
+    label: "Virtual: IP address",
+    placeholder: "192.168.100.200",
+    name: "virtualIpAddress",
+    defaultValue: defaultSettingsLocalStorage.virtualIpAddress,
     category: "Networking" as Category,
     categorySlug: "networking" as CategorySlug,
   },

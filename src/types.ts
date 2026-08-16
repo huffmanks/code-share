@@ -77,6 +77,7 @@ export type SettingsForm = {
   username: string;
   serverIpAddress: string;
   clientIpAddress: string;
+  virtualIpAddress: string;
   hostname: string;
   timeZone: string;
   dockerPath: string;
