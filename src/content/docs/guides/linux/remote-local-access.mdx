@@ -21,6 +21,7 @@ import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 import composeYml from "/src/files/compose/remote-local-access.yml?raw";
 import composeWithSyncYml from "/src/files/compose/remote-local-access_sync.yml?raw";
+import keepalivedConfig from "/src/files/config/keepalived/keepalived.conf?raw";
 import env from "/src/files/env/remote-local-access.env?raw";
 
 export const serverIp = `{{SERVER_IP_VAR}}`;
@@ -138,6 +139,14 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
                                 ```
 
                                 <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+                               **keepalived.conf (Optional)**
+
+                                ```sh wrap
+                                mkdir -p ./keepalived && nano ./keepalived/keepalived.conf
+                                ```
+
+                                <Code lang="dotenv" title="./keepalived/keepalived.conf" wrap preserveIndent code={keepalivedConfig} />
 
                         </TabItem>
 

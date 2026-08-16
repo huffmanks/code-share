@@ -45,6 +45,9 @@ services:
       - NET_ADMIN
       - NET_BROADCAST
       - NET_RAW
+    volumes:
+      # optional
+      - ./keepalived/keepalived.conf:/etc/keepalived/keepalived.conf:ro
     environment:
       - KEEPALIVED_STATE=MASTER # MASTER | BACKUP
       - KEEPALIVED_INTERFACE=enp3s0 # eth0 | enp3s0 | wlan0
