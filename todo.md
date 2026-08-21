@@ -14,14 +14,6 @@
 
 ## Docs
 
----
-
-### Cheatsheets
-
-- [ ] Fix nano cheatsheet with alternative commands.
-
----
-
 ### Linux
 
 - [ ] Update security page with more content:
@@ -30,9 +22,37 @@
   - [ ] Regular audit tools: Recommend lynis or chkrootkit for periodic audits.
   - [ ] Strong password policy: Could include libpam-pwquality or PAM rules for local accounts.
   - [ ] Kernel / sysctl hardening: Add /etc/sysctl.d/ tweaks (disable IP forwarding, limit ICMP, protect against SYN floods, etc.).
-- [ ] Add tailscale setup
+- [ ] Move tailscale to it’s own page.
+- [ ] Move Adguard + NPM to docker apps.
+
+### macOS
+
+- [ ] Update to use stash instead of installing all of those packages and global configs.
+
+### Windows
+
+- [ ] Add setup
+- [ ](winutil)[https://github.com/christitustech/winutil] `irm https://christitus.com/win | iex`
 
 ---
+
+### Docker
+
+- Docker apps
+  - [ ] appwrite
+  - [ ] archivebox
+  - [ ] duplicati
+  - [ ] excalidraw
+  - [ ] filecloud
+  - [ ] headscale
+  - [ ] kasm
+  - [ ] postal
+  - [ ] restic and healthchecks https://nerdyarticles.com/backup-strategy-with-restic-and-healthchecks-io/
+  - [ ] rustdesk
+
+---
+
+## Cheatsheets
 
 ### Docker
 
@@ -43,16 +63,12 @@
 - [ ] Docker Swarm basics
 - [ ] Networking and custom bridge networks
 - [ ] Managing volumes and persistent storage
-- Docker apps
-  - [ ] appwrite
-  - [ ] archivebox
-  - [ ] coolify
-  - [ ] duplicati
-  - [ ] excalidraw
-  - [ ] filecloud
-  - [ ] headscale
-  - [ ] kasm
-  - [ ] ntfy
-  - [ ] postal
-  - [ ] restic and healthchecks https://nerdyarticles.com/backup-strategy-with-restic-and-healthchecks-io/
-  - [ ] rustdesk
+
+### Networking
+
+- [ ] This already partially exists inside terminal cheetsheet. Move all there.
+- [ ] Have different options for native commands on macos, linux and windows.
+
+### Git
+
+- [ ] Trim, rephrase descriptions and add comments as necessary.
