@@ -38,12 +38,14 @@ network:
   ethernets:
     enp3s0:
       dhcp4: true
+      # Remove if causing issues when rebooting
       optional: true
       dhcp4-overrides:
         route-metric: 100
         use-dns: false
       nameservers:
         addresses: [1.1.1.1, 8.8.8.8]
+  # Optional
   wifis:
     wlan0:
       dhcp4: true
