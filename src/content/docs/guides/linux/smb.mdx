@@ -56,9 +56,13 @@ export const smbConf = `
 
 5.  ### Allow through firewall (optional)
 
-    Allow access for SMB traffic.
+    Allow Samba UDP ports (NetBIOS).
 
-    <Code lang="sh" code={`sudo ufw allow samba`} />
+    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
+
+    Allow Samba TCP ports (SMB).
+
+    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
 
 </Steps>
 

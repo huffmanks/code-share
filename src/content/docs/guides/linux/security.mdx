@@ -40,14 +40,10 @@ bantime = 3600
 ignoreip = 127.0.0.1/8 ::1 192.168.100.0/24
 `
 
-export const ufwBeforeRules = `
-\# NAT table rules
-*nat
-:POSTROUTING ACCEPT [0:0]
-\# Forward traffic from Tailscale through the public interface
--A POSTROUTING -s 100.64.0.0/10 -o eth0 -j MASQUERADE
-COMMIT
-`;
+export const ufwSysctl = `
+net/ipv4/ip_forward=1
+net/ipv6/conf/default/forwarding=1
+`
 
 <p>{frontmatter.description}</p>
 
@@ -69,7 +65,14 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 3. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/apt/apt.conf.d/20auto-upgrades" wrap preserveIndent code={unattendedUpgradesConfig} />
+   <Code
+     lang="sh"
+     frame="terminal"
+     title="/etc/apt/apt.conf.d/20auto-upgrades"
+     wrap
+     preserveIndent
+     code={unattendedUpgradesConfig}
+   />
 
 4. ### Verify
 
@@ -91,7 +94,14 @@ Require users to authenticate with a password before using sudo privileges. This
 
 2. ### Modify config
 
-   <Code lang="sh" frame="terminal" title="/etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd" wrap preserveIndent code={sudoersConfig} />
+   <Code
+     lang="sh"
+     frame="terminal"
+     title="/etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd"
+     wrap
+     preserveIndent
+     code={sudoersConfig}
+   />
 
 </Steps>
 
@@ -153,69 +163,75 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 5. ### Tailscale (optional)
 
-   <br />
+      <br />
 
-     <Steps>
+      <Steps>
 
-   1. #### Allow routed traffic
+      1. #### Allow routed traffic
 
-      Required for exit node/subnet routing.
+         Required for exit node/subnet routing.
 
-      <Code lang="sh" code={`sudo ufw default allow routed`} />
+         <Code lang="sh" code={`sudo ufw route allow in on tailscale0`} />
 
-   2. #### Allow Tailscale network
+      2. #### Allow Tailscale network
 
-      Allow everything coming in from your Tailscale network.
+         Allow everything coming in from your Tailscale network.
 
-      <Code lang="sh" code={`sudo ufw allow in on tailscale0`} />
+         <Code lang="sh" code={`sudo ufw allow in on tailscale0`} />
 
-   3. #### Tailscale performance (optional)
+      3. #### Tailscale performance (optional)
 
-      Helps Tailscale make direct “peer-to-peer” connections.
+         Helps Tailscale make direct “peer-to-peer” connections.
 
-      <Code lang="sh" code={`sudo ufw allow 41641/udp`} />
+         <Code lang="sh" code={`sudo ufw allow 41641/udp`} />
 
-   4. #### Enable packet forwarding
+      4. #### Enable packet forwarding
 
-      Tell the kernel to allow packets to be routed through the server. Open the UFW sysctl configuration:
+         Tell the kernel to allow packets to be routed through the server. Open the UFW sysctl configuration:
 
-      <Code lang="sh" code={`sudo nano /etc/ufw/sysctl.conf`} />
+         <Code lang="sh" code={`sudo nano /etc/ufw/sysctl.conf`} />
 
-      Uncomment the following line:
+         Uncomment the following line:
 
-      <Code lang="sh" title="/etc/ufw/sysctl.conf" code={`net/ipv4/ip_forward=1`} />
+         <Code lang="sh" title="/etc/ufw/sysctl.conf" code={ufwSysctl} />
 
-   5. #### Add NAT masquerading
+      </Steps>
 
-      This allows Tailscale devices to “hide” behind the server’s public IP. Open the `before.rules` file:
+6. ### AdGuard Home (optional)
 
-      <Code lang="sh" code={`sudo nano /etc/ufw/before.rules`} />
+   Allow local network devices to send DNS queries to AdGuard Home.
 
-      Add this block at the very top of the file, **above** the `*filter` line (replace `eth0` with your internet interface name):
+   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SUBNET_VAR}} to any port 53`} />
 
-      <Code lang="text" title="/etc/ufw/before.rules" code={ufwBeforeRules} />
+7. ### Samba (optional)
 
-     </Steps>
+   Allow Samba UDP ports (NetBIOS).
 
-6. ### Allow web access (optional)
+   <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
 
-   Required for web server (e.g., Nginx Proxy Manager, Caddy)
+   Allow Samba TCP ports (SMB).
+
+   <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
+
+8. ### Allow web access (optional)
+
+   Required for web server (e.g., Nginx Proxy Manager, Caddy).
 
    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow 80,443/tcp`} />
 
-7. ### Add custom rule (optional)
+9. ### Add custom rule (optional)
 
    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
 
-8. ### Enable ufw
+10. ### Enable ufw
 
-   <Code lang="sh" code={`sudo ufw enable`} />
+    <Code lang="sh" code={`sudo ufw enable`} />
 
-9. ### Reload ufw
+11. ### Reload ufw
 
-   <Code lang="sh" code={`sudo ufw reload`} />
+    <Code lang="sh" code={`sudo ufw reload`} />
 
-10. ### Check status
+12. ### Check status
 
     <Code lang="sh" code={`sudo ufw status verbose`} />
 

@@ -11,6 +11,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 export const logindConf = `
 HandleSuspendKey=ignore
 HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
 HandleLidSwitchDocked=ignore
 `;
 
@@ -202,6 +203,10 @@ This process configures your server to use Netplan and systemd-resolved to manag
                      <Code lang="yaml" wrap preserveIndent title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
 
                3.  Apply the config
+
+                     <Code lang="sh" code={`sudo chown root:root /etc/netplan/50-cloud-init.yaml && sudo chmod 600 /etc/netplan/50-cloud-init.yaml`} />
+
+               4.  Apply the config
 
                      <Code lang="sh" code={`sudo netplan apply`} />
 
