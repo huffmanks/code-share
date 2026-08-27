@@ -3,9 +3,12 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     ports:
-      - 8002:80
+      - 127.0.0.1:8002:80
     volumes:
-      - ./data/:/data/
+      - ./vw-data/:/data/
     environment:
       DOMAIN: "https://vw.domain.tld" # update
+      WEBSOCKET_ENABLED: true
+      SIGNUPS_ALLOWED: false # Flip to false after creating your account
+      EXPERIMENTAL_CLIENT_FEATURE_FLAGS: ssh-key-vault-item,ssh-agent-v2
     restart: unless-stopped
