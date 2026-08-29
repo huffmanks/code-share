@@ -1,6 +1,6 @@
 services:
   linkding:
-    image: sissbruecker/linkding:latest
+    image: sissbruecker/linkding:latest-alpine
     container_name: linkding
     ports:
       - "9090:9090"
@@ -14,7 +14,7 @@ services:
       LD_SUPERUSER_PASSWORD: ${LD_SUPERUSER_PASSWORD}
     restart: unless-stopped
   echo-link:
-    image: huffmanks/echo-link:latest
+    image: huffmanks/echo-link:${ECHOLINK_RELEASE_VERSION:-latest}
     container_name: echo-link
     ports:
       - "${APP_PORT}:${APP_PORT}"
