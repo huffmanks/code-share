@@ -272,6 +272,7 @@ export const appPorts = {
   pastebox: 3006,
   pinchflat: 8945,
   plex: 32400,
+  pocketId: 1411,
   tinyMediaManagerWeb: 4000,
   tinyMediaManagerVnc: 5900,
   vaultWarden: 8002,

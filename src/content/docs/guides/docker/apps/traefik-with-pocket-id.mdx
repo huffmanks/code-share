@@ -1,14 +1,20 @@
 ---
-title: Traefik
-description: ""
+title: Traefik with Pocket ID
+description: "Traefik is a modern HTTP reverse proxy and load balancer integrated with Pocket ID for passkey-first SSO. It dynamically routes web traffic, manages SSL certificates and enforces centralized identity protection across all self-hosted services via OIDC and forward authentication."
 lastUpdated: 2026-08-31 12:48:20
 references:
   - href: https://github.com/traefik/traefik
-    label: GitHub
+    label: Traefik GitHub
     icon: "github-icon"
   - href: https://doc.traefik.io/traefik
-    label: Docs
+    label: Traefik Docs
     icon: "traefik-icon"
+  - href: https://github.com/pocket-id/pocket-id
+    label: Pocket ID GitHub
+    icon: "github-icon"
+  - href: https://pocket-id.org/docs/introduction
+    label: Pocket ID Docs
+    icon: "pocket-id-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
@@ -18,6 +24,8 @@ import dockerCompose from "/src/files/compose/traefik.yml?raw";
 import dynamicConfigYml from "/src/files/config/traefik/dynamic_config.yml?raw";
 import traefikConfigYml from "/src/files/config/traefik/traefik.yml?raw";
 import env from "/src/files/env/traefik.env?raw";
+
+export const setupUrl = `https://auth.${"{{BASE_SUB_DOMAIN_VAR}}"}/setup`;
 
 <p>{frontmatter.description}</p>
 
@@ -44,7 +52,7 @@ import env from "/src/files/env/traefik.env?raw";
 ## Make directory
 
 ```sh wrap preserveIndent
-mkdir -p {{DOCKER_PATH_VAR}}/traefik/config {{DOCKER_PATH_VAR}}/traefik/letsencrypt && cd {{DOCKER_PATH_VAR}}/traefik
+mkdir -p {{DOCKER_PATH_VAR}}/traefik/config {{DOCKER_PATH_VAR}}/traefik/letsencrypt {{DOCKER_PATH_VAR}}/traefik/pocket-id-data && cd {{DOCKER_PATH_VAR}}/traefik
 ```
 
 ## compose.yml
@@ -91,12 +99,24 @@ nano .env
 
 <Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
-## Start container
+## Start pocket-id and traefik
 
 ```sh
-docker compose up -d
+docker compose up -d pocket-id traefik
 ```
 
-## Open web ui
+## Open web setup
 
-<OpenWebUI port="8080" />
+1. Open <a href={setupUrl} target="_blank" rel="noopener">{setupUrl}</a> in your browser.
+2. Set up your admin account and register your primary Passkey.
+3. Go to **Administration** > **OIDC Clients** > **Add OIDC Client**:
+   - Name: `Traefik Forward Auth`
+   - Callback URL: `https://auth.{{BASE_SUB_DOMAIN_VAR}}/_oauth`
+   - Check `Public Client` if secret is not enforced, or copy the `Client ID` and `Client Secret`.
+4. Paste those credentials into the `PROVIDERS_OIDC_CLIENT_ID` and `PROVIDERS_OIDC_CLIENT_SECRET` environment variables in `.env`.
+
+## Start traefik-forward-auth
+
+```sh
+docker compose up -d traefik-forward-auth
+```

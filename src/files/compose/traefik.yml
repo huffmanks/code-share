@@ -5,11 +5,33 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
     environment:
       CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./config/traefik:/etc/traefik:ro
       - ./letsencrypt:/letsencrypt
+    restart: unless-stopped
+
+  pocket-id:
+    container_name: pocket-id
+    image: pocketid/pocket-id:v2
+    env_file: .env
+    ports:
+      - 1411:1411
+    volumes:
+      - "./pocket-id-data:/app/data"
+    restart: unless-stopped
+
+  traefik-forward-auth:
+    container_name: traefik-forward-auth
+    image: ghcr.io/italypaleale/traefik-forward-auth:4
+    environment:
+      DEFAULT_PROVIDER: ${DEFAULT_PROVIDER}
+      PROVIDERS_OIDC_ISSUER_URL: ${PROVIDERS_OIDC_ISSUER_URL}
+      PROVIDERS_OIDC_CLIENT_ID: ${PROVIDERS_OIDC_CLIENT_ID}
+      PROVIDERS_OIDC_CLIENT_SECRET: ${PROVIDERS_OIDC_CLIENT_SECRET}
+      SECRET: ${SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      AUTH_HOST: ${AUTH_HOST}
     restart: unless-stopped

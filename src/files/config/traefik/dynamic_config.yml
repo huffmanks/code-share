@@ -1,30 +1,35 @@
 http:
   middlewares:
-    # Uncomment if using http middleware auth
-    # dashboard-auth:
-    #   basicAuth:
-    #     users:
-    #       # Generate a hashed password for user "admin"
-    #       # htpasswd -nb admin "YourStrongPasswordHere"
-    #       - "admin:$apr1$ru8f2Awq$2x04U43iA4kSKEQ49A11x/"
+    pocket-id-auth:
+      forwardAuth:
+        address: "http://traefik-forward-auth:4181"
+        authResponseHeaders:
+          - "X-Forwarded-User"
+          - "X-Forwarded-Email"
+        trustForwardHeader: true
 
     hsts-header:
       headers:
         stsSeconds: 31536000
         stsIncludeSubdomains: true
-        stsPreload: true
 
   routers:
+    router-pocket-id:
+      rule: "Host(`auth.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-pocket-id
+      entryPoints: ["websecure"]
+
     router-dashboard:
       rule: "Host(`traefik.{{BASE_SUB_DOMAIN_VAR}}`)"
       service: api@internal
       entryPoints: ["websecure"]
-      middlewares: ["dashboard-auth"]
+      middlewares: ["pocket-id-auth"]
 
     router-adguard:
       rule: "Host(`adguard.{{BASE_SUB_DOMAIN_VAR}}`)"
       service: service-adguard
       entryPoints: ["websecure"]
+      middlewares: ["pocket-id-auth"]
 
     router-arcane:
       rule: "Host(`arcane.{{BASE_SUB_DOMAIN_VAR}}`)"
@@ -59,6 +64,11 @@ http:
       middlewares: ["hsts-header"]
 
   services:
+    service-pocket-id:
+      loadBalancer:
+        servers:
+          - url: "http://pocketid:1411"
+
     service-adguard:
       loadBalancer:
         servers:

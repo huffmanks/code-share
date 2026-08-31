@@ -35,7 +35,7 @@ certificatesResolvers:
           - "1.0.0.1:53"
 
 api:
-  insecure: true # false if using http middleware auth
+  insecure: false
   dashboard: true
 
 log:
