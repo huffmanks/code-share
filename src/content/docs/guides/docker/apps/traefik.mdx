@@ -1,0 +1,102 @@
+---
+title: Traefik
+description: ""
+lastUpdated: 2026-08-31 12:48:20
+references:
+  - href: https://github.com/traefik/traefik
+    label: GitHub
+    icon: "github-icon"
+  - href: https://doc.traefik.io/traefik
+    label: Docs
+    icon: "traefik-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Aside, Code, FileTree } from "@astrojs/starlight/components";
+import dockerCompose from "/src/files/compose/traefik.yml?raw";
+import dynamicConfigYml from "/src/files/config/traefik/dynamic_config.yml?raw";
+import traefikConfigYml from "/src/files/config/traefik/traefik.yml?raw";
+import env from "/src/files/env/traefik.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Directory structure
+
+<FileTree>
+
+- traefik
+  - config
+    - traefik.yml (\*)
+    - dynamic_config.yml (\*)
+  - letsencrypt
+    - acme.json
+  - compose.yml (\*)
+
+</FileTree>
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/traefik/config {{DOCKER_PATH_VAR}}/traefik/letsencrypt && cd {{DOCKER_PATH_VAR}}/traefik
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={dockerCompose} />
+
+## traefik.yml
+
+```sh
+nano ./config/traefik.yml
+```
+
+<Code lang="yml" title="./config/traefik.yml" wrap preserveIndent code={traefikConfigYml} />
+
+## dynamic_config.yml
+
+```sh
+nano ./config/dynamic_config.yml
+```
+
+<Code lang="yml" title="./config/dynamic_config.yml" wrap preserveIndent code={dynamicConfigYml} />
+
+## acme.json
+
+```sh
+touch ./letsencrypt/acme.json && chmod 600 ./letsencrypt/acme.json
+```
+
+## Cloudflare DNS API token
+
+<Aside type="caution">
+  Make sure your API token has the permissions Zone/Zone/Read and Zone/DNS/Edit and make sure it applies to all zones.
+</Aside>
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="8080" />

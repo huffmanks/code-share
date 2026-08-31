@@ -1,0 +1,95 @@
+http:
+  middlewares:
+    # Uncomment if using http middleware auth
+    # dashboard-auth:
+    #   basicAuth:
+    #     users:
+    #       # Generate a hashed password for user "admin"
+    #       # htpasswd -nb admin "YourStrongPasswordHere"
+    #       - "admin:$apr1$ru8f2Awq$2x04U43iA4kSKEQ49A11x/"
+
+    hsts-header:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+
+  routers:
+    router-dashboard:
+      rule: "Host(`traefik.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: api@internal
+      entryPoints: ["websecure"]
+      middlewares: ["dashboard-auth"]
+
+    router-adguard:
+      rule: "Host(`adguard.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-adguard
+      entryPoints: ["websecure"]
+
+    router-arcane:
+      rule: "Host(`arcane.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-arcane
+      entryPoints: ["websecure"]
+      middlewares: ["hsts-header"]
+
+    router-echo-link:
+      rule: "Host(`echo.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-echo-link
+      entryPoints: ["websecure"]
+
+    router-immich:
+      rule: "Host(`immich.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-immich
+      entryPoints: ["websecure"]
+
+    router-jellyfin:
+      rule: "Host(`jf.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-jellyfin
+      entryPoints: ["websecure"]
+
+    router-linkding:
+      rule: "Host(`link.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-linkding
+      entryPoints: ["websecure"]
+
+    router-vaultwarden:
+      rule: "Host(`vw.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-vaultwarden
+      entryPoints: ["websecure"]
+      middlewares: ["hsts-header"]
+
+  services:
+    service-adguard:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:8080"
+
+    service-arcane:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:3552"
+
+    service-echo-link:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:3002"
+
+    service-immich:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:2283"
+
+    service-jellyfin:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:8096"
+
+    service-linkding:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:9090"
+
+    service-vaultwarden:
+      loadBalancer:
+        servers:
+          - url: "{{SERVER_IP_VAR}}:8002"

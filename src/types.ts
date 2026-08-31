@@ -41,7 +41,8 @@ export type IconName =
   | "gitea-icon"
   | "mealie-icon"
   | "opencloud-icon"
-  | "paperless-icon";
+  | "paperless-icon"
+  | "traefik-icon";
 
 export type Fragment = {
   filename: string;
@@ -78,6 +79,7 @@ export type SettingsForm = {
   serverIpAddress: string;
   clientIpAddress: string;
   virtualIpAddress: string;
+  baseSubDomain: string;
   hostname: string;
   subnet: string;
   timeZone: string;

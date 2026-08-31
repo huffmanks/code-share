@@ -168,6 +168,11 @@ export default defineConfig({
                   collapsed: true,
                   autogenerate: { directory: "guides/docker/apps", collapsed: true },
                 },
+                {
+                  label: "Archived",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/docker/archived", collapsed: true },
+                },
               ],
             },
           ],

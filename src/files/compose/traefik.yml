@@ -1,0 +1,15 @@
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.7
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    environment:
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config/traefik:/etc/traefik:ro
+      - ./letsencrypt:/letsencrypt
+    restart: unless-stopped
