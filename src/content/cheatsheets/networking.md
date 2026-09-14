@@ -1,7 +1,7 @@
 ---
 title: networking
 description: Common networking commands and configuration tools including connectivity tests, interface management, firewalls and routing.
-updatedAt: 2025-08-20 10:30:12
+updatedAt: 2026-09-14 12:18:51
 groups:
   - title: Basics
     description: Common commands for connectivity and network information.
@@ -38,7 +38,7 @@ groups:
         code: ip link set eth0 up
       - label: ip route add [network] via [gateway]
         description: Add a static route.
-        code: ip route add 192.168.1.0/24 via 192.168.1.1
+        code: ip route add {{SUBNET_VAR}} via {{GATEWAY_IP_ADDRESS_VAR}}
   - title: Firewall (iptables)
     description: Managing firewall rules with iptables.
     items:
@@ -111,6 +111,33 @@ groups:
       - label: sudo networkctl reload
         description: Reload configuration without restarting the service.
         code: sudo networkctl reload
+  - title: nmap
+    description: Network discovery, port scanning, and service identification.
+    items:
+      - label: nmap -p [port] --open [network]
+        description: Find devices on a network with a specific port open.
+        code: nmap -p 22 --open {{SUBNET_VAR}}
+      - label: nmap -sn [network]
+        description: Discover active devices on a network without scanning ports.
+        code: nmap -sn {{SUBNET_VAR}}
+      - label: nmap -sV [host]
+        description: Detect services and versions running on a host.
+        code: nmap -sV {{SERVER_IP_VAR}}
+      - label: nmap -p [ports] [host]
+        description: Scan specific ports on a host.
+        code: nmap -p 22,80,443 {{SERVER_IP_VAR}}
+      - label: nmap -p- [host]
+        description: Scan all TCP ports on a host.
+        code: nmap -p- {{SERVER_IP_VAR}}
+      - label: nmap -O [host]
+        description: Attempt to identify the operating system of a host.
+        code: nmap -O {{SERVER_IP_VAR}}
+      - label: nmap -A [host]
+        description: Perform OS detection, version detection, script scanning, and traceroute.
+        code: nmap -A {{SERVER_IP_VAR}}
+      - label: nmap --script vuln [host]
+        description: Check a host for known vulnerabilities using Nmap scripts.
+        code: nmap --script vuln {{SERVER_IP_VAR}}
   - title: Troubleshooting
     description: Tools for debugging network issues.
     items:

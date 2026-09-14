@@ -19,6 +19,7 @@ import type { Props } from "@astrojs/starlight/props";
       .replace(/{SERVER_IP_VAR}/g, settings.serverIpAddress)
       .replace(/{{CLIENT_IP_VAR}}/g, settings.clientIpAddress)
       .replace(/{{VIRTUAL_IP_VAR}}/g, settings.virtualIpAddress)
+      .replace(/{{GATEWAY_IP_ADDRESS_VAR}}/g, settings.gatewayIpAddress)
       .replace(/{{BASE_SUB_DOMAIN_VAR}}/g, settings.baseSubDomain)
       .replace(/{{HOSTNAME_VAR}}/g, settings.hostname)
       .replace(/{{SUBNET_VAR}}/g, settings.subnet)

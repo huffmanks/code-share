@@ -88,7 +88,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 
         3. ### Start
 
-                <Code lang="sh" wrap preserveIndent code={`sudo tailscale up --advertise-routes=192.168.100.0/24 --accept-dns=false --advertise-exit-node --accept-routes=false`} />
+                <Code lang="sh" wrap preserveIndent code={`sudo tailscale up --advertise-routes={{SUBNET_VAR}} --accept-dns=false --advertise-exit-node --accept-routes=false`} />
 
 
         4. ### Admin console
@@ -259,7 +259,7 @@ sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 
                                 ```txt
                                 100.64.0.0/10
-                                192.168.100.0/24
+                                {{SUBNET_VAR}}
                                 ```
                                 - Add **Tailscale and device IP ranges** above.
                                 - Leave blank to allow all.

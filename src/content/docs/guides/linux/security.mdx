@@ -27,8 +27,7 @@ export const fail2banConfig = `
 [DEFAULT]
 bantime.increment = true
 bantime.factor = 1
-bantime.maxtime = 5w
-
+bantime.maxtime = 5w\n
 [sshd]
 enabled = true
 port = ssh
@@ -37,7 +36,7 @@ backend = systemd
 maxretry = 3
 findtime = 600
 bantime = 3600
-ignoreip = 127.0.0.1/8 ::1 192.168.100.0/24
+ignoreip = 127.0.0.1/8 ::1 {{SUBNET_VAR}}
 `
 
 export const ufwSysctl = `

@@ -79,6 +79,7 @@ export type SettingsForm = {
   serverIpAddress: string;
   clientIpAddress: string;
   virtualIpAddress: string;
+  gatewayIpAddress: string;
   baseSubDomain: string;
   hostname: string;
   subnet: string;
