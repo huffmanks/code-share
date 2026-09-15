@@ -1,0 +1,108 @@
+---
+title: opencode
+description: "Install opencode and omniroute, configure providers and connect them through a local API."
+lastUpdated: 2026-09-15 14:18:29
+references:
+  - href: https://github.com/anomalyco/opencode
+    label: opencode
+    icon: "github-icon"
+  - href: https://github.com/diegosouzapw/omniroute
+    label: omniroute
+    icon: "github-icon"
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code, Steps } from "@astrojs/starlight/components";
+
+export const opencodeJson = `
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "omniroute": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "omniroute",
+      "options": {
+        "baseURL": "http://localhost:20128/v1",
+        "apiKey": "YOUR_OMNIROUTE_API_KEY"
+      },
+      "models": {
+        "auto": {
+          "name": "Auto / Best Available"
+        }
+      }
+    }
+  }
+}
+`;
+
+## Getting started
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Install opencode
+
+    Install opencode using the official installer.
+
+    <Code lang="sh" code={`curl -fsSL https://opencode.ai/install | bash`} wrap preserveIndent />
+
+2.  ## Install omniroute
+
+    Install the latest omniroute release globally, then start the local server.
+
+    <Code
+      lang="sh"
+      code={`pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/core && omniroute`}
+      wrap
+      preserveIndent
+    />
+
+3.  ## Configure omniroute
+
+    Open the omniroute web UI and complete the initial setup.
+
+    <Code lang="sh" code={`open http://localhost:20128/login`} wrap preserveIndent />
+
+        - Set an omniroute password.
+        - Get API keys for the providers you want to use:
+            - [Cerebras](https://cloud.cerebras.ai/platform)
+            - [Mistral](https://console.mistral.ai/api-keys)
+            - [Google AI Studio (Gemini)](https://aistudio.google.com/api-keys)
+            - [Groq](https://console.groq.com/keys)
+            - [DeepSeek](https://platform.deepseek.com/api_keys)
+            - [OpenRouter](https://openrouter.ai/workspaces/default/keys)
+        - Add providers [http://localhost:20128/dashboard/providers](http://localhost:20128/dashboard/providers).
+        - Create omniroute API key [http://localhost:20128/dashboard/api-manager](http://localhost:20128/dashboard/api-manager).
+
+        <br />
+
+4.  ## Configure opencode
+
+    Create the opencode configuration directory and file.
+
+    <Code lang="sh" code={`mkdir -p ~/.config/opencode`} wrap preserveIndent />
+
+    <Code lang="sh" code={`nano ~/.config/opencode/opencode.json`} wrap preserveIndent />
+
+    Add the following configuration and replace `YOUR_OMNIROUTE_API_KEY` with your omniroute API key.
+
+    <Code lang="sh" title="opencode.json" code={opencodeJson} wrap preserveIndent />
+
+5.  ## Start opencode
+
+    Start opencode from your terminal.
+
+    <Code lang="sh" code={`opencode`} wrap preserveIndent />
+
+    Verify that omniroute is available as a provider. If needed, use `/connect` and select `omniroute`.
+
+</Steps>

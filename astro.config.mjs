@@ -139,6 +139,11 @@ export default defineConfig({
                   label: "nix-darwin",
                   slug: "guides/macos/nix-darwin",
                 },
+                {
+                  label: "Programs",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/macos/programs", collapsed: true },
+                },
               ],
             },
             {
