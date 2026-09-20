@@ -157,27 +157,6 @@ groups:
       - label: systemctl restart [service]
         description: Restart a systemd service.
         code: systemctl restart nginx
-  - title: Networking
-    description: Commands related to network operations.
-    items:
-      - label: ping [host]
-        description: Check network connectivity to a host.
-        code: ping google.com
-      - label: ifconfig
-        description: Display network interface information (macOS/Linux).
-        code: ifconfig
-      - label: ipconfig
-        description: Display network interface information (Windows).
-        code: ipconfig
-      - label: netstat
-        description: Display network connections.
-        code: netstat
-      - label: curl [url]
-        description: Transfer data from or to a server.
-        code: curl https://www.example.com
-      - label: wget [url]
-        description: Download a file from a URL.
-        code: wget https://www.example.com/file.zip
   - title: Archiving and Compression
     description: Creating and extracting tarballs and zip files.
     syntax: |
