@@ -19,13 +19,12 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { setupUrl } from "@/lib/mdx-constants";
 import { Aside, Code, FileTree } from "@astrojs/starlight/components";
 import dockerCompose from "/src/files/compose/traefik.yml?raw";
 import dynamicConfigYml from "/src/files/config/traefik/dynamic_config.yml?raw";
 import traefikConfigYml from "/src/files/config/traefik/traefik.yml?raw";
 import env from "/src/files/env/traefik.env?raw";
-
-export const setupUrl = `https://auth.${"{{BASE_SUB_DOMAIN_VAR}}"}/setup`;
 
 <p>{frontmatter.description}</p>
 

@@ -6,71 +6,8 @@ tableOfContents:
   maxHeadingLevel: 5
 ---
 
+import { logindConf, netplanConfig, noSleepConfig, systemdResolvedConfig, wolService } from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-
-export const logindConf = `
-HandleSuspendKey=ignore
-HandleLidSwitch=ignore
-HandleLidSwitchExternalPower=ignore
-HandleLidSwitchDocked=ignore
-`;
-
-export const noSleepConfig = `
-[Sleep]
-AllowSuspend=no
-AllowHibernation=no
-AllowSuspendThenHibernate=no
-AllowHybridSleep=no
-`;
-
-export const systemdResolvedConfig = `
-[Resolve]
-DNS=1.1.1.1 8.8.8.8
-FallbackDNS=1.0.0.1 8.8.4.4
-Domains=~.
-DNSStubListener=no
-`;
-
-export const netplanConfig = `
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    enp3s0:
-      dhcp4: true
-      # Remove if causing issues when rebooting
-      optional: true
-      dhcp4-overrides:
-        route-metric: 100
-        use-dns: false
-      nameservers:
-        addresses: [1.1.1.1, 8.8.8.8]
-  # Optional
-  wifis:
-    wlan0:
-      dhcp4: true
-      optional: true
-      dhcp4-overrides:
-        route-metric: 600
-        use-dns: false
-      nameservers:
-        addresses: [1.1.1.1, 8.8.8.8]
-      access-points:
-        "Your_SSID_Name":
-          password: "Your_Password"
-`;
-
-export const wolService = `
-[Unit]
-Description=Enable Wake On Lan
-
-[Service]
-Type=oneshot
-ExecStart=/usr/sbin/ethtool -s $INTERFACE_NAME wol g
-
-[Install]
-WantedBy=basic.target
-`;
 
 <p>{frontmatter.description}</p>
 

@@ -13,16 +13,9 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { initDocker } from "@/lib/mdx-constants";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/opencloud.yml?raw";
-
-export const initDocker = `
-docker run --rm -it \\
-    -v ./opencloud-config:/etc/opencloud \\
-    -v ./opencloud-data:/var/lib/opencloud \\
-    -e IDM_ADMIN_PASSWORD=admin \\
-    opencloudeu/opencloud-rolling:latest init
-`;
 
 <p>{frontmatter.description}</p>
 

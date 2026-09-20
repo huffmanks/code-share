@@ -13,28 +13,10 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { exampleCli, exampleHttp } from "@/lib/mdx-constants";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/ntfy.yml?raw";
 import serverYml from "/src/files/config/ntfy/server.yml?raw";
-
-export const exampleHttp = `
-curl -X POST "http://localhost:8383/test_topic" \\
-  -H "Authorization: Bearer <tk_your_token>" \\
-  -H "Title: Test Title" \\
-  -H "Tags: rocket,star" \\
-  -H "Priority: default" \\
-  -d "Message using a token"
-`;
-
-export const exampleCli = `
-ntfy publish \\
-  --host="http://localhost:8383" \\
-  --token="<tk_your_token>" \\
-  --title="Test Title" \\
-  --tags="rocket,star" \\
-  --priority="default" \\
-  test_topic "Message using a token"
-`;
 
 <p>{frontmatter.description}</p>
 

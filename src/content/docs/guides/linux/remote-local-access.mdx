@@ -18,33 +18,21 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import {
+  adguardAdminLink,
+  adguardSetupLink,
+  ethtool,
+  ipForwarding,
+  networkdDispatcher,
+  npmServerLink,
+  serverIp,
+  virtualIp,
+} from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 import composeYml from "/src/files/compose/remote-local-access.yml?raw";
 import composeWithSyncYml from "/src/files/compose/remote-local-access_sync.yml?raw";
 import keepalivedConfig from "/src/files/config/keepalived/keepalived.conf?raw";
 import env from "/src/files/env/remote-local-access.env?raw";
-
-export const serverIp = `{{SERVER_IP_VAR}}`;
-export const virtualIp = `{{VIRTUAL_IP_VAR}}`;
-export const npmServerLink = `http://${serverIp}:81`;
-export const adguardSetupLink = `http://${serverIp}:3000`;
-export const adguardAdminLink = `http://${serverIp}:8080`;
-
-export const ethtool = `
-NETDEV=$(ip -o route get 1.1.1.1 | cut -f 5 -d " ")
-sudo ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
-`;
-
-export const networkdDispatcher = `
-printf '#!/bin/sh\n\nethtool -K %s rx-udp-gro-forwarding on rx-gro-list off \n' "$(ip -o route get 1.1.1.1 | cut -f 5 -d " ")" | sudo tee /etc/networkd-dispatcher/routable.d/50-tailscale
-sudo chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
-`;
-
-export const ipForwarding = `
-echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
-echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
-sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
-`;
 
 <p>{frontmatter.description}</p>
 

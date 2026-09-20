@@ -6,43 +6,8 @@ tableOfContents:
   maxHeadingLevel: 4
 ---
 
+import { fail2banConfig, sudoersConfig, ufwSysctl, unattendedUpgradesConfig } from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
-
-export const unattendedUpgradesConfig = `
-\# Update below:
-APT::Periodic::Enable "1";
-APT::Periodic::Update-Package-Lists "1";
-APT::Periodic::Download-Upgradeable-Packages "1";
-APT::Periodic::Unattended-Upgrade "1";
-APT::Periodic::AutocleanInterval "1";
-APT::Periodic::Verbose "2";
-`;
-
-export const sudoersConfig = `
-\# Comment out line below to require password for sudo (recommended)
-{USERNAME_VAR} ALL=(ALL) NOPASSWD: ALL
-`;
-
-export const fail2banConfig = `
-[DEFAULT]
-bantime.increment = true
-bantime.factor = 1
-bantime.maxtime = 5w\n
-[sshd]
-enabled = true
-port = ssh
-filter = sshd
-backend = systemd
-maxretry = 3
-findtime = 600
-bantime = 3600
-ignoreip = 127.0.0.1/8 ::1 {{SUBNET_VAR}}
-`
-
-export const ufwSysctl = `
-net/ipv4/ip_forward=1
-net/ipv6/conf/default/forwarding=1
-`
 
 <p>{frontmatter.description}</p>
 
@@ -142,85 +107,85 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 <Steps>
 
-1. ### Install
+1.  ### Install
 
-   <Code lang="sh" code={`sudo apt install ufw -y`} />
+    <Code lang="sh" code={`sudo apt install ufw -y`} />
 
-2. ### Deny incoming
+2.  ### Deny incoming
 
-   <Code lang="sh" code={`sudo ufw default deny incoming`} />
+    <Code lang="sh" code={`sudo ufw default deny incoming`} />
 
-3. ### Allow outgoing
+3.  ### Allow outgoing
 
-   <Code lang="sh" code={`sudo ufw default allow outgoing`} />
+    <Code lang="sh" code={`sudo ufw default allow outgoing`} />
 
-4. ### Allow SSH
+4.  ### Allow SSH
 
-   Replace port number if your SSH port is different.
+    Replace port number if your SSH port is different.
 
-   <Code lang="sh" code={`sudo ufw allow 22/tcp`} />
+    <Code lang="sh" code={`sudo ufw allow 22/tcp`} />
 
-5. ### Tailscale (optional)
+5.  ### Tailscale (optional)
 
-      <br />
+    <br />
 
-      <Steps>
+          <Steps>
 
-      1. #### Allow routed traffic
+          1. #### Allow routed traffic
 
-         Required for exit node/subnet routing.
+             Required for exit node/subnet routing.
 
-         <Code lang="sh" code={`sudo ufw route allow in on tailscale0`} />
+             <Code lang="sh" code={`sudo ufw route allow in on tailscale0`} />
 
-      2. #### Allow Tailscale network
+          2. #### Allow Tailscale network
 
-         Allow everything coming in from your Tailscale network.
+             Allow everything coming in from your Tailscale network.
 
-         <Code lang="sh" code={`sudo ufw allow in on tailscale0`} />
+             <Code lang="sh" code={`sudo ufw allow in on tailscale0`} />
 
-      3. #### Tailscale performance (optional)
+          3. #### Tailscale performance (optional)
 
-         Helps Tailscale make direct “peer-to-peer” connections.
+             Helps Tailscale make direct “peer-to-peer” connections.
 
-         <Code lang="sh" code={`sudo ufw allow 41641/udp`} />
+             <Code lang="sh" code={`sudo ufw allow 41641/udp`} />
 
-      4. #### Enable packet forwarding
+          4. #### Enable packet forwarding
 
-         Tell the kernel to allow packets to be routed through the server. Open the UFW sysctl configuration:
+             Tell the kernel to allow packets to be routed through the server. Open the UFW sysctl configuration:
 
-         <Code lang="sh" code={`sudo nano /etc/ufw/sysctl.conf`} />
+             <Code lang="sh" code={`sudo nano /etc/ufw/sysctl.conf`} />
 
-         Uncomment the following line:
+             Uncomment the following line:
 
-         <Code lang="sh" title="/etc/ufw/sysctl.conf" code={ufwSysctl} />
+             <Code lang="sh" title="/etc/ufw/sysctl.conf" code={ufwSysctl} />
 
-      </Steps>
+          </Steps>
 
-6. ### AdGuard Home (optional)
+6.  ### AdGuard Home (optional)
 
-   Allow local network devices to send DNS queries to AdGuard Home.
+    Allow local network devices to send DNS queries to AdGuard Home.
 
-   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SUBNET_VAR}} to any port 53`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SUBNET_VAR}} to any port 53`} />
 
-7. ### Samba (optional)
+7.  ### Samba (optional)
 
-   Allow Samba UDP ports (NetBIOS).
+    Allow Samba UDP ports (NetBIOS).
 
-   <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
+    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
 
-   Allow Samba TCP ports (SMB).
+    Allow Samba TCP ports (SMB).
 
-   <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
+    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
 
-8. ### Allow web access (optional)
+8.  ### Allow web access (optional)
 
-   Required for web server (e.g., Nginx Proxy Manager, Caddy).
+    Required for web server (e.g., Nginx Proxy Manager, Caddy).
 
-   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow 80,443/tcp`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow 80,443/tcp`} />
 
-9. ### Add custom rule (optional)
+9.  ### Add custom rule (optional)
 
-   <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
 
 10. ### Enable ufw
 

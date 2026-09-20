@@ -4,7 +4,7 @@ description: Initial system setup and secure remote access configuration using S
 lastUpdated: 2026-02-08 18:18:12
 ---
 
-import { sshConfig, sshdConfig } from "@/lib/mdxExports";
+import { linuxSshConfig, linuxSshdConfig } from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
 
 <p>{frontmatter.description}</p>
@@ -65,7 +65,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
              <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
 
-             <Code lang="sh" title="/etc/ssh/sshd_config" code={sshdConfig} />
+             <Code lang="sh" title="/etc/ssh/sshd_config" code={linuxSshdConfig} />
 
           3. ### Verify and restart
 
@@ -91,7 +91,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
              Define your server details. Now you can connect using just the alias name.
 
-             <Code lang="sh" title="~/.ssh/config" code={sshConfig} />
+             <Code lang="sh" title="~/.ssh/config" code={linuxSshConfig} />
 
           3. ### Connect via alias
 

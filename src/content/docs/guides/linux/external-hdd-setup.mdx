@@ -4,12 +4,8 @@ description: Step-by-step guide to partition, format and auto-mount an external 
 lastUpdated: 2025-12-21 01:24:46
 ---
 
+import { identifyDrive } from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-
-export const identifyDrive = `
-# Identify the target drive, i.e., /dev/sde
-lsblk
-`;
 
 <p>{frontmatter.description}</p>
 
@@ -40,17 +36,14 @@ lsblk
    <Code lang="sh" code={`sudo gdisk /dev/sde`} />
 
 5. ### Delete the existing partition
-
    - Type `d` to delete the existing partition (/dev/sde1).
    - Defaults to partition `1`.
 
 6. ### Create a new partition table
-
    - Type `o` to create a new GPT partition table.
    - Confirm with `Y`.
 
 7. ### Create the partition
-
    - Type `n` to create a new partition.
    - Follow the prompts to create a partition with the default values:
      - Partition number: press `Enter` (default is 1)
@@ -59,7 +52,6 @@ lsblk
      - Partition type: `0700` (Microsoft basic data)
 
 8. ### Write changes
-
    - Type `w` to write the changes.
    - Confirm with `Y`.
 
@@ -98,7 +90,12 @@ lsblk
 
     After creating the mount point, it's important to set the appropriate ownership and permissions for the directory. This ensures that the user or group can access the external HDD properly.
 
-    <Code lang="sh" wrap preserveIndent code={`sudo chown -R $USER:$USER {{EXTERNAL_HDD_PATH_VAR}} && sudo chmod -R 755 {{EXTERNAL_HDD_PATH_VAR}}`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo chown -R $USER:$USER {{EXTERNAL_HDD_PATH_VAR}} && sudo chmod -R 755 {{EXTERNAL_HDD_PATH_VAR}}`}
+    />
 
 5.  ### Modify fstab for auto-mount
 
@@ -110,7 +107,11 @@ lsblk
 
     You’ll add a new line to the fstab file, <u>below other entries</u>, to specify how your external HDD should be mounted. This entry ensures the drive is automatically mounted at boot time using its UUID.
 
-    <Code lang="sh" preserveIndent code={`UUID={{EXTERNAL_HDD_UUID_VAR}}  {{EXTERNAL_HDD_PATH_VAR}}       ext4            auto,nofail,noatime,rw,users,exec  0    0`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      code={`UUID={{EXTERNAL_HDD_UUID_VAR}}  {{EXTERNAL_HDD_PATH_VAR}}       ext4            auto,nofail,noatime,rw,users,exec  0    0`}
+    />
 
 7.  ### Unmount external HDD
 

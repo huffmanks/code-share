@@ -12,29 +12,8 @@ references:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { macOSDarkConf, oneDarkProConf } from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-
-export const oneDarkProConf = `
-[ColorScheme]
-active_colors=#abb2bf, #282c34, #3a3f4b, #21252b, #4b5363, #3c4049, #abb2bf, #ffffff, #abb2bf, #282c34, #282c34, #181a1f, #3e4451, #abb2bf, #61afef, #c678dd, #21252b, #abb2bf, #282c34, #abb2bf, #14161a
-disabled_colors=#5c6370, #21252b, #282c34, #1c1f24, #3c4049, #282c34, #5c6370, #ffffff, #5c6370, #21252b, #21252b, #121417, #21252b, #5c6370, #3e4451, #c678dd, #1c1f24, #5c6370, #21252b, #5c6370, #101214
-inactive_colors=#abb2bf, #282c34, #3a3f4b, #21252b, #4b5363, #3c4049, #abb2bf, #ffffff, #abb2bf, #282c34, #282c34, #181a1f, #3e4451, #abb2bf, #61afef, #c678dd, #21252b, #abb2bf, #282c34, #abb2bf, #14161a
-
-[Style]
-style=Fusion
-palette=OneDarkPro
-`
-
-export const macOSDarkConf = `
-[ColorScheme]
-active_colors=#ffffff, #1e1e1e, #323232, #262626, #454545, #3a3a3a, #ffffff, #ffffff, #ffffff, #1e1e1e, #1e1e1e, #000000, #4a4a4a, #ffffff, #4a4a4a, #af52de, #262626, #ffffff, #1e1e1e, #ffffff, #181818
-disabled_colors=#757575, #1c1c1c, #262626, #1c1c1c, #3a3a3a, #1c1c1c, #757575, #ffffff, #757575, #1c1c1c, #1c1c1c, #000000, #323232, #757575, #323232, #af52de, #1c1c1c, #757575, #1c1c1c, #757575, #121212
-inactive_colors=#ffffff, #1e1e1e, #323232, #262626, #454545, #3a3a3a, #ffffff, #ffffff, #ffffff, #1e1e1e, #1e1e1e, #000000, #4a4a4a, #ffffff, #4a4a4a, #af52de, #262626, #ffffff, #1e1e1e, #ffffff, #181818
-
-[Style]
-style=Fusion
-palette=MacOSDark
-`
 
 ## Getting started
 

@@ -25,15 +25,8 @@ references:
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import Icon from "@/components/icon.astro";
+import { androidBashrc } from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
-
-export const bashrc = `
-export PATH="$PATH:/home/droid/.local/bin\n
-if [ -x "$(command -v zsh)" ]; then
-  export SHELL=$(command -v zsh)
-  exec $(command -v zsh) -l
-fi
-`;
 
 <p>{frontmatter.description}</p>
 
@@ -77,7 +70,7 @@ fi
 
             <Code lang="sh" code={`nano ~/.bashrc`} />
 
-            <Code lang="sh" title=".bashrc" wrap preserveIndent code={bashrc} />
+            <Code lang="sh" title=".bashrc" wrap preserveIndent code={androidBashrc} />
 
         5. ### Change default shell (optional)
 

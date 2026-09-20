@@ -20,29 +20,8 @@ tableOfContents:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { daemonJson, debianAptSource, ubuntuAptSource, verifyDockerData } from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-
-export const debianAptSource = `
-echo \\
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \\
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-`;
-export const ubuntuAptSource = `
-echo \\
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \\
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \\
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-`;
-export const daemonJson = `
-{
-  "data-root": "{{EXTERNAL_HDD_PATH_VAR}}/docker-data"
-}
-`;
-export const verifyDockerData = `
-# Docker Root Dir: {{EXTERNAL_HDD_PATH_VAR}}/docker-data
-docker info | grep "Docker Root Dir"
-`;
 
 ## Getting started
 

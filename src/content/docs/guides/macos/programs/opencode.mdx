@@ -12,28 +12,8 @@ references:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { opencodeJson } from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
-
-export const opencodeJson = `
-{
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "omniroute": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "omniroute",
-      "options": {
-        "baseURL": "http://localhost:20128/v1",
-        "apiKey": "YOUR_OMNIROUTE_API_KEY"
-      },
-      "models": {
-        "auto": {
-          "name": "Auto / Best Available"
-        }
-      }
-    }
-  }
-}
-`;
 
 ## Getting started
 

@@ -4,15 +4,8 @@ description: Setup guide for sharing files over a local network using Samba (SMB
 lastUpdated: 2026-03-22 17:09:18
 ---
 
+import { smbConf } from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
-
-export const smbConf = `
-[shared]
-   path = {{SMB_SHARE_VAR}}
-   read only = no
-   browsable = yes
-   guest ok = no
-`;
 
 <p>{frontmatter.description}</p>
 
