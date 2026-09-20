@@ -1,20 +1,20 @@
 ---
 title: vim
 description: Navigation, editing and command shortcuts to work efficiently in Vim.
-updatedAt: 2025-03-17 14:57:47
+updatedAt: 2026-09-20 17:35:13
 groups:
   - title: Navigation
     description: Move efficiently within a file using these commands.
     items:
-      - label: Move to beginning of line
+      - label: Move to line start
         description: Jumps to the first character of the current line.
         commands:
           - ["0"]
-      - label: Move to end of line
+      - label: Move to line end
         description: Jumps to the last character of the current line.
         commands:
           - [SHIFT, "4"]
-      - label: Move to a specific line
+      - label: Move to specific line
         description: Jumps to a specified line number.
         commands:
           - [":[line number]", ENTER]
@@ -30,90 +30,90 @@ groups:
         description: Jumps between matching parentheses, brackets, or braces.
         commands:
           - ["%"]
-      - label: Tab (add indent)
-        description: In insert mode, increases the indentation level.
+      - label: Add indent
+        description: Increases the indentation level.
         commands:
           - [CTRL, t]
-      - label: Un-tab (remove indent)
-        description: In insert mode, decreases the indentation level.
+      - label: Remove indent
+        description: Decreases the indentation level.
         commands:
           - [CTRL, d]
   - title: Selecting Text
-    description: Commands for selecting, deselecting, and highlighting text, lines, or the entire file.
+    description: Commands for selecting, deselecting, and highlighting text.
     items:
-      - label: Select text
+      - label: Select characters
         description: Starts visual mode to select text character by character.
         commands:
           - ["v"]
-        comment: "Use arrow keys to expand selection."
-      - label: Select line
+        comment: Use arrow keys to expand selection.
+      - label: Select lines
         description: Selects entire lines instead of characters.
         commands:
           - ["V"]
-        comment: "Use up/down to extend selection by lines."
+        comment: Use up/down to extend selection by lines.
       - label: Select entire file
         description: Selects all text in the file.
         commands:
           - ["ggVG"]
-      - label: Deselect selection
+      - label: Clear selection
         description: Exits visual mode and clears selection.
         commands:
           - ["ESC"]
   - title: Editing
-    description: Modify text with these essential Vim commands.
+    description: Modify text with essential Vim commands.
     items:
-      - label: Insert mode
+      - label: Enter insert mode
         description: Enters insert mode to start typing.
         commands:
           - ["i"]
           - ["a"]
         comment: i=insert before cursor, a=append after cursor
-      - label: Escape insert mode
+      - label: Exit insert mode
         description: Escapes the insert mode.
         commands:
           - ["ESC"]
-      - label: Replace a character
+      - label: Replace character
         description: Replaces the character under the cursor.
         commands:
           - ["r", "[new character]"]
-      - label: Change a word
+      - label: Change word
         description: Deletes the word under the cursor and enters insert mode.
         commands:
           - ["caw"]
-      - label: Delete a character
+      - label: Delete character
         description: Deletes the character under the cursor.
         commands:
           - ["x"]
-      - label: Delete a word
+      - label: Delete word
         description: Deletes the word under the cursor.
         commands:
           - ["daw"]
-      - label: Copy
+      - label: Copy text
         description: Copies the selected text or the current line.
         commands:
           - ["y"]
           - ["yy"]
         comment: y=selected text, yy=current line
-      - label: Cut
+      - label: Cut text
         description: Cuts the selected text or the current line.
         commands:
           - ["d"]
           - ["dd"]
         comment: d=selected text, dd=current line
-      - label: Paste
+      - label: Paste text
         description: Pastes the last cut or copied text at the cursor position.
         commands:
           - ["p"]
           - ["P"]
         comment: p=after cursor, P=before cursor
       - label: Copy to system clipboard
-        description: Copies the selected text or current line to the system clipboard.
+        description: Copies selection or current line to system clipboard.
         commands:
           - ['"+y']
           - ['"+yy']
         comment: '"+y=selected text, "+yy=current line'
       - label: Cut to system clipboard
-        description: Cuts the selected text or current line to the system clipboard.
+        description: Cuts selection or current line to system clipboard.
         commands:
           - ['"+d']
           - ['"+dd']
@@ -124,26 +124,26 @@ groups:
           - ['"+p']
           - ['"+P']
         comment: '"+p=after cursor, "+P=before cursor'
-      - label: Undo last change
+      - label: Undo change
         description: Reverts the last edit.
         commands:
           - ["u"]
-      - label: Redo last undone change
+      - label: Redo change
         description: Reapplies the last undone change.
         commands:
           - ["CTRL", "r"]
   - title: Search and Replace
     description: Find text and perform replacements efficiently.
     items:
-      - label: Search for a word
+      - label: Search forward
         description: Finds the next occurrence of a word in the file.
         commands:
           - ["/word", "ENTER"]
-      - label: Search backward for a word
+      - label: Search backward
         description: Finds the previous occurrence of a word in the file.
         commands:
           - ["?word", "ENTER"]
-      - label: Repeat last search
+      - label: Repeat search
         description: Moves to the next match of the last search.
         commands:
           - ["n"]
@@ -153,7 +153,7 @@ groups:
         description: Replaces all occurrences of a word with another in the whole file.
         commands:
           - [":%s/old/new/g", "ENTER"]
-      - label: Replace text in the current line
+      - label: Replace on current line
         description: Replaces all occurrences of a word in the current line.
         commands:
           - [":s/old/new/g", "ENTER"]
@@ -175,30 +175,30 @@ groups:
   - title: Windows and Tabs
     description: Manage multiple files and workspaces.
     items:
-      - label: Open a new tab
+      - label: Open new tab
         description: Opens a new tab in Vim.
         commands:
           - [":tabnew", "ENTER"]
-      - label: Switch between tabs
+      - label: Switch tabs
         description: Moves to the next or previous tab.
         commands:
           - ["gt"]
           - ["gT"]
         comment: gt=next, gT=previous
-      - label: Split window horizontally
+      - label: Split horizontal
         description: Splits the window into two horizontal panes.
         commands:
           - ["CTRL", "w", "s"]
-      - label: Split window vertically
+      - label: Split vertical
         description: Splits the window into two vertical panes.
         commands:
           - ["CTRL", "w", "v"]
-      - label: Switch between windows
+      - label: Switch windows
         description: Moves the cursor between split windows.
         commands:
           - ["CTRL", "w", "[arrow key]"]
   - title: Miscellaneous
-    description: Other useful Vim commands.
+    description: Other useful Vim configuration commands.
     items:
       - label: Show line numbers
         description: Displays line numbers in the editor.

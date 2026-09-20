@@ -9,7 +9,6 @@ import { getVariant } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const cheatsheets = await getCollection("cheatsheets");
-
   return cheatsheets.map((cheatsheet) => ({
     params: { id: cheatsheet.id },
     props: { cheatsheet },
@@ -18,6 +17,17 @@ export async function getStaticPaths() {
 
 const { cheatsheet } = Astro.props;
 const pageUrl = Astro.url.href;
+
+const platformsFound = new Set<string>();
+cheatsheet.data.groups.forEach((group) => {
+  group.items?.forEach((item) => {
+    item.platforms?.forEach((p) => {
+      p.os.forEach((os) => platformsFound.add(os));
+    });
+  });
+});
+const availablePlatforms = Array.from(platformsFound).sort();
+const showToggle = availablePlatforms.length > 0;
 ---
 
 <StarlightPage
@@ -32,7 +42,24 @@ const pageUrl = Astro.url.href;
     prev: false,
     next: false,
   }}>
-  <p style="margin-top: -20px; margin-bottom: 25px;">{cheatsheet.data.description}</p>
+  <p style="margin-top: -20px; margin-bottom: 20px;">{cheatsheet.data.description}</p>
+
+  {
+    showToggle && (
+      <div class="platform-toggle-bar">
+        <span class="platform-label">Platform:</span>
+        <button class="platform-btn active" data-filter="all">
+          All
+        </button>
+        {availablePlatforms.map((os) => (
+          <button class="platform-btn" data-filter={os}>
+            {os.charAt(0).toUpperCase() + os.slice(1)}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
   {
     cheatsheet.data.groups.map((group) => (
       <div>
@@ -47,79 +74,170 @@ const pageUrl = Astro.url.href;
 
         {group?.items && (
           <div class="grid">
-            {group.items.map((item, index) => (
-              <div
-                class="cheatsheet-card"
-                style={{
-                  borderColor: getVariant(borderColorVariants, index),
-                  color: getVariant(colorVariants, index),
-                }}>
-                <h3>{item.label}</h3>
-                <p class="item-description">{item.description}</p>
+            {group.items.map((item, index) => {
+              const renderBlocks = [];
 
-                <div class="code-example">
-                  {item?.example && (
-                    <>
-                      <code>{item.example}</code>
-                    </>
-                  )}
-                  {item?.commands && (
-                    <div class="commands-wrapper">
-                      {item.commands.map((keys, cmdIdx) => (
-                        <>
-                          {cmdIdx > 0 && <span class="or-separator">or</span>}
-                          <div class="command">
-                            {keys.map((key, keyIdx) => (
+              if (item.commands || item.code || item.example || item.regex) {
+                renderBlocks.push({
+                  osList: "universal",
+                  osArray: ["universal"],
+                  payload: item,
+                });
+              }
+
+              if (item.platforms) {
+                item.platforms.forEach((p) => {
+                  renderBlocks.push({
+                    osList: p.os.join(","),
+                    osArray: p.os,
+                    payload: p,
+                  });
+                });
+              }
+
+              return (
+                <div
+                  class="cheatsheet-card"
+                  style={{
+                    borderColor: getVariant(borderColorVariants, index),
+                    color: getVariant(colorVariants, index),
+                  }}>
+                  <h3>{item.label}</h3>
+                  <p class="item-description">{item.description}</p>
+
+                  <div class="code-example">
+                    {renderBlocks.map((block) => (
+                      <div class="platform-block" data-os-list={block.osList}>
+                        {block.osList !== "universal" && (
+                          <div class="os-tags-wrapper">
+                            {block.osArray.map((osName) => (
+                              <span class="os-tag" data-os-name={osName}>
+                                {osName}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {block.payload.code && (
+                          <Code lang={block.payload.codeLang || "sh"} wrap preserveIndent code={block.payload.code} />
+                        )}
+
+                        {block.payload.example && (
+                          <Code
+                            title="Example"
+                            lang={block.payload.codeLang || "sh"}
+                            wrap
+                            preserveIndent
+                            code={block.payload.example}
+                          />
+                        )}
+
+                        {block.payload.commands && (
+                          <div class="commands-wrapper">
+                            {block.payload.commands.map((cmd, cmdIndex) => (
                               <>
-                                <kbd
-                                  class="kbd"
-                                  style={{
-                                    borderColor: getVariant(borderColorVariants, index),
-                                    boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}`,
-                                  }}>
-                                  {key}
-                                </kbd>
-                                {keyIdx + 1 !== keys.length && <span>+</span>}
+                                {cmdIndex > 0 && <span class="or-separator">or</span>}
+                                <div class="command">
+                                  {cmd.map((key, keyIndex) => (
+                                    <>
+                                      <kbd
+                                        class="kbd"
+                                        style={{
+                                          borderColor: getVariant(borderColorVariants, index),
+                                          boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}`,
+                                        }}>
+                                        {key}
+                                      </kbd>
+                                      {keyIndex + 1 !== cmd.length && <span>+</span>}
+                                    </>
+                                  ))}
+                                </div>
                               </>
                             ))}
                           </div>
-                        </>
-                      ))}
-                    </div>
-                  )}
-                  {item?.code && (
-                    <>
-                      <Code lang={item.codeLang} wrap preserveIndent code={item.code} />
-                    </>
-                  )}
-                  {item?.regex?.steps && (
-                    <div class="regex-wrapper">
-                      {item.regex.steps.map((step) => (
-                        <div class="regex-step">
-                          <div>
-                            <Code title="Find" wrap preserveIndent code={step.find} />
+                        )}
+
+                        {block.payload.regex?.steps && (
+                          <div class="regex-wrapper">
+                            {block.payload.regex.steps.map((step) => (
+                              <div class="regex-step">
+                                <div>
+                                  <Code title="Find" wrap preserveIndent code={step.find} />
+                                </div>
+                                <div>
+                                  <Code title="Replace" wrap preserveIndent code={step.replace} />
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div>
-                            <Code title="Replace" wrap preserveIndent code={step.replace} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  {item?.comment && (
-                    <>
-                      <div class="comment">{item.comment}</div>
-                    </>
-                  )}
+                        )}
+
+                        {block.osList !== "universal" && block.payload.comment && (
+                          <div class="comment">{block.payload.comment}</div>
+                        )}
+                      </div>
+                    ))}
+
+                    {item.comment && <div class="comment">{item.comment}</div>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
     ))
   }
 </StarlightPage>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    const btn = target.closest(".platform-btn");
+    if (!btn) return;
+
+    const buttons = document.querySelectorAll(".platform-btn");
+    buttons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const selectedOS = btn.getAttribute("data-filter");
+    const cards = document.querySelectorAll(".cheatsheet-card");
+
+    cards.forEach((card) => {
+      const blocks = card.querySelectorAll(".platform-block");
+
+      blocks.forEach((block) => {
+        const blockEl = block as HTMLElement;
+        const osListAttr = block.getAttribute("data-os-list") || "";
+        const osArray = osListAttr.split(",");
+        const tags = block.querySelectorAll(".os-tag");
+
+        if (selectedOS === "all") {
+          blockEl.style.display = "block";
+          tags.forEach((tag) => {
+            (tag as HTMLElement).style.display = "inline-block";
+          });
+        } else {
+          if (osListAttr === "universal" || (selectedOS && osArray.includes(selectedOS))) {
+            blockEl.style.display = "block";
+
+            tags.forEach((tag) => {
+              const tagEl = tag as HTMLElement;
+              const osName = tag.getAttribute("data-os-name");
+              if (osName === selectedOS) {
+                tagEl.style.display = "inline-block";
+              } else {
+                tagEl.style.display = "none";
+              }
+            });
+          } else {
+            blockEl.style.display = "none";
+          }
+        }
+      });
+    });
+  });
+</script>
 
 <style is:inline>
   .grid {
@@ -139,6 +257,49 @@ const pageUrl = Astro.url.href;
     border: 1px solid var(--sl-color-gray-5);
   }
 
+  .platform-toggle-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .platform-label {
+    font-weight: 600;
+  }
+
+  .platform-btn {
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-bg);
+    cursor: pointer;
+    color: inherit;
+    font-size: 0.9rem;
+  }
+
+  .platform-btn.active {
+    background: var(--sl-color-accent);
+    color: var(--sl-color-text-invert);
+    border-color: var(--sl-color-accent);
+  }
+
+  .os-tags-wrapper {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .os-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-accent);
+    text-transform: uppercase;
+  }
+
   .group-description,
   .item-description {
     margin-bottom: 10px;
@@ -148,11 +309,6 @@ const pageUrl = Astro.url.href;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-  }
-
-  .code-example code {
-    width: fit-content;
-    margin-bottom: 10px;
   }
 
   .regex-wrapper {
@@ -173,10 +329,16 @@ const pageUrl = Astro.url.href;
     color: var(--sl-color-gray-3);
   }
 
+  .commands-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .command {
     display: flex;
     align-items: center;
-    gap: 0.5ch;
+    gap: 0.5rem;
   }
 
   .kbd {

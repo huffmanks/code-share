@@ -3,6 +3,26 @@ import { docsSchema } from "@astrojs/starlight/schema";
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
+const executionFields = z.object({
+  code: z.string().optional(),
+  codeLang: z.string().default("sh").optional(),
+  example: z.string().optional(),
+  commands: z.array(z.array(z.string())).optional(),
+  regex: z
+    .object({
+      steps: z
+        .array(
+          z.object({
+            find: z.string(),
+            replace: z.string(),
+          }),
+        )
+        .min(1),
+    })
+    .optional(),
+  comment: z.string().optional(),
+});
+
 export const collections = {
   docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
   snippets: defineCollection({
@@ -70,22 +90,15 @@ export const collections = {
               z.object({
                 label: z.string(),
                 description: z.string().optional(),
-                code: z.string().optional(),
-                codeLang: z.string().default("sh"),
-                comment: z.string().optional(),
-                example: z.string().optional(),
-                commands: z.array(z.array(z.string())).optional(),
-                regex: z
-                  .object({
-                    steps: z
-                      .array(
-                        z.object({
-                          find: z.string(),
-                          replace: z.string(),
-                        }),
-                      )
-                      .min(1),
-                  })
+                ...executionFields.shape,
+                platforms: z
+                  .array(
+                    z
+                      .object({
+                        os: z.array(z.enum(["macos", "linux", "windows"])).min(1),
+                      })
+                      .merge(executionFields),
+                  )
                   .optional(),
               }),
             )
