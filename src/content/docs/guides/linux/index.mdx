@@ -4,29 +4,8 @@ description: Initial system setup and secure remote access configuration using S
 lastUpdated: 2026-02-08 18:18:12
 ---
 
+import { sshConfig, sshdConfig } from "@/lib/mdxExports";
 import { Code, Steps } from "@astrojs/starlight/components";
-
-export const sshdConfig = `
-\# Disable password auth
-PasswordAuthentication no
-
-\# Prevent root login entirely
-PermitRootLogin no
-
-\# Custom SSH port (optional)
-Port 2222
-
-\# Only allow specific users (optional)
-AllowUsers {{USERNAME_VAR}} $USERNAME2 $USERNAME3
-`;
-
-export const sshConfig = `
-\# Default settings for all hosts
-Host *\n\tServerAliveInterval 60\n\tServerAliveCountMax 5
-
-\# Example host
-Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\tPort 22\n\tIdentityFile ~/.ssh/id\_{{HOSTNAME_VAR}}
-`;
 
 <p>{frontmatter.description}</p>
 
@@ -122,9 +101,9 @@ Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\t
 
        </Steps>
 
-6.  ## TODO (optional)
+6.  ## SSH authorized_keys (optional)
 
-    TODO
+    Use a system-wide authorized keys directory to manage SSH keys for multiple users from a single location.
 
        <Steps>
 
@@ -148,13 +127,11 @@ Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\t
              <Code lang="sh" wrap code={`sudo chown root:root /etc/ssh/authorized_keys/$USER`} />
              <Code lang="sh" wrap code={`sudo chmod 644 /etc/ssh/authorized_keys/$USER`} />
 
-          4. ### Edit config
+          4. ### Add AuthorizedKeysFile
 
              Open (or create) the global SSH config file on your **local** machine.
 
              <Code lang="sh" code={`sudo nano /etc/ssh/sshd_config`} />
-
-          5. ### Add AuthorizedKeysFile
 
              Add or update this line in config.
 
@@ -165,7 +142,7 @@ Host {{HOSTNAME_VAR}}\n\tHostName {{SERVER_IP_VAR}}\n\tUser {{USERNAME_VAR}}\n\t
              code={`AuthorizedKeysFile /etc/ssh/authorized_keys/%u .ssh/authorized_keys`}
              />
 
-          6. ### Restart SSH
+          5. ### Restart SSH
 
              Test configuration and restart the SSH service.
 

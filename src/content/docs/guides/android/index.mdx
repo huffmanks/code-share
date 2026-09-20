@@ -28,6 +28,7 @@ import Icon from "@/components/icon.astro";
 import { Code, Steps } from "@astrojs/starlight/components";
 
 export const bashrc = `
+export PATH="$PATH:/home/droid/.local/bin\n
 if [ -x "$(command -v zsh)" ]; then
   export SHELL=$(command -v zsh)
   exec $(command -v zsh) -l
@@ -56,39 +57,39 @@ fi
 
             Fetch the latest package lists and apply security patches.
 
-            <Code lang="sh" code={`sudo apt update && sudo apt upgrade -y`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo apt update && sudo apt upgrade -y`} />
 
         2. ### Install stash
 
             Download and run the stash installer.
 
-            <Code lang="sh" code={`curl -sSL https://raw.githubusercontent.com/huffmanks/stash/main/install.sh | bash`} />
+            <Code lang="sh" wrap preserveIndent code={`curl -sSL https://raw.githubusercontent.com/huffmanks/stash/main/install.sh | bash`} />
 
         3. ### Run stash
 
-            Run stash to create `.zshrc`, the global `.gitconfig` and `.gitignore` files and help install the necessary packages.
+            Run stash to create `.zshrc`, `.zprofile`, `.gitconfig` and `.gitignore` files and help install the necessary packages.
 
             <Code lang="sh" code={`stash`} />
 
-        4. ### Update .bashrc
+        4. ### Update .bashrc (optional)
 
-            Add this to `.bashrc` so Bash automatically starts zsh as a login shell.
+            If stash is not working as expected, or zsh is not starting as your current shell, add this to `.bashrc`. This ensures the stash path is available and Bash automatically starts zsh as a login shell.
 
             <Code lang="sh" code={`nano ~/.bashrc`} />
 
-            <Code lang="sh" title=".bashrc" code={bashrc} />
+            <Code lang="sh" title=".bashrc" wrap preserveIndent code={bashrc} />
 
-        5. ### Change default shell
+        5. ### Change default shell (optional)
 
-            Set zsh as the default login shell.
+            If zsh is still not being used as your default shell, set it as the default login shell.
 
             <Code lang="sh" code={`chsh -s $(which zsh)`} />
 
-        6. ### Compile .zshrc
+        6. ### Compile .zprofile and .zshrc
 
-            Compile `.zshrc` and restart zsh to apply the changes.
+            Compile `.zprofile`, `.zshrc` and restart zsh to apply the changes.
 
-            <Code lang="sh" code={`zcompile ~/.zshrc && exec zsh`} />
+            <Code lang="sh" wrap preserveIndent code={`zcompile ~/.zprofile && zcompile ~/.zshrc && exec zsh`} />
 
         </Steps>
 
