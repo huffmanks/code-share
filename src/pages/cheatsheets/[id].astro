@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { generateHeadMeta } from "@/lib/generateHeadMeta";
-import { getVariant } from "@/lib/utils";
+import { getVariant, slugify } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const cheatsheets = await getCollection("cheatsheets");
@@ -17,6 +17,15 @@ export async function getStaticPaths() {
 
 const { cheatsheet } = Astro.props;
 const pageUrl = Astro.url.href;
+
+const headings = cheatsheet.data.groups.flatMap((group) => [
+  { depth: 2, slug: slugify(group.title), text: group.title },
+  ...(group.items || []).map((item) => ({
+    depth: 3,
+    slug: slugify(item.label),
+    text: item.label,
+  })),
+]);
 
 const platformsFound = new Set<string>();
 cheatsheet.data.groups.forEach((group) => {
@@ -31,6 +40,7 @@ const showToggle = availablePlatforms.length > 0;
 ---
 
 <StarlightPage
+  headings={headings}
   frontmatter={{
     title: cheatsheet.data.title,
     head: generateHeadMeta({
@@ -38,7 +48,7 @@ const showToggle = availablePlatforms.length > 0;
       pageDescription: cheatsheet.data.description,
       pageUrl,
     }),
-    tableOfContents: false,
+    tableOfContents: true,
     prev: false,
     next: false,
   }}>
@@ -63,7 +73,7 @@ const showToggle = availablePlatforms.length > 0;
   {
     cheatsheet.data.groups.map((group) => (
       <div>
-        <h2>{group.title}</h2>
+        <h2 id={slugify(group.title)}>{group.title}</h2>
         <p class="group-description">{group.description}</p>
 
         {group?.syntax && (
@@ -102,7 +112,7 @@ const showToggle = availablePlatforms.length > 0;
                     borderColor: getVariant(borderColorVariants, index),
                     color: getVariant(colorVariants, index),
                   }}>
-                  <h3>{item.label}</h3>
+                  <h3 id={slugify(item.label)}>{item.label}</h3>
                   <p class="item-description">{item.description}</p>
 
                   <div class="code-example">
@@ -361,17 +371,5 @@ const showToggle = availablePlatforms.length > 0;
 
   .no-copy .copy {
     display: none;
-  }
-
-  /* ==== Overrides ==== */
-
-  .sl-container {
-    --sl-content-width: 80rem;
-  }
-
-  .sl-markdown-content
-    :not(a, strong, em, del, span, input, code, br)
-    + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
-    margin-top: 0;
   }
 </style>
