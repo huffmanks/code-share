@@ -203,6 +203,10 @@ export default defineConfig({
               link: "cheatsheets/git",
             },
             {
+              label: "golang",
+              link: "cheatsheets/golang",
+            },
+            {
               label: "jq",
               link: "cheatsheets/jq",
             },

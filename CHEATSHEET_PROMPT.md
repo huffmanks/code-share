@@ -148,4 +148,14 @@ export const collections = {
 
 ---
 
+### Additional Items Policy
+
+1. **Relevance & Utility Check:** Only add new items if they solve a practical problem, represent common workflows, or fill a genuine knowledge gap in the current cheatsheet.
+2. **Consolidation First:** Before adding a new item, scan existing entries. If a similar command, flag, or concept already exists, autonomously evaluate and merge them into a single, cleaner entry rather than creating duplicates.
+3. **Anti-Bloat Constraint:** Do not add items arbitrarily just to expand the document. Make autonomous decisions to preserve conciseness, maintain a high signal-to-noise ratio, and prevent document bloat.
+4. **Possible additions:**
+   - none
+
+---
+
 ### Source Markdown File to Refactor:

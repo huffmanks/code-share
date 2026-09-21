@@ -54,21 +54,4 @@
 
 ## Cheatsheets
 
-### Docker
-
-- [ ] Docker security best practices
-  - [ ] rootless
-  - [ ] distroless
-- [ ] Docker secrets and environment variables
-- [ ] Docker Swarm basics
-- [ ] Networking and custom bridge networks
-- [ ] Managing volumes and persistent storage
-
-### Networking
-
-- [ ] This already partially exists inside terminal cheetsheet. Move all there.
-- [ ] Have different options for native commands on macos, linux and windows.
-
-### Git
-
-- [ ] Trim, rephrase descriptions and add comments as necessary.
+- [ ] [src/pages/cheatsheets/[id].astro](src/pages/cheatsheets/[id].astro) Fix UI and styles.

@@ -1,41 +1,42 @@
 ---
 title: "pdf"
 description: "A quick reference guide covering PDF techniques and repeatable workflows."
-updatedAt: "2026-05-06"
+updatedAt: 2026-09-20 20:21:07
 groups:
-  - title: "Reduce PDF file sizes"
+  - title: "PDF Compression & Optimization"
     description: "Reduce PDF file size while balancing image quality and document fidelity."
     items:
-      - label: "Compress with Ghostscript"
-        description: "Compress a PDF using Ghostscript while preserving the original color space."
+      - label: "Balanced Compression"
+        description: "Compress a PDF using optimization settings while preserving the original color space."
+        codeLang: "sh"
         code: |
           gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dPDFSETTINGS=/ebook -dColorConversionStrategy=/LeaveColorUnchanged -dDownsampleColorImages=true -dColorImageResolution=150 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=compressed.pdf input.pdf
-        codeLang: "sh"
         comment: "-dColorImageResolution=(72 | 96 | 150 | 300)"
-      - label: "Compress with JPEG conversion"
-        description: "Convert PDF pages to JPEG images and rebuild them into a smaller PDF."
+      - label: "Raster Compression"
+        description: "Convert PDF pages to images and rebuild them into a smaller document."
+        codeLang: "sh"
         code: |
           pdftoppm -r 150 -jpeg -jpegopt quality=90 input.pdf page && img2pdf page-*.jpg -o compressed.pdf && rm page-*.jpg
-        codeLang: "sh"
         comment: "Adjust quality as necessary (1-100)"
-  - title: "Flatten high-quality print PDFs"
-    description: "Workflow for rasterizing complex vector documents to ensure instant loading and maximum compatibility without sacrificing visual clarity."
+  - title: "Print Optimization & Flattening"
+    description: "Rasterize complex vector documents to ensure instant loading and maximum compatibility."
     items:
       - label: "Import Settings"
-        description: "Open the PDF in Photoshop and configure the rendering engine."
+        description: "Configure rendering engine options upon opening the document."
+        codeLang: "text"
         code: |
           - Crop To: Media Box
           - Resolution: 300 Pixels/Inch
           - Mode: RGB Color
-        codeLang: "text"
         comment: "Changing ‘Bounding Box’ to ‘Media Box’ prevents trimming any margin."
       - label: "Flatten Image"
-        description: "Merges all layers and paths into a single background layer to ensure instant loading."
+        description: "Merge all layers and paths into a single background layer."
+        codeLang: "text"
         commands:
           - ["Layer > Flatten Image"]
+      - label: "Save Configuration"
+        description: "Apply high-quality print compression and web optimization settings."
         codeLang: "text"
-      - label: "Save configuration"
-        description: "Use the Photoshop PDF format with specific compression settings."
         code: |
           General:
             - Preset: [High Quality Print]
@@ -47,43 +48,42 @@ groups:
             - Bicubic Downsampling: 300 PPI (above 450)
             - Format: JPEG (Medium Quality)
             - Options: Check Convert 16-bit to 8-bit
-        codeLang: "text"
         commands:
           - ["File > Save As > Select Photoshop PDF"]
-  - title: "Standardize PDF page sizes"
-    description: "A workflow to scale inconsistent document pages to a uniform standard dimension."
+  - title: "Page Size Standardization"
+    description: "Scale inconsistent document pages to a uniform standard dimension."
     items:
-      - label: "Open preflight"
-        description: "Navigate to the print production suite to begin the fixup."
+      - label: "Access Preflight Suite"
+        description: "Navigate to the print production tools."
         commands:
           - ["Tools > Print Production > Preflight"]
-      - label: "Select profile library"
-        description: "Set the library to the correct versioning for scaling tools."
+      - label: "Select Profile Library"
+        description: "Set the library versioning for scaling tools."
         commands:
           - ["Select ‘Acrobat Pro DC 2015 Profiles’"]
         comment: "Found in the top dropdown menu of the Preflight window."
-      - label: "Access scaling tools"
-        description: "Switch to the fixup menu to find page adjustment options."
+      - label: "Open Scaling Fixups"
+        description: "Switch to the fixup menu for page adjustment options."
         commands:
           - ["Click wrench button"]
-      - label: "Select Scale Tool"
-        description: "Locate the specific page scaling fixup within the Pages category."
+      - label: "Configure Page Scaling"
+        description: "Locate the specific page scaling fixup within categories."
         commands:
           - ["Pages > Scale pages to specified size > Edit"]
-      - label: "Define dimensions"
-        description: "Input the exact millimeter values for the desired output size."
+      - label: "Set Target Dimensions"
+        description: "Input exact millimeter values for the target output size."
+        codeLang: "text"
         code: |
           Target Size (US Letter):
           - Short Edge: 216 mm
           - Long Edge: 279 mm
-        codeLang: "text"
-        comment: "216mm x 279mm is the standard equivalent for 8.5 x 11 inch paper."
-      - label: "Execute fix"
+        comment: "216mm x 279mm is standard for 8.5 x 11 inch paper."
+      - label: "Run Scaling Fixup"
         description: "Run the fixup and verify the results."
         commands:
           - ["Click wrench fix (bottom)"]
-      - label: "Finalize"
-        description: "Save the document once the page sizes are verified."
+      - label: "Save Document"
+        description: "Save the document once page sizes are verified."
         commands:
           - ["CMD", "S"]
 ---

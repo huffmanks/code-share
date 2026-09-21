@@ -118,21 +118,11 @@ const showToggle = availablePlatforms.length > 0;
                           </div>
                         )}
 
-                        {block.payload.code && (
-                          <Code lang={block.payload.codeLang || "sh"} wrap preserveIndent code={block.payload.code} />
+                        {block.payload?.code && (
+                          <Code lang={block.payload.codeLang ?? "sh"} wrap preserveIndent code={block.payload.code} />
                         )}
 
-                        {block.payload.example && (
-                          <Code
-                            title="Example"
-                            lang={block.payload.codeLang || "sh"}
-                            wrap
-                            preserveIndent
-                            code={block.payload.example}
-                          />
-                        )}
-
-                        {block.payload.commands && (
+                        {block.payload?.commands?.length && (
                           <div class="commands-wrapper">
                             {block.payload.commands.map((cmd, cmdIndex) => (
                               <>
@@ -157,7 +147,7 @@ const showToggle = availablePlatforms.length > 0;
                           </div>
                         )}
 
-                        {block.payload.regex?.steps && (
+                        {block.payload?.regex?.steps?.length && (
                           <div class="regex-wrapper">
                             {block.payload.regex.steps.map((step) => (
                               <div class="regex-step">
@@ -169,6 +159,23 @@ const showToggle = availablePlatforms.length > 0;
                                 </div>
                               </div>
                             ))}
+                          </div>
+                        )}
+
+                        {block.payload.example && (
+                          <div
+                            class={
+                              Boolean(block.payload.regex?.steps?.length) || block.payload.codeLang === "regex"
+                                ? "no-copy"
+                                : undefined
+                            }>
+                            <Code
+                              title="Example"
+                              lang={block.payload.codeLang === "regex" ? "txt" : (block.payload.codeLang ?? "sh")}
+                              wrap
+                              preserveIndent
+                              code={block.payload.example}
+                            />
                           </div>
                         )}
 
