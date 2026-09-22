@@ -1,0 +1,125 @@
+---
+import Icon from "@/components/icon.astro";
+import type { IconName } from "@/types";
+
+interface Props {
+  title: string;
+  href: string;
+  icon: IconName;
+}
+
+const { href, title, icon } = Astro.props;
+---
+
+<article class="card" style="padding: 0px">
+  <a class="link" href={href} title={title}>
+    <h2 class="title sl-flex">
+      {icon && <Icon name={icon} class="icon" size="1em" />}
+      <span set:html={title} />
+    </h2>
+    <slot class="body" />
+  </a>
+
+  <div class="arrow-container">
+    <Icon name="arrow-right-icon" class="right-arrow-icon" size="1.333em" />
+  </div>
+</article>
+
+<style>
+  @layer starlight.components {
+    .card {
+      --sl-card-border: var(--sl-color-purple);
+      --sl-card-bg: var(--sl-color-purple-low);
+      border: 1px solid var(--sl-color-gray-5);
+      background-color: var(--sl-color-black);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: clamp(0.5rem, calc(0.125rem + 1vw), 1rem);
+
+      border-radius: 0.5rem;
+      box-shadow: var(--sl-shadow-sm);
+      position: relative;
+      transition: border-color 0.2s ease;
+
+      &:has(.link:hover, .link:focus-visible) {
+        border-color: var(--sl-color-accent);
+
+        .right-arrow-icon {
+          color: var(--sl-color-accent);
+        }
+      }
+    }
+
+    .card:nth-child(4n + 1) {
+      --sl-card-border: var(--sl-color-orange);
+      --sl-card-bg: var(--sl-color-orange-low);
+    }
+    .card:nth-child(4n + 3) {
+      --sl-card-border: var(--sl-color-green);
+      --sl-card-bg: var(--sl-color-green-low);
+    }
+    .card:nth-child(4n + 4) {
+      --sl-card-border: var(--sl-color-red);
+      --sl-card-bg: var(--sl-color-red-low);
+    }
+    .card:nth-child(5) {
+      --sl-card-border: var(--sl-color-blue);
+      --sl-card-bg: var(--sl-color-blue-low);
+    }
+    .card:nth-child(n + 6) .icon {
+      border: 1px solid var(--sl-color-gray-5);
+      background-color: var(--sl-color-black);
+    }
+
+    .card .link {
+      display: block;
+      padding: clamp(1rem, calc(0.125rem + 1.5vw), 2.5rem);
+      text-decoration: none;
+      color: currentColor;
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        color: inherit;
+        text-decoration: none;
+        outline: none;
+      }
+    }
+
+    .title {
+      gap: 1rem;
+      align-items: center;
+
+      & span {
+        font-weight: 600;
+        font-size: var(--sl-text-h4);
+        color: var(--sl-color-white);
+        line-height: var(--sl-line-height-headings);
+      }
+    }
+
+    .card .icon {
+      border: 1px solid var(--sl-card-border);
+      background-color: var(--sl-card-bg);
+      padding: 0.2em;
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .arrow-container {
+      padding-right: clamp(1rem, calc(0.125rem + 1.5vw), 2.5rem);
+      pointer-events: none;
+    }
+
+    .card .right-arrow-icon {
+      color: var(--sl-color-gray-3);
+      transition: color 0.2s ease;
+    }
+
+    .card .body {
+      margin: 0;
+      font-size: clamp(var(--sl-text-sm), calc(0.5rem + 1vw), var(--sl-text-body));
+    }
+  }
+</style>

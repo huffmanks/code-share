@@ -1,0 +1,30 @@
+---
+title: Getting started
+description: ""
+lastUpdated: 2026-09-22 14:00:41
+references:
+  - href: https://github.com/christitustech/winutil
+    label: Window’s Utility
+    icon: github-icon
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Run Windows Utility
+
+    <Code lang="sh" wrap preserveIndent code={`irm https://christitus.com/win | iex`} />
+
+</Steps>

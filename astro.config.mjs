@@ -147,16 +147,6 @@ export default defineConfig({
               ],
             },
             {
-              label: "Android",
-              collapsed: true,
-              items: [
-                {
-                  label: "Getting started",
-                  slug: "guides/android",
-                },
-              ],
-            },
-            {
               label: "Docker",
               collapsed: true,
               items: [
@@ -177,6 +167,26 @@ export default defineConfig({
                   label: "Archived",
                   collapsed: true,
                   autogenerate: { directory: "guides/docker/archived", collapsed: true },
+                },
+              ],
+            },
+            {
+              label: "Android",
+              collapsed: true,
+              items: [
+                {
+                  label: "Getting started",
+                  slug: "guides/android",
+                },
+              ],
+            },
+            {
+              label: "Windows",
+              collapsed: true,
+              items: [
+                {
+                  label: "Getting started",
+                  slug: "guides/windows",
                 },
               ],
             },

@@ -18,36 +18,53 @@ hero:
       variant: secondary
     - text: Docker
       link: /guides/docker
-      icon: seti:docker
+      icon: '<svg aria-hidden="true" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;--sl-icon-size: 1.5rem;"><use href="/icons.svg#docker-icon"></use></svg>'
       variant: secondary
-    - text: Snippets
-      link: /snippets
-      icon: seti:jade
+    - text: Android
+      link: /guides/android
+      icon: '<svg aria-hidden="true" aria-hidden="true" width="16" height="16" viewBox="0 0 1024 1024" style="display:inline-block;vertical-align:middle;--sl-icon-size: 1.5rem;"><use href="/icons.svg#android-icon"></use></svg>'
+      variant: secondary
+    - text: Windows
+      link: /guides/windows
+      icon: '<svg aria-hidden="true" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;--sl-icon-size: 1.5rem;"><use href="/icons.svg#windows-icon"></use></svg>'
       variant: secondary
     - text: Cheatsheets
       link: /cheatsheets
-      icon: document
+      icon: '<svg aria-hidden="true" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;--sl-icon-size: 1.5rem;"><use href="/icons.svg#cheatsheet-icon"></use></svg>'
+      variant: secondary
+    - text: Snippets
+      link: /snippets
+      icon: '<svg aria-hidden="true" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style="display:inline-block;vertical-align:middle;--sl-icon-size: 1.5rem;"><use href="/icons.svg#snippet-icon"></use></svg>'
       variant: secondary
 ---
 
-import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
+import { CardGrid } from "@astrojs/starlight/components";
+
+import Card from "@/components/custom-card.astro";
+import Icon from "@/components/icon.astro";
 
 ## Next steps
 
 <CardGrid stagger>
-  <Card title="Linux" icon="linux">
+  <Card href="/guides/linux" title="Linux" icon="linux-icon">
     Getting started guides with Linux.
   </Card>
-  <Card title="macOS" icon="apple">
+  <Card href="/guides/macos" title="macOS" icon="apple-icon">
     Getting started guides with macOS.
   </Card>
-  <Card title="Docker" icon="seti:docker">
+  <Card href="/guides/docker" title="Docker" icon="docker-icon">
     Getting started guides with Docker.
   </Card>
-  <Card title="Snippets" icon="seti:jade">
-    A collection of code snippets.
+  <Card href="/guides/android" title="Android" icon="android-icon">
+    Getting started guides with Android.
   </Card>
-  <Card title="Cheatsheets" icon="document">
+  <Card href="/guides/windows" title="Windows" icon="windows-icon">
+    Getting started guides with Windows.
+  </Card>
+  <Card href="/cheatsheets" title="Cheatsheets" icon="cheatsheet-icon">
     A collection of cheatsheets.
+  </Card>
+  <Card href="/snippets" title="Snippets" icon="snippet-icon">
+    A collection of code snippets.
   </Card>
 </CardGrid>

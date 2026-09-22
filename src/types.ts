@@ -42,7 +42,13 @@ export type IconName =
   | "mealie-icon"
   | "opencloud-icon"
   | "paperless-icon"
-  | "traefik-icon";
+  | "traefik-icon"
+  | "pocket-id-icon"
+  | "android-icon"
+  | "linux-icon"
+  | "snippet-icon"
+  | "cheatsheet-icon"
+  | "arrow-right-icon";
 
 export type Fragment = {
   filename: string;
