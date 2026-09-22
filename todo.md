@@ -1,11 +1,5 @@
 # Todos
 
-## Fixes
-
-- [ ] Snippet card: move action buttons to right of title, to tighten up card.
-
----
-
 ## Settings
 
 - [ ] Add tabs for package manager in guides. e.g. apt, dnf, homebrew, macports, pacman

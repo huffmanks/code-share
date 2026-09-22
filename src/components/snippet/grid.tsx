@@ -41,9 +41,26 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <span>{time}</span>
       </div>
       <div className={styles["card-inner"]}>
-        <h2 id={snippet.id} className={styles.title}>
-          {snippet.data.title}
-        </h2>
+        <div className={styles["card-inner-header"]}>
+          <h2 id={snippet.id} className={styles.title}>
+            {snippet.data.title}
+          </h2>
+          <div className={styles["action-buttons"]}>
+            <button
+              className="btn"
+              style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
+              onClick={handleDownload}>
+              <ButtonIcon.download />
+            </button>
+            <a
+              href={`/snippets/${snippet.id}`}
+              className="btn"
+              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
+              <ButtonIcon.external />
+            </a>
+          </div>
+        </div>
+
         <div className={styles.languages}>
           {languages.map((languageInfo) => {
             const LanguageIconComponent = LanguageIcon[languageInfo.extension];
@@ -61,18 +78,15 @@ function SnippetCard({ snippet }: { snippet: SnippetWithHtml }) {
         <div className={styles["tags-container"]}>
           {snippet.data.tags &&
             snippet.data.tags.map((tag: string, index: number) => (
-              <div className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
+              <div
+                className="badge"
+                style={{
+                  border: `1px solid ${getVariant(borderColorVariants, index)}`,
+                  color: getVariant(colorVariants, index),
+                }}>
                 {tag}
               </div>
             ))}
-        </div>
-        <div className={styles["action-buttons"]} style={{ marginBottom: snippet.data.fragments.length > 1 ? "0.5rem" : "1.25rem" }}>
-          <button className="btn" style={{ borderRight: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }} onClick={handleDownload}>
-            <ButtonIcon.download />
-          </button>
-          <a href={`/snippets/${snippet.id}`} className="btn" style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
-            <ButtonIcon.external />
-          </a>
         </div>
       </div>
       <Tabs fragments={snippet.data.fragments} codeFragments={snippet.codeFragments} />

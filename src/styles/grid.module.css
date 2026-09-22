@@ -33,6 +33,14 @@
   padding: 10px 15px 0;
 }
 
+.card-inner-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 5px;
+}
+
 .card-inner + div {
   display: flex;
   flex-direction: column;
@@ -44,10 +52,16 @@
 }
 
 .title {
-  margin-bottom: 5px;
+  min-width: 0;
   color: var(--sl-color-white);
   line-height: var(--sl-line-height-headings);
   text-wrap: balance;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .languages {
@@ -57,7 +71,6 @@
 }
 
 .language {
-  margin-bottom: 10px;
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -65,7 +78,7 @@
 }
 
 .description {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: var(--sl-color-gray-3);
 }
 
