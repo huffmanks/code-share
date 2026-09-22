@@ -34,7 +34,7 @@
 
 - Docker apps
   - [ ] zerobyte
-  - [ ] norish (replace for mealie)
+  - [ ] norish (replace for mealie) > Update compose and add .env
   - [ ] archivebox
   - [ ] excalidraw
   - [ ] filecloud

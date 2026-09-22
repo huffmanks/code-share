@@ -273,6 +273,7 @@ export const appPorts = {
   mealie: 9925,
   nextcloud: 8443,
   nginxProxyManager: 81,
+  norish: 3009,
   ntfy: 8383,
   openWebUi: 3007,
   opencloud: 9200,

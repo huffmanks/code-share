@@ -1,0 +1,52 @@
+services:
+  norish:
+    image: norishapp/norish:latest
+    container_name: norish-app
+    restart: always
+    ports:
+      - "3009:3000"
+    user: "1000:1000"
+    volumes:
+      - norish_data:/app/uploads
+    environment:
+      AUTH_URL: "{{SERVER_IP_VAR}}:3009"
+      TRUSTED_ORIGINS: "{{SERVER_IP_VAR}}:3009,http://localhost:3009,http://127.0.0.1:3009"
+      BETTER_AUTH_TRUSTED_ORIGINS: "{{SERVER_IP_VAR}}:3009,http://localhost:3009,http://127.0.0.1:3009"
+      DATABASE_URL: postgres://postgres:norish@db:5432/norish
+      MASTER_KEY: RrZTvrrvvArkbAdF3J2j+t+JmmSIg6xNgAb+u/yHqW4=
+      OBSCURA_ENDPOINT: ws://obscura:9222
+      REDIS_URL: redis://redis:6379
+      UPLOADS_DIR: /app/uploads
+      PASSWORD_AUTH_ENABLED: true
+      ENABLE_REGISTRATION: true
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:17-alpine
+    container_name: norish-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: norish
+      POSTGRES_DB: norish
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  obscura:
+    image: norishapp/obscura:0.2.0-norish.1
+    container_name: norish-obscura
+    restart: unless-stopped
+
+  redis:
+    image: redis:8.4.0
+    container_name: norish-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  db_data:
+  norish_data:
+  redis_data:
