@@ -32,12 +32,42 @@ const snippets = await Promise.all(
     return { ...snippet, codeFragments };
   }),
 );
+
+const headMeta = generateHeadMeta({
+  pageTitle: "Snippets",
+  pageDescription: "A collection of useful code snippets for various programming languages and tasks.",
+  pageUrl,
+});
 ---
 
 <StarlightPage
   frontmatter={{
     title: "Snippets",
-    head: generateHeadMeta({ pageTitle: "Snippets", pageDescription: "A collection of useful code snippets for various programming languages and tasks.", pageUrl }),
+    head: [
+      ...headMeta,
+      {
+        tag: "style",
+        content: `
+          .sl-container {
+            --sl-content-width: 84rem;
+          }
+          .sl-container .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+            margin-top: 0;
+          }
+          .sl-container .sl-markdown-content h2:not(:where(.not-content *)) {
+            font-size: 1.5rem;
+          }
+          @media (min-width: 50rem) {
+            .header {
+              --__toc-width: unset;
+            }
+          }
+          .header :nth-child(2).sl-flex {
+            display: block;
+          }
+        `,
+      },
+    ],
     tableOfContents: false,
     prev: false,
     next: false,
@@ -45,29 +75,3 @@ const snippets = await Promise.all(
   }}>
   <SnippetContainer client:visible snippets={snippets} />
 </StarlightPage>
-
-<style is:inline>
-  /* ==== Overrides ==== */
-
-  .sl-container {
-    --sl-content-width: 84rem;
-  }
-
-  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
-    margin-top: 0;
-  }
-
-  .sl-markdown-content h2:not(:where(.not-content *)) {
-    font-size: 1.5rem;
-  }
-
-  @media (min-width: 50rem) {
-    .header {
-      --__toc-width: unset;
-    }
-  }
-
-  .header :nth-child(2).sl-flex {
-    display: block;
-  }
-</style>

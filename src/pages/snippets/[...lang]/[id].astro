@@ -25,12 +25,35 @@ const pageUrl = Astro.url.href;
 
 const languages = getLanguagesInfo(snippet.data.fragments);
 const time = formatRelativeTime(snippet.data.updatedAt);
+
+const headMeta = generateHeadMeta({
+  pageTitle: snippet.data.title,
+  pageDescription: snippet.data.description,
+  pageUrl,
+  parentTitle: "Snippet",
+});
 ---
 
 <StarlightPage
   frontmatter={{
     title: snippet.data.title,
-    head: generateHeadMeta({ pageTitle: snippet.data.title, pageDescription: snippet.data.description, pageUrl, parentTitle: "Snippet" }),
+    head: [
+      ...headMeta,
+      {
+        tag: "style",
+        content: `
+          .sl-markdown-content article :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+            margin-top: 0;
+          }
+          main .content-panel {
+            padding-bottom: 10px;
+          }
+          starlight-tabs ul[role="tablist"] a[role="tab"] {
+            white-space: nowrap;
+          }
+        `,
+      },
+    ],
     tableOfContents: false,
     prev: false,
     next: false,
@@ -59,7 +82,12 @@ const time = formatRelativeTime(snippet.data.updatedAt);
       {
         snippet.data.tags &&
           snippet.data.tags.map((tag: string, index: number) => (
-            <div class="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index) }}>
+            <div
+              class="badge"
+              style={{
+                border: `1px solid ${getVariant(borderColorVariants, index)}`,
+                color: getVariant(colorVariants, index),
+              }}>
               {tag}
             </div>
           ))
@@ -103,7 +131,7 @@ const time = formatRelativeTime(snippet.data.updatedAt);
   </article>
 </StarlightPage>
 
-<style is:inline>
+<style>
   .time {
     font-weight: bold;
     font-size: 0.9rem;
@@ -174,19 +202,5 @@ const time = formatRelativeTime(snippet.data.updatedAt);
   .fragment-code.expressive-code .frame.has-title:not(.is-terminal) .header::before,
   .fragment-code.expressive-code .frame.has-title:not(.is-terminal) span.title {
     border: none;
-  }
-
-  /* ==== Overrides ==== */
-
-  .sl-markdown-content :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
-    margin-top: 0;
-  }
-
-  .content-panel {
-    padding-bottom: 10px;
-  }
-
-  starlight-tabs ul[role="tablist"] a[role="tab"] {
-    white-space: nowrap;
   }
 </style>
