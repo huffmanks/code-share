@@ -19,10 +19,6 @@
 - [ ] Move tailscale to it’s own page.
 - [ ] Move Adguard + NPM to docker apps.
 
-### macOS
-
-- [ ] Update to use stash instead of installing all of those packages and global configs.
-
 ### Windows
 
 - [ ] Add setup
