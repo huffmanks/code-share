@@ -1,9 +1,9 @@
 ---
-title: Glance
-description: "A self-hosted dashboard that puts all your feeds in one place."
-lastUpdated: 2025-12-28 20:28:55
+title: dynacat
+description: "Self-hosted dashboard built for people who want their information in one place."
+lastUpdated: 2026-09-23 10:25:44
 references:
-  - href: https://github.com/glanceapp/glance
+  - href: https://github.com/Panonim/dynacat
     label: GitHub
     icon: "github-icon"
 ---
@@ -11,9 +11,9 @@ references:
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code, FileTree } from "@astrojs/starlight/components";
-import composeYml from "/src/files/compose/glance.yml?raw";
-import glanceYml from "/src/files/config/glance/glance.yml?raw";
-import homeYml from "/src/files/config/glance/home.yml?raw";
+import composeYml from "/src/files/compose/dynacat.yml?raw";
+import dynacatYml from "/src/files/config/dynacat/dynacat.yml?raw";
+import homeYml from "/src/files/config/dynacat/home.yml?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -27,9 +27,9 @@ import homeYml from "/src/files/config/glance/home.yml?raw";
 
 <FileTree>
 
-- glance
+- dynacat
   - config
-    - glance.yml (\*)
+    - dynacat.yml (\*)
     - home.yml (\*)
   - assets
     - user.css
@@ -41,7 +41,7 @@ import homeYml from "/src/files/config/glance/home.yml?raw";
 ## Make directory
 
 ```sh wrap preserveIndent
-mkdir -p {{DOCKER_PATH_VAR}}/glance && cd {{DOCKER_PATH_VAR}}/glance
+mkdir -p {{DOCKER_PATH_VAR}}/dynacat && cd {{DOCKER_PATH_VAR}}/dynacat
 ```
 
 ## compose.yml
@@ -52,13 +52,13 @@ nano compose.yml
 
 <Code lang="yml" title="compose.yml" wrap preserveIndent code={composeYml} />
 
-## glance.yml
+## dynacat.yml
 
 ```sh
-nano ./config/glance.yml
+nano ./config/dynacat.yml
 ```
 
-<Code lang="yml" title="./config/glance.yml" wrap preserveIndent code={glanceYml} />
+<Code lang="yml" title="./config/dynacat.yml" wrap preserveIndent code={dynacatYml} />
 
 ## home.yml
 

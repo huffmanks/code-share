@@ -1,0 +1,82 @@
+---
+title: Glance
+description: "A self-hosted dashboard that puts all your feeds in one place."
+lastUpdated: 2026-09-23 10:28:02
+references:
+  - href: https://github.com/glanceapp/glance
+    label: GitHub
+    icon: "github-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import ServiceNotice from "@/components/guides/service-notice.astro";
+import { Code, FileTree } from "@astrojs/starlight/components";
+import composeYml from "/src/files/compose/glance.yml?raw";
+import glanceYml from "/src/files/config/glance/glance.yml?raw";
+import homeYml from "/src/files/config/glance/home.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+<ServiceNotice serviceName="dynacat" linkPath="/guides/docker/apps/dynacat" />
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Directory structure
+
+<FileTree>
+
+- glance
+  - config
+    - glance.yml (\*)
+    - home.yml (\*)
+  - assets
+    - user.css
+  - compose.yml (\*)
+  - .env
+
+</FileTree>
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/glance && cd {{DOCKER_PATH_VAR}}/glance
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={composeYml} />
+
+## glance.yml
+
+```sh
+nano ./config/glance.yml
+```
+
+<Code lang="yml" title="./config/glance.yml" wrap preserveIndent code={glanceYml} />
+
+## home.yml
+
+```sh
+nano ./config/home.yml
+```
+
+<Code lang="yml" title="./config/home.yml" wrap preserveIndent code={homeYml} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="8282" />

@@ -34,11 +34,9 @@
 
 - Docker apps
   - [ ] zerobyte
-  - [ ] norish (replace for mealie) > Update compose and add .env
   - [ ] archivebox
   - [ ] excalidraw
   - [ ] filecloud
-  - [ ] dynacat (fork replacement for glance)
   - [ ] kasm
   - [ ] postal
   - [ ] rustdesk

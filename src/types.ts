@@ -48,7 +48,8 @@ export type IconName =
   | "linux-icon"
   | "snippet-icon"
   | "cheatsheet-icon"
-  | "arrow-right-icon";
+  | "arrow-right-icon"
+  | "norish-icon";
 
 export type Fragment = {
   filename: string;

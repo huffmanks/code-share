@@ -6,13 +6,16 @@ references:
   - href: https://github.com/norish-recipes/norish
     label: GitHub
     icon: "github-icon"
+  - href: https://docs.norish.dev
+    label: Docs
+    icon: "norish-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/norish.yml?raw";
-// import env from "/src/files/env/norish.env?raw";
+import env from "/src/files/env/norish.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -35,14 +38,14 @@ nano compose.yml
 ```
 
 <Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
-{/*
+
 ## .env
 
 ```sh
 nano .env
 ```
 
-<Code lang="dotenv" title=".env" wrap preserveIndent code={env} /> */}
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 

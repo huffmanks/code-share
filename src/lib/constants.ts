@@ -260,6 +260,7 @@ export const appPorts = {
   convexBackend: 3210,
   convexDashboard: 6791,
   dockge: 5001,
+  dynacat: 8282,
   echoLinkBackend: 9090,
   echoLinkFrontend: 3008,
   enclosed: 8787,
