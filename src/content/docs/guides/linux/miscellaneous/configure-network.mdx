@@ -1,0 +1,111 @@
+---
+title: Configure network
+description: This process configures your server to use Netplan and systemd-resolved to manage both ethernet and Wi-Fi connections through a single, unified configuration file.
+lastUpdated: 2026-09-23 10:39:16
+---
+
+import { netplanConfig, systemdResolvedConfig } from "@/lib/mdx-constants";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+<Steps>
+
+1.  ## Install network driver (if applicable)
+
+    <Code lang="sh" code={`lspci -nnk | grep -iA 3 net`} />
+
+    If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
+
+    <Code
+      lang="sh"
+      wrap
+      code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`}
+    />
+
+    For changes to take effect, reboot the system.
+
+    <Code lang="sh" code={`sudo reboot`} />
+
+    Verify the driver is active by running `ip link`. A wireless interface, typically `wlan0`, should now appear in the list.
+
+2.  ## Install and enable wpa_supplicant
+
+    <Code lang="sh" wrap code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`} />
+
+3.  ## Create symlink to systemd-resolved
+
+    <Code lang="sh" wrap code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
+
+4.  ## Network configuration
+
+      <Tabs syncKey="network-config">
+
+         <TabItem label="systemd-resolved">
+
+            ### systemd-resolved
+
+               <Steps>
+
+               1. Open netplan config
+
+                     <Code lang="sh" wrap code={`sudo nano /etc/systemd/resolved.conf.d/10-override-dns.conf`} />
+
+               2.  Update config
+
+                     <Code lang="yaml" wrap preserveIndent title="/etc/systemd/resolved.conf.d/10-override-dns.conf" code={systemdResolvedConfig} />
+
+               </Steps>
+
+         </TabItem>
+
+         <TabItem label="netplan">
+
+            ### netplan
+
+               <Steps>
+
+               1. Open netplan config
+
+                     <Code lang="sh" wrap code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+
+               2.  Update config
+
+                     - Replace `enp3s0` with your ethernet ID from `ip link`.
+                     - Replace `wlan0` with your Wi-Fi ID from `ip link`.
+                     - Replace `Your_SSID_Name` and `Your_Password` under access-points.
+
+                     <Code lang="yaml" wrap preserveIndent title="/etc/netplan/50-cloud-init.yaml" code={netplanConfig} />
+
+               3.  Apply the config
+
+                     <Code lang="sh" code={`sudo chown root:root /etc/netplan/50-cloud-init.yaml && sudo chmod 600 /etc/netplan/50-cloud-init.yaml`} />
+
+               4.  Apply the config
+
+                     <Code lang="sh" code={`sudo netplan apply`} />
+
+
+               </Steps>
+
+         </TabItem>
+
+      </Tabs>
+
+    <br />
+
+5.  ## Restart systemd-resolved
+
+    <Code lang="sh" code={`sudo systemctl restart systemd-resolved`} />
+
+6.  ## Enable systemd-networkd-wait-online
+
+    <Code lang="sh" wrap code={`sudo systemctl enable systemd-networkd-wait-online.service`} />
+
+7.  ## Reboot the system
+
+    <Code lang="sh" code={`sudo reboot`} />
+
+</Steps>

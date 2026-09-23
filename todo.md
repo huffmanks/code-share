@@ -10,12 +10,6 @@
 
 ### Linux
 
-- [ ] Move SSH to its own page.
-- [ ] Make miscellaneous page and child items break out from current misc page.
-- [ ] Make storage page and child items for NFS, SMB, Rsync, External HDD
-
-- [ ] Move tailscale to it’s own page.
-- [ ] Move Adguard + NPM to docker apps.
 - [ ] Update security page with more content:
   - [ ] AppArmor / SELinux: Could add a section recommending enabling AppArmor profiles.
   - [ ] Automatic log rotation: logrotate for SSH, Fail2Ban logs.

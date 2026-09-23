@@ -1,0 +1,62 @@
+---
+title: Laptop optimization
+description: This ensures your laptop stays awake with the lid closed, maintains a stable network connection and boots quickly by ignoring unused network interfaces.
+lastUpdated: 2026-09-23 10:41:04
+---
+
+import { logindConf, noSleepConfig } from "@/lib/mdx-constants";
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+<Steps>
+
+1.  ## Lid and sleep configuration
+
+    These steps prevent the system from suspending or shutting down when the lid is closed or the power button is pressed.
+
+       <Steps>
+
+          1. ### Open logind config
+
+             <Code lang="sh" code={`sudo nano /etc/systemd/logind.conf`} />
+
+          2. ### Update config
+
+             Update the following lines to `ignore` to keep the system awake.
+
+             <Code lang="sh" title="/etc/systemd/logind.conf" code={logindConf} />
+
+          3. ### Restart logind
+
+             <Code lang="sh" code={`sudo systemctl restart systemd-logind`} />
+
+       </Steps>
+
+2.  ## Disable system-wide sleep
+
+    To prevent the kernel from attempting to sleep even if triggered by software, create a “no-sleep” override.
+
+       <Steps>
+
+          1. ### Create nosuspend config
+
+             <Code
+             lang="sh"
+             wrap
+             code={`sudo mkdir -p /etc/systemd/sleep.conf.d/ && sudo nano /etc/systemd/sleep.conf.d/nosuspend.conf`}
+             />
+
+          2. ### Add config
+
+             <Code lang="sh" wrap title="/etc/systemd/sleep.conf.d/nosuspend.conf" code={noSleepConfig} />
+
+          3. ### Reload daemon
+
+             <Code lang="sh" code={`sudo systemctl daemon-reload`} />
+
+       </Steps>
+
+</Steps>

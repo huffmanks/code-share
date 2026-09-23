@@ -93,37 +93,27 @@ export default defineConfig({
                   slug: "guides/linux",
                 },
                 {
-                  label: "External HDD setup",
-                  slug: "guides/linux/external-hdd-setup",
-                },
-                {
-                  label: "Miscellaneous",
-                  slug: "guides/linux/miscellaneous",
-                },
-                {
-                  label: "NFS",
-                  slug: "guides/linux/nfs",
-                },
-                {
-                  label: "Remote & local access",
-                  slug: "guides/linux/remote-local-access",
-                },
-                {
-                  label: "Rsync",
-                  slug: "guides/linux/rsync",
+                  label: "SSH",
+                  slug: "guides/linux/ssh",
                 },
                 {
                   label: "Security",
                   slug: "guides/linux/security",
                 },
                 {
-                  label: "SMB",
-                  slug: "guides/linux/smb",
-                },
-                {
                   label: "Programs",
                   collapsed: true,
                   autogenerate: { directory: "guides/linux/programs", collapsed: true },
+                },
+                {
+                  label: "Storage",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/linux/storage", collapsed: true },
+                },
+                {
+                  label: "Miscellaneous",
+                  collapsed: true,
+                  autogenerate: { directory: "guides/linux/miscellaneous", collapsed: true },
                 },
               ],
             },

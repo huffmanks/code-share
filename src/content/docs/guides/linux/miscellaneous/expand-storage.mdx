@@ -1,0 +1,27 @@
+---
+title: Expand storage
+description: This process extends the logical volume and resizes the filesystem to utilize all remaining unallocated space on your primary hard drive.
+lastUpdated: 2026-09-23 10:36:54
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+<Steps>
+
+1.  ## Extend the logical volume
+
+    <Code lang="sh" code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`} />
+
+2.  ## Resize the filesystem
+
+    <Code lang="sh" code={`sudo resize2fs /dev/ubuntu-vg/ubuntu-lv`} />
+
+3.  ## Verify
+
+    <Code lang="sh" code={`df -h /`} />
+
+</Steps>

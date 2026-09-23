@@ -1,0 +1,63 @@
+---
+title: Tailscale
+description: "Install and configure the Tailscale client to establish a secure mesh network and manage node connectivity."
+lastUpdated: 2026-09-23 10:48:22
+references:
+  - href: https://tailscale.com/kb
+    label: Tailscale
+    icon: "tailscale-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { ethtool, ipForwarding, networkdDispatcher } from "@/lib/mdx-constants";
+import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+<Steps>
+
+1.  ## Install
+
+        ```sh
+        curl -fsSL https://tailscale.com/install.sh | sh
+        ```
+
+2.  ## Optimizations for subnet routers and exit nodes (optional)
+
+        Enable IP forwarding and adjust network interface offloading to maximize throughput for routed traffic.
+
+        ### Network performance
+
+        <Code lang="sh"  wrap preserveIndent code={ethtool} />
+
+        ### Persist on reboot
+
+        <Code lang="sh"  wrap preserveIndent code={networkdDispatcher} />
+
+        ### Enable IP forwarding
+
+        <Code lang="sh"  wrap preserveIndent code={ipForwarding} />
+
+3.  ## Start
+
+        <Code lang="sh" wrap preserveIndent code={`sudo tailscale up --advertise-routes={{SUBNET_VAR}} --accept-dns=false --advertise-exit-node --accept-routes=false`} />
+
+4.  ## Admin console
+
+        - Go to <a class="link" href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">https://login.tailscale.com/admin/machines</a>.
+        - Approve `exit node` and `subnet routes` for your device.
+        - Go to DNS > **Nameservers**.
+        - **Add Nameserver:** Select `Custom`.
+        - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
+        - **Override Local DNS:** toggle to `ON`.
+
+</Steps>

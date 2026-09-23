@@ -1,7 +1,7 @@
 ---
-title: Remote & local Access
+title: Adguard & NPM
 description: "Access your home services via a secure URL from anywhere in the world. This guide covers setting up AdGuard Home for custom DNS, Nginx Proxy Manager for wildcard SSL certificates via Cloudflare and Tailscale for a zero-config VPN mesh."
-lastUpdated: 2025-12-28 20:28:55
+lastUpdated: 2026-09-23 10:56:51
 tableOfContents:
   maxHeadingLevel: 5
 references:
@@ -11,28 +11,16 @@ references:
   - href: https://github.com/NginxProxyManager/nginx-proxy-manager
     label: Nginx Proxy Manager
     icon: "github-icon"
-  - href: https://tailscale.com/kb
-    label: Tailscale
-    icon: "tailscale-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import {
-  adguardAdminLink,
-  adguardSetupLink,
-  ethtool,
-  ipForwarding,
-  networkdDispatcher,
-  npmServerLink,
-  serverIp,
-  virtualIp,
-} from "@/lib/mdx-constants";
-import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-import composeYml from "/src/files/compose/remote-local-access.yml?raw";
-import composeWithSyncYml from "/src/files/compose/remote-local-access_sync.yml?raw";
+import { adguardAdminLink, adguardSetupLink, npmServerLink, serverIp, virtualIp } from "@/lib/mdx-constants";
+import { Code, LinkCard, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+import composeYml from "/src/files/compose/adguard-npm.yml?raw";
+import composeWithSyncYml from "/src/files/compose/adguard-npm_sync.yml?raw";
 import keepalivedConfig from "/src/files/config/keepalived/keepalived.conf?raw";
-import env from "/src/files/env/remote-local-access.env?raw";
+import env from "/src/files/env/adguard-npm.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -48,49 +36,13 @@ import env from "/src/files/env/remote-local-access.env?raw";
 
 1.  ## Tailscale
 
-        Install and configure the Tailscale client to establish a secure mesh network and manage node connectivity.
-
-        <Steps>
-
-        1. ### Install
-
-                ```sh
-                curl -fsSL https://tailscale.com/install.sh | sh
-                ```
-
-        2. ### Optimizations for subnet routers and exit nodes (optional)
-
-                Enable IP forwarding and adjust network interface offloading to maximize throughput for routed traffic.
-
-                #### Network performance
-
-                <Code lang="sh"  wrap preserveIndent code={ethtool} />
-
-                #### Persist on reboot
-
-                <Code lang="sh"  wrap preserveIndent code={networkdDispatcher} />
-
-                #### Enable IP forwarding
-
-                <Code lang="sh"  wrap preserveIndent code={ipForwarding} />
-
-        3. ### Start
-
-                <Code lang="sh" wrap preserveIndent code={`sudo tailscale up --advertise-routes={{SUBNET_VAR}} --accept-dns=false --advertise-exit-node --accept-routes=false`} />
-
-
-        4. ### Admin console
-
-                - Go to <a class="link" href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">https://login.tailscale.com/admin/machines</a>.
-                - Approve `exit node` and `subnet routes` for your device.
-                - Go to DNS > **Nameservers**.
-                - **Add Nameserver:** Select `Custom`.
-                - **IP address:** Enter your `Tailscale IP` *(100.x.y.z)*.
-                - **Override Local DNS:** toggle to `ON`.
-
-        </Steps>
-
-        <br />
+    <LinkCard
+      title="Setup Tailscale"
+      href="/guides/linux/programs/tailscale"
+      description="Install and configure the Tailscale client to establish a secure mesh network and manage node connectivity."
+      target="_blank"
+      rel="noopener noreferrer"
+    />
 
 2.  ## Docker
 
@@ -204,13 +156,21 @@ import env from "/src/files/env/remote-local-access.env?raw";
 
         3. ### Blocklists (optional)
 
-                - Go to Filters > DNS Blocklists > **Add Blocklist:** `Choose from the list`.
-                        - [x] AdGuard DNS filter
-                        - [x] AdAway Default Blocklist
-                        - [x] HaGeZi's Pro++ Blocklist
-                        - [x] OISD Blocklist Small
-                        - [x] OISD Blocklist Big
-                        - [x] HaGeZi's Samsung Tracker Blocklist
+                1. Preconfigured list
+                        - Go to Filters > DNS Blocklists > **Add Blocklist:** `Choose from the list`.
+                                - [x] AdGuard DNS filter
+                                - [x] AdAway Default Blocklist
+                                - [x] HaGeZi's Pro++ Blocklist
+                                - [x] OISD Blocklist Small
+                                - [x] OISD Blocklist Big
+                                - [x] HaGeZi's Samsung Tracker Blocklist
+                2. Custom list
+                        - Go to Filters > DNS Blocklists > **Add Blocklist:** `Add a custom list`.
+                        - **Name:** Enter a name.
+                        - ```txt wrap title="URL"
+                          https://raw.githubusercontent.com/huffmanks/code-share/refs/heads/main/src/files/config/adguard/blocklist.txt
+                          ```
+
 
                 <br />
 
@@ -259,12 +219,13 @@ import env from "/src/files/env/remote-local-access.env?raw";
 
                 - Go to Filters > **Custom filtering rules**.
 
-                        ```txt
+                        ```txt wrap
                         @@||tailscale.com^
                         @@||tailscale.io^
                         @@||log.tailscale.io^
+                        ||*.church^$denyallow=host.church|life.church|online.church,badfilter
                         ```
-                        - Add **Tailscale domains** to allow.
+                        - Add **domains** to allow.
                         - Click `Apply`.
 
         </Steps>

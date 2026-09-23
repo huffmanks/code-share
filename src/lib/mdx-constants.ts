@@ -1,4 +1,4 @@
-// src/content/docs/guides/linux/index.mdx
+// src/content/docs/guides/linux/ssh.mdx
 export const linuxSshdConfig = `
 # Disable password auth
 PasswordAuthentication no
@@ -95,13 +95,13 @@ docker run --rm -it \
 // src/content/docs/guides/docker/apps/traefik-with-pocket-id.mdx
 export const setupUrl = `https://auth.${"{{BASE_SUB_DOMAIN_VAR}}"}/setup`;
 
-// src/content/docs/guides/linux/external-hdd-setup.mdx
+// src/content/docs/guides/linux/storage/external-hdd-setup.mdx
 export const identifyDrive = `
 # Identify the target drive, i.e., /dev/sde
 lsblk
 `;
 
-// src/content/docs/guides/linux/miscellaneous.mdx
+// src/content/docs/guides/linux/miscellaneous/laptop-optimization.mdx
 export const logindConf = `
 HandleSuspendKey=ignore
 HandleLidSwitch=ignore
@@ -117,6 +117,7 @@ AllowSuspendThenHibernate=no
 AllowHybridSleep=no
 `;
 
+// src/content/docs/guides/linux/miscellaneous/configure-network.mdx
 export const systemdResolvedConfig = `
 [Resolve]
 DNS=1.1.1.1 8.8.8.8
@@ -154,6 +155,7 @@ network:
           password: "Your_Password"
 `;
 
+// src/content/docs/guides/linux/miscellaneous/wake-on-lan.mdx
 export const wolService = `
 [Unit]
 Description=Enable Wake On Lan
@@ -215,7 +217,7 @@ for u in $(sudo dscl . -list /Users | grep _nixbld); do
 done
 `;
 
-// src/content/docs/guides/linux/smb.mdx
+// src/content/docs/guides/linux/storage/smb.mdx
 export const smbConf = `
 [shared]
    path = {{SMB_SHARE_VAR}}
@@ -285,13 +287,14 @@ net/ipv4/ip_forward=1
 net/ipv6/conf/default/forwarding=1
 `;
 
-// src/content/docs/guides/linux/remote-local-access.mdx
+// src/content/docs/guides/docker/apps/adguard-npm.mdx
 export const serverIp = `{{SERVER_IP_VAR}}`;
 export const virtualIp = `{{VIRTUAL_IP_VAR}}`;
 export const npmServerLink = `http://${serverIp}:81`;
 export const adguardSetupLink = `http://${serverIp}:3000`;
 export const adguardAdminLink = `http://${serverIp}:8080`;
 
+// src/content/docs/guides/linux/programs/tailscale.mdx
 export const ethtool = `
 NETDEV=$(ip -o route get 1.1.1.1 | cut -f 5 -d " ")
 sudo ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
