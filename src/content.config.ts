@@ -1,7 +1,23 @@
+import type { IconName } from "@/types";
 import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from "@astrojs/starlight/schema";
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+
+const referenceItemSchema = z.object({
+  href: z.string().url(),
+  label: z.string(),
+  icon: z.custom<IconName>(),
+});
+
+const referenceGroupSchema = z.object({
+  heading: z.string(),
+  items: z.array(referenceItemSchema),
+});
+
+const referencesSchema = z.array(z.union([referenceItemSchema, referenceGroupSchema])).optional();
+
+export type References = z.infer<typeof referencesSchema>;
 
 const executionFields = z.object({
   code: z.string().optional(),
@@ -24,7 +40,14 @@ const executionFields = z.object({
 });
 
 export const collections = {
-  docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
+  docs: defineCollection({
+    loader: docsLoader(),
+    schema: docsSchema({
+      extend: z.object({
+        references: referencesSchema,
+      }),
+    }),
+  }),
   snippets: defineCollection({
     loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/snippets" }),
     schema: z.object({

@@ -27,7 +27,8 @@ certificatesResolvers:
     acme:
       email: admin@example.com
       storage: "/letsencrypt/acme.json"
-      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory" # staging, remove for production
+      # staging, remove for production
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       dnsChallenge:
         provider: "cloudflare"
         resolvers:
@@ -36,7 +37,7 @@ certificatesResolvers:
 
 api:
   insecure: false
-  dashboard: true
+  dashboard: false
 
 log:
   level: "INFO"

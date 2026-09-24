@@ -1,0 +1,89 @@
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.7
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config/traefik:/etc/traefik:ro
+      - ./letsencrypt:/letsencrypt
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  pocket-id:
+    container_name: pocket-id
+    image: pocketid/pocket-id:v2
+    env_file: .env
+    ports:
+      - "1411:1411"
+    volumes:
+      - "./pocket-id/data:/app/data"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  traefik-forward-auth:
+    container_name: traefik-forward-auth
+    image: ghcr.io/italypaleale/traefik-forward-auth:4
+    environment:
+      DEFAULT_PROVIDER: ${DEFAULT_PROVIDER}
+      PROVIDERS_OIDC_ISSUER_URL: ${PROVIDERS_OIDC_ISSUER_URL}
+      PROVIDERS_OIDC_CLIENT_ID: ${PROVIDERS_OIDC_CLIENT_ID}
+      PROVIDERS_OIDC_CLIENT_SECRET: ${PROVIDERS_OIDC_CLIENT_SECRET}
+      SECRET: ${SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      AUTH_HOST: ${AUTH_HOST}
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  adguard:
+    container_name: adguard
+    image: adguard/adguardhome:latest
+    restart: unless-stopped
+    volumes:
+      - ./adguard/work:/opt/adguardhome/work
+      - ./adguard/conf:/opt/adguardhome/conf
+    network_mode: host
+
+  adguardhome-sync:
+    container_name: adguardhome-sync
+    image: ghcr.io/bakito/adguardhome-sync:latest
+    command: run
+    environment:
+      ORIGIN_URL: ${ORIGIN_URL}
+      ORIGIN_USERNAME: ${ORIGIN_USERNAME}
+      ORIGIN_PASSWORD: ${ORIGIN_PASSWORD}
+      REPLICA_URL: ${REPLICA_URL}
+      REPLICA_USERNAME: ${REPLICA_USERNAME}
+      REPLICA_PASSWORD: ${REPLICA_PASSWORD}
+      CRON: "*/10 * * * *"
+      RUN_ON_START: "true"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  keepalived:
+    container_name: keepalived
+    image: osixia/keepalived:latest
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
+    volumes:
+      - ./keepalived/keepalived.conf:/etc/keepalived/keepalived.conf:ro
+    restart: unless-stopped
+
+networks:
+  proxy:
+    name: proxy
+    driver: bridge
+    external: true

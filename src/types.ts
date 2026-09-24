@@ -49,7 +49,8 @@ export type IconName =
   | "snippet-icon"
   | "cheatsheet-icon"
   | "arrow-right-icon"
-  | "norish-icon";
+  | "norish-icon"
+  | "adguard-icon";
 
 export type Fragment = {
   filename: string;

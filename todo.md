@@ -8,6 +8,10 @@
 
 ## Docs
 
+### Global
+
+- [ ] Add a copy markdown button at top and/or for AI.
+
 ### Linux
 
 - [ ] Update security page with more content:

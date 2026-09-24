@@ -1,4 +1,5 @@
 import { ButtonIcon, LanguageIcon } from "@/components/preact-icons";
+import Tabs from "@/components/snippet/tabs";
 import { borderColorVariants, colorVariants } from "@/lib/constants";
 import { downloadFile } from "@/lib/downloadFile";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
@@ -6,7 +7,6 @@ import { getLanguagesInfo } from "@/lib/languages";
 import { getVariant } from "@/lib/utils";
 import styles from "@/styles/grid.module.css";
 import type { SnippetWithHtml } from "@/types";
-import Tabs from "./tabs";
 
 export default function SnippetGrid({ snippets }: { snippets: SnippetWithHtml[] }) {
   return (

@@ -67,7 +67,7 @@ http:
     service-pocket-id:
       loadBalancer:
         servers:
-          - url: "http://pocketid:1411"
+          - url: "http://pocket-id:1411"
 
     service-adguard:
       loadBalancer:
