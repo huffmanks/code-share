@@ -121,17 +121,15 @@ const headMeta = generateHeadMeta({
           ))}
         </Tabs>
       ) : (
-        <>
-          <Code
-            class="fragment-code"
-            code={snippet.data.fragments[0].code}
-            wrap
-            preserveIndent
-            frame={snippet.data.fragments[0].language === "sh" ? "terminal" : "auto"}
-            lang={snippet.data.fragments[0].language}
-            title={`${snippet.data.fragments[0].filename}.${snippet.data.fragments[0].language}`}
-          />
-        </>
+        <Code
+          class="fragment-code"
+          code={snippet.data.fragments[0].code}
+          wrap
+          preserveIndent
+          frame={snippet.data.fragments[0].language === "sh" ? "terminal" : "auto"}
+          lang={snippet.data.fragments[0].language}
+          title={`${snippet.data.fragments[0].filename}.${snippet.data.fragments[0].language}`}
+        />
       )
     }
   </article>

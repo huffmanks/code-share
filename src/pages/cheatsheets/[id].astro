@@ -159,11 +159,11 @@ const headMeta = generateHeadMeta({
                         {block.payload?.commands?.length && (
                           <div class="commands-wrapper">
                             {block.payload.commands.map((cmd, cmdIndex) => (
-                              <>
+                              <Fragment key={cmdIndex}>
                                 {cmdIndex > 0 && <span class="or-separator">or</span>}
                                 <div class="command">
                                   {cmd.map((key, keyIndex) => (
-                                    <>
+                                    <Fragment key={keyIndex}>
                                       <kbd
                                         class="kbd"
                                         style={{
@@ -173,10 +173,10 @@ const headMeta = generateHeadMeta({
                                         {key}
                                       </kbd>
                                       {keyIndex + 1 !== cmd.length && <span>+</span>}
-                                    </>
+                                    </Fragment>
                                   ))}
                                 </div>
-                              </>
+                              </Fragment>
                             ))}
                           </div>
                         )}

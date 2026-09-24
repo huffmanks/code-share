@@ -2,12 +2,13 @@ import type { IconName } from "@/types";
 import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from "@astrojs/starlight/schema";
 import { glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 
 const referenceItemSchema = z.object({
-  href: z.string().url(),
+  href: z.url(),
   label: z.string(),
-  icon: z.custom<IconName>(),
+  icon: z.custom<IconName>().optional(),
 });
 
 const referenceGroupSchema = z.object({
@@ -120,7 +121,7 @@ export const collections = {
                       .object({
                         os: z.array(z.enum(["macos", "linux", "windows"])).min(1),
                       })
-                      .merge(executionFields),
+                      .extend(executionFields.shape),
                   )
                   .optional(),
               }),

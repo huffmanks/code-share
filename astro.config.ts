@@ -1,8 +1,8 @@
-// @ts-check
 import preact from "@astrojs/preact";
 import starlight from "@astrojs/starlight";
 import { defineConfig, passthroughImageService } from "astro/config";
 import { fileURLToPath, URL } from "node:url";
+import starlightPageContextAction from "starlight-page-context-action";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
@@ -60,7 +60,24 @@ export default defineConfig({
         SocialIcons: "./src/components/social-icons.astro",
         ThemeSelect: "./src/components/theme-select.astro",
       },
-      plugins: [starlightThemeRapide()],
+      plugins: [
+        starlightThemeRapide(),
+        starlightPageContextAction({
+          prompt: "Read {url}. I want to ask questions about it.",
+          position: "above-toc",
+          layout: "compact",
+          sticky: false,
+          llmsTxt: true,
+          actions: {
+            copy: true,
+            viewMarkdown: true,
+            chatgpt: true,
+            claude: true,
+            t3chat: false,
+            scrollTop: true,
+          },
+        }),
+      ],
       expressiveCode: {
         frames: {
           removeCommentsWhenCopyingTerminalFrames: true,
@@ -103,17 +120,17 @@ export default defineConfig({
                 {
                   label: "Programs",
                   collapsed: true,
-                  autogenerate: { directory: "guides/linux/programs", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/linux/programs" } }],
                 },
                 {
                   label: "Storage",
                   collapsed: true,
-                  autogenerate: { directory: "guides/linux/storage", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/linux/storage" } }],
                 },
                 {
                   label: "Miscellaneous",
                   collapsed: true,
-                  autogenerate: { directory: "guides/linux/miscellaneous", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/linux/miscellaneous" } }],
                 },
               ],
             },
@@ -132,7 +149,7 @@ export default defineConfig({
                 {
                   label: "Programs",
                   collapsed: true,
-                  autogenerate: { directory: "guides/macos/programs", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/macos/programs" } }],
                 },
               ],
             },
@@ -151,12 +168,12 @@ export default defineConfig({
                 {
                   label: "Apps",
                   collapsed: true,
-                  autogenerate: { directory: "guides/docker/apps", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/docker/apps" } }],
                 },
                 {
                   label: "Archived",
                   collapsed: true,
-                  autogenerate: { directory: "guides/docker/archived", collapsed: true },
+                  items: [{ autogenerate: { directory: "guides/docker/archived" } }],
                 },
               ],
             },
