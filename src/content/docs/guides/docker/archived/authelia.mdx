@@ -10,6 +10,7 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
 import dockerCompose from "/src/files/compose/authelia.yml?raw";
 import configuration from "/src/files/config/auth/authelia/configuration.yml?raw";
@@ -17,6 +18,8 @@ import usersDatabase from "/src/files/config/auth/authelia/users_database.yml?ra
 import npmService from "/src/files/config/auth/npm/service.txt?raw";
 
 <p>{frontmatter.description}</p>
+
+<ServiceNotice serviceName="Pocket ID" linkPath="/guides/docker/apps/dns-proxy" />
 
 ### References
 

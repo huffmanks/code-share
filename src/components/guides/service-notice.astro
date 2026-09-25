@@ -1,9 +1,18 @@
 ---
 import { Aside } from "@astrojs/starlight/components";
 
-const { serviceName, linkPath } = Astro.props;
+const { serviceName, linkPath, hasMigrated = true } = Astro.props;
 ---
 
 <Aside type="caution">
-  I no longer use this service and have migrated to {serviceName}. While this guide may still work, I recommend following the <a href={linkPath}>{serviceName} guide</a> instead.
+  {
+    hasMigrated ? (
+      <>
+        I no longer use this service and have migrated to {serviceName}. While this guide may still work, I recommend
+        following the <a href={linkPath}>{serviceName} guide</a> instead.
+      </>
+    ) : (
+      "I no longer use this service. While this guide may still work, I recommend checking the GitHub repository for the latest documentation."
+    )
+  }
 </Aside>
