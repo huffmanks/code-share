@@ -16,11 +16,14 @@ references:
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
 import ReferenceLinks from "@/components/guides/reference-links.astro";
+import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/nextcloud.yml?raw";
 import env from "/src/files/env/nextcloud.env?raw";
 
 <p>{frontmatter.description}</p>
+
+<ServiceNotice serviceName="OpenCloud" linkPath="/guides/docker/apps/opencloud" />
 
 ### References
 

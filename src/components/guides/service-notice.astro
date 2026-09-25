@@ -7,10 +7,10 @@ const { serviceName, linkPath, hasMigrated = true } = Astro.props;
 <Aside type="caution">
   {
     hasMigrated ? (
-      <>
+      <Fragment>
         I no longer use this service and have migrated to {serviceName}. While this guide may still work, I recommend
         following the <a href={linkPath}>{serviceName} guide</a> instead.
-      </>
+      </Fragment>
     ) : (
       "I no longer use this service. While this guide may still work, I recommend checking the GitHub repository for the latest documentation."
     )

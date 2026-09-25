@@ -31,7 +31,6 @@
 ### Docker
 
 - Docker apps
-  - [ ] zerobyte
   - [ ] archivebox
   - [ ] excalidraw
   - [ ] filecloud

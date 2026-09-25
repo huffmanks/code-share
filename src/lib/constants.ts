@@ -289,4 +289,5 @@ export const appPorts = {
   tinyMediaManagerWeb: 4000,
   tinyMediaManagerVnc: 5900,
   vaultWarden: 8002,
+  zerobyte: 4096,
 };
