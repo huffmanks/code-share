@@ -49,7 +49,7 @@ const headMeta = generateHeadMeta({
   headings={headings}
   frontmatter={{
     title: cheatsheet.data.title,
-
+    description: cheatsheet.data.description,
     head: [
       ...headMeta,
       {
@@ -58,6 +58,10 @@ const headMeta = generateHeadMeta({
           .sl-markdown-content .platform-toggle-bar .platform-btn,
           .sl-markdown-content .platform-toggle-bar .platform-btn + .platform-btn {
             margin-top: 0;
+          }
+          mobile-page-context-actions,
+          .page-context-action__wrapper {
+            display: none;
           }
         `,
       },
@@ -76,7 +80,6 @@ const headMeta = generateHeadMeta({
           <span class="platform-text">All</span>
         </button>
         {availablePlatforms.map((os) => {
-          console.log("___ __", os);
           const formattedOs = os === "macos" ? "macOS" : capitalize(os);
           const iconName = os === "windows" ? "seti:windows" : os === "linux" ? "linux" : "apple";
           return (

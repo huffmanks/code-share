@@ -17,3 +17,14 @@ import Default from "@astrojs/starlight/components/SocialIcons.astro";
 </a>
 
 <Default {...Astro.props}><slot /></Default>
+
+<style>
+  .social-icon-link {
+    color: var(--sl-color-gray-2);
+  }
+
+  .social-icon-link:hover,
+  .social-icon-link:focus-visible {
+    color: var(--sl-color-accent-high);
+  }
+</style>

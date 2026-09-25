@@ -99,7 +99,11 @@ export const languageMapLength = Object.keys(languageMap).length;
 export function getLanguagesInfo(fragments: Array<{ language: string }>): LanguageInfo[] {
   const uniqueLanguages = [...new Set(fragments.map((fragment) => fragment.language.toLowerCase()))];
 
-  return uniqueLanguages.map((language) => languageMap[language]);
+  const infoList = uniqueLanguages
+    .map((language) => languageMap[language])
+    .filter((info): info is LanguageInfo => Boolean(info));
+
+  return Array.from(new Map(infoList.map((info) => [info.extension, info])).values());
 }
 
 export function getAllLanguagesLabels(): string[] {

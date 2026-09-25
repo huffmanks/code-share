@@ -268,6 +268,9 @@ export default defineConfig({
         {
           label: "Snippets",
           link: "snippets",
+          attrs: {
+            class: "sidebar-link",
+          },
         },
       ],
     }),

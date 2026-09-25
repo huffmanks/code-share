@@ -50,7 +50,8 @@ export type IconName =
   | "cheatsheet-icon"
   | "arrow-right-icon"
   | "norish-icon"
-  | "adguard-icon";
+  | "adguard-icon"
+  | "settings-icon";
 
 export type Fragment = {
   filename: string;

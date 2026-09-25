@@ -10,7 +10,7 @@
 
 ### Global
 
-- [ ] Add a copy markdown button at top and/or for AI.
+- [ ] Auto update lastUpdated frontmatter.
 
 ### Linux
 

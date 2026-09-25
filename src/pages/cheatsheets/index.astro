@@ -9,16 +9,20 @@ const pageUrl = Astro.url.href;
 
 const cheatsheets = await getCollection("cheatsheets");
 
+const pageTitle = "Cheatsheets";
+const pageDescription = "A collection of useful command-line and programming cheatsheets for quick reference.";
+
 const headMeta = generateHeadMeta({
-  pageTitle: "Cheatsheets",
-  pageDescription: "A collection of useful command-line and programming cheatsheets for quick reference.",
+  pageTitle,
+  pageDescription,
   pageUrl,
 });
 ---
 
 <StarlightPage
   frontmatter={{
-    title: "Cheatsheets",
+    title: pageTitle,
+    description: pageDescription,
     head: [
       ...headMeta,
       {
