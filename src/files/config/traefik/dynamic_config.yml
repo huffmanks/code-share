@@ -57,9 +57,9 @@ http:
       service: service-linkding
       entryPoints: ["websecure"]
 
-    router-vaultwarden:
-      rule: "Host(`vw.{{BASE_SUB_DOMAIN_VAR}}`)"
-      service: service-vaultwarden
+    router-dynacat:
+      rule: "Host(`home.{{BASE_SUB_DOMAIN_VAR}}`)"
+      service: service-dynacat
       entryPoints: ["websecure"]
       middlewares: ["hsts-header"]
 
@@ -99,7 +99,7 @@ http:
         servers:
           - url: "{{SERVER_IP_VAR}}:9090"
 
-    service-vaultwarden:
+    service-dynacat:
       loadBalancer:
         servers:
-          - url: "{{SERVER_IP_VAR}}:8002"
+          - url: "{{SERVER_IP_VAR}}:8282"
