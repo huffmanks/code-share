@@ -51,7 +51,8 @@ export type IconName =
   | "arrow-right-icon"
   | "norish-icon"
   | "adguard-icon"
-  | "settings-icon";
+  | "settings-icon"
+  | "dynacat-icon";
 
 export type Fragment = {
   filename: string;

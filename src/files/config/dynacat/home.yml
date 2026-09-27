@@ -3,8 +3,35 @@
     - size: small
       widgets:
         - type: calendar
-          first-day-of-week: monday
-
+          first-day-of-week: sunday
+        - type: clock
+          hour-format: 12h
+          timezones:
+            - timezone: America/New_York
+              label: New York
+            - timezone: Europe/Madrid
+              label: Madrid
+            - timezone: Asia/Tokyo
+              label: Tokyo
+        - type: bookmarks
+          groups:
+            - links:
+                - title: EchoLink
+                  url: https://echo.lan.huffmanks.com
+                - title: Github
+                  url: https://github.com/huffmanks?tab=repositories
+                - title: Tools
+                  url: https://tools.huffmanks.com
+        # not working with domain, localhost or IP address
+        # - type: dynawidgets
+        #   widget: linkding-dashboard
+        #   title: Linkding
+        #   cache: 30m
+        #   limit: 10
+        #   options:
+        #     collapse-after: 5
+        #     in-new-tab: true
+        #     layout: vertical
         - type: rss
           limit: 10
           collapse-after: 3
@@ -12,24 +39,10 @@
           feeds:
             - url: https://selfh.st/rss/
               title: selfh.st
-              limit: 4
+              limit: 3
             - url: https://word.huffmanks.com/rss.xml
               title: Weekly Word
-            - url: https://ciechanow.ski/atom.xml
-            - url: https://www.joshwcomeau.com/rss.xml
-              title: Josh Comeau
-            - url: https://samwho.dev/rss.xml
-            - url: https://ishadeed.com/feed.xml
-              title: Ahmad Shadeed
-
-        - type: twitch-channels
-          channels:
-            - theprimeagen
-            - j_blow
-            - piratesoftware
-            - cohhcarnage
-            - christitustech
-            - EJ_SA
+              limit: 3
 
     - size: full
       widgets:
@@ -40,45 +53,60 @@
 
         - type: videos
           channels:
+            - UCyU5wkjgQYGRB0hIHMwm2Sg # Syntax
+            - UCkVfrGwV-iG9bSsgCbrNPxQ # Better Stack
+            - UCbRP3c757lWg9M-U7TyEkXA # Theo
+            - UCUyeluBRhGPCW4rPe_UvBZQ # Primeagen
             - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
-            - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
-            - UCsBjURrPoezykLs9EqgamOA # Fireship
             - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
-            - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
 
         - type: group
           widgets:
             - type: reddit
-              subreddit: technology
+              subreddit: selfhosted
               show-thumbnails: true
             - type: reddit
-              subreddit: selfhosted
+              subreddit: webdev
               show-thumbnails: true
 
     - size: small
       widgets:
         - type: weather
-          location: London, United Kingdom
-          units: metric
+          location: Greenville, South Carolina, United States
+          units: imperial
           hour-format: 12h
+
+        - type: server-stats
+          servers:
+            - type: local
+              name: Services
+
+        - type: monitor
+          cache: 1m
+          title: Monitor
+          show-history: true
+          sites:
+            - title: AdGuard Home
+              url: http://{{SERVER_IP_VAR}}:8080
+              icon: sh:adguard-home
+            - title: Immich
+              url: http://{{SERVER_IP_VAR}}:2283
+              icon: sh:immich
+            # not working
+            # - title: Jellyfin
+            #   url: http://{{SERVER_IP_VAR}}:8096
+            #   icon: sh:jellyfin
+            #   method: HEAD
 
         - type: markets
           markets:
             - symbol: SPY
               name: S&P 500
-            - symbol: BTC-USD
-              name: Bitcoin
-            - symbol: NVDA
-              name: NVIDIA
-            - symbol: AAPL
-              name: Apple
-            - symbol: MSFT
-              name: Microsoft
-
-        - type: releases
-          cache: 1d
-          repositories:
-            - panonim/dynacat
-            - go-gitea/gitea
-            - immich-app/immich
-            - syncthing/syncthing
+            - symbol: QQQ
+              name: Nasdaq 100
+            - symbol: DIA
+              name: Dow Jones
+            - symbol: GLD
+              name: Gold
+            - symbol: USO
+              name: Crude Oil

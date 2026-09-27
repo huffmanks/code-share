@@ -7,7 +7,9 @@ services:
       - ./config:/app/config
       - ./assets:/app/assets
       - /etc/localtime:/etc/localtime:ro
-      # Optionally, also mount docker socket if you want to use the docker containers widget
+      # Optional server stats widget
+      - /etc/os-release:/host/etc/os-release:ro
+      # Optional docker containers widget
       # - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8282:8080

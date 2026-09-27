@@ -6,6 +6,9 @@ references:
   - href: https://github.com/Panonim/dynacat
     label: GitHub
     icon: "github-icon"
+  - href: https://dynacat.artur.zone
+    label: Docs
+    icon: "dynacat-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
@@ -14,6 +17,7 @@ import { Code, FileTree } from "@astrojs/starlight/components";
 import composeYml from "/src/files/compose/dynacat.yml?raw";
 import dynacatYml from "/src/files/config/dynacat/dynacat.yml?raw";
 import homeYml from "/src/files/config/dynacat/home.yml?raw";
+import dynacatEnv from "/src/files/env/dynacat.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -34,7 +38,7 @@ import homeYml from "/src/files/config/dynacat/home.yml?raw";
   - assets
     - user.css
   - compose.yml (\*)
-  - .env
+  - .env (\*)
 
 </FileTree>
 
@@ -51,6 +55,14 @@ nano compose.yml
 ```
 
 <Code lang="yml" title="compose.yml" wrap preserveIndent code={composeYml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={dynacatEnv} />
 
 ## dynacat.yml
 
