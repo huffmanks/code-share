@@ -1,0 +1,95 @@
+---
+title: Dispatcharr
+description: "Dispatcharr is an open-source powerhouse for managing IPTV streams, EPG data and VOD content with elegance and control."
+lastUpdated: 2026-09-28 13:31:09
+references:
+  - href: https://github.com/Dispatcharr/Dispatcharr
+    label: GitHub
+    icon: "github-icon"
+  - href: https://dispatcharr.github.io/Dispatcharr-Docs
+    label: Docs
+    icon: "dispatcharr-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { generateChannels } from "@/lib/mdx-constants";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/dispatcharr.yml?raw";
+import env from "/src/files/env/dispatcharr.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directories
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/dispatcharr {{DOCKER_PATH_VAR}}/dispatcharr/epg-data && cd {{DOCKER_PATH_VAR}}/dispatcharr
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## generate_channels.py
+
+```sh
+nano generate_channels.py
+```
+
+<Code lang="py" title="generate_channels.py" wrap preserveIndent code={generateChannels} />
+
+```sh
+python3 generate_channels.py
+```
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="9191" />
+
+## Setup
+
+### M3U account
+
+- **Name:** `Sports M3U IPTV.org`
+- **URL:**
+  ```txt
+  https://iptv-org.github.io/iptv/categories/sports.m3u
+  ```
+- **Account type:** `Standard`
+
+Another option:
+
+- Generate m3u and epg data: <a href="https://livetvbuilder.replit.app" target="_blank" rel="noopener">https://livetvbuilder.replit.app</a>
+- Download and add to `./epg-data` directory.
+
+### EPG
+
+- **Name:** `Sports EPG IPTV.org`
+- **URL:**
+  ```txt
+    http://{{SERVER_IP_VAR}}:3010/guide.xml
+  ```

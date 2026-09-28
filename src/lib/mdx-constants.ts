@@ -313,3 +313,167 @@ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
 echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
 sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 `;
+
+// src/content/docs/guides/docker/apps/dispatcharr.mdx
+export const generateChannels = `
+import json
+import os
+import re
+import urllib.request
+import urllib.error
+from xml.sax.saxutils import escape
+
+# Explicit list of site domains to skip entirely
+BROKEN_SITES = {
+    "tv.mail.ru",
+}
+
+m3u_urls = [
+    "https://iptv-org.github.io/iptv/categories/sports.m3u",
+]
+
+all_channels = []
+seen_ids = set()
+
+for url in m3u_urls:
+    print(f"Downloading playlist from {url}...")
+    try:
+        req = urllib.request.urlopen(url)
+        content = req.read().decode('utf-8')
+
+        for line in content.splitlines():
+            if line.startswith("#EXTINF:"):
+                tvg_id_match = re.search(r'tvg-id="([^"]*)"', line)
+                parts = line.split(",")
+                name = parts[-1].strip() if len(parts) > 1 else "Unknown"
+                tvg_id = tvg_id_match.group(1) if tvg_id_match else ""
+
+                if tvg_id and tvg_id not in seen_ids:
+                    seen_ids.add(tvg_id)
+                    all_channels.append((tvg_id, name))
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+
+print(f"Total unique raw tvg-ids from M3U: {len(all_channels)}")
+
+# Fetch guides database
+print("Fetching IPTV-org guides database...")
+guides_url = "https://iptv-org.github.io/api/guides.json"
+guides_by_channel = {}
+guides_by_site_id = {}
+guides_by_name = {}
+
+def normalize(text):
+    return re.sub(r'[^a-z0-9]', '', text.lower())
+
+try:
+    req = urllib.request.urlopen(guides_url)
+    guides_data = json.loads(req.read().decode('utf-8'))
+
+    for g in guides_data:
+        chan = g.get("channel")
+        site = g.get("site")
+        site_id = g.get("site_id")
+        site_name = g.get("site_name", "")
+
+        # Skip invalid entries or explicitly blacklisted sites
+        if not site or not site_id or site_id == "#" or site in BROKEN_SITES:
+            continue
+
+        guide_obj = {
+            "site": site,
+            "site_id": site_id,
+            "lang": g.get("lang", "")
+        }
+
+        if chan and chan not in guides_by_channel:
+            guides_by_channel[chan] = guide_obj
+
+        if site_id and site_id not in guides_by_site_id:
+            guides_by_site_id[site_id] = guide_obj
+
+        if site_name:
+            norm_name = normalize(site_name)
+            if norm_name not in guides_by_name:
+                guides_by_name[norm_name] = guide_obj
+
+except Exception as e:
+    print(f"Error fetching guides database: {e}")
+
+# Cache site reachability check so we don't spam requests to the same site
+site_status_cache = {}
+
+def is_site_working(site):
+    if site in BROKEN_SITES:
+        return False
+
+    if site in site_status_cache:
+        return site_status_cache[site]
+
+    url = f"https://{site}" if not site.startswith("http") else site
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+
+    # Try HEAD request first for efficiency
+    try:
+        req = urllib.request.Request(url, headers=headers, method="HEAD")
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            working = 200 <= resp.status < 400
+    except (urllib.error.HTTPError, urllib.error.URLError, Exception):
+        # Fall back to GET in case HEAD request is blocked/unsupported by target web server
+        try:
+            req = urllib.request.Request(url, headers=headers, method="GET")
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                working = 200 <= resp.status < 400
+        except Exception:
+            working = False
+
+    site_status_cache[site] = working
+    if not working:
+        print(f"Skipping broken site: {site}")
+    return working
+
+# Match channels using layered fallback strategies
+xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<channels>']
+matched_count = 0
+
+for raw_tvg_id, name in all_channels:
+    base_id = raw_tvg_id.split("@")[0].strip()
+    clean_id = base_id.split(".")[0]  # e.g., "ESPN" from "ESPN.us"
+    norm_name = normalize(name)
+
+    matched_guide = (
+        guides_by_channel.get(base_id) or
+        guides_by_site_id.get(base_id) or
+        guides_by_channel.get(clean_id) or
+        guides_by_name.get(norm_name)
+    )
+
+    if matched_guide:
+        site_domain = matched_guide["site"]
+
+        # Skip if in broken sites or fails HTTP ping check
+        if site_domain in BROKEN_SITES or not is_site_working(site_domain):
+            continue
+
+        site = escape(site_domain)
+        site_id = escape(str(matched_guide["site_id"]))
+        safe_xmltv_id = escape(raw_tvg_id)
+        safe_name = escape(name)
+        lang_str = f' lang="{escape(matched_guide["lang"])}"' if matched_guide["lang"] else ""
+
+        xml_lines.append(
+            f'  <channel site="{site}" site_id="{site_id}" xmltv_id="{safe_xmltv_id}"{lang_str}>{safe_name}</channel>'
+        )
+        matched_count += 1
+
+xml_lines.append('</channels>')
+
+output_dir = "./epg-data"
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, "channels.xml")
+
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write("\n".join(xml_lines))
+
+print(f"Successfully generated {output_path} with {matched_count} active matched channels out of {len(all_channels)}!")
+`;

@@ -1,14 +1,15 @@
-import type { IconName } from "@/types";
 import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from "@astrojs/starlight/schema";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
+import { customIcons } from "@/lib/constants";
+
 const referenceItemSchema = z.object({
   href: z.url(),
   label: z.string(),
-  icon: z.custom<IconName>().optional(),
+  icon: z.enum(customIcons).optional(),
 });
 
 const referenceGroupSchema = z.object({

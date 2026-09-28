@@ -1,0 +1,57 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "9191:9191" # dispatcharr
+      - "3010:3000" # iptv-epg
+      - "8920:8920"
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: openvpn
+      OPENVPN_USER: ${OPENVPN_USER}
+      OPENVPN_PASSWORD: ${OPENVPN_PASSWORD}
+      SERVER_COUNTRIES: Netherlands
+      FREE_ONLY: on
+      LAN_NETWORK: "{{SUBNET_VAR}}"
+      FIREWALL: on
+    restart: always
+
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+    volumes:
+      - dispatcharr_data:/data
+    environment:
+      - DISPATCHARR_ENV=aio
+      - REDIS_HOST=localhost
+      - CELERY_BROKER_URL=redis://localhost:6379/0
+      - DISPATCHARR_LOG_LEVEL=info
+
+  iptv-epg:
+    image: ghcr.io/iptv-org/epg:master
+    container_name: iptv-epg
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+    volumes:
+      - ./epg-data:/epg/public
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=8192
+      - MAX_CONNECTIONS=5
+      - DAYS=2
+      - GZIP=true
+      - CRON_SCHEDULE=0 0 * * *
+      - RUN_AT_STARTUP=false
+
+volumes:
+  dispatcharr_data:
