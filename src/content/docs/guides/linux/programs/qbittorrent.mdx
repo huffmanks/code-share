@@ -1,7 +1,7 @@
 ---
 title: qBittorrent
 description: qBittorrent is a free, open-source BitTorrent client that is lightweight, cross-platform and supports all common BitTorrent protocols.
-lastUpdated: 2025-08-19 14:48:35
+lastUpdated: 2026-09-30 13:16:39
 references:
   - href: https://github.com/qbittorrent/qBittorrent
     label: GitHub
@@ -28,19 +28,13 @@ import { Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
-1.  ## Add repository
-
-    ```sh
-    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
-    ```
-
-2.  ## Install
+1.  ## Install
 
     ```sh
     sudo apt update && sudo apt install qbittorrent
     ```
 
-3.  ## Restore settings
+2.  ## Restore settings
 
     `(Optional)` If you have a backup of your settings, move your saved config into qBittorrent’s config directory:
 
@@ -48,7 +42,7 @@ import { Steps } from "@astrojs/starlight/components";
     mv qBittorrent.conf /home/{{USERNAME_VAR}}/.config/qBittorrent/qBittorrent.conf
     ```
 
-4.  ## Set theme
+3.  ## Set theme
 
     `(Optional)` In qBittorrent, go to:
     - **Tools → Options → Behavior → Interface**
