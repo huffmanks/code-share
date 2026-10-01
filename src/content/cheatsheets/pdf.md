@@ -10,7 +10,7 @@ groups:
         description: "Compress a PDF while preserving the original color space and maintaining good image quality."
         codeLang: "sh"
         code: |
-          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 \
+          \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 \
              -dPDFSETTINGS=/ebook \
              -dColorConversionStrategy=/LeaveColorUnchanged \
              -dDownsampleColorImages=true \
@@ -22,7 +22,7 @@ groups:
         description: "Flatten PDF content while retaining vector graphics and the original color space."
         codeLang: "sh"
         code: |
-          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+          \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
              -dPDFSETTINGS=/ebook \
              -dColorConversionStrategy=/LeaveColorUnchanged \
              -dPreserveAnnots=false \
@@ -45,72 +45,36 @@ groups:
         code: |
           qpdf --optimize-images --jpeg-quality=85 input.pdf optimized-images-quality.pdf
         comment: "--jpeg-quality=(0-100)"
-  - title: "Print Optimization & Flattening"
-    description: "Rasterize complex vector documents to ensure instant loading and maximum compatibility."
+  - title: "PDF Page Size & Scaling"
+    description: "Resize PDF pages to standard paper sizes while preserving the page content and aspect ratio."
     items:
-      - label: "Import Settings"
-        description: "Configure rendering engine options upon opening the document."
-        codeLang: "text"
+      - label: "Resize to Paper Size"
+        description: "Resize PDF pages to a fixed paper size while scaling and centering the original content to fit."
+        codeLang: "sh"
         code: |
-          - Crop To: Media Box
-          - Resolution: 300 Pixels/Inch
-          - Mode: RGB Color
-        comment: "Changing ‘Bounding Box’ to ‘Media Box’ prevents trimming any margin."
-      - label: "Flatten Image"
-        description: "Merge all layers and paths into a single background layer."
-        codeLang: "text"
-        commands:
-          - ["Layer > Flatten Image"]
-      - label: "Save Configuration"
-        description: "Apply high-quality print compression and web optimization settings."
-        codeLang: "text"
+          \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+              -sPAPERSIZE=letter \
+              -dFIXEDMEDIA \
+              -dPDFFitPage \
+              -dAutoRotatePages=/None \
+              -dModifiesPageSize=true \
+              -dNOPAUSE -dBATCH -dQUIET \
+              -sOutputFile=resized-letter.pdf input.pdf
+        comment: "-sPAPERSIZE=(letter | a4 | legal | ledger | ...)"
+      - label: "Resize to Exact Dimensions"
+        description: "Resize PDF pages to exact dimensions in points while scaling and centering the original content to fit."
+        codeLang: "sh"
         code: |
-          General:
-            - Preset: [High Quality Print]
-            - Compatibility: Acrobat 8 (PDF 1.7)
-            - Uncheck: Preserve Photoshop Editing Capabilities
-            - Check: Optimize for Fast Web View
-
-          Compression:
-            - Bicubic Downsampling: 300 PPI (above 450)
-            - Format: JPEG (Medium Quality)
-            - Options: Check Convert 16-bit to 8-bit
-        commands:
-          - ["File > Save As > Select Photoshop PDF"]
-  - title: "Page Size Standardization"
-    description: "Scale inconsistent document pages to a uniform standard dimension."
-    items:
-      - label: "Access Preflight Suite"
-        description: "Navigate to the print production tools."
-        commands:
-          - ["Tools > Print Production > Preflight"]
-      - label: "Select Profile Library"
-        description: "Set the library versioning for scaling tools."
-        commands:
-          - ["Select ‘Acrobat Pro DC 2015 Profiles’"]
-        comment: "Found in the top dropdown menu of the Preflight window."
-      - label: "Open Scaling Fixups"
-        description: "Switch to the fixup menu for page adjustment options."
-        commands:
-          - ["Click wrench button"]
-      - label: "Configure Page Scaling"
-        description: "Locate the specific page scaling fixup within categories."
-        commands:
-          - ["Pages > Scale pages to specified size > Edit"]
-      - label: "Set Target Dimensions"
-        description: "Input exact millimeter values for the target output size."
-        codeLang: "text"
-        code: |
-          Target Size (US Letter):
-          - Short Edge: 216 mm
-          - Long Edge: 279 mm
-        comment: "216mm x 279mm is standard for 8.5 x 11 inch paper."
-      - label: "Run Scaling Fixup"
-        description: "Run the fixup and verify the results."
-        commands:
-          - ["Click wrench fix (bottom)"]
-      - label: "Save Document"
-        description: "Save the document once page sizes are verified."
-        commands:
-          - ["CMD", "S"]
+          \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+              -dDEVICEWIDTHPOINTS=612 \
+              -dDEVICEHEIGHTPOINTS=792 \
+              -dFIXEDMEDIA \
+              -dPDFFitPage \
+              -dAutoRotatePages=/None \
+              -dModifiesPageSize=true \
+              -dNOPAUSE -dBATCH -dQUIET \
+              -sOutputFile=resized-letter-exact.pdf input.pdf
+        verificationCode: |
+          pdfinfo -f 1 -l $(pdfinfo "resized-letter-exact.pdf" | awk '/Pages/ {print $2}') "resized-letter-exact.pdf" | grep -E "Page.*size:"
+        comment: "Letter = 612×792 points; 72 points = 1 inch."
 ---

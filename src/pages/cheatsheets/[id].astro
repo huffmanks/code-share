@@ -110,7 +110,7 @@ const headMeta = generateHeadMeta({
             {group.items.map((item, index) => {
               const renderBlocks = [];
 
-              if (item.commands || item.code || item.example || item.regex) {
+              if (item.commands || item.code || item.verificationCode || item.example || item.regex) {
                 renderBlocks.push({
                   osList: "universal",
                   osArray: ["universal"],
@@ -157,6 +157,16 @@ const headMeta = generateHeadMeta({
 
                         {block.payload?.code && (
                           <Code lang={block.payload.codeLang ?? "sh"} wrap preserveIndent code={block.payload.code} />
+                        )}
+
+                        {block.payload?.verificationCode && (
+                          <Code
+                            title="Verify"
+                            lang={block.payload.codeLang ?? "sh"}
+                            wrap
+                            preserveIndent
+                            code={block.payload.verificationCode}
+                          />
                         )}
 
                         {block.payload?.commands?.length && (
