@@ -1,23 +1,50 @@
 ---
 title: "pdf"
 description: "A quick reference guide covering PDF techniques and repeatable workflows."
-updatedAt: 2026-09-20 20:21:07
+updatedAt: 2026-10-01 11:30:11
 groups:
   - title: "PDF Compression & Optimization"
-    description: "Reduce PDF file size while balancing image quality and document fidelity."
+    description: "Reduce PDF file size through compression, flattening, rasterization, and structural optimization."
     items:
       - label: "Balanced Compression"
-        description: "Compress a PDF using optimization settings while preserving the original color space."
+        description: "Compress a PDF while preserving the original color space and maintaining good image quality."
         codeLang: "sh"
         code: |
-          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dPDFSETTINGS=/ebook -dColorConversionStrategy=/LeaveColorUnchanged -dDownsampleColorImages=true -dColorImageResolution=150 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=compressed.pdf input.pdf
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 \
+             -dPDFSETTINGS=/ebook \
+             -dColorConversionStrategy=/LeaveColorUnchanged \
+             -dDownsampleColorImages=true \
+             -dColorImageResolution=150 \
+             -dNOPAUSE -dQUIET -dBATCH \
+             -sOutputFile=compressed-balanced.pdf input.pdf
         comment: "-dColorImageResolution=(72 | 96 | 150 | 300)"
-      - label: "Raster Compression"
-        description: "Convert PDF pages to images and rebuild them into a smaller document."
+      - label: "Vector Flattening"
+        description: "Flatten PDF content while retaining vector graphics and the original color space."
         codeLang: "sh"
         code: |
-          pdftoppm -r 150 -jpeg -jpegopt quality=90 input.pdf page && img2pdf page-*.jpg -o compressed.pdf && rm page-*.jpg
-        comment: "Adjust quality as necessary (1-100)"
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+             -dPDFSETTINGS=/ebook \
+             -dColorConversionStrategy=/LeaveColorUnchanged \
+             -dPreserveAnnots=false \
+             -dPreserveFlattenedNC=false \
+             -dNOINTERACTION -dNOPAUSE -dQUIET -dBATCH \
+             -sOutputFile=flattened-vector.pdf input.pdf
+      - label: "Annotation Flattening"
+        description: "Flatten annotations and page rotation into the PDF content."
+        codeLang: "sh"
+        code: |
+          qpdf --flatten-annotations=all --flatten-rotation input.pdf flattened-annotations.pdf
+      - label: "Structural Optimization"
+        description: "Linearize the PDF and optimize embedded images and unreferenced objects."
+        codeLang: "sh"
+        code: |
+          qpdf --linearize --optimize-images input.pdf optimized-structural.pdf
+      - label: "Image Optimization with Quality"
+        description: "Recompress images with a specified JPEG quality when optimization reduces file size."
+        codeLang: "sh"
+        code: |
+          qpdf --optimize-images --jpeg-quality=85 input.pdf optimized-images-quality.pdf
+        comment: "--jpeg-quality=(0-100)"
   - title: "Print Optimization & Flattening"
     description: "Rasterize complex vector documents to ensure instant loading and maximum compatibility."
     items:
