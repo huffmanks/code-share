@@ -289,6 +289,7 @@ export const appPorts = {
   pinchflat: 8945,
   plex: 32400,
   pocketId: 1411,
+  termix: 8181,
   tinyMediaManagerWeb: 4000,
   tinyMediaManagerVnc: 5900,
   vaultWarden: 8002,
@@ -346,4 +347,5 @@ export const customIcons = [
   "settings-icon",
   "dynacat-icon",
   "dispatcharr-icon",
+  "termix-icon",
 ] as const;

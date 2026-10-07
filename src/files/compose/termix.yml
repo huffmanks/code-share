@@ -1,0 +1,35 @@
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    ports:
+      - "8181:8080"
+    volumes:
+      - termix-data:/app/data
+    environment:
+      PORT: "8181"
+    # optional, remote desktop only
+    depends_on:
+      - guacd
+    networks:
+      - termix-net
+
+  # optional, remote desktop only
+  guacd:
+    image: guacamole/guacd:1.6.0
+    container_name: guacd
+    restart: unless-stopped
+    ports:
+      - "4822:4822"
+    networks:
+      - termix-net
+
+volumes:
+  termix-data:
+    driver: local
+
+# optional, remote desktop only
+networks:
+  termix-net:
+    driver: bridge

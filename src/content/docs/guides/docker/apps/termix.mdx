@@ -1,0 +1,49 @@
+---
+title: termix
+description: "Self-hosted server management, from SSH and remote desktop to automations."
+lastUpdated: 2026-10-07 10:34:55
+references:
+  - href: https://github.com/termix-ssh/termix
+    label: GitHub
+    icon: "github-icon"
+  - href: https://docs.termix.site/install
+    label: Docs
+    icon: "termix-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/termix.yml?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/termix && cd {{DOCKER_PATH_VAR}}/termix
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="8181" />
