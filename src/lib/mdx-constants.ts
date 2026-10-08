@@ -92,7 +92,7 @@ docker run --rm -it \
     opencloudeu/opencloud-rolling:latest init
 `;
 
-// src/content/docs/guides/docker/apps/traefik-with-pocket-id.mdx
+// src/content/docs/guides/docker/apps/traefik.mdx
 export const setupUrl = `https://auth.${"{{BASE_SUB_DOMAIN_VAR}}"}/setup`;
 
 // src/content/docs/guides/linux/storage/external-hdd-setup.mdx
@@ -287,7 +287,7 @@ net/ipv4/ip_forward=1
 net/ipv6/conf/default/forwarding=1
 `;
 
-// src/content/docs/guides/docker/apps/adguard-npm.mdx
+// src/content/docs/guides/docker/archived/nginx-proxy-manager.mdx
 export const serverIp = `{{SERVER_IP_VAR}}`;
 export const virtualIp = `{{VIRTUAL_IP_VAR}}`;
 export const npmServerLink = `http://${serverIp}:81`;

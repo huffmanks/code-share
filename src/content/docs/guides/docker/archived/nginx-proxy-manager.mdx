@@ -1,5 +1,5 @@
 ---
-title: Adguard & NPM
+title: Nginx Proxy Manager
 description: "Access your home services via a secure URL from anywhere in the world. This guide covers setting up AdGuard Home for custom DNS, Nginx Proxy Manager for wildcard SSL certificates via Cloudflare and Tailscale for a zero-config VPN mesh."
 lastUpdated: 2026-09-23 10:56:51
 tableOfContents:
@@ -18,10 +18,10 @@ import ReferenceLinks from "@/components/guides/reference-links.astro";
 import ServiceNotice from "@/components/guides/service-notice.astro";
 import { adguardAdminLink, adguardSetupLink, npmServerLink, serverIp, virtualIp } from "@/lib/mdx-constants";
 import { Code, LinkCard, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
-import composeYml from "/src/files/compose/adguard-npm.yml?raw";
-import composeWithSyncYml from "/src/files/compose/adguard-npm_sync.yml?raw";
+import composeYml from "/src/files/compose/nginx-proxy-manager.yml?raw";
+import composeWithSyncYml from "/src/files/compose/nginx-proxy-manager_sync.yml?raw";
 import keepalivedConfig from "/src/files/config/keepalived/keepalived.conf?raw";
-import env from "/src/files/env/adguard-npm.env?raw";
+import env from "/src/files/env/nginx-proxy-manager.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -65,7 +65,7 @@ import env from "/src/files/env/adguard-npm.env?raw";
                 nano compose.yml
                 ```
 
-                <Tabs syncKey="adguard-npm-compose">
+                <Tabs syncKey="nginx-proxy-manager-compose">
 
                         <TabItem label="Standalone">
 

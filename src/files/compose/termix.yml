@@ -8,14 +8,13 @@ services:
     volumes:
       - termix-data:/app/data
     environment:
-      PORT: "8181"
-    # optional, remote desktop only
+      PORT: "8080"
     depends_on:
       - guacd
     networks:
       - termix-net
 
-  # optional, remote desktop only
+  # optional, remote desktop only, networks can be removed if omitted
   guacd:
     image: guacamole/guacd:1.6.0
     container_name: guacd
@@ -29,7 +28,6 @@ volumes:
   termix-data:
     driver: local
 
-# optional, remote desktop only
 networks:
   termix-net:
     driver: bridge
