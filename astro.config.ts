@@ -185,6 +185,10 @@ export default defineConfig({
                   label: "Getting started",
                   slug: "guides/android",
                 },
+                {
+                  label: "Tablet reflashing",
+                  slug: "guides/android/tablet-reflashing",
+                },
               ],
             },
             {

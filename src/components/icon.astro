@@ -4,17 +4,18 @@ import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"svg"> {
   name: IconName;
-  size?: number | string;
+  width?: number | string;
+  height?: number | string;
   spritePath?: string;
 }
 
-const { name, size = "1em", spritePath = "/icons.svg", class: className, ...props } = Astro.props;
+const { name, width = "1em", height = "1em", spritePath = "/icons.svg", class: className, ...props } = Astro.props;
 ---
 
 <svg
   class={className}
-  width={size}
-  height={size}
+  width={width}
+  height={height}
   role="presentation"
   aria-hidden="true"
   style={{ display: "inline-block", verticalAlign: "middle" }}

@@ -348,4 +348,5 @@ export const customIcons = [
   "dynacat-icon",
   "dispatcharr-icon",
   "termix-icon",
+  "nura-icon",
 ] as const;

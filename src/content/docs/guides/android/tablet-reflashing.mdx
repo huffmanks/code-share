@@ -1,0 +1,166 @@
+---
+title: "Tablet reflashing"
+description: "A guide to flashing Linux onto older tablets using alternative bootloaders, device-specific images and flashing tools."
+lastUpdated: 2026-10-09 19:49:58
+references:
+  - href: https://github.com/msm8916-mainline/lk2nd/releases
+    label: lk2nd
+    icon: github-icon
+  - href: https://github.com/fathonix/heimdall-osx-arm64/releases
+    label: heimdall
+    icon: github-icon
+  - href: https://images.nura.eco/bpo/v26.06/samsung-gt510/phosh/20261009-0946/
+    label: nura
+    icon: nura-icon
+---
+
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Aside, Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+<Aside type="caution">
+  **Before you begin:** Installing Linux on a tablet may erase existing data or affect the device’s ability to boot.
+  Back up important files and verify that the installation instructions, bootloader and operating system images are
+  compatible with your device before proceeding.
+</Aside>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+<br />
+
+## Samsung tablets
+
+<Tabs syncKey="samsung-tablets">
+
+    <TabItem label="gt510">
+
+      <br />
+
+       <Steps>
+
+       1. ### Download lk2nd
+
+          Open the [GitHub releases](https://github.com/msm8916-mainline/lk2nd/releases) page and download `lk2nd-msm8916.img`. This image provides an alternative bootloader that will be used to start the Linux installation.
+
+       2. ### Download Heimdall
+
+          From the [GitHub releases](https://github.com/fathonix/heimdall-osx-arm64/releases), download `heimdall-2.0.2-macos-arm64.tar.xz`. Heimdall is the utility used to flash the bootloader image to the tablet.
+
+       3. ### Extract Heimdall
+
+          Open a terminal in the directory containing the downloaded archive, then extract its contents. Make sure you run subsequent commands from a location where the extracted Heimdall files are accessible.
+
+          <Code lang="sh" preserveIndent wrap code={`tar -xf heimdall-2.0.2-macos-arm64.tar.xz`} />
+
+       4. ### Remove the macOS quarantine attribute
+
+          macOS may flag downloaded applications because they came from the internet. This command removes the quarantine attribute from the Heimdall frontend application so it can be launched.
+
+          <Code
+              lang="sh"
+              preserveIndent
+              wrap
+              code={`sudo xattr -d -r com.apple.quarantine ~/Downloads/heimdall-frontend.app`}
+              />
+
+       5. ### Download the Linux images
+
+          Open the [Nura image directory](https://images.nura.eco/bpo/v26.06/samsung-gt510/phosh/20261009-0946/) and download both files:
+
+          - `20261009-0946-postmarketOS-v26.06-phosh-29.1-samsung-gt510-boot.img.xz`
+          - `20261009-0946-postmarketOS-v26.06-phosh-29.1-samsung-gt510.img.xz`
+
+          The boot image contains the files needed to start the system, while the main image contains the postmarketOS installation. Keep both files together with the downloaded lk2nd image for the following steps.
+
+       6. ### Extract the boot image
+
+          Decompress the boot image archive. This produces the uncompressed boot image required by the boot command later in the guide.
+
+          <Code lang="sh" preserveIndent wrap code={`xz -d *-boot.img.xz`} />
+
+       7. ### Extract the system image
+
+          Decompress the main postmarketOS image. This produces the image that will be written to the tablet's userdata partition.
+
+          <Code lang="sh" preserveIndent wrap code={`xz -d *-samsung-gt510.img.xz`} />
+
+      8. ### Enter Samsung Download Mode
+
+         Before flashing the bootloader, put the tablet into Download Mode so Heimdall can communicate with it.
+
+         1. **Power off** the tablet completely.
+         2. **Hold** `Volume Down + Home + Power` simultaneously until the cyan warning screen appears.
+         3. **Press** `Volume Up` to confirm and enter Download Mode. The screen should display a green Android robot and a “Downloading...” message.
+         4. **Connect the tablet** to your Mac using a USB cable.
+
+       9. ### Flash the bootloader
+
+          Put the tablet into the appropriate download mode and connect it to your Mac before running this command. It flashes the lk2nd image to the tablet's BOOT partition using Heimdall.
+
+          <Code
+              lang="sh"
+              preserveIndent
+              wrap
+              code={`./heimdall-frontend.app/Contents/MacOS/heimdall flash --BOOT lk2nd-msm8916.img`}
+              />
+
+          Wait for the flashing process to finish before disconnecting the device. If Heimdall cannot detect the tablet, check the USB connection and confirm that the device is in download mode.
+
+       10. ### Flash the Linux system image
+
+           With the tablet in the appropriate fastboot mode, write the extracted system image to the userdata partition. This replaces the existing user data, so make sure you have backed up anything you want to keep.
+
+           <Code lang="sh" preserveIndent wrap code={`fastboot flash userdata *-samsung-gt510.img`} />
+
+       11. ### Boot Linux
+
+           Start the tablet using the extracted boot image. This command boots the supplied image directly rather than flashing it as a separate step.
+
+           <Code lang="sh" preserveIndent wrap code={`fastboot boot *-boot.img`} />
+
+           Allow the device time to start. The first boot may take longer than subsequent boots, so give it a little time before troubleshooting.
+
+       12. ### Log in to the system
+
+           When the initial login prompt appears, use the default passcode below.
+
+           **Default passcode:** `147147`
+
+           Once logged in, verify that the system starts correctly and that the Phosh interface is usable. Change any default credentials if the installed system provides a supported way to do so.
+
+       </Steps>
+
+    </TabItem>
+
+    <TabItem label="sm-t280">
+
+       <br />
+
+       <Aside type="caution">Experimental: have not tried yet.</Aside>
+
+       <br />
+
+      <Steps>
+
+      1. ### Flash TWRP Recovery
+
+         Flash a custom TWRP image for gtexswifi via Heimdall/Odin.
+
+      2. ### Flash LineageOS
+
+         Flash the gtexswifi zip via TWRP.
+
+      3. ### Termux
+
+         Install Termux inside the Android ROM to run an isolated Linux environment (Debian, Alpine, or Ubuntu) alongside working drivers for Wi-Fi and display.
+
+      </Steps>
+
+    </TabItem>
+
+</Tabs>
