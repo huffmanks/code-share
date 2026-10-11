@@ -19,11 +19,51 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
     If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
 
-    <Code
-      lang="sh"
-      wrap
-      code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`}
-    />
+    <Tabs syncKey="network-driver">
+
+      <TabItem key="modern" label="Modern kernels 6.8+">
+
+            **Adding restricted apt repository:** _May be required to access necessary proprietary hardware drivers, such as Wi-Fi or graphics card drivers._
+
+            <Code lang="sh" wrap code={`sudo add-apt-repository restricted`} />
+
+            Ensure you have the required build tools installed.
+
+            <Code lang="sh" wrap code={`sudo apt install build-essential dkms -y`} />
+
+            Clone the patched driver repository.
+
+            <Code lang="sh" wrap code={`git clone --depth 1 https://github.com/develeacid/broadcom-sta-patched.git /tmp/broadcom-sta-patched`} />
+
+            Build and install via DKMS.
+
+            <Code lang="sh" wrap code={`sudo add-apt-repository restricted`} />
+
+            Copy the files to `/usr/src` and register them with DKMS.
+
+            <Code lang="sh" wrap code={`sudo cp -r /tmp/broadcom-sta-patched /usr/src/broadcom-sta-patched-6.30.223.271 && sudo dkms add broadcom-sta-patched/6.30.223.271 && sudo dkms build broadcom-sta-patched/6.30.223.271 && sudo dkms install broadcom-sta-patched/6.30.223.271`} />
+
+            Load the driver module.
+
+            <Code lang="sh" wrap code={`sudo modprobe -r bcma b43 b43legacy ssb brcmsmac && sudo modprobe wl`} />
+
+            Verify that the wl module is loaded.
+
+            <Code lang="sh" wrap code={`lsmod | grep wl`} />
+
+      </TabItem>
+
+      <TabItem key="older" label="Older kernels">
+
+            <Code
+                  lang="sh"
+                  wrap
+                  code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`}
+            />
+
+      </TabItem>
+
+    </Tabs>
 
     For changes to take effect, reboot the system.
 
