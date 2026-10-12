@@ -1,5 +1,9 @@
 # Todos
 
+## Fix
+
+- [ ] cheatsheets with mac/windows/linux shows empty sometimes
+
 ## Settings
 
 - [ ] Add tabs for package manager in guides. e.g. apt, dnf, homebrew, macports, pacman

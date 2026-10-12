@@ -1,0 +1,39 @@
+{
+  "name": "starlight-page-context-action",
+  "version": "0.0.0-semantically-released",
+  "description": "A Starlight plugin that adds page action buttons to the right sidebar above the table of contents.",
+  "type": "module",
+  "author": "babblebey",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babblebey/starlight-page-context-action"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "exports": {
+    ".": "./index.js",
+    "./overrides/PageSidebar.astro": "./overrides/PageSidebar.astro",
+    "./overrides/MobileTableOfContents.astro": "./overrides/MobileTableOfContents.astro"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "virtual.d.ts",
+    "overrides",
+    "components"
+  ],
+  "dependencies": {
+    "vite-plugin-static-copy": "^3.0.0",
+    "vite-plugin-virtual": "^0.3.0"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.36.0",
+    "astro": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/starlight": "^0.41.4",
+    "astro": "^7.1.3"
+  }
+}
