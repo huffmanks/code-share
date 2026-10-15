@@ -2,7 +2,7 @@
 
 ## Fix
 
-- [ ] cheatsheets with mac/windows/linux shows empty sometimes
+- [ ] copying compose.yml or other files on mobile does not paste with same indents,spaces
 
 ## Settings
 

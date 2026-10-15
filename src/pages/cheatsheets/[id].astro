@@ -110,7 +110,7 @@ const headMeta = generateHeadMeta({
             {group.items.map((item, index) => {
               const renderBlocks = [];
 
-              if (item.commands || item.code || item.verificationCode || item.example || item.regex) {
+              if (item.commands || item.code || item.secondaryCode || item.example || item.regex) {
                 renderBlocks.push({
                   osList: "universal",
                   osArray: ["universal"],
@@ -127,6 +127,8 @@ const headMeta = generateHeadMeta({
                   });
                 });
               }
+
+              if (renderBlocks.length === 0) return null;
 
               return (
                 <div
@@ -159,13 +161,13 @@ const headMeta = generateHeadMeta({
                           <Code lang={block.payload.codeLang ?? "sh"} wrap preserveIndent code={block.payload.code} />
                         )}
 
-                        {block.payload?.verificationCode && (
+                        {block.payload?.secondaryCode && (
                           <Code
-                            title="Verify"
+                            title={block.payload.secondaryCode.title}
                             lang={block.payload.codeLang ?? "sh"}
                             wrap
                             preserveIndent
-                            code={block.payload.verificationCode}
+                            code={block.payload.secondaryCode.code}
                           />
                         )}
 
@@ -254,41 +256,35 @@ const headMeta = generateHeadMeta({
     buttons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
 
-    const selectedOS = btn.getAttribute("data-filter");
+    const selectedOS = btn.getAttribute("data-filter") as string;
     const cards = document.querySelectorAll(".cheatsheet-card");
 
     cards.forEach((card) => {
       const blocks = card.querySelectorAll(".platform-block");
+      let visibleBlocksCount = 0;
 
       blocks.forEach((block) => {
         const blockEl = block as HTMLElement;
         const osListAttr = block.getAttribute("data-os-list") || "";
         const osArray = osListAttr.split(",");
-        const tags = block.querySelectorAll(".os-tag");
 
+        let showBlock = false;
         if (selectedOS === "all") {
-          blockEl.style.display = "block";
-          tags.forEach((tag) => {
-            (tag as HTMLElement).style.display = "inline-block";
-          });
-        } else {
-          if (osListAttr === "universal" || (selectedOS && osArray.includes(selectedOS))) {
-            blockEl.style.display = "block";
+          showBlock = true;
+        } else if (osListAttr === "universal" || osArray.includes(selectedOS)) {
+          showBlock = true;
+        }
 
-            tags.forEach((tag) => {
-              const tagEl = tag as HTMLElement;
-              const osName = tag.getAttribute("data-os-name");
-              if (osName === selectedOS) {
-                tagEl.style.display = "inline-block";
-              } else {
-                tagEl.style.display = "none";
-              }
-            });
-          } else {
-            blockEl.style.display = "none";
-          }
+        if (showBlock) {
+          blockEl.style.display = "block";
+          visibleBlocksCount++;
+        } else {
+          blockEl.style.display = "none";
         }
       });
+
+      const cardEl = card as HTMLElement;
+      cardEl.style.display = visibleBlocksCount > 0 ? "block" : "none";
     });
   });
 </script>

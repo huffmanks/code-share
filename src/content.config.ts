@@ -23,7 +23,12 @@ export type References = z.infer<typeof referencesSchema>;
 
 const executionFields = z.object({
   code: z.string().optional(),
-  verificationCode: z.string().optional(),
+  secondaryCode: z
+    .object({
+      title: z.string(),
+      code: z.string(),
+    })
+    .optional(),
   codeLang: z.string().default("sh").optional(),
   example: z.string().optional(),
   commands: z.array(z.array(z.string())).optional(),

@@ -26,20 +26,28 @@ groups:
               - [CTRL, v]
       - label: Move to beginning of line
         description: Moves the cursor to the start of the current line.
-        commands:
-          - [CTRL, a]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, a]
       - label: Move to end of line
         description: Moves the cursor to the end of the current line.
-        commands:
-          - [CTRL, e]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, e]
       - label: Move to previous line
         description: Moves the cursor to the previous line.
-        commands:
-          - [CTRL, p]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, p]
       - label: Move to next line
         description: Moves the cursor to the next line.
-        commands:
-          - [CTRL, n]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, n]
       - label: Move to previous word
         description: Moves the cursor backward one word at a time.
         platforms:
@@ -90,12 +98,16 @@ groups:
               - [ALT, "6"]
       - label: Cut selected text
         description: Cuts the selected text and stores it in the buffer.
-        commands:
-          - [CTRL, k]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, k]
       - label: Paste text
         description: Pastes the last cut text.
-        commands:
-          - [CTRL, u]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, u]
   - title: Search and Replace
     description: Find text and perform replacements efficiently.
     items:
@@ -133,21 +145,27 @@ groups:
     items:
       - label: Save and exit
         description: Writes changes to file and quits.
-        commands:
-          - [CTRL, x, "y", ENTER]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, x, "y", ENTER]
         comment: x=exit, y=yes
       - label: Exit without saving
         description: Closes Nano without saving changes.
-        commands:
-          - [CTRL, x, "n"]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, x, "n"]
         comment: x=exit, n=no
   - title: Miscellaneous
     description: Other useful Nano commands.
     items:
       - label: Display help
         description: Shows Nano's help documentation.
-        commands:
-          - [CTRL, g]
+        platforms:
+          - os: [macos, linux, windows]
+            commands:
+              - [CTRL, g]
       - label: Undo
         description: Revert the most recent change.
         platforms:

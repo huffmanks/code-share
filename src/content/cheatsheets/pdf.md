@@ -74,7 +74,9 @@ groups:
               -dModifiesPageSize=true \
               -dNOPAUSE -dBATCH -dQUIET \
               -sOutputFile=resized-letter-exact.pdf input.pdf
-        verificationCode: |
-          pdfinfo -f 1 -l $(pdfinfo "resized-letter-exact.pdf" | awk '/Pages/ {print $2}') "resized-letter-exact.pdf" | grep -E "Page.*size:"
+        secondaryCode:
+          title: "Verify"
+          code: |
+            pdfinfo -f 1 -l $(pdfinfo "resized-letter-exact.pdf" | awk '/Pages/ {print $2}') "resized-letter-exact.pdf" | grep -E "Page.*size:"
         comment: "Letter = 612×792 points; 72 points = 1 inch."
 ---

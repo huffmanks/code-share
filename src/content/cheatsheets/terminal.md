@@ -3,185 +3,123 @@ title: terminal
 description: Frequently used shell commands for file navigation, permissions, networking and more.
 updatedAt: 2026-09-20 17:29:52
 groups:
-  - title: Navigation
-    description: Moving around the file system.
+  - title: System Information
+    description: Getting information about the system.
     items:
-      - label: Print working directory
-        description: Output the absolute path of your current directory.
-        code: pwd
-      - label: Change directory
-        description: Switch the active directory path.
-        code: cd Documents
-      - label: List directory contents
-        description: Display files and folders in the current location.
+      - label: Display system details
+        description: Output host configuration and kernel version.
         platforms:
           - os: [macos, linux]
-            code: ls
+            code: uname -a
           - os: [windows]
-            code: dir
+            code: systeminfo
+      - label: Monitor running processes
+        description: Open interactive resource usage dashboard.
+        platforms:
+          - os: [macos, linux]
+            code: top
+          - os: [windows]
+            code: taskmgr
+      - label: List active processes
+        description: List running processes with their IDs and resource usage.
+        platforms:
+          - os: [macos, linux]
+            code: ps aux
+          - os: [windows]
             codeLang: ps1
-      - label: List files with details
-        description: Display detailed file and folder attributes.
+            code: tasklist
+      - label: Search processes by name
+        description: Find process IDs and names matching a search term.
         platforms:
           - os: [macos, linux]
-            code: ls -l
+            code: pgrep -ifl <search-term>
+            example: pgrep -ifl chrome
+            comment: Case-insensitive; output format varies between macOS and Linux.
           - os: [windows]
-            code: Get-ChildItem
+            code: Get-Process | Where-Object { $_.ProcessName -like "*<search-term>*" }
             codeLang: ps1
-      - label: List all including hidden
-        description: Display all files including hidden system files.
+            example: Get-Process | Where-Object { $_.ProcessName -like "*chrome*" }
+      - label: Terminate processes by name
+        description: Send a termination signal to matching processes.
         platforms:
           - os: [macos, linux]
-            code: ls -a
+            code: pkill <process-name>
+            example: pkill chrome
+            comment: Matches process names, not app display names. Add -i for case-insensitive matching.
           - os: [windows]
-            code: Get-ChildItem -Force
+            code: Stop-Process -Name <process-name>
             codeLang: ps1
-      - label: Go up one level
-        description: Navigate to the parent directory.
-        code: cd ..
-      - label: Go to home directory
-        description: Navigate directly to the user home folder.
-        code: cd ~
-  - title: File Manipulation
-    description: Creating, moving, and deleting files and directories.
-    items:
-      - label: Create empty file
-        description: Initialize a new blank file on disk.
+            example: Stop-Process -Name chrome
+      - label: Terminate processes by command line
+        description: Terminate processes whose command lines match a pattern.
         platforms:
           - os: [macos, linux]
-            code: touch myfile.txt
+            code: pkill -f <search-term>
+            example: pkill -if chrome
+            comment: Add -i for case-insensitive matching. May match multiple processes.
           - os: [windows]
-            code: New-Item myfile.txt
+            code: Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like "*<search-term>*" } | ForEach-Object { Stop-Process -Id $_.ProcessId }
             codeLang: ps1
-      - label: Create directory
-        description: Initialize a new folder on disk.
-        code: mkdir mydirectory
-      - label: Copy file or folder
-        description: Duplicate files or directories to a new destination.
+            example: Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like "*chrome*" } | ForEach-Object { Stop-Process -Id $_.ProcessId }
+            comment: May match multiple processes; access to command lines can be restricted.
+      - label: Force terminate processes
+        description: Force-stop processes that do not terminate normally.
         platforms:
           - os: [macos, linux]
-            code: cp myfile.txt mycopy.txt
+            code: pkill -9 <process-name>
+            example: pkill -9 chrome
+            comment: SIGKILL; cannot be caught or handled. Add -i for case-insensitive matching.
           - os: [windows]
-            code: Copy-Item myfile.txt mycopy.txt
+            code: Stop-Process -Name <process-name> -Force
             codeLang: ps1
-      - label: Move or rename target
-        description: Relocate or rename files and directories.
+            example: Stop-Process -Name chrome -Force
+      - label: Terminate process by PID
+        description: Terminate a specific process using its ID.
         platforms:
           - os: [macos, linux]
-            code: mv myfile.txt newlocation/myfile.txt
+            code: kill <PID>
+            example: kill 1234
+            comment: Add -9 after kill to force termination.
           - os: [windows]
-            code: Move-Item myfile.txt newlocation/
+            code: Stop-Process -Id <PID>
             codeLang: ps1
-      - label: Remove file
-        description: Delete a specific file from disk.
+            example: Stop-Process -Id 1234
+            comment: Add -Force to force termination.
+      - label: Check disk space usage
+        description: Display storage volume capacity and availability.
         platforms:
           - os: [macos, linux]
-            code: rm myfile.txt
+            code: df -h
           - os: [windows]
-            code: Remove-Item myfile.txt
+            code: Get-PSDrive
             codeLang: ps1
-      - label: Remove directory recursively
-        description: Delete a folder and its entire contents.
+      - label: Measure folder size
+        description: Calculate total disk space consumed by a directory.
         platforms:
           - os: [macos, linux]
-            code: rm -r mydirectory
+            code: du -sh Documents
           - os: [windows]
-            code: Remove-Item -Recurse mydirectory
+            code: Get-ChildItem Documents -Recurse | Measure-Object Length -Sum
             codeLang: ps1
-      - label: Force remove file
-        description: Delete a file forcefully without confirmation.
+      - label: Check service status
+        description: Query the current operational state of a service.
         platforms:
-          - os: [macos, linux]
-            code: rm -f myfile.txt
+          - os: [linux]
+            code: systemctl status nginx
+          - os: [macos]
+            code: launchctl print system/nginx
           - os: [windows]
-            code: Remove-Item -Force myfile.txt
+            code: Get-Service nginx
             codeLang: ps1
-      - label: Force remove directory
-        description: Delete a directory and contents forcefully.
+      - label: Restart system service
+        description: Stop and start a system service daemon.
         platforms:
-          - os: [macos, linux]
-            code: rm -rf mydirectory
+          - os: [linux]
+            code: systemctl restart nginx
+          - os: [macos]
+            code: launchctl kickstart -k system/nginx
           - os: [windows]
-            code: Remove-Item -Recurse -Force mydirectory
-            codeLang: ps1
-  - title: Viewing Files
-    description: Displaying the contents of files.
-    items:
-      - label: Display file content
-        description: Output the complete text contents of a file.
-        platforms:
-          - os: [macos, linux]
-            code: cat myfile.txt
-          - os: [windows]
-            code: Get-Content myfile.txt
-            codeLang: ps1
-      - label: View file paginated
-        description: Inspect file contents one screen page at a time.
-        platforms:
-          - os: [macos, linux]
-            code: less myfile.txt
-          - os: [windows]
-            code: Get-Content myfile.txt | more
-            codeLang: ps1
-            comment: space=scroll, q=quit
-      - label: Display file head
-        description: Output the opening lines of a file.
-        platforms:
-          - os: [macos, linux]
-            code: head myfile.txt
-          - os: [windows]
-            code: Get-Content myfile.txt -Head 10
-            codeLang: ps1
-      - label: Display file tail
-        description: Output the closing lines of a file.
-        platforms:
-          - os: [macos, linux]
-            code: tail myfile.txt
-          - os: [windows]
-            code: Get-Content myfile.txt -Tail 10
-            codeLang: ps1
-      - label: Open text editor nano
-        description: Launch text editor for quick inline modifications.
-        platforms:
-          - os: [macos, linux]
-            code: nano myfile.txt
-          - os: [windows]
-            code: notepad myfile.txt
-            codeLang: ps1
-      - label: Open text editor vim
-        description: Launch modal text editor for editing files.
-        platforms:
-          - os: [macos, linux]
-            code: vi myfile.txt
-          - os: [windows]
-            code: notepad myfile.txt
-            codeLang: ps1
-  - title: Searching
-    description: Finding files and content.
-    items:
-      - label: Find files and folders
-        description: Locate files matching specific criteria recursively.
-        platforms:
-          - os: [macos, linux]
-            code: find . -name "myfile.txt"
-          - os: [windows]
-            code: Get-ChildItem -Recurse -Filter "myfile.txt"
-            codeLang: ps1
-      - label: Search text pattern
-        description: Scan file contents for matching string patterns.
-        platforms:
-          - os: [macos, linux]
-            code: grep "hello" myfile.txt
-          - os: [windows]
-            code: Select-String -Pattern "hello" -Path myfile.txt
-            codeLang: ps1
-      - label: Locate executable path
-        description: Resolve the absolute filesystem path of a tool.
-        platforms:
-          - os: [macos, linux]
-            code: which ls
-          - os: [windows]
-            code: Get-Command ls
+            code: Restart-Service nginx
             codeLang: ps1
   - title: File Permissions and Ownership
     description: Managing file access rights and ownership.
@@ -237,90 +175,6 @@ groups:
           - os: [windows]
             code: Get-ItemProperty myfile.txt
             codeLang: ps1
-  - title: System Information
-    description: Getting information about the system.
-    items:
-      - label: Display system details
-        description: Output host configuration and kernel version.
-        platforms:
-          - os: [macos, linux]
-            code: uname -a
-          - os: [windows]
-            code: systeminfo
-      - label: Check disk space usage
-        description: Display storage volume capacity and availability.
-        platforms:
-          - os: [macos, linux]
-            code: df -h
-          - os: [windows]
-            code: Get-PSDrive
-            codeLang: ps1
-      - label: Measure folder size
-        description: Calculate total disk space consumed by a directory.
-        platforms:
-          - os: [macos, linux]
-            code: du -sh Documents
-          - os: [windows]
-            code: Get-ChildItem Documents -Recurse | Measure-Object Length -Sum
-            codeLang: ps1
-      - label: Monitor running processes
-        description: Open interactive resource usage dashboard.
-        platforms:
-          - os: [macos, linux]
-            code: top
-          - os: [windows]
-            code: taskmgr
-      - label: List active processes
-        description: Output a snapshot list of active system processes.
-        platforms:
-          - os: [macos, linux]
-            code: ps aux
-          - os: [windows]
-            code: tasklist
-      - label: Terminate process by PID
-        description: Send a stop signal to a process identifier.
-        platforms:
-          - os: [macos, linux]
-            code: kill 1234
-          - os: [windows]
-            code: Stop-Process -Id 1234
-            codeLang: ps1
-      - label: Force terminate process
-        description: Forcefully abort a process by its identifier.
-        platforms:
-          - os: [macos, linux]
-            code: kill -9 1234
-          - os: [windows]
-            code: Stop-Process -Id 1234 -Force
-            codeLang: ps1
-      - label: Terminate processes by name
-        description: Stop running processes matching a process name.
-        platforms:
-          - os: [macos, linux]
-            code: pkill firefox
-          - os: [windows]
-            code: Stop-Process -Name firefox
-            codeLang: ps1
-      - label: Check service status
-        description: Query the current operational state of a service.
-        platforms:
-          - os: [linux]
-            code: systemctl status nginx
-          - os: [macos]
-            code: launchctl print system/nginx
-          - os: [windows]
-            code: Get-Service nginx
-            codeLang: ps1
-      - label: Restart system service
-        description: Stop and start a system service daemon.
-        platforms:
-          - os: [linux]
-            code: systemctl restart nginx
-          - os: [macos]
-            code: launchctl kickstart -k system/nginx
-          - os: [windows]
-            code: Restart-Service nginx
-            codeLang: ps1
   - title: Archiving and Compression
     description: Creating and extracting tarballs and zip files.
     syntax: |
@@ -341,16 +195,24 @@ groups:
     items:
       - label: Create tar archive
         description: Package files into an uncompressed archive container.
-        code: tar -cvf archive.tar myfolder
+        platforms:
+          - os: [macos, linux, windows]
+            code: tar -cvf archive.tar myfolder
       - label: Extract tar archive
         description: Unpack files from a tar container.
-        code: tar -xvf archive.tar
+        platforms:
+          - os: [macos, linux, windows]
+            code: tar -xvf archive.tar
       - label: Create compressed tarball
         description: Package and gzip compress a directory structure.
-        code: tar -czvf archive.tar.gz myfolder
+        platforms:
+          - os: [macos, linux, windows]
+            code: tar -czvf archive.tar.gz myfolder
       - label: Extract compressed tarball
         description: Unpack and decompress a gzipped archive file.
-        code: tar -xzvf archive.tar.gz
+        platforms:
+          - os: [macos, linux, windows]
+            code: tar -xzvf archive.tar.gz
       - label: Create zip archive
         description: Compress files into a standard zip format.
         platforms:
