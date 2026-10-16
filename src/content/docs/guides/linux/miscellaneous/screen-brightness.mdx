@@ -10,23 +10,27 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 ---
 
+## Find your backlight controller path
+
+<Code lang="sh" code={`ls /sys/class/backlight/`} />
+
 ## Turn screen off
 
 <Code
   lang="sh"
-  code={`echo 0 | sudo tee /sys/class/backlight/acpi_video0/brightness && echo 0 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+  code={`echo 0 | sudo tee /sys/class/backlight/acpi_video0/brightness; echo 0 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
 />
 
 ## Verify max level
 
 <Code
   lang="sh"
-  code={`cat /sys/class/backlight/acpi_video0/max_brightness && cat /sys/class/backlight/acpi_video1/max_brightness`}
+  code={`cat /sys/class/backlight/acpi_video0/max_brightness; cat /sys/class/backlight/acpi_video1/max_brightness`}
 />
 
 ## Turn screen on
 
 <Code
   lang="sh"
-  code={`echo 84 | sudo tee /sys/class/backlight/acpi_video0/brightness && echo 84 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+  code={`echo 84 | sudo tee /sys/class/backlight/acpi_video0/brightness; echo 84 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
 />
