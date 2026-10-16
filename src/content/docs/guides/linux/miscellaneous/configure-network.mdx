@@ -4,7 +4,7 @@ description: This process configures your server to use Netplan and systemd-reso
 lastUpdated: 2026-09-23 10:39:16
 ---
 
-import { netplanConfig, systemdResolvedConfig } from "@/lib/mdx-constants";
+import { netplanConfig, systemdResolvedConfig, wifiPowerSaveOnConf } from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 <p>{frontmatter.description}</p>
@@ -15,7 +15,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 1.  ## Install network driver (if applicable)
 
-    <Code lang="sh" code={`lspci -nnk | grep -iA 3 net`} />
+    <Code lang="sh" wrap preserveIndent code={`lspci -nnk | grep -iA 3 net`} />
 
     If the network controller says **“Broadcom”** and **“BCM43xx”**, install the drivers below; otherwise, skip to step 2.
 
@@ -23,33 +23,58 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
       <TabItem key="modern" label="Modern kernels 6.8+">
 
-            **Adding restricted apt repository:** _May be required to access necessary proprietary hardware drivers, such as Wi-Fi or graphics card drivers._
+            Ensure the `non-free` repository component is enabled for your Debian release. (`deb` and `deb-src`)
 
-            <Code lang="sh" wrap code={`sudo add-apt-repository restricted`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo nano /etc/apt/sources.list`} />
 
-            Ensure you have the required build tools installed.
+            Update package lists.
 
-            <Code lang="sh" wrap code={`sudo apt install build-essential dkms -y`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo apt update`} />
 
-            Clone the patched driver repository.
+            Check that the Broadcom driver package is available.
 
-            <Code lang="sh" wrap code={`git clone --depth 1 https://github.com/develeacid/broadcom-sta-patched.git /tmp/broadcom-sta-patched`} />
+            <Code lang="sh" wrap preserveIndent code={`apt-cache policy broadcom-sta-dkms`} />
 
-            Build and install via DKMS.
+            Install the kernel headers, DKMS, NetworkManager and the Broadcom driver.
 
-            <Code lang="sh" wrap code={`sudo add-apt-repository restricted`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo apt install -y linux-headers-$(uname -r) dkms network-manager && sudo apt install -y broadcom-sta-dkms`} />
 
-            Copy the files to `/usr/src` and register them with DKMS.
+            Verification: If the output includes `wl` with a _nonzero size_, the driver module is loaded.
 
-            <Code lang="sh" wrap code={`sudo cp -r /tmp/broadcom-sta-patched /usr/src/broadcom-sta-patched-6.30.223.271 && sudo dkms add broadcom-sta-patched/6.30.223.271 && sudo dkms build broadcom-sta-patched/6.30.223.271 && sudo dkms install broadcom-sta-patched/6.30.223.271`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma && sudo modprobe wl && lsmod | grep wl`} />
 
-            Load the driver module.
+            Remove any wireless interfaces if they exist.
 
-            <Code lang="sh" wrap code={`sudo modprobe -r bcma b43 b43legacy ssb brcmsmac && sudo modprobe wl`} />
+            <Code lang="sh" wrap preserveIndent code={`sudo nano /etc/network/interfaces`} />
 
-            Verify that the wl module is loaded.
+            Disable Wi-Fi power saving to help prevent connection drops.
 
-            <Code lang="sh" wrap code={`lsmod | grep wl`} />
+            <Code
+                  lang="sh"
+                  wrap
+                  preserveIndent
+                  title="/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf"
+                  code={`sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf`}
+            />
+
+            <Code
+                  lang="sh"
+                  wrap
+                  preserveIndent
+                  code={wifiPowerSaveOnConf}
+            />
+
+            Restart NetworkManager.
+
+            <Code lang="sh" wrap preserveIndent code={`sudo systemctl restart NetworkManager`} />
+
+            Configure the corporate Wi-Fi connection using WPA-Enterprise credentials.
+
+            <Code lang="sh" wrap preserveIndent code={`sudo nmcli connection add type wifi con-name corporate-wifi ssid "YourSSID" wifi-sec.key-mgmt wpa-eap 802-1x.eap peap 802-1x.identity "your_username" 802-1x.password "your_password" 802-1x.phase2-auth mschapv2`} />
+
+            Connect to the corporate Wi-Fi network.
+
+            <Code lang="sh" wrap preserveIndent code={`sudo nmcli connection up corporate-wifi`} />
 
       </TabItem>
 
@@ -57,7 +82,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
             <Code
                   lang="sh"
-                  wrap
+                  wrap preserveIndent
                   code={`sudo apt update && sudo apt install linux-headers-$(uname -r) -y && sudo apt install bcmwl-kernel-source -y`}
             />
 
@@ -73,11 +98,16 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 2.  ## Install and enable wpa_supplicant
 
-    <Code lang="sh" wrap code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo apt install wpasupplicant -y && sudo systemctl enable --now wpa_supplicant`}
+    />
 
 3.  ## Create symlink to systemd-resolved
 
-    <Code lang="sh" wrap code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
 
 4.  ## Network configuration
 
@@ -91,7 +121,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
                1. Open netplan config
 
-                     <Code lang="sh" wrap code={`sudo nano /etc/systemd/resolved.conf.d/10-override-dns.conf`} />
+                     <Code lang="sh" wrap preserveIndent code={`sudo nano /etc/systemd/resolved.conf.d/10-override-dns.conf`} />
 
                2.  Update config
 
@@ -109,7 +139,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
                1. Open netplan config
 
-                     <Code lang="sh" wrap code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
+                     <Code lang="sh" wrap preserveIndent code={`sudo nano /etc/netplan/50-cloud-init.yaml`} />
 
                2.  Update config
 
@@ -121,12 +151,11 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
                3.  Apply the config
 
-                     <Code lang="sh" code={`sudo chown root:root /etc/netplan/50-cloud-init.yaml && sudo chmod 600 /etc/netplan/50-cloud-init.yaml`} />
+                     <Code lang="sh" wrap preserveIndent code={`sudo chown root:root /etc/netplan/50-cloud-init.yaml && sudo chmod 600 /etc/netplan/50-cloud-init.yaml`} />
 
                4.  Apply the config
 
                      <Code lang="sh" code={`sudo netplan apply`} />
-
 
                </Steps>
 
@@ -142,7 +171,7 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 6.  ## Enable systemd-networkd-wait-online
 
-    <Code lang="sh" wrap code={`sudo systemctl enable systemd-networkd-wait-online.service`} />
+    <Code lang="sh" wrap preserveIndent code={`sudo systemctl enable systemd-networkd-wait-online.service`} />
 
 7.  ## Reboot the system
 

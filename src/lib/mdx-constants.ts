@@ -155,6 +155,11 @@ network:
           password: "Your_Password"
 `;
 
+export const wifiPowerSaveOnConf = `
+[connection]
+wifi.powersave = 2
+`;
+
 // src/content/docs/guides/linux/miscellaneous/wake-on-lan.mdx
 export const wolService = `
 [Unit]

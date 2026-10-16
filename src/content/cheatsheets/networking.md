@@ -157,6 +157,18 @@ groups:
             codeLang: ps1
             example: Disable-NetAdapter -Name Ethernet
             comment: Use Enable-NetAdapter to enable the interface.
+      - label: ""
+        description: ""
+        platforms:
+          - os: ["macos"]
+            code: sudo wdutil info
+            codeLang: sh
+          - os: ["linux"]
+            code: iw dev
+            codeLang: sh
+          - os: ["windows"]
+            code: netsh wlan show interfaces
+            codeLang: ps1
       - label: Show configured DNS servers
         description: Display DNS resolver configuration for the system.
         platforms:

@@ -1,0 +1,32 @@
+---
+title: Screen brightness
+description: Control and verify display brightness from the terminal.
+lastUpdated: 2026-10-16 10:59:08
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+## Turn screen off
+
+<Code
+  lang="sh"
+  code={`echo 0 | sudo tee /sys/class/backlight/acpi_video0/brightness && echo 0 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+/>
+
+## Verify max level
+
+<Code
+  lang="sh"
+  code={`cat /sys/class/backlight/acpi_video0/max_brightness && cat /sys/class/backlight/acpi_video1/max_brightness`}
+/>
+
+## Turn screen on
+
+<Code
+  lang="sh"
+  code={`echo 84 | sudo tee /sys/class/backlight/acpi_video0/brightness && echo 84 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+/>
