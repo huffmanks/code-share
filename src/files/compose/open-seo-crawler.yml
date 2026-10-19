@@ -1,0 +1,9 @@
+services:
+  open-seo-crawler:
+    build: .
+    container_name: open-seo-crawler
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./crawls:/root/.site-crawler-crawls
+    restart: unless-stopped

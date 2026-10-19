@@ -1,0 +1,55 @@
+---
+title: Open SEO Crawler
+description: "Open SEO Crawler is a free, open-source SEO crawler you run locally: a self-hosted website SEO crawler and site audit tool that crawls any website for technical SEO issues. Fast, concurrent, and CMS-aware, it’s a drop-in alternative to Screaming Frog, Sitebulb, and Ahrefs Site Audit, with no accounts, no API keys, no cloud and no per-URL limits."
+lastUpdated: 2026-10-19 16:11:37
+references:
+  - href: https://github.com/puneetindersingh/open-seo-crawler
+    label: GitHub
+    icon: "github-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/open-seo-crawler.yml?raw";
+import dockerfile from "/src/files/dockerfile/open-seo-crawler.Dockerfile?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directory
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/open-seo-crawler && cd {{DOCKER_PATH_VAR}}/open-seo-crawler
+```
+
+## Dockerfile
+
+```sh
+nano Dockerfile
+```
+
+<Code lang="dockerfile" title="Dockerfile" wrap preserveIndent code={dockerfile} />
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## Start container
+
+```sh
+docker compose up --build -d
+```
+
+## Open web ui
+
+<OpenWebUI port="5002" />

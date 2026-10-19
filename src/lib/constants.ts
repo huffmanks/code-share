@@ -281,6 +281,7 @@ export const appPorts = {
   ntfy: 8383,
   openWebUi: 3007,
   opencloud: 9200,
+  openSeoCrawler: 5002,
   pangolinServer: 51820,
   pangolinHttps: 443,
   pangolinHttp: 80,
