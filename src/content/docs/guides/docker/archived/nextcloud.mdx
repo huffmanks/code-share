@@ -1,17 +1,14 @@
 ---
 title: Nextcloud
 description: "Nextcloud offers a self-hosted file storage and sync platform with powerful collaboration capabilities with desktop, mobile and web interfaces."
-lastUpdated: 2025-12-28 20:28:55
+lastUpdated: 2026-10-23 16:51:34
 references:
-  - href: https://docs.linuxserver.io/images/docker-nextcloud
-    label: LinuxServer.io
-    icon: "linux-server-icon"
-  - href: https://docs.nextcloud.com/server/latest/admin_manual
-    label: Docs
-    icon: "nextcloud-icon"
   - href: https://github.com/nextcloud/all-in-one
     label: Nextcloud AIO
     icon: "github-icon"
+  - href: https://docs.nextcloud.com/server/latest/admin_manual
+    label: Docs
+    icon: "nextcloud-icon"
 ---
 
 import OpenWebUI from "@/components/guides/open-webui.astro";
@@ -19,7 +16,6 @@ import ReferenceLinks from "@/components/guides/reference-links.astro";
 import ServiceNotice from "@/components/guides/service-notice.astro";
 import { Code } from "@astrojs/starlight/components";
 import yaml from "/src/files/compose/nextcloud.yml?raw";
-import env from "/src/files/env/nextcloud.env?raw";
 
 <p>{frontmatter.description}</p>
 
@@ -44,14 +40,6 @@ nano compose.yml
 ```
 
 <Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
-
-## .env
-
-```sh
-nano .env
-```
-
-<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
 
 ## Start container
 

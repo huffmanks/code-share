@@ -1,6 +1,6 @@
 services:
   plex:
-    image: lscr.io/linuxserver/plex:latest
+    image: plexinc/pms-docker:latest
     container_name: plex
     network_mode: host
     volumes:
@@ -10,9 +10,6 @@ services:
       - /path/to/movies-02:/movies/movies-02
       - /path/to/youtube:/youtube
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ={{TIME_ZONE_VAR}}
-      - VERSION=docker
       - PLEX_CLAIM= #optional
     restart: unless-stopped

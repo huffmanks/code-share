@@ -26,4 +26,23 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" code={`sudo reboot`} />
 
+3.  ## Install extension manager
+
+    Install GNOME Extension Manager to browse, install and configure GNOME Shell extensions.
+
+    <Code lang="sh" code={`sudo apt install -y gnome-shell-extension-manager`} />
+
+4.  ## Launch extension manager
+
+    Open Extension Manager from the applications menu or launch it from the terminal.
+
+    <Code lang="sh" code={`extension-manager`} />
+
+5.  ## Install and configure Deja Window
+    - Open the **Browse** tab and search for `Deja Window` by _mcastaldo_.
+    - Install the extension, then open the **Installed** tab.
+    - Click the settings icon next to **Deja Window**.
+    - Under **Global Defaults**, toggle **Enabled** and then click **Restore**.
+    - Enable `Size`, `Position` and `Avoid Overlap for Additional Windows`. Leave all other options disabled.
+
 </Steps>
