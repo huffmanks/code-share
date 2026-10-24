@@ -3,6 +3,9 @@ export const linuxSshdConfig = `
 # Disable password auth
 PasswordAuthentication no
 
+# Allow using SSH public/private keys
+PubkeyAuthentication yes
+
 # Prevent root login entirely
 PermitRootLogin no
 
