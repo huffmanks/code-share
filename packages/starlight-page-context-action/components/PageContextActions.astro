@@ -629,7 +629,6 @@ const rawSourcePath = (() => {
       const popupHeight = popupEl.offsetHeight;
       const popupWidth = popupEl.offsetWidth;
       const spaceAbove = rect.top;
-      const spaceBelow = window.innerHeight - rect.bottom;
 
       // Vertical: prefer above, fall back to below
       if (spaceAbove >= popupHeight + gap) {

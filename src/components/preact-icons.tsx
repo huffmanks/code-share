@@ -1,6 +1,6 @@
-import type { JSX } from "preact/jsx-runtime";
+import type { CSSProperties, JSX } from "preact";
 
-export const LanguageIcon: Record<string, ({ style }: { style: JSX.CSSProperties }) => JSX.Element> = {
+export const LanguageIcon: Record<string, ({ style }: { style: CSSProperties }) => JSX.Element> = {
   css: ({ style }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style={style}>
       <path
@@ -92,7 +92,7 @@ export const LanguageIcon: Record<string, ({ style }: { style: JSX.CSSProperties
   ),
 };
 
-export const ButtonIcon: Record<string, ({ style }: { style?: JSX.CSSProperties }) => JSX.Element> = {
+export const ButtonIcon: Record<string, ({ style }: { style?: CSSProperties }) => JSX.Element> = {
   az: ({ style }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" style={style}>
       <g fill="none">

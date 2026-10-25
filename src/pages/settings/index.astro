@@ -50,7 +50,7 @@ const headMeta = generateHeadMeta({
     pagefind: false,
   }}
   headings={headings}>
-  <SettingsForm client:only pageDescription={pageDescription} />
+  <SettingsForm client:only="preact" pageDescription={pageDescription} />
 </StarlightPage>
 <!--
 <style is:inline>

@@ -498,16 +498,16 @@ const rawSourcePath = (() => {
         }
 
         // --- AI service URLs ---
-        var pageUrl = window.location.href;
-        var encodedPrompt = encodeURIComponent(prompt.replace("{url}", pageUrl));
-        var serviceUrls = {
+        const pageUrl = window.location.href;
+        const encodedPrompt = encodeURIComponent(prompt.replace("{url}", pageUrl));
+        const serviceUrls = {
           chatgpt: "https://chatgpt.com/?q=" + encodedPrompt,
           claude: "https://claude.ai/new?q=" + encodedPrompt,
           t3chat: "https://t3.chat/new?q=" + encodedPrompt,
         };
 
         this.querySelectorAll("[data-mobile-ai]").forEach(function (link) {
-          var service = link.getAttribute("data-mobile-ai");
+          const service = link.getAttribute("data-mobile-ai");
           if (serviceUrls[service]) {
             link.href = serviceUrls[service];
           }
@@ -517,7 +517,7 @@ const rawSourcePath = (() => {
         });
 
         // --- Scroll to top ---
-        var scrollBtn = this.querySelector("[data-mobile-scroll-top]");
+        const scrollBtn = this.querySelector("[data-mobile-scroll-top]");
         if (scrollBtn) {
           scrollBtn.addEventListener("click", function () {
             window.scrollTo({ top: 0, behavior: "smooth" });

@@ -14,14 +14,14 @@ const { href, title, icon } = Astro.props;
 <article class="card" style="padding: 0px">
   <a class="link" href={href} title={title}>
     <h2 class="title sl-flex">
-      {icon && <Icon name={icon} class="icon" size="1em" />}
+      {icon && <Icon name={icon} class="icon" width="1em" height="1em" />}
       <span set:html={title} />
     </h2>
     <slot class="body" />
   </a>
 
   <div class="arrow-container">
-    <Icon name="arrow-right-icon" class="right-arrow-icon" size="1.333em" />
+    <Icon name="arrow-right-icon" class="right-arrow-icon" width="1.333em" height="1.333em" />
   </div>
 </article>
 

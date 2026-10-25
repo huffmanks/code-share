@@ -11,7 +11,7 @@ export function getStoredValues(key: string, defaultValues: SettingsForm): Setti
 
   try {
     return { ...defaultValues, ...JSON.parse(stored) };
-  } catch (e) {
+  } catch (_e) {
     return defaultValues;
   }
 }
