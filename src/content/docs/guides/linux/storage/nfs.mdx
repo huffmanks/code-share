@@ -20,7 +20,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Install the NFS server package to enable file sharing.
 
-    <Code lang="sh" code={`sudo apt update && sudo apt install nfs-kernel-server -y`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo apt update && sudo apt install nfs-kernel-server -y`} />
 
 2.  ### Add export
 
@@ -28,6 +28,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code
       lang="sh"
+      preserveIndent
       wrap
       code={`echo "{{NFS_SHARE_VAR}} {{CLIENT_IP_VAR}}(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports`}
     />
@@ -42,7 +43,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Open the NFS port to allow access from the specified client IP.
 
-    <Code lang="sh" code={`sudo ufw allow from {{CLIENT_IP_VAR}} to any port nfs`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{CLIENT_IP_VAR}} to any port nfs`} />
 
 </Steps>
 
@@ -54,7 +55,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Install the NFS client package to enable mounting remote shares.
 
-    <Code lang="sh" code={`sudo apt update && sudo apt install nfs-common -y`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo apt update && sudo apt install nfs-common -y`} />
 
 2.  ### Create mount point
 

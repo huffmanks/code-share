@@ -25,7 +25,7 @@ Ensure your Linux system is automatically updated with security patches. Unatten
 
 2. ### Open config
 
-   <Code lang="sh" code={`sudo nano /etc/apt/apt.conf.d/20auto-upgrades`} />
+   <Code lang="sh" preserveIndent wrap code={`sudo nano /etc/apt/apt.conf.d/20auto-upgrades`} />
 
 3. ### Modify config
 
@@ -54,7 +54,7 @@ Require users to authenticate with a password before using sudo privileges. This
 
 1. ### Open config
 
-   <Code lang="sh" code={`sudo visudo -f /etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd`} />
+   <Code lang="sh" preserveIndent wrap code={`sudo visudo -f /etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd`} />
 
 2. ### Modify config
 
@@ -171,11 +171,11 @@ A firewall is your first line of defense against unauthorized access. Installing
 
     Allow Samba UDP ports (NetBIOS).
 
-    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
 
     Allow Samba TCP ports (SMB).
 
-    <Code lang="sh" code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
 
 8.  ### Allow web access (optional)
 

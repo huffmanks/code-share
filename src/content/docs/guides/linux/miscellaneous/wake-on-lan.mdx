@@ -41,13 +41,13 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Create a service to ensure WOL is re-enabled automatically on every boot.
 
-    <Code lang="sh" title="/etc/systemd/system/wol.service" code={wolService} />
+    <Code lang="sh" preserveIndent wrap title="/etc/systemd/system/wol.service" code={wolService} />
 
 6.  ## Enable the service
 
     Reload systemd and enable the new service.
 
-    <Code lang="sh" wrap code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
+    <Code lang="sh" preserveIndent wrap code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
 
 7.  ## Send Wake-up packet
 

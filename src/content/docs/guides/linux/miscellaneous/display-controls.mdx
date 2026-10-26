@@ -1,0 +1,74 @@
+---
+title: "Display controls"
+description: "Turn off the display and adjust screen brightness."
+lastUpdated: 2026-10-16 10:59:08
+---
+
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+---
+
+## Turn display on or off
+
+<br />
+
+<Steps>
+
+1. ### Verify framebuffer support
+
+   The framebuffer blanking control may not be available or supported by every graphics driver.
+
+   <Code lang="sh" preserveIndent wrap code={`ls /sys/class/backlight/`} />
+
+2. ### Turn display off
+
+   <Code lang="sh" preserveIndent wrap code={`echo 1 | sudo tee /sys/class/graphics/fb0/blank`} />
+
+3. ### Turn display on
+
+   <Code lang="sh" preserveIndent wrap code={`echo 0 | sudo tee /sys/class/graphics/fb0/blank`} />
+
+</Steps>
+
+---
+
+## Adjust display brightness
+
+<br />
+
+<Steps>
+
+1. ### Identify backlight controllers
+
+   <Code lang="sh" preserveIndent wrap code={`ls /sys/class/backlight/`} />
+
+2. ### Set minimum brightness
+
+   <Code
+     lang="sh"
+     preserveIndent
+     wrap
+     code={`echo 0 | sudo tee /sys/class/backlight/acpi_video0/brightness; echo 0 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+   />
+
+3. ### Check maximum brightness
+
+   <Code
+     lang="sh"
+     preserveIndent
+     wrap
+     code={`cat /sys/class/backlight/acpi_video0/max_brightness; cat /sys/class/backlight/acpi_video1/max_brightness`}
+   />
+
+4. ### Set maximum brightness
+
+   <Code
+     lang="sh"
+     preserveIndent
+     wrap
+     code={`echo 84 | sudo tee /sys/class/backlight/acpi_video0/brightness; echo 84 | sudo tee /sys/class/backlight/acpi_video1/brightness`}
+   />
+
+</Steps>

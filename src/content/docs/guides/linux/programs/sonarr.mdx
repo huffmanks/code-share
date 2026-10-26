@@ -36,7 +36,7 @@ import { Steps } from "@astrojs/starlight/components";
 
     Run the official install script for Debian-based systems:
 
-    ```sh
+    ```sh preserveIndent wrap
     curl -o- https://raw.githubusercontent.com/Sonarr/Sonarr/develop/distribution/debian/install.sh | sudo bash
     ```
 
@@ -44,7 +44,7 @@ import { Steps } from "@astrojs/starlight/components";
 
     Give your user and Sonarr permission to access the `media` group and each other’s files:
 
-    ```sh
+    ```sh preserveIndent wrap
     sudo usermod -aG media {{USERNAME_VAR}}
     sudo usermod -aG media sonarr
     ```
@@ -53,7 +53,7 @@ import { Steps } from "@astrojs/starlight/components";
 
     Change group ownership of your `Videos` directory and restrict access so only members of the group can read/write:
 
-    ```sh
+    ```sh preserveIndent wrap
     sudo chgrp -R media /home/{{USERNAME_VAR}}/Videos
     sudo chmod -R 775 /home/{{USERNAME_VAR}}/Videos
     ```
@@ -62,7 +62,7 @@ import { Steps } from "@astrojs/starlight/components";
 
     Ensures that any new folders created under `Videos` will automatically use the `media` group:
 
-    ```sh
+    ```sh preserveIndent wrap
     sudo find /home/{{USERNAME_VAR}}/Videos -type d -exec chmod g+s {} +
     ```
 
