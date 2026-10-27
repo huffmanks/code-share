@@ -18,6 +18,14 @@ groups:
              -dNOPAUSE -dQUIET -dBATCH \
              -sOutputFile=compressed-balanced.pdf input.pdf
         comment: "-dColorImageResolution=(72 | 96 | 150 | 300)"
+      - label: "Maximum Compression"
+        description: "Reduce PDF file size as much as possible, prioritizing smaller files over image quality."
+        codeLang: "sh"
+        code: |
+          \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+            -dPDFSETTINGS=/screen \
+            -dNOPAUSE -dBATCH \
+            -sOutputFile=compressed.pdf input.pdf
       - label: "Vector Flattening"
         description: "Flatten PDF content while retaining vector graphics and the original color space."
         codeLang: "sh"
