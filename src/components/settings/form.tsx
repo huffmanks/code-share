@@ -7,7 +7,9 @@ import type { SettingsForm } from "@/types";
 import { useState } from "preact/hooks";
 
 export function SettingsForm({ pageDescription }: { pageDescription: string }) {
-  const [settings, setSettings] = useState<SettingsForm>(() => getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues));
+  const [settings, setSettings] = useState<SettingsForm>(() =>
+    getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues),
+  );
 
   const handleSubmit = (event: Event) => {
     event.preventDefault();

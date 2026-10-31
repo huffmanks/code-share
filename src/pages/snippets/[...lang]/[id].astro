@@ -80,7 +80,7 @@ const headMeta = generateHeadMeta({
       </div>
 
       <div class="action-buttons">
-        <DownloadButton client:load snippet={snippet} />
+        <DownloadButton client:only="preact" transition:persist={false} snippet={snippet} />
       </div>
     </div>
 

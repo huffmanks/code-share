@@ -2,7 +2,7 @@
 
 ## Fix
 
-- [ ] copying compose.yml or other files on mobile does not paste with same indents,spaces
+- [ ] add paginate to snippets page.
 
 ## Settings
 
