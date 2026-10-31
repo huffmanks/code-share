@@ -1,0 +1,40 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "5523:5523" # fastchannels
+      - "8920:8920"
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: openvpn
+      OPENVPN_USER: ${OPENVPN_USER}
+      OPENVPN_PASSWORD: ${OPENVPN_PASSWORD}
+      SERVER_COUNTRIES: Netherlands
+      FREE_ONLY: on
+      LAN_NETWORK: "{{SUBNET_VAR}}"
+      FIREWALL: on
+      FIREWALL_VPN_INPUT_PORTS: 5523
+    restart: always
+
+  fastchannels:
+    image: ghcr.io/kineticman/fastchannels:latest
+    container_name: fastchannels
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+    volumes:
+      - fastchannels_data:/data
+      - fastchannels_adb_keys:/root/.android
+    environment:
+      - TZ={{TIME_ZONE_VAR}}
+      - GEO_CHECK_ENABLED=0
+
+volumes:
+  fastchannels_data:
+  fastchannels_adb_keys:

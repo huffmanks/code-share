@@ -1,0 +1,55 @@
+---
+title: FastChannels
+description: "One live-TV lineup from everything you can watch: free streaming services, the cable networks your TV provider includes, the subscriptions you already pay for, and your own tuner or playlists. FastChannels gathers the channels and their guide data and serves them as M3U playlists and XMLTV guides for Jellyfin or any other IPTV player."
+lastUpdated: 2026-10-31 14:38:36
+references:
+  - href: https://github.com/kineticman/FastChannels
+    label: GitHub
+    icon: "github-icon"
+---
+
+import OpenWebUI from "@/components/guides/open-webui.astro";
+import ReferenceLinks from "@/components/guides/reference-links.astro";
+import { Code } from "@astrojs/starlight/components";
+import yaml from "/src/files/compose/fastchannels.yml?raw";
+import env from "/src/files/env/fastchannels.env?raw";
+
+<p>{frontmatter.description}</p>
+
+### References
+
+<ReferenceLinks references={frontmatter.references} />
+
+---
+
+## Make directories
+
+```sh wrap preserveIndent
+mkdir -p {{DOCKER_PATH_VAR}}/fastchannels && cd {{DOCKER_PATH_VAR}}/fastchannels
+```
+
+## compose.yml
+
+```sh
+nano compose.yml
+```
+
+<Code lang="yml" title="compose.yml" wrap preserveIndent code={yaml} />
+
+## .env
+
+```sh
+nano .env
+```
+
+<Code lang="dotenv" title=".env" wrap preserveIndent code={env} />
+
+## Start container
+
+```sh
+docker compose up -d
+```
+
+## Open web ui
+
+<OpenWebUI port="5523" />
