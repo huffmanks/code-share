@@ -97,7 +97,9 @@ export const languageMap: Record<string, LanguageInfo> = (() => {
 export const languageMapLength = Object.keys(languageMap).length;
 
 export function getLanguagesInfo(fragments: Array<{ language: string }>): LanguageInfo[] {
-  const uniqueLanguages = [...new Set(fragments.map((fragment) => fragment.language.toLowerCase()))];
+  const uniqueLanguages = [
+    ...new Set(fragments.map((fragment) => fragment.language.toLowerCase())),
+  ];
 
   const infoList = uniqueLanguages
     .map((language) => languageMap[language])

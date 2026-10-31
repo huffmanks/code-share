@@ -6,7 +6,12 @@ tableOfContents:
   maxHeadingLevel: 4
 ---
 
-import { fail2banConfig, sudoersConfig, ufwSysctl, unattendedUpgradesConfig } from "@/lib/mdx-constants";
+import {
+  fail2banConfig,
+  sudoersConfig,
+  ufwSysctl,
+  unattendedUpgradesConfig,
+} from "@/lib/mdx-constants";
 import { Code, Steps } from "@astrojs/starlight/components";
 
 <p>{frontmatter.description}</p>
@@ -54,7 +59,12 @@ Require users to authenticate with a password before using sudo privileges. This
 
 1. ### Open config
 
-   <Code lang="sh" preserveIndent wrap code={`sudo visudo -f /etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd`} />
+   <Code
+     lang="sh"
+     preserveIndent
+     wrap
+     code={`sudo visudo -f /etc/sudoers.d/010_{{USERNAME_VAR}}-nopasswd`}
+   />
 
 2. ### Modify config
 
@@ -165,17 +175,32 @@ A firewall is your first line of defense against unauthorized access. Installing
 
     Allow local network devices to send DNS queries to AdGuard Home.
 
-    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SUBNET_VAR}} to any port 53`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo ufw allow from {{SUBNET_VAR}} to any port 53`}
+    />
 
 7.  ### Samba (optional)
 
     Allow Samba UDP ports (NetBIOS).
 
-    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`}
+    />
 
     Allow Samba TCP ports (SMB).
 
-    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`}
+    />
 
 8.  ### Allow web access (optional)
 
@@ -185,7 +210,12 @@ A firewall is your first line of defense against unauthorized access. Installing
 
 9.  ### Add custom rule (optional)
 
-    <Code lang="sh" wrap preserveIndent code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo ufw allow from {{SERVER_IP_VAR}} port $PORT_NUMBER`}
+    />
 
 10. ### Enable ufw
 

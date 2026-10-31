@@ -10,7 +10,8 @@ const pageUrl = Astro.url.href;
 const cheatsheets = await getCollection("cheatsheets");
 
 const pageTitle = "Cheatsheets";
-const pageDescription = "A collection of useful command-line and programming cheatsheets for quick reference.";
+const pageDescription =
+  "A collection of useful command-line and programming cheatsheets for quick reference.";
 
 const headMeta = generateHeadMeta({
   pageTitle,
@@ -51,17 +52,15 @@ const headMeta = generateHeadMeta({
     pagefind: false,
   }}>
   <div class="grid">
-    {
-      cheatsheets
-        .sort((a, b) => a.data.title.localeCompare(b.data.title))
-        .map((cheatsheet) => (
-          <LinkCard
-            title={cheatsheet.data.title}
-            href={`/cheatsheets/${cheatsheet.id}`}
-            description={cheatsheet.data.description}
-          />
-        ))
-    }
+    {cheatsheets
+      .sort((a, b) => a.data.title.localeCompare(b.data.title))
+      .map((cheatsheet) => (
+        <LinkCard
+          title={cheatsheet.data.title}
+          href={`/cheatsheets/${cheatsheet.id}`}
+          description={cheatsheet.data.description}
+        />
+      ))}
   </div>
 </StarlightPage>
 

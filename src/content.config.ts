@@ -39,7 +39,7 @@ const executionFields = z.object({
           z.object({
             find: z.string(),
             replace: z.string(),
-          }),
+          })
         )
         .min(1),
     })
@@ -101,7 +101,7 @@ export const collections = {
           ]),
           position: z.number().default(0),
           code: z.string(),
-        }),
+        })
       ),
     }),
   }),
@@ -128,13 +128,13 @@ export const collections = {
                       .object({
                         os: z.array(z.enum(["macos", "linux", "windows"])).min(1),
                       })
-                      .extend(executionFields.shape),
+                      .extend(executionFields.shape)
                   )
                   .optional(),
-              }),
+              })
             )
             .optional(),
-        }),
+        })
       ),
     }),
   }),

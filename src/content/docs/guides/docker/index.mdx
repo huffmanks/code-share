@@ -20,7 +20,12 @@ tableOfContents:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import { daemonJson, debianAptSource, ubuntuAptSource, verifyDockerData } from "@/lib/mdx-constants";
+import {
+  daemonJson,
+  debianAptSource,
+  ubuntuAptSource,
+  verifyDockerData,
+} from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 ## Getting started
@@ -143,7 +148,12 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
    Move docker data to the new directory.
 
-   <Code lang="sh" wrap preserveIndent code={`sudo mv /var/lib/docker {{EXTERNAL_HDD_PATH_VAR}}/docker-data`} />
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`sudo mv /var/lib/docker {{EXTERNAL_HDD_PATH_VAR}}/docker-data`}
+   />
 
 3. #### Open daemon.json
 
@@ -159,7 +169,12 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
    Restart the Docker service.
 
-   <Code lang="sh" wrap preserveIndent code={`sudo systemctl daemon-reload && sudo systemctl restart docker`} />
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`sudo systemctl daemon-reload && sudo systemctl restart docker`}
+   />
 
 6. #### Verify change
 

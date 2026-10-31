@@ -16,7 +16,9 @@ import Default from "@astrojs/starlight/components/SocialIcons.astro";
   <Icon name="huffmanks-icon" />
 </a>
 
-<Default {...Astro.props}><slot /></Default>
+<Default {...Astro.props}>
+  <slot />
+</Default>
 
 <style>
   .social-icon-link {

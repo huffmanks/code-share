@@ -72,178 +72,197 @@ const headMeta = generateHeadMeta({
   }}>
   <p style="margin-top: -20px; margin-bottom: 20px;">{cheatsheet.data.description}</p>
 
-  {
-    showToggle && (
-      <div class="platform-toggle-bar" role="toolbar" aria-label="Filter cheatsheets by platform">
-        <button class="platform-btn active" data-filter="all" aria-pressed="true" aria-label="Show all platforms">
-          <Icon name="seti:html" />
-          <span class="platform-text">All</span>
-        </button>
-        {availablePlatforms.map((os) => {
-          const formattedOs = os === "macos" ? "macOS" : capitalize(os);
-          const iconName = os === "windows" ? "seti:windows" : os === "linux" ? "linux" : "apple";
-          return (
-            <button class="platform-btn" data-filter={os} aria-pressed="false" aria-label={`Filter by ${formattedOs}`}>
-              <Icon name={iconName} />
-              <span class="platform-text">{formattedOs}</span>
-            </button>
-          );
-        })}
-      </div>
-    )
-  }
+  {showToggle && (
+    <div class="platform-toggle-bar" role="toolbar" aria-label="Filter cheatsheets by platform">
+      <button
+        class="platform-btn active"
+        data-filter="all"
+        aria-pressed="true"
+        aria-label="Show all platforms">
+        <Icon name="seti:html" />
+        <span class="platform-text">All</span>
+      </button>
+      {availablePlatforms.map((os) => {
+        const formattedOs = os === "macos" ? "macOS" : capitalize(os);
+        const iconName = os === "windows" ? "seti:windows" : os === "linux" ? "linux" : "apple";
+        return (
+          <button
+            class="platform-btn"
+            data-filter={os}
+            aria-pressed="false"
+            aria-label={`Filter by ${formattedOs}`}>
+            <Icon name={iconName} />
+            <span class="platform-text">{formattedOs}</span>
+          </button>
+        );
+      })}
+    </div>
+  )}
 
-  {
-    cheatsheet.data.groups.map((group) => (
-      <div>
-        <h2 id={slugify(group.title)}>{group.title}</h2>
-        <p class="group-description">{group.description}</p>
+  {cheatsheet.data.groups.map((group) => (
+    <div>
+      <h2 id={slugify(group.title)}>{group.title}</h2>
+      <p class="group-description">{group.description}</p>
 
-        {group?.syntax && (
-          <div class="no-copy" style="margin-bottom: 20px;">
-            <Code lang="sh" preserveIndent code={group.syntax} />
-          </div>
-        )}
+      {group?.syntax && (
+        <div class="no-copy" style="margin-bottom: 20px;">
+          <Code lang="sh" preserveIndent code={group.syntax} />
+        </div>
+      )}
 
-        {group?.items && (
-          <div class="grid">
-            {group.items.map((item, index) => {
-              const renderBlocks = [];
+      {group?.items && (
+        <div class="grid">
+          {group.items.map((item, index) => {
+            const renderBlocks = [];
 
-              if (item.commands || item.code || item.secondaryCode || item.example || item.regex) {
+            if (item.commands || item.code || item.secondaryCode || item.example || item.regex) {
+              renderBlocks.push({
+                osList: "universal",
+                osArray: ["universal"],
+                payload: item,
+              });
+            }
+
+            if (item.platforms) {
+              item.platforms.forEach((p) => {
                 renderBlocks.push({
-                  osList: "universal",
-                  osArray: ["universal"],
-                  payload: item,
+                  osList: p.os.join(","),
+                  osArray: p.os,
+                  payload: p,
                 });
-              }
+              });
+            }
 
-              if (item.platforms) {
-                item.platforms.forEach((p) => {
-                  renderBlocks.push({
-                    osList: p.os.join(","),
-                    osArray: p.os,
-                    payload: p,
-                  });
-                });
-              }
+            if (renderBlocks.length === 0) return null;
 
-              if (renderBlocks.length === 0) return null;
+            return (
+              <div
+                class="cheatsheet-card"
+                style={{
+                  borderColor: getVariant(borderColorVariants, index),
+                  color: getVariant(colorVariants, index),
+                }}>
+                <h3 id={slugify(item.label)}>{item.label}</h3>
+                <p class="item-description">{item.description}</p>
 
-              return (
-                <div
-                  class="cheatsheet-card"
-                  style={{
-                    borderColor: getVariant(borderColorVariants, index),
-                    color: getVariant(colorVariants, index),
-                  }}>
-                  <h3 id={slugify(item.label)}>{item.label}</h3>
-                  <p class="item-description">{item.description}</p>
+                <div class="code-example">
+                  {renderBlocks.map((block) => (
+                    <div class="platform-block" data-os-list={block.osList}>
+                      {block.osList !== "universal" && (
+                        <div class="os-tags-wrapper">
+                          {block.osArray.map((osName) => {
+                            const variant =
+                              osName === "windows"
+                                ? "note"
+                                : osName === "linux"
+                                  ? "caution"
+                                  : "tip";
+                            const badgeText = osName === "macos" ? "macOS" : capitalize(osName);
+                            return (
+                              <span data-os-name={osName} style="display: inline-block;">
+                                <Badge text={badgeText} variant={variant} size="small" />
+                              </span>
+                            );
+                          })}
+                        </div>
+                      )}
 
-                  <div class="code-example">
-                    {renderBlocks.map((block) => (
-                      <div class="platform-block" data-os-list={block.osList}>
-                        {block.osList !== "universal" && (
-                          <div class="os-tags-wrapper">
-                            {block.osArray.map((osName) => {
-                              const variant = osName === "windows" ? "note" : osName === "linux" ? "caution" : "tip";
-                              const badgeText = osName === "macos" ? "macOS" : capitalize(osName);
-                              return (
-                                <span data-os-name={osName} style="display: inline-block;">
-                                  <Badge text={badgeText} variant={variant} size="small" />
-                                </span>
-                              );
-                            })}
-                          </div>
-                        )}
+                      {block.payload?.code && (
+                        <Code
+                          lang={block.payload.codeLang ?? "sh"}
+                          wrap
+                          preserveIndent
+                          code={block.payload.code}
+                        />
+                      )}
 
-                        {block.payload?.code && (
-                          <Code lang={block.payload.codeLang ?? "sh"} wrap preserveIndent code={block.payload.code} />
-                        )}
+                      {block.payload?.secondaryCode && (
+                        <Code
+                          title={block.payload.secondaryCode.title}
+                          lang={block.payload.codeLang ?? "sh"}
+                          wrap
+                          preserveIndent
+                          code={block.payload.secondaryCode.code}
+                        />
+                      )}
 
-                        {block.payload?.secondaryCode && (
+                      {block.payload?.commands?.length && (
+                        <div class="commands-wrapper">
+                          {block.payload.commands.map((cmd, cmdIndex) => (
+                            <Fragment key={cmdIndex}>
+                              {cmdIndex > 0 && <span class="or-separator">or</span>}
+                              <div class="command">
+                                {cmd.map((key, keyIndex) => (
+                                  <Fragment key={keyIndex}>
+                                    <kbd
+                                      class="kbd"
+                                      style={{
+                                        borderColor: getVariant(borderColorVariants, index),
+                                        boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}`,
+                                      }}>
+                                      {key}
+                                    </kbd>
+                                    {keyIndex + 1 !== cmd.length && <span>+</span>}
+                                  </Fragment>
+                                ))}
+                              </div>
+                            </Fragment>
+                          ))}
+                        </div>
+                      )}
+
+                      {block.payload?.regex?.steps?.length && (
+                        <div class="regex-wrapper">
+                          {block.payload.regex.steps.map((step) => (
+                            <div class="regex-step">
+                              <div>
+                                <Code title="Find" wrap preserveIndent code={step.find} />
+                              </div>
+                              <div>
+                                <Code title="Replace" wrap preserveIndent code={step.replace} />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {block.payload.example && (
+                        <div
+                          class={
+                            Boolean(block.payload.regex?.steps?.length) ||
+                            block.payload.codeLang === "regex"
+                              ? "no-copy"
+                              : undefined
+                          }>
                           <Code
-                            title={block.payload.secondaryCode.title}
-                            lang={block.payload.codeLang ?? "sh"}
+                            title="Example"
+                            lang={
+                              block.payload.codeLang === "regex"
+                                ? "txt"
+                                : (block.payload.codeLang ?? "sh")
+                            }
                             wrap
                             preserveIndent
-                            code={block.payload.secondaryCode.code}
+                            code={block.payload.example}
                           />
-                        )}
+                        </div>
+                      )}
 
-                        {block.payload?.commands?.length && (
-                          <div class="commands-wrapper">
-                            {block.payload.commands.map((cmd, cmdIndex) => (
-                              <Fragment key={cmdIndex}>
-                                {cmdIndex > 0 && <span class="or-separator">or</span>}
-                                <div class="command">
-                                  {cmd.map((key, keyIndex) => (
-                                    <Fragment key={keyIndex}>
-                                      <kbd
-                                        class="kbd"
-                                        style={{
-                                          borderColor: getVariant(borderColorVariants, index),
-                                          boxShadow: `1px 1px 2px 0 ${getVariant(borderColorVariants, index)}`,
-                                        }}>
-                                        {key}
-                                      </kbd>
-                                      {keyIndex + 1 !== cmd.length && <span>+</span>}
-                                    </Fragment>
-                                  ))}
-                                </div>
-                              </Fragment>
-                            ))}
-                          </div>
-                        )}
+                      {block.osList !== "universal" && block.payload.comment && (
+                        <div class="comment">{block.payload.comment}</div>
+                      )}
+                    </div>
+                  ))}
 
-                        {block.payload?.regex?.steps?.length && (
-                          <div class="regex-wrapper">
-                            {block.payload.regex.steps.map((step) => (
-                              <div class="regex-step">
-                                <div>
-                                  <Code title="Find" wrap preserveIndent code={step.find} />
-                                </div>
-                                <div>
-                                  <Code title="Replace" wrap preserveIndent code={step.replace} />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {block.payload.example && (
-                          <div
-                            class={
-                              Boolean(block.payload.regex?.steps?.length) || block.payload.codeLang === "regex"
-                                ? "no-copy"
-                                : undefined
-                            }>
-                            <Code
-                              title="Example"
-                              lang={block.payload.codeLang === "regex" ? "txt" : (block.payload.codeLang ?? "sh")}
-                              wrap
-                              preserveIndent
-                              code={block.payload.example}
-                            />
-                          </div>
-                        )}
-
-                        {block.osList !== "universal" && block.payload.comment && (
-                          <div class="comment">{block.payload.comment}</div>
-                        )}
-                      </div>
-                    ))}
-
-                    {item.comment && <div class="comment">{item.comment}</div>}
-                  </div>
+                  {item.comment && <div class="comment">{item.comment}</div>}
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    ))
-  }
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  ))}
 </StarlightPage>
 
 <script>

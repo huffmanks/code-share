@@ -43,7 +43,9 @@ function SnippetLanguageItem({ snippet }: { snippet: Snippet }) {
         const LanguageIconComponent = LanguageIcon[languageInfo.extension];
         return (
           <div className={styles.language}>
-            {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
+            {LanguageIconComponent && (
+              <LanguageIconComponent style={{ color: languageInfo.color }} />
+            )}
             <span>{languageInfo.label}</span>
           </div>
         );

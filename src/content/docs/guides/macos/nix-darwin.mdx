@@ -15,7 +15,12 @@ references:
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import { nixDaemonServices, nixInstaller, removeNixGroupUsers, shellConfigBackups } from "@/lib/mdx-constants";
+import {
+  nixDaemonServices,
+  nixInstaller,
+  removeNixGroupUsers,
+  shellConfigBackups,
+} from "@/lib/mdx-constants";
 import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 import configurationNix from "/src/files/config/nix/configuration.nix?raw";
 import flakeNix from "/src/files/config/nix/flake.nix?raw";

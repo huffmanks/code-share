@@ -9,7 +9,14 @@ interface Props extends HTMLAttributes<"svg"> {
   spritePath?: string;
 }
 
-const { name, width = "1em", height = "1em", spritePath = "/icons.svg", class: className, ...props } = Astro.props;
+const {
+  name,
+  width = "1em",
+  height = "1em",
+  spritePath = "/icons.svg",
+  class: className,
+  ...props
+} = Astro.props;
 ---
 
 <svg

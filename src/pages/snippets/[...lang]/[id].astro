@@ -61,21 +61,19 @@ const headMeta = generateHeadMeta({
   <article class="snippet">
     <div class="snippet-header">
       <div>
-        <div class="time">
-          {time}
-        </div>
+        <div class="time">{time}</div>
         <div class="languages">
-          {
-            languages.map((languageInfo) => {
-              const LanguageIconComponent = LanguageIcon[languageInfo.extension];
-              return (
-                <div class="language">
-                  {LanguageIconComponent && <LanguageIconComponent style={{ color: languageInfo.color }} />}
-                  <span>{languageInfo.label}</span>
-                </div>
-              );
-            })
-          }
+          {languages.map((languageInfo) => {
+            const LanguageIconComponent = LanguageIcon[languageInfo.extension];
+            return (
+              <div class="language">
+                {LanguageIconComponent && (
+                  <LanguageIconComponent style={{ color: languageInfo.color }} />
+                )}
+                <span>{languageInfo.label}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -88,50 +86,46 @@ const headMeta = generateHeadMeta({
       <p>{snippet.data.description}</p>
     </div>
     <div class="tags-container">
-      {
-        snippet.data.tags &&
-          snippet.data.tags.map((tag: string, index: number) => (
-            <div
-              class="badge"
-              style={{
-                border: `1px solid ${getVariant(borderColorVariants, index)}`,
-                color: getVariant(colorVariants, index),
-              }}>
-              {tag}
-            </div>
-          ))
-      }
+      {snippet.data.tags &&
+        snippet.data.tags.map((tag: string, index: number) => (
+          <div
+            class="badge"
+            style={{
+              border: `1px solid ${getVariant(borderColorVariants, index)}`,
+              color: getVariant(colorVariants, index),
+            }}>
+            {tag}
+          </div>
+        ))}
     </div>
 
-    {
-      snippet.data.fragments.length > 1 ? (
-        <Tabs>
-          {snippet.data.fragments.map((fragment) => (
-            <TabItem label={fragment.label}>
-              <Code
-                class="fragment-code"
-                code={fragment.code}
-                wrap
-                preserveIndent
-                frame={fragment.language === "sh" ? "terminal" : "auto"}
-                lang={fragment.language}
-                title={`${fragment.filename}.${fragment.language}`}
-              />
-            </TabItem>
-          ))}
-        </Tabs>
-      ) : (
-        <Code
-          class="fragment-code"
-          code={snippet.data.fragments[0].code}
-          wrap
-          preserveIndent
-          frame={snippet.data.fragments[0].language === "sh" ? "terminal" : "auto"}
-          lang={snippet.data.fragments[0].language}
-          title={`${snippet.data.fragments[0].filename}.${snippet.data.fragments[0].language}`}
-        />
-      )
-    }
+    {snippet.data.fragments.length > 1 ? (
+      <Tabs>
+        {snippet.data.fragments.map((fragment) => (
+          <TabItem label={fragment.label}>
+            <Code
+              class="fragment-code"
+              code={fragment.code}
+              wrap
+              preserveIndent
+              frame={fragment.language === "sh" ? "terminal" : "auto"}
+              lang={fragment.language}
+              title={`${fragment.filename}.${fragment.language}`}
+            />
+          </TabItem>
+        ))}
+      </Tabs>
+    ) : (
+      <Code
+        class="fragment-code"
+        code={snippet.data.fragments[0].code}
+        wrap
+        preserveIndent
+        frame={snippet.data.fragments[0].language === "sh" ? "terminal" : "auto"}
+        lang={snippet.data.fragments[0].language}
+        title={`${snippet.data.fragments[0].filename}.${snippet.data.fragments[0].language}`}
+      />
+    )}
   </article>
 </StarlightPage>
 

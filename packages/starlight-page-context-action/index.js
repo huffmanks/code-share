@@ -63,7 +63,9 @@ async function cleanMarkdown(content) {
   }
 
   // --- Strip import statements (outside code blocks) ---
-  cleaned = transformOutsideCodeBlocks(cleaned, (text) => text.replace(/^import\s+.*?;\s*\r?\n?/gm, ""));
+  cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
+    text.replace(/^import\s+.*?;\s*\r?\n?/gm, "")
+  );
 
   // #--- MODIFIED ---#
   // #--- FOR PROPER INDENTATION OF STEP COMPONENTS ---#
@@ -97,16 +99,16 @@ async function cleanMarkdown(content) {
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
     text.replace(
       /<LinkCard\s+(?=[^>]*title=["']([^"']+)["'])(?=[^>]*href=["']([^"']+)["'])[^>]*\/?\s*>/g,
-      (_, t, h) => `[${t}](${h})`,
-    ),
+      (_, t, h) => `[${t}](${h})`
+    )
   );
 
   // <Card title="X">content</Card>
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
     text.replace(
       /<Card\s+(?=[^>]*title=["']([^"']+)["'])[^>]*>([\s\S]*?)<\/\s*Card\s*>/g,
-      (_, t, c) => `**${t}**\n${c.trim()}`,
-    ),
+      (_, t, c) => `**${t}**\n${c.trim()}`
+    )
   );
 
   // <Aside type="T" title="X">content</Aside>
@@ -122,12 +124,12 @@ async function cleanMarkdown(content) {
       const typeAttr = attrs.match(/type=["']([^"']+)["']/);
       const heading = titleAttr?.[1] || asideDefaults[typeAttr?.[1]] || asideDefaults.note;
       return `**${heading}:** ${c.trim()}`;
-    }),
+    })
   );
 
   // <Badge text="X" /> (self-closing)
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
-    text.replace(/<Badge\s+(?=[^>]*text=["']([^"']+)["'])[^>]*\/?\s*>/g, (_, t) => t),
+    text.replace(/<Badge\s+(?=[^>]*text=["']([^"']+)["'])[^>]*\/?\s*>/g, (_, t) => t)
   );
 
   // #--- MODIFIED ---#
@@ -161,7 +163,7 @@ async function cleanMarkdown(content) {
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
     text.replace(/([ \t]*)(<Code\b[\s\S]*?\/?>)/g, (match, indent, codeTag) => {
       const codeMatch = codeTag.match(
-        /code\s*=\s*(?:["']([^"']*)["']|\{\s*`([^`]*)`\s*\}|\{\s*["']([^"']*)["']\s*\}|\{\s*([^}]+)\s*\})/,
+        /code\s*=\s*(?:["']([^"']*)["']|\{\s*`([^`]*)`\s*\}|\{\s*["']([^"']*)["']\s*\}|\{\s*([^}]+)\s*\})/
       );
       if (!codeMatch) return match;
 
@@ -186,7 +188,7 @@ async function cleanMarkdown(content) {
         .join("\n");
 
       return `${indent}\`\`\`${lang}${titleAttr}\n${indentedCode}\n${indent}\`\`\``;
-    }),
+    })
   );
   // #--- END MODIFIED ---#
 
@@ -194,13 +196,13 @@ async function cleanMarkdown(content) {
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
     text.replace(
       /<LinkButton\s+(?=[^>]*href=["']([^"']+)["'])[^>]*>([\s\S]*?)<\/\s*LinkButton\s*>/g,
-      (_, h, t) => `[${t.trim()}](${h})`,
-    ),
+      (_, h, t) => `[${t.trim()}](${h})`
+    )
   );
 
   // --- Strip comments outside code blocks ---
   cleaned = transformOutsideCodeBlocks(cleaned, (text) =>
-    text.replace(/<!--([\s\S]*?)-->/g, "").replace(/\{\/\*[\s\S]*?\*\/\}/g, ""),
+    text.replace(/<!--([\s\S]*?)-->/g, "").replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
   );
 
   // #--- MODIFIED ---#
@@ -253,7 +255,9 @@ async function cleanMarkdown(content) {
  */
 function renameHandler(fileName, fileExtension, fullPath) {
   const normalized = fullPath.replace(/\\/g, "/");
-  const relative = normalized.split("src/content/docs/")[1].replace(new RegExp(`\\.${fileExtension}$`), "");
+  const relative = normalized
+    .split("src/content/docs/")[1]
+    .replace(new RegExp(`\\.${fileExtension}$`), "");
   const segments = relative.split("/");
   if (fileName === "index") {
     if (segments.length === 1) return "index.md";
@@ -273,7 +277,9 @@ function renameHandler(fileName, fileExtension, fullPath) {
  */
 function getFrontmatterValue(frontmatter, key) {
   const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = frontmatter.match(new RegExp(`^${escapedKey}:\\s*(?:["']([^"']+)["']|([^\\n#]+))`, "m"));
+  const match = frontmatter.match(
+    new RegExp(`^${escapedKey}:\\s*(?:["']([^"']+)["']|([^\\n#]+))`, "m")
+  );
   const value = match?.[1] ?? match?.[2];
   return value ? value.trim() : undefined;
 }
@@ -504,7 +510,9 @@ function llmsTxtPlugin(options) {
       docFiles = await collectDocsFiles(docsDir);
     } catch {
       if (!missingDocsWarningShown) {
-        options.logger.warn("Could not find docs content at src/content/docs; skipping llms.txt generation.");
+        options.logger.warn(
+          "Could not find docs content at src/content/docs; skipping llms.txt generation."
+        );
         missingDocsWarningShown = true;
       }
       return null;
@@ -537,7 +545,9 @@ function llmsTxtPlugin(options) {
     const usedMarkdownPaths = new Set();
     /** @type {{ title: string; markdownPath: string; url: string; description?: string; content: string }[]} */
     const orderedPages = [];
-    const sidebarSections = collectSidebarSections(Array.isArray(options.sidebar) ? options.sidebar : []);
+    const sidebarSections = collectSidebarSections(
+      Array.isArray(options.sidebar) ? options.sidebar : []
+    );
 
     const lines = [
       `# ${options.title ?? "Documentation"}`,
@@ -663,7 +673,8 @@ export default function starlightPageContextAction(userConfig = {}) {
           name: "starlight-page-context-action-integration",
           hooks: {
             "astro:config:setup"({ updateConfig: updateAstroConfig, config: astroConfig }) {
-              const shouldGenerateMarkdown = config.actions.copy || config.actions.viewMarkdown || config.llmsTxt;
+              const shouldGenerateMarkdown =
+                config.actions.copy || config.actions.viewMarkdown || config.llmsTxt;
 
               updateAstroConfig({
                 vite: {
@@ -712,7 +723,8 @@ export default function starlightPageContextAction(userConfig = {}) {
           components: {
             ...starlightConfig.components,
             PageSidebar:
-              starlightConfig.components?.PageSidebar ?? "starlight-page-context-action/overrides/PageSidebar.astro",
+              starlightConfig.components?.PageSidebar ??
+              "starlight-page-context-action/overrides/PageSidebar.astro",
             MobileTableOfContents:
               starlightConfig.components?.MobileTableOfContents ??
               "starlight-page-context-action/overrides/MobileTableOfContents.astro",

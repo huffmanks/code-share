@@ -42,7 +42,13 @@ function TableRow({ snippet }: { snippet: SnippetWithHtml }) {
         <td>
           <div class={styles.badges}>
             {snippet.data.tags.slice(0, 5).map((tag, index) => (
-              <span className="badge" style={{ border: `1px solid ${getVariant(borderColorVariants, index)}`, color: getVariant(colorVariants, index), overflowWrap: "normal" }}>
+              <span
+                className="badge"
+                style={{
+                  border: `1px solid ${getVariant(borderColorVariants, index)}`,
+                  color: getVariant(colorVariants, index),
+                  overflowWrap: "normal",
+                }}>
                 {tag}
               </span>
             ))}

@@ -9,7 +9,9 @@ import Default from "starlight-theme-rapide/overrides/ThemeSelect.astro";
     <Icon name="settings-icon" />
   </a>
 
-  <Default {...Astro.props}><slot /></Default>
+  <Default {...Astro.props}>
+    <slot />
+  </Default>
 </div>
 
 <style>

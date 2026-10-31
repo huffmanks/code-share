@@ -51,11 +51,21 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Allow Samba UDP ports (NetBIOS).
 
-    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo ufw allow from {{SUBNET_VAR}} to any port 137,138 proto udp`}
+    />
 
     Allow Samba TCP ports (SMB).
 
-    <Code lang="sh" preserveIndent wrap code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo ufw allow from {{SUBNET_VAR}} to any port 139,445 proto tcp`}
+    />
 
 </Steps>
 
@@ -84,6 +94,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" preserveIndent wrap code={`sudo apt install smbclient cifs-utils -y`} />
 
-    <Code lang="sh" preserveIndent wrap code={`smbclient //{{SERVER_IP_VAR}}/shared -U {{USERNAME_VAR}}`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`smbclient //{{SERVER_IP_VAR}}/shared -U {{USERNAME_VAR}}`}
+    />
 
 </Steps>

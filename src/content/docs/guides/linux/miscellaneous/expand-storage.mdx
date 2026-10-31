@@ -14,7 +14,12 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
 1.  ## Extend the logical volume
 
-    <Code lang="sh" preserveIndent wrap code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`}
+    />
 
 2.  ## Resize the filesystem
 

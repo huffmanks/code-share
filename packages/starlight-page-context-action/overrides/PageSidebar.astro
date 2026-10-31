@@ -21,27 +21,25 @@ const wrapperClasses = [
   .join(" ");
 ---
 
-{
-  showPageContextActions && position === "above-toc" && (
-    <div class={wrapperClasses}>
-      <div class="sl-container">
-        <PageContextActions entryFilePath={entryFilePath} />
-      </div>
+{showPageContextActions && position === "above-toc" && (
+  <div class={wrapperClasses}>
+    <div class="sl-container">
+      <PageContextActions entryFilePath={entryFilePath} />
     </div>
-  )
-}
+  </div>
+)}
 
-<Default><slot /></Default>
+<Default>
+  <slot />
+</Default>
 
-{
-  showPageContextActions && position === "below-toc" && (
-    <div class={wrapperClasses}>
-      <div class="sl-container">
-        <PageContextActions entryFilePath={entryFilePath} />
-      </div>
+{showPageContextActions && position === "below-toc" && (
+  <div class={wrapperClasses}>
+    <div class="sl-container">
+      <PageContextActions entryFilePath={entryFilePath} />
     </div>
-  )
-}
+  </div>
+)}
 
 <style>
   .page-context-action__wrapper {

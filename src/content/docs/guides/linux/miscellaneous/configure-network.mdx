@@ -107,7 +107,12 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 3.  ## Create symlink to systemd-resolved
 
-    <Code lang="sh" wrap preserveIndent code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`}
+    />
 
 4.  ## Network configuration
 
@@ -171,7 +176,12 @@ import { Code, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
 6.  ## Enable systemd-networkd-wait-online
 
-    <Code lang="sh" wrap preserveIndent code={`sudo systemctl enable systemd-networkd-wait-online.service`} />
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`sudo systemctl enable systemd-networkd-wait-online.service`}
+    />
 
 7.  ## Reboot the system
 

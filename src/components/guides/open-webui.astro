@@ -8,11 +8,19 @@ const { port, isHttps = false } = Astro.props;
 ---
 
 <p>
-  <a class="link" href={`http${isHttps ? "s" : ""}://localhost:${port}`} target="_blank" rel="noopener">
+  <a
+    class="link"
+    href={`http${isHttps ? "s" : ""}://localhost:${port}`}
+    target="_blank"
+    rel="noopener">
     http{isHttps ? "s" : ""}://localhost:{port}
   </a>
   <span> or </span>
-  <a class="link" href={`http${isHttps ? "s" : ""}://{{SERVER_IP_VAR}}:${port}`} target="_blank" rel="noopener">
+  <a
+    class="link"
+    href={`http${isHttps ? "s" : ""}://{{SERVER_IP_VAR}}:${port}`}
+    target="_blank"
+    rel="noopener">
     {`http${isHttps ? "s" : ""}://{{SERVER_IP_VAR}}:${port}`}
   </a>
 </p>

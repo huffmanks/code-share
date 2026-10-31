@@ -23,7 +23,13 @@ export function SettingsSelect({ field, settings, setSettings }: SettingsSelectP
       <label className={styles.label} htmlFor={`${field.id}:form-item-label`}>
         {field.label}
       </label>
-      <select className={styles.input} id={`${field.id}:form-item-label`} value={settings[field.name]} name={field.name} onChange={handleChange} aria-describedby={`${field.id}:form-item-description`}>
+      <select
+        className={styles.input}
+        id={`${field.id}:form-item-label`}
+        value={settings[field.name]}
+        name={field.name}
+        onChange={handleChange}
+        aria-describedby={`${field.id}:form-item-description`}>
         {field.selectOptions!.map((option) => (
           <option key={option.identifier} value={option.identifier}>
             {option.identifier}

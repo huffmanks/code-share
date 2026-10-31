@@ -8,7 +8,7 @@ import { useState } from "preact/hooks";
 
 export function SettingsForm({ pageDescription }: { pageDescription: string }) {
   const [settings, setSettings] = useState<SettingsForm>(() =>
-    getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues),
+    getStoredValues(LS_SETTINGS_KEY, defaultSettingsFormValues)
   );
 
   const handleSubmit = (event: Event) => {

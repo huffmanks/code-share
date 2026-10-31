@@ -17,7 +17,10 @@ export default function Tabs({ fragments, codeFragments }: Props) {
           <ul role="tablist" className={styles.tabs}>
             {fragments.map((fragment) => (
               <li key={fragment.label} role="presentation" className={styles.tab}>
-                <span role="tab" className={`${styles["tab-label"]} ${fragment.label === activeTab ? styles.active : ""}`} onClick={() => setActiveTab(fragment.label)}>
+                <span
+                  role="tab"
+                  className={`${styles["tab-label"]} ${fragment.label === activeTab ? styles.active : ""}`}
+                  onClick={() => setActiveTab(fragment.label)}>
                   {fragment.label}
                 </span>
               </li>
@@ -27,7 +30,16 @@ export default function Tabs({ fragments, codeFragments }: Props) {
       )}
 
       {codeFragments && codeFragments.length && (
-        <div>{codeFragments.map((fragment, index) => (activeTab === fragment.label ? <div key={fragment.filename + index} dangerouslySetInnerHTML={{ __html: fragment.codeHtml }} /> : null))}</div>
+        <div>
+          {codeFragments.map((fragment, index) =>
+            activeTab === fragment.label ? (
+              <div
+                key={fragment.filename + index}
+                dangerouslySetInnerHTML={{ __html: fragment.codeHtml }}
+              />
+            ) : null
+          )}
+        </div>
       )}
     </>
   );

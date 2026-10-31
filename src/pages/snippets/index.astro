@@ -26,16 +26,17 @@ const snippets = await Promise.all(
           ...fragment,
           codeHtml,
         };
-      }),
+      })
     );
 
     return { ...snippet, codeFragments };
-  }),
+  })
 );
 
 const headMeta = generateHeadMeta({
   pageTitle: "Snippets",
-  pageDescription: "A collection of useful code snippets for various programming languages and tasks.",
+  pageDescription:
+    "A collection of useful code snippets for various programming languages and tasks.",
   pageUrl,
 });
 ---

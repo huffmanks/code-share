@@ -24,7 +24,8 @@ export default defineConfig({
     preact(),
     starlight({
       title: "CodeShare",
-      description: "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
+      description:
+        "CodeShare is your go-to platform for clear, practical coding guides and reusable code snippets.",
       head: [
         {
           tag: "meta",

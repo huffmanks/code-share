@@ -9,38 +9,36 @@ type Props = {
 const { references } = Astro.props;
 ---
 
-{
-  references && references.length > 0 && (
-    <ul>
-      {references.map((ref) => {
-        if ("heading" in ref) {
-          return (
-            <li>
-              <span>{ref.heading}</span>
-              <ul>
-                {ref.items.map((item) => (
-                  <li>
-                    <a class="link" href={item.href} target="_blank" rel="noopener">
-                      {item.label} {item.icon && <Icon name={item.icon} />}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          );
-        }
-
+{references && references.length > 0 && (
+  <ul>
+    {references.map((ref) => {
+      if ("heading" in ref) {
         return (
           <li>
-            <a class="link" href={ref.href} target="_blank" rel="noopener">
-              {ref.label} {ref.icon && <Icon name={ref.icon} />}
-            </a>
+            <span>{ref.heading}</span>
+            <ul>
+              {ref.items.map((item) => (
+                <li>
+                  <a class="link" href={item.href} target="_blank" rel="noopener">
+                    {item.label} {item.icon && <Icon name={item.icon} />}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </li>
         );
-      })}
-    </ul>
-  )
-}
+      }
+
+      return (
+        <li>
+          <a class="link" href={ref.href} target="_blank" rel="noopener">
+            {ref.label} {ref.icon && <Icon name={ref.icon} />}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+)}
 
 <style is:inline>
   .sl-container .sl-markdown-content a:not(:where(.not-content .link)) {

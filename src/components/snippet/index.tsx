@@ -39,13 +39,17 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
 
   const formattedSnippets = useMemo(() => {
     const filtered = snippets.filter((snippet) =>
-      query.language ? snippet.data.fragments.some((fragment) => fragment.language === query.language) : true,
+      query.language
+        ? snippet.data.fragments.some((fragment) => fragment.language === query.language)
+        : true
     );
 
     return [...filtered].sort((a, b) => {
       const { field, direction } = query;
-      const aValue = field === "title" ? a.data.title.toLowerCase() : new Date(a.data.updatedAt).getTime();
-      const bValue = field === "title" ? b.data.title.toLowerCase() : new Date(b.data.updatedAt).getTime();
+      const aValue =
+        field === "title" ? a.data.title.toLowerCase() : new Date(a.data.updatedAt).getTime();
+      const bValue =
+        field === "title" ? b.data.title.toLowerCase() : new Date(b.data.updatedAt).getTime();
 
       if (aValue < bValue) return direction === "asc" ? -1 : 1;
       if (aValue > bValue) return direction === "asc" ? 1 : -1;
@@ -53,7 +57,10 @@ export default function SnippetContainer({ snippets }: SnippetContainerProps) {
     });
   }, [snippets, query]);
 
-  function handleChange(key: ParamKeys, value: SelectedLanguage | SortField | SortDirection | ToggleView) {
+  function handleChange(
+    key: ParamKeys,
+    value: SelectedLanguage | SortField | SortDirection | ToggleView
+  ) {
     setQuery((prev) => {
       const isSameField = prev.field === value;
       const newDirection = isSameField && prev.direction === "asc" ? "desc" : "asc";

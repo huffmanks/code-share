@@ -49,5 +49,5 @@ export interface StarlightPageContextActionConfig {
 }
 
 export default function starlightPageContextAction(
-  config?: Partial<StarlightPageContextActionConfig>,
+  config?: Partial<StarlightPageContextActionConfig>
 ): StarlightPlugin;

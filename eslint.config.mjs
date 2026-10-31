@@ -12,7 +12,10 @@ const typescriptRules = {
     },
   ],
   "@typescript-eslint/no-explicit-any": "warn",
-  "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports", fixStyle: "inline-type-imports" }],
+  "@typescript-eslint/consistent-type-imports": [
+    "error",
+    { prefer: "type-imports", fixStyle: "inline-type-imports" },
+  ],
 };
 
 export default defineConfig([
@@ -33,5 +36,12 @@ export default defineConfig([
     rules: typescriptRules,
   },
 
-  globalIgnores([".astro/**", "dist/**", "public/**", "scripts/**", "src/content/**", "src/files/**"]),
+  globalIgnores([
+    ".astro/**",
+    "dist/**",
+    "public/**",
+    "scripts/**",
+    "src/content/**",
+    "src/files/**",
+  ]),
 ]);

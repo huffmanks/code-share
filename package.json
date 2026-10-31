@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",
+    "format": "prettier . --write",
     "astro": "astro"
   },
   "dependencies": {
@@ -26,6 +27,8 @@
     "@astrojs/check": "0.9.12",
     "eslint": "^10.14.0",
     "eslint-plugin-astro": "^3.2.1",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
     "typescript-eslint": "^8.72.1"
   }
 }

@@ -47,7 +47,12 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     Reload systemd and enable the new service.
 
-    <Code lang="sh" preserveIndent wrap code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`} />
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`sudo systemctl daemon-reload && sudo systemctl enable wol.service`}
+    />
 
 7.  ## Send Wake-up packet
 
