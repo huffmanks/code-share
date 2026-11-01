@@ -1,14 +1,15 @@
 ---
 title: FreeFileSync
 description: FreeFileSync is a folder comparison and synchronization software that creates and manages backup copies of all your important files.
-lastUpdated: 2025-08-18 11:08:59
+lastUpdated: 2026-11-01 14:15:25
 references:
-  - href: https://freefilesync.org/download.php
-    label: Download
+  - href: https://freefilesync.org/manual.php
+    label: Docs
 ---
 
 import ReferenceLinks from "@/components/guides/reference-links.astro";
-import { Steps } from "@astrojs/starlight/components";
+import { ffsExclude } from "@/lib/mdx-constants";
+import { Code, Steps } from "@astrojs/starlight/components";
 
 ## Getting started
 
@@ -24,28 +25,26 @@ import { Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
-1.  ## Download Linux.tar.gz
+1.  ## Download
 
-        ```sh preserveIndent wrap
-        wget -P ~/Downloads https://freefilesync.org/download/FreeFileSync_14.3_Linux.tar.gz
-        ```
+        [Download latest version for Linux x86-64](https://freefilesync.org/download.php).
 
 2.  ## Extract
 
         ```sh preserveIndent wrap
-        tar -xvzf ~/Downloads/FreeFileSync_14.3_Linux.tar.gz
+        tar -xvzf ~/Downloads/FreeFileSync_*_Linux_x86_64.tar.gz -C ~/Downloads/
         ```
 
 3.  ## Make executeable
 
         ```sh preserveIndent wrap
-        chmod +x ~/Downloads/FreeFileSync_14.3_Install.run
+        chmod +x ~/Downloads/FreeFileSync_*_Install.run
         ```
 
 4.  ## Run
 
-        ```sh
-        ./FreeFileSync_14.3_Install.run
+        ```sh preserveIndent wrap
+        ~/Downloads/FreeFileSync_*_Install.run
         ```
 
 5.  ## Install
@@ -60,5 +59,19 @@ import { Steps } from "@astrojs/starlight/components";
         - Press `2` to change installation directory.
         - Press `3` to disable desktop shortcuts.
         - Press `Enter` to begin installtion.
+
+6.  ## Synchronization Settings
+
+        ### Comparison
+        - **Select a variant:** `File time and size`
+
+        ### Filter
+        - **Include:** `*`
+        - **Exclude:**
+                <Code lang="txt" code={ffsExclude} />
+
+        ### Synchronization
+        - **Select a variant:** `Mirror`
+        - **Delete and overwrite:** `Recycle bin`
 
 </Steps>

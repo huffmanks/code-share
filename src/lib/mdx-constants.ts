@@ -321,3 +321,34 @@ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
 echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
 sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 `;
+
+// src/content/docs/guides/linux/programs/freefilesync.mdx
+export const ffsExclude = `
+*/.Trash-*/
+*/.recycle/
+*/.Trash/
+*/.Trashes/
+*/._*
+*/.DS_Store
+*/.Spotlight-V100/
+*/.fseventsd/
+*/.TemporaryItems/
+*/.DocumentRevisions-V100/
+*/.VolumeIcon.icns
+*/.AppleDouble/
+*/.LSOverride
+*/.localized
+*/$RECYCLE.BIN/
+*/System Volume Information/
+*/RECYCLER/
+*/RECYCLED/
+*/desktop.ini
+*/Thumbs.db
+*/ehthumbs.db
+*/ehthumbs_vista.db
+*/$RECYCLE.BIN/
+*/lost+found/
+*/.directory
+*/.thumbnails/
+*/.Trash-*/
+`;
