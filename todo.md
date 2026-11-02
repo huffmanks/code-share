@@ -1,9 +1,5 @@
 # Todos
 
-## Fix
-
-- [ ] add paginate to snippets page.
-
 ## Settings
 
 - [ ] Add tabs for package manager in guides. e.g. apt, dnf, homebrew, macports, pacman
