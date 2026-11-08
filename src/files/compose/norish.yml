@@ -5,23 +5,34 @@ services:
     restart: always
     ports:
       - "3009:3000"
-    user: "1000:1000"
     volumes:
       - norish_data:/app/uploads
     environment:
       AUTH_URL: ${AUTH_URL}
       DATABASE_URL: ${DATABASE_URL}
       MASTER_KEY: ${MASTER_KEY}
+      VALKEY_URL: ${VALKEY_URL}
       OBSCURA_ENDPOINT: ${OBSCURA_ENDPOINT}
-      REDIS_URL: ${REDIS_URL}
+      OBSCURA_CDP_TOKEN: ${OBSCURA_CDP_TOKEN}
       UPLOADS_DIR: ${UPLOADS_DIR}
       TRUSTED_ORIGINS: ${TRUSTED_ORIGINS}
-      BETTER_AUTH_TRUSTED_ORIGINS: ${BETTER_AUTH_TRUSTED_ORIGINS}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      DEFAULT_LOCALE: ${DEFAULT_LOCALE}
+      ENABLED_LOCALES: ${ENABLED_LOCALES}
       PASSWORD_AUTH_ENABLED: ${PASSWORD_AUTH_ENABLED}
-      ENABLE_REGISTRATION: ${ENABLE_REGISTRATION}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'node -e "require(''http'').get(''http://localhost:3000'' + ''/api/v1/health/live'', r => process.exit(r.statusCode===200?0:1))"',
+        ]
+      interval: 1m
+      timeout: 15s
+      retries: 3
+      start_period: 1m
     depends_on:
       - db
-      - redis
+      - valkey
 
   db:
     image: postgres:17-alpine
@@ -35,18 +46,20 @@ services:
       - db_data:/var/lib/postgresql/data
 
   obscura:
-    image: norishapp/obscura:0.2.0-norish.1
+    image: norishapp/obscura:0.2.5-norish.1
     container_name: norish-obscura
     restart: unless-stopped
+    environment:
+      OBSCURA_CDP_TOKEN: ${OBSCURA_CDP_TOKEN}
 
-  redis:
-    image: redis:8.4.0
-    container_name: norish-redis
+  valkey:
+    image: valkey/valkey:9
+    container_name: norish-valkey
     restart: unless-stopped
     volumes:
-      - redis_data:/data
+      - valkey_data:/data
 
 volumes:
   db_data:
   norish_data:
-  redis_data:
+  valkey_data:
