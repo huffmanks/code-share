@@ -26,28 +26,145 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
     <Code lang="sh" code={`sudo reboot`} />
 
-3.  ## Install extension manager
+3.  ## stash
 
-    Install GNOME Extension Manager to browse, install and configure GNOME Shell extensions.
+    <Code
+      lang="sh"
+      wrap
+      preserveIndent
+      code={`curl -sSL https://raw.githubusercontent.com/huffmanks/stash/main/install.sh | bash`}
+    />
+
+    ### Run stash
+
+    Run stash to create `.zshrc`, `.zprofile`, `.gitconfig` and `.gitignore` files and help install the necessary packages.
+
+    <Code lang="sh" code="stash" />
+
+4.  ## Install tweaks and extensions
+
+    Install GNOME Tweaks, Extension Manager and the extensions needed for customization.
 
     <Code
       lang="sh"
       preserveIndent
       wrap
-      code={`sudo apt install -y gnome-shell-extension-manager`}
+      code={`sudo apt install -y sassc gnome-tweaks gnome-shell-extension-user-theme gnome-shell-extension-blur-my-shell gnome-shell-extension-dashtodock`}
     />
 
-4.  ## Launch extension manager
+    ### Enable extensions
 
-    Open Extension Manager from the applications menu or launch it from the terminal.
+    Enable Blur My Shell Dash to Dock and User Themes.
+
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`gnome-extensions enable blur-my-shell@aunetx && gnome-extensions enable dash-to-dock@micxgx.gmail.com && gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com`}
+    />
+
+5.  ## Install themes
+
+    Install the WhiteSur GTK theme and icon theme.
+
+    ### GTK theme
+
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git /tmp/WhiteSur-gtk-theme --depth=1 && cd /tmp/WhiteSur-gtk-theme && ./install.sh -c dark -l`}
+    />
+
+    ### Icon theme
+
+    <Code
+      lang="sh"
+      preserveIndent
+      wrap
+      code={`git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git /tmp/WhiteSur-icon-theme --depth=1 && cd /tmp/WhiteSur-icon-theme && ./install.sh`}
+    />
+
+6.  ## Configure Extension Manager
+
+    Open Extension Manager from the terminal.
 
     <Code lang="sh" code={`extension-manager`} />
 
-5.  ## Install and configure Deja Window
-    - Open the **Browse** tab and search for `Deja Window` by _mcastaldo_.
-    - Install the extension, then open the **Installed** tab.
-    - Click the settings icon next to **Deja Window**.
-    - Under **Global Defaults**, toggle **Enabled** and then click **Restore**.
-    - Enable `Size`, `Position` and `Avoid Overlap for Additional Windows`. Leave all other options disabled.
+    ### Dash to Dock
+    - **Click** the `Settings` icon.
+      - **Click** the `Position and size` tab:
+        - **Disable** `Intelligent autohide`.
+        - **Set** `Dock size limit` to `52%`.
+        - **Set** `Icon size limit` to `40px`.
+      - **Click** the `Launchers` tab:
+        - **Disable** `Show Applications icon`.
+      - **Click** the `Behaviors` tab:
+        - **Click action** `Focus or app spread`.
+        - **Click action** `Settings` icon:
+          - **Middle-Click action** `Raise window`.
+      - **Click** the `Appearance` tab:
+        - **Enable** `Use built-in theme`.
+
+    ### Deja Window
+    - **Click** the `Browse` tab.
+      - **Search** for `Deja Window` by _mcastaldo_.
+      - Install the extension.
+    - **Click** the `Installed` tab and then the `Settings` icon.
+      - **Click** the `Global Defaults` tab:
+        - **Enable** `Enabled`.
+        - **Click** `Restore`.
+        - **Enable** `Size`.
+        - **Enable** `Position`.
+        - **Enable** `Avoid Overlap for Additional Windows`.
+        - Leave all other options disabled.
+      - **Click** the `Settings` tab:
+        - **Disable** `Show Icon in Top Bar`.
+
+    ### User Themes
+    - **Click** the `Settings` icon.
+    - **Select** `WhiteSur-Dark`.
+
+7.  ## Configure Tweaks
+
+    Open GNOME Tweaks from the terminal.
+
+    <Code lang="sh" code={`gnome-tweaks`} />
+
+    ### Fonts
+    - **Set** `Antialiasing` to `Subpixel`.
+    - **Set** `Hinting` to `Slight`.
+
+    ### Appearance
+    - **Icons** `WhiteSur-Dark`.
+    - **Shell** `WhiteSur-Dark`.
+    - **Legacy Applications** `WhiteSur-Dark`.
+
+    ### Windows
+    - **Enable** `Maximize`.
+    - **Enable** `Minimize`.
+    - **Set** `Placement` to `Left`.
+
+8.  ## Configure settings
+
+    Open GNOME Settings from the terminal.
+
+    <Code lang="sh" code={`gnome-control-center`} />
+
+    ### Power
+    - **Set** `Power Button Behavior` to `Power Off`.
+    - **Enable** `Show Battery Percentage`.
+
+    ### Multitasking
+    - **Disable** `Hot Corner`.
+
+    ### Appearance
+    - **Set** `Style` to `Dark`.
+    - **Set** `Background` to your preferred wallpaper.
+
+    ### Mouse & Touchpad
+    - **Click** the `Touchpad` tab.
+    - **Set** `Secondary click` to `Corner push`.
+    - **Disable** `Tap to Click`.
 
 </Steps>
