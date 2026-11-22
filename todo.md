@@ -21,6 +21,38 @@
   - [ ] Strong password policy: Could include libpam-pwquality or PAM rules for local accounts.
   - [ ] Kernel / sysctl hardening: Add /etc/sysctl.d/ tweaks (disable IP forwarding, limit ICMP, protect against SYN floods, etc.).
 
+- [ ] Add gnome tweaks and extensions
+        ```sh
+        sudo apt update
+        sudo apt install -y git sassc gnome-tweaks gnome-shell-extension-user-theme gnome-shell-extension-blur-my-shell gnome-shell-extension-dashtodock
+        ```
+
+        This already exists in linux getting started
+        [Deja window by mcastaldo](https://extensions.gnome.org/extension/9024/deja-window/)
+
+        ```sh
+        gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+        gnome-extensions enable blur-my-shell@aunetx
+        gnome-extensions enable dash-to-dock@micxgx.gmail.com
+        ```
+        open gnome-extensions > dashtodock settings > Position and size > disable intelligent autohide, dock size limit 52%, icon size 40px > Launchers disable show applications icon > Appearance custom opacity to fixed, opacity 50%
+
+        ```sh
+        git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git --depth=1
+        cd WhiteSur-gtk-theme
+        ./install.sh -c dark -l
+        ```
+
+        open gnome-extensions > user-themes settings > select WhiteSur-Dark
+
+        ```sh
+        git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git --depth=1
+        cd WhiteSur-icon-theme
+        ./install.sh
+        ```
+
+        open gnome-tweaks and appearance > icons/shell/legacy applications select WhiteSur-Dark
+
 ### Windows
 
 - [ ] Add Windows Utility setup
