@@ -85,7 +85,11 @@ import { Code, Steps } from "@astrojs/starlight/components";
      code={`mkdir -p ~/.local/share/gnome-shell/extensions && cp -r /usr/share/keyd/gnome-extension-45 ~/.local/share/gnome-shell/extensions/keyd`}
    />
 
-   Update its compatibility metadata. (Optional)
+   Check your GNOME Shell version.
+
+   <Code lang="sh" wrap preserveIndent code={`gnome-shell --version`} />
+
+   Update its compatibility metadata using your GNOME Shell major version.
 
    <Code
      lang="sh"
@@ -94,7 +98,9 @@ import { Code, Steps } from "@astrojs/starlight/components";
      code={`nano ~/.local/share/gnome-shell/extensions/keyd/metadata.json`}
    />
 
-   _This is a compatibility workaround for the Debian-packaged extension, not an official GNOME 48 certification._
+   _This is a compatibility workaround for the Debian-packaged extension._
+
+   Add your GNOME Shell major version to the `shell-version` array. For example, if your version is 48.1, add `"48"`.
 
    <Code
      lang="json"
