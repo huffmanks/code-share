@@ -1,3 +1,10 @@
+// src/content/docs/guides/linux/index.mdx
+export const grubConfig = `
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_TIMEOUT=0
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+`;
+
 // src/content/docs/guides/linux/ssh.mdx
 export const linuxSshdConfig = `
 # Disable password auth
@@ -351,4 +358,87 @@ export const ffsExclude = `
 */.directory
 */.thumbnails/
 */.Trash-*/
+`;
+
+// src/content/docs/guides/linux/miscellaneous/macos-style-keybindings.mdx
+export const mainKeydConfig = `
+[ids]
+*
+
+[main]
+# Map both Command keys to the macOS-style Command layer
+leftmeta = layer(cmd)
+rightmeta = layer(cmd)
+
+# Caps Lock acts as Command
+capslock = layer(meta)
+
+# Command behaves like Control by default
+# This provides the standard copy, paste, save, undo, etc. shortcuts
+[cmd:C]
+
+[cmd+shift]
+# macOS screenshots
+3 = macro(S-print)
+4 = print
+5 = print
+
+# Select to the beginning or end of the line
+left = S-home
+right = S-end
+
+[alt]
+# Move cursor by word
+left = C-left
+right = C-right
+
+# Left typographic
+] = ‘
+[ = “
+- = –
+
+[alt+shift]
+# Select by word
+left = C-S-left
+right = C-S-right
+
+# Right typographic
+] = ’
+[ = ”
+- = —
+`;
+
+export const appKeydConfig = `
+# GNOME Terminal
+[org-gnome-terminal]
+
+# Clipboard operations
+cmd.c = C-S-c
+cmd.v = C-S-v
+
+# Terminal tabs
+cmd.t = C-S-t
+cmd.w = C-S-w
+
+# Tab navigation
+cmd.leftbrace = C-S-tab
+cmd.rightbrace = C-tab
+
+# GNOME Files
+[org-gnome-nautilus]
+
+# Move selected files to trash
+meta.backspace = delete
+
+# Rename file
+meta.enter = f2
+
+# Visual Studio Code
+[com-microsoft-vscode]
+
+# Move selected files to trash
+meta.backspace = delete
+
+# Rename file
+meta.enter = f2
 `;

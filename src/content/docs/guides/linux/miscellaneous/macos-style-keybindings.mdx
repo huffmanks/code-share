@@ -1,0 +1,155 @@
+---
+title: macOS-style keybindings
+description: "A practical guide to bringing familiar macOS keyboard shortcuts to GNOME using keyd."
+lastUpdated: 2026-11-22 20:37:12
+---
+
+import { appKeydConfig, keydAppMapperService, mainKeydConfig } from "@/lib/mdx-constants";
+import { Code, Steps } from "@astrojs/starlight/components";
+
+<p>{frontmatter.description}</p>
+
+- **Command (⌘):** Maps to Control for standard shortcuts like copy, paste, save and undo.
+- **Option (⌥):** Maps to Alt, including word-by-word cursor navigation.
+- **Terminal:** `CMD+C` and `CMD+V` handle copy and paste without requiring Shift.
+- **Spotlight:** `CMD+Space` opens the GNOME Activities overview and search.
+- **Screenshots:** `CMD+Shift+3`, `CMD+Shift+4` and `CMD+Shift+5` provide familiar screenshot shortcuts.
+
+---
+
+<br />
+
+<Steps>
+
+1. ## Install
+
+   Install keyd and the application mapper.
+
+   <Code lang="sh" wrap preserveIndent code={`sudo apt install -y keyd keyd-application-mapper`} />
+
+   Add your user to the keyd group.
+
+   <Code lang="sh" wrap preserveIndent code={`sudo usermod -aG keyd "$USER"`} />
+
+   _Log out and back in for the group membership to take effect._
+
+2. ## Configure keyd
+
+   Create a symlink to key’s compose file to enable Unicode character mappings.
+
+   <Code lang="sh" wrap preserveIndent code={`ln -s /usr/share/keyd/keyd.compose ~/.XCompose`} />
+
+   _Restart applications after creating the symlink._
+
+   <Code lang="sh" wrap preserveIndent code={`sudo nano /etc/keyd/default.conf`} />
+
+   Add your global key mappings.
+
+   <Code lang="toml" wrap preserveIndent title="/etc/keyd/default.conf" code={mainKeydConfig} />
+
+3. ## Configure keyd-application-mapper
+
+   <Code lang="sh" wrap preserveIndent code={`mkdir -p ~/.config/keyd`} />
+
+   <Code lang="sh" wrap preserveIndent code={`nano ~/.config/keyd/app.conf`} />
+
+   Add your application-specific key mappings.
+
+   <Code lang="toml" wrap preserveIndent title="~/.config/keyd/app.conf" code={appKeydConfig} />
+
+   _The section names must match the window classes reported by the application mapper. You can identify them with `keyd-application-mapper -v`._
+
+4. ## Enable keyd
+
+   Start and reload keyd.
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`sudo systemctl enable --now keyd && sudo keyd.rvaiya reload`}
+   />
+
+   Verify that keyd is running.
+
+   <Code lang="sh" wrap preserveIndent code={`systemctl status keyd`} />
+
+5. ## Enable keyd-application-mapper
+
+   Copy the extension into your user extensions directory.
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`mkdir -p ~/.local/share/gnome-shell/extensions && cp -r /usr/share/keyd/gnome-extension-45 ~/.local/share/gnome-shell/extensions/keyd`}
+   />
+
+   Update its compatibility metadata. (Optional)
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`nano ~/.local/share/gnome-shell/extensions/keyd/metadata.json`}
+   />
+
+   _This is a compatibility workaround for the Debian-packaged extension, not an official GNOME 48 certification._
+
+   <Code
+     lang="json"
+     wrap
+     preserveIndent
+     title="~/.local/share/gnome-shell/extensions/keyd/metadata.json"
+     ins=', "48"'
+     code={`"shell-version": [ "45", "46", "48" ]`}
+   />
+
+   _Log out and back in so GNOME registers the extension._
+
+   Enable and verify the extension.
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`gnome-extensions enable keyd && gnome-extensions show keyd`}
+   />
+
+6. ## macOS-style spotlight
+
+   Since Command maps to Control, configure GNOME to use `CTRL+Space` to open the Activities overview.
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`gsettings set org.gnome.shell.keybindings toggle-overview "['<Control>space']"`}
+   />
+
+7. ## VS Code keyboard shortcuts
+   - `CMD+Shift+P` to open command palette.
+   - Search for `Preferences: Open Keyboard Shortcuts`
+   - **Add Cursor Above/Below** modify to `CapsLock+Alt+Up/Down`.
+   - **Copy Line Up/Down** modify to `Shift+Alt+Up/Down`.
+
+8. ## Troubleshooting
+
+   Monitor keyboard events to inspect the keys recognized by keyd.
+
+   <Code lang="sh" wrap preserveIndent code={`sudo keyd.rvaiya monitor`} />
+
+   If keyd does not appear to be applying your configuration, check its service logs.
+
+   <Code lang="sh" wrap preserveIndent code={`sudo journalctl -u keyd -b`} />
+
+   After editing your keyd configuration, reload it and restart the application mapper to apply the changes.
+
+   <Code
+     lang="sh"
+     wrap
+     preserveIndent
+     code={`sudo keyd.rvaiya reload && pkill -f keyd-application-mapper && keyd-application-mapper -d`}
+   />
+
+</Steps>
