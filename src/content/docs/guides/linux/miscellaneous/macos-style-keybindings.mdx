@@ -57,7 +57,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
 
    <Code lang="toml" wrap preserveIndent title="~/.config/keyd/app.conf" code={appKeydConfig} />
 
-   _The section names must match the window classes reported by the application mapper. You can identify them with `keyd-application-mapper -v`._
+   _The section names must match the window classes reported by the application mapper._
 
 4. ## Enable keyd
 
@@ -149,7 +149,7 @@ import { Code, Steps } from "@astrojs/starlight/components";
      lang="sh"
      wrap
      preserveIndent
-     code={`sudo keyd.rvaiya reload && pkill -f keyd-application-mapper && keyd-application-mapper -d`}
+     code={`sudo keyd.rvaiya reload\npkill -f keyd-application-mapper\nkeyd-application-mapper -d`}
    />
 
 </Steps>
